@@ -6,6 +6,7 @@ set include=%include%;C:\Procs\MicrosoftVisualStudio10.0\VC\include
 set include=%include%;C:\Procs\MicrosoftSDKs\Windows\v7.0A\Include
 set include=%include%;C:\Procs\MicrosoftPlatformSDK\Include
 
+set include=%include%;C:\Users\Sinan\Downloads\ogre\OgreSDK_vc10_v1-8-0\include\
 set include=%include%;C:\Users\Sinan\Downloads\ogre\OgreSDK_vc10_v1-8-0\include\OGRE\
 
 set include=%include%;C:\Users\Sinan\Downloads\physx\PhysX-3.1.2_PC_VC10_SDK_Core\SDKs\PhysXAPI
@@ -42,6 +43,7 @@ set cl_setting=%cl_setting% /nologo
 
 set lib_list=
 set lib_list=%lib_list% OgreMain.lib
+set lib_list=%lib_list% OIS.lib
 
 set lib_list=%lib_list% PhysX3_x86.lib
 set lib_list=%lib_list% PhysX3Common.lib

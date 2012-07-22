@@ -53,7 +53,6 @@ void PhysicsEngine::setup(){
 }
 
 void PhysicsEngine::simulate(float timing) {
-    Logger::debug(format("simulating physics engine: %p ") % this);
     //mScene->simulate( 1.0f / 60.0f );
     mScene->simulate(timing);
     mScene->fetchResults(true);

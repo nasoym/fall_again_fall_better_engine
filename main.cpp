@@ -2,29 +2,20 @@
 #include <stdio.h>
 #include "logger.h"
 
-#include "engine_physic.h"
-#include "box_physic.h"
-
-#include "engine_graphic.h"
-#include "box_graphic.h"
-
-PhysicsEngine*  physicsEngine = 0;
-GraphicsEngine* graphicsEngine = 0;
+#include "engine.h"
+Engine* mEngine = 0;
 
 int main(int argc, char *argv[]) {
     Logger::debug("running main");
 
-    graphicsEngine = new GraphicsEngine();
-    physicsEngine = new PhysicsEngine();
+    mEngine = new Engine();
 
-    graphicsEngine->render();
-    physicsEngine->simulate(0.1f);
+    mEngine->run();
+    mEngine->run();
+    mEngine->run();
+    mEngine->run();
 
-    graphicsEngine->render();
-    physicsEngine->simulate(0.1f);
-
-    delete physicsEngine;
-    delete graphicsEngine;
+    delete mEngine;
 
 	return 0;
 }
