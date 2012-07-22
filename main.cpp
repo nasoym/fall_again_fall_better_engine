@@ -19,6 +19,7 @@ int main(int argc, char *argv[]) {
 
     graphicsEngine->render();
     physicsEngine->simulate(0.1f);
+
     graphicsEngine->render();
     physicsEngine->simulate(0.1f);
 
