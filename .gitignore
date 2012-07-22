@@ -1,0 +1,11 @@
+*.swp
+*.pyc
+*.so
+*.o
+*.dll
+*.lib
+*.exp
+*.obj
+*.pyd
+*.exe
+Ogre.log
