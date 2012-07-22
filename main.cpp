@@ -1,68 +1,29 @@
 
 #include <stdio.h>
+#include "logger.h"
 
-#include <Ogre.h>
-using namespace Ogre;
+#include "engine_physic.h"
+#include "box_physic.h"
 
-#include "PxPhysicsAPI.h"
-#include "PxDefaultErrorCallback.h"
-#include "PxDefaultCpuDispatcher.h"
-#include "PxExtensionsAPI.h"
-using namespace physx;
+#include "engine_graphic.h"
+#include "box_graphic.h"
 
-class Allocator : public PxAllocatorCallback {
-    void * allocate(size_t size,const char*,const char*,int) {
-        return _aligned_malloc(size,16);
-    }
-    void deallocate(void * ptr) {
-        _aligned_free(ptr);
-    }
-};
-        PxDefaultErrorCallback	    mDefaultErrorCallback;
-        Allocator                   mDefaultAllocator;
-
-        PxPhysics *                 mPhysics;
-        PxMaterial *                mMaterial; 
-        PxScene *                   mScene;
-        PxDefaultCpuDispatcher *    mCpuDispatcher;
+PhysicsEngine*  physicsEngine = 0;
+GraphicsEngine* graphicsEngine = 0;
 
 int main(int argc, char *argv[]) {
-	printf("starting");
-	//Root *root = new Root("","");
-	Root *root = new Root();
-	root->showConfigDialog();
-	root->initialise(true);
+    Logger::debug("running main");
 
+    graphicsEngine = new GraphicsEngine();
+    physicsEngine = new PhysicsEngine();
 
-    mPhysics = PxCreatePhysics(
-        PX_PHYSICS_VERSION,
-        mDefaultAllocator, 
-        mDefaultErrorCallback,
-        PxTolerancesScale(),
-        false
-        );
+    graphicsEngine->render();
+    physicsEngine->simulate(0.1f);
+    graphicsEngine->render();
+    physicsEngine->simulate(0.1f);
 
-    if(!PxInitExtensions(*mPhysics)) {
+    delete physicsEngine;
+    delete graphicsEngine;
 
-    }
-
-    mMaterial = mPhysics->createMaterial(0.5f,0.5f,0.5f);
-
-    PxSceneDesc sceneDesc(mPhysics->getTolerancesScale());
-    sceneDesc.gravity = PxVec3(0.0f,-9.81f,0.0f);
-
-	if(!sceneDesc.cpuDispatcher) {
-		mCpuDispatcher = PxDefaultCpuDispatcherCreate(1);
-		sceneDesc.cpuDispatcher	= mCpuDispatcher;
-	}
-
-    if(!sceneDesc.filterShader) {
-        sceneDesc.filterShader  = PxDefaultSimulationFilterShader;
-    }
-    mScene = mPhysics->createScene(sceneDesc);
-
-
-	root->startRendering();
-	printf("hello");
 	return 0;
 }
