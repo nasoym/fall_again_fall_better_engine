@@ -4,12 +4,12 @@
 //-------------------------------------
 PhysicsEngine::PhysicsEngine() :
     mForceFactor(300) {
-    Logger::debug(format("creating physics engine: %p ") % this);
+    Logger::debug(format("creating physics engine: %p") % this);
     setup();
 }
 
 PhysicsEngine::~PhysicsEngine(){
-    Logger::debug(format("deleting physics engine: %p ") % this);
+    Logger::debug(format("deleting physics engine: %p") % this);
     close();
 }
 

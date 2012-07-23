@@ -16,6 +16,7 @@
     #include <log4cpp/PatternLayout.hh>
 */
 
+
     using std::string;
     using boost::format;
 
@@ -43,6 +44,7 @@ class Logger {
         log4cpp::Appender*          mAppender; 
         log4cpp::Category*          mCategory;
 */
+
      
     private:
        Logger(){};

@@ -6,7 +6,7 @@
 Engine* mEngine = 0;
 
 int main(int argc, char *argv[]) {
-    Logger::debug("running main");
+    Logger::debug("running main.");
 
     mEngine = new Engine();
 

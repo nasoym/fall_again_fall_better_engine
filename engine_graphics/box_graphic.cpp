@@ -5,7 +5,7 @@
 GraphicsBox::GraphicsBox(GraphicsEngine* graphicsEngine):
     mGraphicsEngine(graphicsEngine) 
     {
-    Logger::debug(format("creating graphics box: %p ") % this);
+    Logger::debug(format("creating graphics box: %p") % this);
 
     mEntity = mGraphicsEngine->getSceneManager()->createEntity("");
     mNode = mGraphicsEngine->getDebugNode()->createChildSceneNode();
