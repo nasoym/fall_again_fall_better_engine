@@ -2,9 +2,14 @@
 #include "logger.h"
 #include "engine_object.h"
 //-------------------------------------
-EngineObject::EngineObject() {
+
+EngineObject::EngineObject(Engine* engine) :
+	mEngine(engine)
+	{
+	mEngine->addObject(this);
 }
 
-EngineObject::~EngineObject() {
+EngineObject::~EngineObject(){
+	mEngine->deleteObject(this);
 }
 

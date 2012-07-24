@@ -6,31 +6,13 @@
 using namespace Ogre;
 
 #include "engine_graphic.h"
+#include "shape_graphic.h"
 
 //-------------------------------------
-class GraphicsBox {
+class GraphicsBox : public GraphicsShape {
     public:
-
         GraphicsBox(GraphicsEngine*);
-        ~GraphicsBox();
 
-
-        void        setPosition(float,float,float);
-        void        setPosition(Vector3&);
-        Vector3&    getPosition();
-
-        void        setOrientation(float,float,float,float);
-        void        setOrientation(Quaternion&);
-        Quaternion& getOrientation();
-
-        void        setSize(float,float,float);
-        void        setSize(Vector3&);
-        Vector3&    getSize();
-
-    private:
-        GraphicsEngine* mGraphicsEngine;
-        Entity*     mEntity; 
-        SceneNode*  mNode;
 };
 //-------------------------------------
 #endif
