@@ -58,11 +58,13 @@ void GraphicsEngine::setup(){
     Light * light = mSceneMgr->createLight("MainLight");
     light->setPosition(0,400,0);
 
+	/*
     //Entity *ent = mSceneMgr->createEntity("head","cube.mesh");
     Entity *ent = mSceneMgr->createEntity("head","Prefab_Cube");
     //ent->setMaterialName("Ogre/Skin");
     //ent->setMaterialName("Examples/Chrome");
     mSceneMgr->getRootSceneNode()->createChildSceneNode()->attachObject(ent);
+	*/
 
 
 }
@@ -104,8 +106,8 @@ void GraphicsEngine::setupOIS() {
     OIS::ParamList pl;
     size_t windowHnd = 0;
     std::ostringstream windowHndStr;
-    bool bufferedKeys = false;
-    bool bufferedMouse = false;
+    bool bufferedKeys = true;
+    bool bufferedMouse = true;
 
     mWindow->getCustomAttribute("WINDOW", &windowHnd);
     windowHndStr << windowHnd;
@@ -185,7 +187,7 @@ void GraphicsEngine::windowResized(RenderWindow* rw) {
 }
 
 void GraphicsEngine::windowMoved(RenderWindow* rw) {
-    Logger::debug("windowMoved");
+    //Logger::debug("windowMoved");
 }
 
 bool windowClosing(RenderWindow* rw) {
@@ -203,27 +205,75 @@ void GraphicsEngine::windowFocusChange(RenderWindow* rw) {
 }
 
 bool GraphicsEngine::keyPressed(const OIS::KeyEvent& evt) {
-    Logger::debug("keyPressed");
+	allKeyboardListenersPressed(evt);
     return true;
 }
 
 bool GraphicsEngine::keyReleased(const OIS::KeyEvent& evt) {
-    Logger::debug("keyReleased");
+	allKeyboardListenersReleased(evt);
     return true;
 }
 
 bool GraphicsEngine::mouseMoved(const OIS::MouseEvent& evt) {
-    Logger::debug("mouseMoved");
     return true;
 }
 
 bool GraphicsEngine::mousePressed(const OIS::MouseEvent& evt, OIS::MouseButtonID id) {
-    Logger::debug("mousePressed");
+    //Logger::debug("mousePressed");
+	allKeyboardListenersMousePressed(evt,id);
     return true;
 }
 
 bool GraphicsEngine::mouseReleased(const OIS::MouseEvent& evt, OIS::MouseButtonID id) {
-    Logger::debug("mouseReleased");
+    //Logger::debug("mouseReleased");
+	allKeyboardListenersMouseReleased(evt,id);
     return true;
 }
 
+void    GraphicsEngine::deleteKeyboardListener(KeyboardListener* keylistener) {
+	std::set<KeyboardListener*>::iterator  mIterator;
+	for (mIterator = mKeyboardListeners.begin(); 
+		mIterator != mKeyboardListeners.end(); ++mIterator) {
+		if ( (*mIterator) == keylistener ){
+			delete (*mIterator);
+			mKeyboardListeners.erase( mIterator);
+			break;
+		}
+	}
+}
+
+void    GraphicsEngine::addKeyboardListener(KeyboardListener* keylistener) {
+	mKeyboardListeners.insert(keylistener);
+}
+
+void	GraphicsEngine::allKeyboardListenersPressed(const OIS::KeyEvent& evt) {
+	std::set<KeyboardListener*>::iterator  mIterator;
+	for (mIterator = mKeyboardListeners.begin(); 
+		mIterator != mKeyboardListeners.end(); ++mIterator) {
+		(*mIterator)->keyPressed(evt);
+	}
+}
+
+void	GraphicsEngine::allKeyboardListenersReleased(const OIS::KeyEvent& evt) {
+	std::set<KeyboardListener*>::iterator  mIterator;
+	for (mIterator = mKeyboardListeners.begin(); 
+		mIterator != mKeyboardListeners.end(); ++mIterator) {
+		(*mIterator)->keyReleased(evt);
+	}
+}
+
+void	GraphicsEngine::allKeyboardListenersMousePressed(const OIS::MouseEvent& evt, OIS::MouseButtonID id) {
+	std::set<KeyboardListener*>::iterator  mIterator;
+	for (mIterator = mKeyboardListeners.begin(); 
+		mIterator != mKeyboardListeners.end(); ++mIterator) {
+		(*mIterator)->mousePressed(evt,id);
+	}
+}
+
+void	GraphicsEngine::allKeyboardListenersMouseReleased(const OIS::MouseEvent& evt, OIS::MouseButtonID id) {
+	std::set<KeyboardListener*>::iterator  mIterator;
+	for (mIterator = mKeyboardListeners.begin(); 
+		mIterator != mKeyboardListeners.end(); ++mIterator) {
+		(*mIterator)->mouseReleased(evt,id);
+	}
+}

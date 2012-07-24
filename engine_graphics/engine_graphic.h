@@ -5,6 +5,10 @@
 #include <Ogre.h>
 using namespace Ogre;
 
+#include <set>
+
+#include "keyboard_listener.h"
+
 #define OIS_DYNAMIC_LIB
 #include <OIS/OIS.h>
 
@@ -37,6 +41,16 @@ class GraphicsEngine :
         virtual bool mouseMoved(const OIS::MouseEvent& evt);
         virtual bool mousePressed(const OIS::MouseEvent& evt, OIS::MouseButtonID id);
         virtual bool mouseReleased(const OIS::MouseEvent& evt, OIS::MouseButtonID id);
+	
+		void    deleteKeyboardListener(KeyboardListener*);
+		void    addKeyboardListener(KeyboardListener*);
+
+		void	allKeyboardListenersReleased(const OIS::KeyEvent& evt);
+		void	allKeyboardListenersPressed(const OIS::KeyEvent& evt);
+
+		void	allKeyboardListenersMouseReleased(const OIS::MouseEvent& evt, OIS::MouseButtonID id);
+		void	allKeyboardListenersMousePressed(const OIS::MouseEvent& evt, OIS::MouseButtonID id);
+
 
     private:
         void    setup();
@@ -63,6 +77,8 @@ class GraphicsEngine :
         OIS::Mouse*     mMouse;
         OIS::Keyboard*  mKeyboard;
         bool            mExit;
+
+		std::set<KeyboardListener*>    mKeyboardListeners;
 
 };
 //-------------------------------------

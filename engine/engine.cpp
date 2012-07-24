@@ -2,7 +2,8 @@
 #include "logger.h"
 #include "engine.h"
 //-------------------------------------
-Engine::Engine() {
+Engine::Engine() :
+	mLoopRendering(true) {
     Logger::debug(format("creating engine: %p ") % this);
     setup();
 }
@@ -15,10 +16,13 @@ Engine::~Engine(){
 void Engine::setup(){
     mGraphicsEngine = new GraphicsEngine();
     mPhysicsEngine = new PhysicsEngine();
+
+	mGraphicsEngine->addKeyboardListener(new EngineKeyListener(mGraphicsEngine));
 }
 
 void Engine::run(){
-    while(true) {
+    //while(true) {
+    while(mLoopRendering) {
         mGraphicsEngine->processOIS();
         if (mGraphicsEngine->inputExit()) {
             break;

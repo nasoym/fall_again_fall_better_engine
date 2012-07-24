@@ -7,7 +7,9 @@ GraphicsBox::GraphicsBox(GraphicsEngine* graphicsEngine):
     {
     Logger::debug(format("creating graphics box: %p") % this);
 
-    mEntity = mGraphicsEngine->getSceneManager()->createEntity("");
+    mEntity = mGraphicsEngine->getSceneManager()->createEntity("Prefab_Cube");
+    //ent->setMaterialName("Ogre/Skin");
+    //ent->setMaterialName("Examples/Chrome");
     mNode = mGraphicsEngine->getDebugNode()->createChildSceneNode();
     mNode->attachObject(mEntity);
 
