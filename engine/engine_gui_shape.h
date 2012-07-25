@@ -11,9 +11,10 @@
 class EngineGuiShape : public EngineObject {
     public:
         EngineGuiShape(Engine* engine);
-        ~EngineGuiShape();
+        virtual ~EngineGuiShape();
 
 		void		setShape(GraphicsShape* shape){mShape=shape;}
+
 	private:
 		GraphicsShape*	mShape;
 

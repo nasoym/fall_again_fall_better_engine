@@ -1,21 +1,20 @@
-//-------------------------------------
 #ifndef _ENGINE_H
 #define _ENGINE_H
 
+#include <boost/python.hpp>
+using namespace boost::python;
+
 #include "engine_physic.h"
-#include "box_physic.h"
 
 #include "engine_graphic.h"
-#include "box_graphic.h"
-
-#include "logger.h"
 
 #include "engine_object.h"
 class EngineObject;
 
 #include <set>
 
-//-------------------------------------
+#include "logger.h"
+
 class Engine {
     public:
         Engine();
@@ -29,14 +28,23 @@ class Engine {
 		void    deleteObject(EngineObject*);
 		int     howManyObjects();
 		void    addObject(EngineObject*);
+		//TODO object query
+
+		GraphicsEngine*	getGraphicsEngine(){return mGraphicsEngine;}
+		PhysicsEngine*	getPhysicsEngine(){return mPhysicsEngine;}
+
+		void    physicUpdates();
+		void    guiUpdates();
+
+		void	setupPython();
+		void	closePython();
+		void    runPython();
 
     private:
         void    setup();
         void    close();
 
     private:
-	public:
-
         PhysicsEngine*  mPhysicsEngine;
         GraphicsEngine* mGraphicsEngine;
 		bool			mLoopRendering;
@@ -47,11 +55,9 @@ class Engine {
 class EngineKeyListener : public KeyboardListener {
     private:
         Engine* 	mEngine;
+
     public:
-		EngineKeyListener(Engine* engine) :
-			mEngine(engine) {
-			
-		}
+		EngineKeyListener(Engine* engine) : mEngine(engine) { }
 
 		virtual void keyPressed(const OIS::KeyEvent& evt);
 		/*
@@ -85,8 +91,4 @@ class EngineKeyListener : public KeyboardListener {
 			}
 		}
 };
-//-------------------------------------
 #endif
-//-------------------------------------
-
-

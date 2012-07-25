@@ -4,7 +4,9 @@
 //-------------------------------------
 GraphicsEngine::GraphicsEngine() :
     mExit(false),
-    mInputManager(0)
+    mInputManager(0),
+	mCurrentTime(0),
+	mLastTime(0)
     {
     Logger::debug(format("creating graphics engine: %p ") % this);
     setup();
@@ -100,6 +102,23 @@ void GraphicsEngine::setupResources() {
                 archName, typeName, secName);
         }
     }
+}
+
+void		GraphicsEngine::setCameraPosition(Vector3& vec){
+	getCamera()->setPosition(vec);
+}
+
+void		GraphicsEngine::setCameraOrientation(Quaternion& quat){
+	getCamera()->setOrientation(quat);
+}
+
+unsigned long GraphicsEngine::getElapsedTime() {
+	unsigned long timeDifference = 0;
+
+	mCurrentTime = mTimer.getMilliseconds();
+	timeDifference = mCurrentTime - mLastTime;
+	mLastTime = mCurrentTime;
+	return timeDifference;
 }
 
 void GraphicsEngine::setupOIS() {

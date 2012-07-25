@@ -1,46 +1,45 @@
-//-------------------------------------
 #ifndef _GRAPHIC_ENGINE_H
 #define _GRAPHIC_ENGINE_H
 
 #include <Ogre.h>
 using namespace Ogre;
 
+#define OIS_DYNAMIC_LIB
+#include <OIS/OIS.h>
+
 #include <set>
 
 #include "keyboard_listener.h"
 
-#define OIS_DYNAMIC_LIB
-#include <OIS/OIS.h>
-
-//-------------------------------------
 class GraphicsEngine : 
         public WindowEventListener,
 		public OIS::KeyListener,
 		public OIS::MouseListener
-{
+	{
     public:
         GraphicsEngine();
         ~GraphicsEngine();
 
         void    render();
 
-        SceneManager*   getSceneManager(){ return mSceneMgr; }
-        SceneNode*      getFinalNode(){ return mFinalSceneNode; }
-        SceneNode*      getDebugNode(){ return mDebugSceneNode; }
+        SceneManager*   getSceneManager(){return mSceneMgr;}
+        SceneNode*      getFinalNode(){return mFinalSceneNode;}
+        SceneNode*      getDebugNode(){return mDebugSceneNode;}
+		Camera*			getCamera(){return mCamera;}
 
         bool            inputExit();
         void            processOIS();
 
-        virtual void    windowResized(RenderWindow*);
-        virtual void windowMoved(RenderWindow* rw);
-        virtual void windowClosed(RenderWindow* rw);
-        virtual void windowFocusChange(RenderWindow* rw);
+        void    windowResized(RenderWindow*);
+        void windowMoved(RenderWindow* rw);
+        void windowClosed(RenderWindow* rw);
+        void windowFocusChange(RenderWindow* rw);
 
-        virtual bool keyPressed(const OIS::KeyEvent& evt);
-        virtual bool keyReleased(const OIS::KeyEvent& evt);
-        virtual bool mouseMoved(const OIS::MouseEvent& evt);
-        virtual bool mousePressed(const OIS::MouseEvent& evt, OIS::MouseButtonID id);
-        virtual bool mouseReleased(const OIS::MouseEvent& evt, OIS::MouseButtonID id);
+        bool keyPressed(const OIS::KeyEvent& evt);
+        bool keyReleased(const OIS::KeyEvent& evt);
+        bool mouseMoved(const OIS::MouseEvent& evt);
+        bool mousePressed(const OIS::MouseEvent& evt, OIS::MouseButtonID id);
+        bool mouseReleased(const OIS::MouseEvent& evt, OIS::MouseButtonID id);
 	
 		void    deleteKeyboardListener(KeyboardListener*);
 		void    addKeyboardListener(KeyboardListener*);
@@ -51,6 +50,13 @@ class GraphicsEngine :
 		void	allKeyboardListenersMouseReleased(const OIS::MouseEvent& evt, OIS::MouseButtonID id);
 		void	allKeyboardListenersMousePressed(const OIS::MouseEvent& evt, OIS::MouseButtonID id);
 
+
+		void		setCameraPosition(Vector3&);
+		void		setCameraOrientation(Quaternion&);
+
+		unsigned long getElapsedTime();
+
+		//TODO set windows params
 
     private:
         void    setup();
@@ -68,6 +74,9 @@ class GraphicsEngine :
         SceneManager*   mSceneMgr;
         RenderWindow*   mWindow;
         Viewport*       mViewport;
+		Timer			mTimer;
+		unsigned long mCurrentTime;
+		unsigned long mLastTime;
 
         SceneNode*      mRootSceneNode;
         SceneNode*      mDebugSceneNode;
@@ -81,7 +90,4 @@ class GraphicsEngine :
 		std::set<KeyboardListener*>    mKeyboardListeners;
 
 };
-//-------------------------------------
 #endif
-//-------------------------------------
-
