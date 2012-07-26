@@ -1,7 +1,6 @@
-//-------------------------------------
 #ifndef _PHYSIC_BOX_H
 	#define _PHYSIC_BOX_H
-//-------------------------------------
+
 #include <boost/python/module.hpp>
 #include <boost/python/def.hpp>
 #include <boost/python/tuple.hpp>
@@ -57,6 +56,4 @@ class Actor : public BaseActor {
         void            dSetSolverIterCount(int);
         void            dSetVelocityIterCount(int);
 };
-//-------------------------------------
 #endif
-//-------------------------------------

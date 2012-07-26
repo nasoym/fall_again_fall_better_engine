@@ -6,24 +6,26 @@
 #include "box_graphic.h"
 //-------------------------------------
 Engine::Engine() :
-	mLoopRendering(true) {
+	mLoopRendering(true),
+	mPythonInitialized(false)
+	{
     Logger::debug(format("creating engine: %p ") % this);
     setup();
-	setupPython();
 }
 
 Engine::~Engine(){
     Logger::debug(format("deleting engine: %p ") % this);
-	closePython();
+	if (mPythonInitialized) {
+		closePython();
+	}
     close();
-
 }
 
 void Engine::setup(){
     mGraphicsEngine = new GraphicsEngine();
-    mPhysicsEngine = new PhysicsEngine();
+	mGraphicsEngine->addKeyboardListener(this);
 
-	mGraphicsEngine->addKeyboardListener(new EngineKeyListener(this));
+    mPhysicsEngine = new PhysicsEngine();
 }
 
 void Engine::run(){
@@ -32,7 +34,7 @@ void Engine::run(){
         if (mGraphicsEngine->inputExit()) {
             break;
         }
-		//TODO camera
+		//TODO camera pos/rot from node
 		guiUpdates();
         mGraphicsEngine->render();
 
@@ -46,18 +48,19 @@ void Engine::run(){
 			physicUpdates();
 			mPhysicsEngine->simulate(mSimulationTimeStep / 1000.0f);
 		}
-
     }
 }
 
 void	Engine::closePython() {
 	Logger::debug("close python");
 	Py_Finalize();
+	mPythonInitialized = false;
 }
 
 void	Engine::setupPython() {
 	Logger::debug("setup python");
 	Py_Initialize();
+	//printf("Py_GetPath: %s\n",Py_GetPath());
 	object main_module(( handle<>(borrowed(PyImport_AddModule("__main__"))) ));
 	main_namespace = main_module.attr("__dict__");
 	PyImport_AppendInittab("EngineModule", &initEngineModule ); 
@@ -65,14 +68,17 @@ void	Engine::setupPython() {
 	main_namespace["EngineModule"] = engineModule;
 	main_namespace["Engine"] = ptr(this);
 
-	runPython();
+	mPythonInitialized = true;
 }
 
 void    Engine::runPython(){
+	if (!mPythonInitialized) {
+		setupPython();
+	}
 	Logger::debug("run python file");
 	try {
-        PyObject* file = PyFile_FromString("main.py", "r+");
-        PyRun_File(PyFile_AsFile(file), "main.py", Py_file_input, 
+        PyObject* file = PyFile_FromString("script.py", "r+");
+        PyRun_File(PyFile_AsFile(file), "script.py", Py_file_input, 
 			main_namespace.ptr(), main_namespace.ptr()
 			);
 
@@ -91,24 +97,39 @@ void    Engine::runPython(){
 }
 
 void	Engine::callPythonKeyPressed(const OIS::KeyEvent& evt ) {
-	std::map<OIS::KeyCode,Keys>::iterator keyListIterator;
-	keyListIterator = keyList.find(evt.key);
-    if (keyListIterator != keyList.end()) {
-		try {
-			pyFunctionKeyPressed(keyListIterator->second);
-		} catch( error_already_set ) {
-			Logger::debug("Python error");
-			PyErr_Print();
+	if (mPythonInitialized) {
+		std::map<OIS::KeyCode,Keys>::iterator keyListIterator;
+		keyListIterator = keyList.find(evt.key);
+		if (keyListIterator != keyList.end()) {
+			try {
+				pyFunctionKeyPressed(keyListIterator->second);
+			} catch( error_already_set ) {
+				Logger::debug("Python error");
+				PyErr_Print();
+			}
 		}
 	}
 }
 
 void	Engine::callPythonKeyReleased(const OIS::KeyEvent& evt ) {
-	std::map<OIS::KeyCode,Keys>::iterator keyListIterator;
-	keyListIterator = keyList.find(evt.key);
-    if (keyListIterator != keyList.end()) {
+	if (mPythonInitialized) {
+		std::map<OIS::KeyCode,Keys>::iterator keyListIterator;
+		keyListIterator = keyList.find(evt.key);
+		if (keyListIterator != keyList.end()) {
+			try {
+				pyFunctionKeyReleased(keyListIterator->second);
+			} catch( error_already_set ) {
+				Logger::debug("Python error");
+				PyErr_Print();
+			}
+		}
+	}
+}
+
+void	Engine::callPythonKeyGuiUpdate() {
+	if (mPythonInitialized) {
 		try {
-			pyFunctionKeyReleased(keyListIterator->second);
+			pyFunctionGuiUpdate();
 		} catch( error_already_set ) {
 			Logger::debug("Python error");
 			PyErr_Print();
@@ -116,21 +137,14 @@ void	Engine::callPythonKeyReleased(const OIS::KeyEvent& evt ) {
 	}
 }
 
-void	Engine::callPythonKeyGuiUpdate() {
-	try {
-		pyFunctionGuiUpdate();
-	} catch( error_already_set ) {
-		Logger::debug("Python error");
-		PyErr_Print();
-	}
-}
-
 void	Engine::callPythonKeyPysicUpdate() {
-	try {
-		pyFunctionPhysicUpdate();
-	} catch( error_already_set ) {
-		Logger::debug("Python error");
-		PyErr_Print();
+	if (mPythonInitialized) {
+		try {
+			pyFunctionPhysicUpdate();
+		} catch( error_already_set ) {
+			Logger::debug("Python error");
+			PyErr_Print();
+		}
 	}
 }
 
@@ -187,23 +201,32 @@ void    Engine::addObject(EngineObject* object){
 	mObjects.insert(object);
 }
 
-void EngineKeyListener::keyPressed(const OIS::KeyEvent& evt){
+void Engine::keyPressed(const OIS::KeyEvent& evt){
 	if (evt.key == OIS::KC_ESCAPE) {
 		Logger::debug("esc pressed");
-		mEngine->quit();
+		quit();
 	}
-	/*
-	if (evt.key == OIS::KC_1) {
-		//new GraphicsBox(mGraphicsEngine);
-		EngineGuiShape* engineObject = new EngineGuiShape(mEngine);
-		engineObject->setShape(new GraphicsBox(mEngine->getGraphicsEngine()));
-	}
-	*/
-	mEngine->callPythonKeyPressed(evt);
+	callPythonKeyPressed(evt);
 }
 
-void EngineKeyListener::keyReleased(const OIS::KeyEvent& evt){
-	mEngine->callPythonKeyReleased(evt);
+void Engine::keyReleased(const OIS::KeyEvent& evt){
+	callPythonKeyReleased(evt);
+}
+
+void	Engine::mousePressed(const OIS::MouseEvent& evt, OIS::MouseButtonID id){
+	if (id == OIS::MB_Left)  {
+		pyFunctionKeyPressed(K_MLEFT);
+	//} else if (id == OIS::MB_RIGHT) {
+	//	pyFunctionKeyPressed(K_MRIGHT);
+	}
+}
+
+void	Engine::mouseReleased(const OIS::MouseEvent& evt, OIS::MouseButtonID id){
+	if (id == OIS::MB_Left)  {
+		pyFunctionKeyReleased(K_MLEFT);
+	//} else if (id == OIS::MB_RIGHT) {
+//		pyFunctionKeyReleased(K_MRIGHT);
+	}
 }
 
 EngineObject*	Engine::createGuiBox(){

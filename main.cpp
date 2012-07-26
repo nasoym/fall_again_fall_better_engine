@@ -10,6 +10,7 @@ int main(int argc, char *argv[]) {
     Logger::debug("running main.");
 
     mEngine = new Engine();
+	mEngine->runPython();
 
     mEngine->run();
 

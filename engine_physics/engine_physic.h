@@ -1,4 +1,3 @@
-//-------------------------------------
 #ifndef _PHYSIC_ENGINE_H
 #define _PHYSIC_ENGINE_H
 
@@ -17,7 +16,6 @@ class Allocator : public PxAllocatorCallback {
     }
 };
 
-//-------------------------------------
 class PhysicsEngine {
     public:
         PhysicsEngine();
@@ -47,6 +45,4 @@ class PhysicsEngine {
 
         float                       mForceFactor;
 };
-//-------------------------------------
 #endif
-//-------------------------------------

@@ -5,6 +5,8 @@ print("main.py:hello")
 print("Engine: " + str(Engine))
 print("EngineModule: " + str(EngineModule))
 
+print(globals())
+
 
 def init():
 	print("init")

@@ -15,7 +15,7 @@ class EngineObject;
 
 #include "logger.h"
 
-class Engine {
+class Engine : public KeyboardListener {
     public:
         Engine();
         ~Engine();
@@ -46,17 +46,26 @@ class Engine {
 		void	callPythonKeyReleased(const OIS::KeyEvent& evt );
 		void	callPythonKeyPysicUpdate();
 		void	callPythonKeyGuiUpdate();
+
+		virtual void keyPressed(const OIS::KeyEvent& evt);
+		virtual void keyReleased(const OIS::KeyEvent& evt);
+		
+		virtual void	mousePressed(const OIS::MouseEvent& evt, OIS::MouseButtonID id);
+		virtual void	mouseReleased(const OIS::MouseEvent& evt, OIS::MouseButtonID id);
+
+
     private:
         void    setup();
         void    close();
 
     private:
-        PhysicsEngine*  mPhysicsEngine;
-        GraphicsEngine* mGraphicsEngine;
-		bool			mLoopRendering;
+        PhysicsEngine*  		mPhysicsEngine;
+        GraphicsEngine* 		mGraphicsEngine;
+		bool					mLoopRendering;
 
-		std::set<EngineObject*>    mObjects;
+		std::set<EngineObject*> mObjects;
 
+		bool	mPythonInitialized;
         object main_namespace;
 
 		object pyFunctionKeyPressed;
@@ -66,45 +75,4 @@ class Engine {
 		object pyFunctionPhysicUpdate;
 };
 
-class EngineKeyListener : public KeyboardListener {
-    private:
-        Engine* 	mEngine;
-
-    public:
-		EngineKeyListener(Engine* engine) : mEngine(engine) { }
-
-		virtual void keyPressed(const OIS::KeyEvent& evt);
-		/*
-		virtual void keyPressed(const OIS::KeyEvent& evt){
-			if (evt.key == OIS::KC_ESCAPE) {
-				Logger::debug("esc pressed");
-				mEngine->quit();
-			}
-			if (evt.key == OIS::KC_1) {
-				//new GraphicsBox(mGraphicsEngine);
-				EngineGuiShape* engineObject = new EngineGuiShape(mEngine);
-				engineObject->setShape(new GraphicsBox(mEngine->mGraphicsEngine));
-			}
-		}
-		*/
-
-		virtual void keyReleased(const OIS::KeyEvent& evt);
-			/*
-			if (evt.key == OIS::KC_ESCAPE) {
-				Logger::debug("esc released");
-			}
-		}
-		*/
-
-		virtual void	mousePressed(const OIS::MouseEvent& evt, OIS::MouseButtonID id){
-			if(id == OIS::MB_Left)  {
-				Logger::debug("left pressed");
-			}
-		}
-		virtual void	mouseReleased(const OIS::MouseEvent& evt, OIS::MouseButtonID id){
-			if(id == OIS::MB_Left)  {
-				Logger::debug("left released");
-			}
-		}
-};
 #endif

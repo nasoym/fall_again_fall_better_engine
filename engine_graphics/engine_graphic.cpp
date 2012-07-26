@@ -27,10 +27,19 @@ void GraphicsEngine::setup(){
 
 	//root = new Root("","");
 	mRoot = new Root();
-	mRoot->showConfigDialog();
+    RenderSystemList rlist = mRoot->getAvailableRenderers();
+    RenderSystemList::iterator it = rlist.begin();
+    while (it !=rlist.end()) {
+        RenderSystem *rSys = *(it++);
+		mRoot->setRenderSystem(rSys);
+    }
+	//mRoot->showConfigDialog();
     setupResources();
 
-	mWindow = mRoot->initialise(true);
+	//mWindow = mRoot->initialise(true);
+
+	mRoot->initialise(false);
+	mWindow = mRoot->createRenderWindow("main window",400,400,false);
 
     mSceneMgr = mRoot->createSceneManager(ST_GENERIC, "ExampleSMInstance");
 
