@@ -32,8 +32,8 @@ void Engine::run(){
         if (mGraphicsEngine->inputExit()) {
             break;
         }
-		//TODO camera
-		guiUpdates();
+		//TODO all gui updates
+		//camera
         mGraphicsEngine->render();
 
 		unsigned long elapsedTime = mGraphicsEngine->getElapsedTime();
@@ -43,8 +43,8 @@ void Engine::run(){
 
 		while(timeToSimulate > mSimulationTimeStep) {
 			timeToSimulate -= mSimulationTimeStep;
-			physicUpdates();
 			mPhysicsEngine->simulate(mSimulationTimeStep / 1000.0f);
+			//TODO all physics updates
 		}
 
     }
@@ -76,62 +76,39 @@ void    Engine::runPython(){
 			main_namespace.ptr(), main_namespace.ptr()
 			);
 
-		pyFunctionKeyPressed = main_namespace["keyPressed"];
-		pyFunctionKeyReleased = main_namespace["keyReleased"];
-		pyFunctionInit = main_namespace["init"];
-		pyFunctionGuiUpdate = main_namespace["guiUpdate"];
-		pyFunctionPhysicUpdate = main_namespace["physicUpdate"];
+		object pyFunctionKeyPressed = main_namespace["keyPressed"];
+		pyFunctionKeyPressed(4);
+		if (PyObject_HasAttrString(main_namespace.ptr(), "keyPressed") ) {
+			printf("found keyPressed function\n");
+			object pyFunctionKeyPressed = main_namespace["keyPressed"];
+		} else {
+			printf("NOT found keyPressed function\n");
+		}
 
-		pyFunctionInit();
+		if (PyObject_HasAttrString(main_namespace.ptr(), "keyReleased") ) {
+			printf("found keyReleased function\n");
+			object pyFunctionKeyReleased = main_namespace["keyReleased"];
+		}
+
+		if (PyObject_HasAttrString(main_namespace.ptr(), "init") ) {
+			printf("found init function\n");
+			object pyFunctionInit = main_namespace["init"];
+		}
+
+		if (PyObject_HasAttrString(main_namespace.ptr(), "guiUpdate") ) {
+			printf("found guiUpdate function\n");
+			object pyFunctionGuiUpdate = main_namespace["guiUpdate"];
+		}
+
+		if (PyObject_HasAttrString(main_namespace.ptr(), "physicUpdate") ) {
+			printf("found physicUpdate function\n");
+			object pyFunctionPhysicUpdate = main_namespace["physicUpdate"];
+		}
+
 
     } catch( error_already_set ) {
-		Logger::debug("python error");
         PyErr_Print();
     }
-}
-
-void	Engine::callPythonKeyPressed(const OIS::KeyEvent& evt ) {
-	std::map<OIS::KeyCode,Keys>::iterator keyListIterator;
-	keyListIterator = keyList.find(evt.key);
-    if (keyListIterator != keyList.end()) {
-		try {
-			pyFunctionKeyPressed(keyListIterator->second);
-		} catch( error_already_set ) {
-			Logger::debug("Python error");
-			PyErr_Print();
-		}
-	}
-}
-
-void	Engine::callPythonKeyReleased(const OIS::KeyEvent& evt ) {
-	std::map<OIS::KeyCode,Keys>::iterator keyListIterator;
-	keyListIterator = keyList.find(evt.key);
-    if (keyListIterator != keyList.end()) {
-		try {
-			pyFunctionKeyReleased(keyListIterator->second);
-		} catch( error_already_set ) {
-			Logger::debug("Python error");
-			PyErr_Print();
-		}
-	}
-}
-
-void	Engine::callPythonKeyGuiUpdate() {
-	try {
-		pyFunctionGuiUpdate();
-	} catch( error_already_set ) {
-		Logger::debug("Python error");
-		PyErr_Print();
-	}
-}
-
-void	Engine::callPythonKeyPysicUpdate() {
-	try {
-		pyFunctionPhysicUpdate();
-	} catch( error_already_set ) {
-		Logger::debug("Python error");
-		PyErr_Print();
-	}
 }
 
 void    Engine::guiUpdates() {
@@ -140,7 +117,6 @@ void    Engine::guiUpdates() {
 		mIterator != mObjects.end(); ++mIterator) {
 		(*mIterator)->guiUpdate();
 	}
-	callPythonKeyGuiUpdate();
 }
 
 void    Engine::physicUpdates() {
@@ -149,7 +125,6 @@ void    Engine::physicUpdates() {
 		mIterator != mObjects.end(); ++mIterator) {
 		(*mIterator)->physicUpdate();
 	}
-	callPythonKeyPysicUpdate();
 }
 
 void Engine::close(){
@@ -192,18 +167,11 @@ void EngineKeyListener::keyPressed(const OIS::KeyEvent& evt){
 		Logger::debug("esc pressed");
 		mEngine->quit();
 	}
-	/*
 	if (evt.key == OIS::KC_1) {
 		//new GraphicsBox(mGraphicsEngine);
 		EngineGuiShape* engineObject = new EngineGuiShape(mEngine);
 		engineObject->setShape(new GraphicsBox(mEngine->getGraphicsEngine()));
 	}
-	*/
-	mEngine->callPythonKeyPressed(evt);
-}
-
-void EngineKeyListener::keyReleased(const OIS::KeyEvent& evt){
-	mEngine->callPythonKeyReleased(evt);
 }
 
 EngineObject*	Engine::createGuiBox(){

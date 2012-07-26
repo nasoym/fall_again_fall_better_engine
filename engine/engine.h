@@ -40,6 +40,12 @@ class Engine {
 		void	closePython();
 		void    runPython();
 
+
+		EngineObject*	createGuiBox();
+		void	callPythonKeyPressed(const OIS::KeyEvent& evt );
+		void	callPythonKeyReleased(const OIS::KeyEvent& evt );
+		void	callPythonKeyPysicUpdate();
+		void	callPythonKeyGuiUpdate();
     private:
         void    setup();
         void    close();
@@ -50,6 +56,14 @@ class Engine {
 		bool			mLoopRendering;
 
 		std::set<EngineObject*>    mObjects;
+
+        object main_namespace;
+
+		object pyFunctionKeyPressed;
+		object pyFunctionKeyReleased;
+		object pyFunctionInit;
+		object pyFunctionGuiUpdate;
+		object pyFunctionPhysicUpdate;
 };
 
 class EngineKeyListener : public KeyboardListener {
@@ -74,11 +88,13 @@ class EngineKeyListener : public KeyboardListener {
 		}
 		*/
 
-		virtual void keyReleased(const OIS::KeyEvent& evt){
+		virtual void keyReleased(const OIS::KeyEvent& evt);
+			/*
 			if (evt.key == OIS::KC_ESCAPE) {
 				Logger::debug("esc released");
 			}
 		}
+		*/
 
 		virtual void	mousePressed(const OIS::MouseEvent& evt, OIS::MouseButtonID id){
 			if(id == OIS::MB_Left)  {

@@ -11,7 +11,6 @@ int main(int argc, char *argv[]) {
 
     mEngine = new Engine();
 
-	mEngine->runPython();
     mEngine->run();
 
     delete mEngine;
