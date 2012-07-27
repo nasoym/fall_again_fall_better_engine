@@ -8,15 +8,19 @@
 #include <boost/python/return_value_policy.hpp>
 #include <boost/python/call_method.hpp>
 
-#include "engine.h"
-#include "engine_object.h"
 #include "engine_keys.h"
+#include "engine.h"
+class Engine;
+#include "engine_object.h"
+class EngineObject;
+#include "engine_gui_shape.h"
+class EngineGuiShape;
+
+#include "math3d.h"
 
 using namespace boost::python;
 
 BOOST_PYTHON_MODULE(EngineModule) {
-    //class_<BaseActor>("BaseActor");
-    //class_<ActorStatic, bases<BaseActor> >("ActorStatic", init<Engine&,object,object>())
 
 
 	enum_<Keys>("Keys")
@@ -59,19 +63,60 @@ BOOST_PYTHON_MODULE(EngineModule) {
 	;
 
 
-
-
-
     class_<EngineObject>("EngineObject", init<Engine*>())
         .def("getName",&EngineObject::getName)
         .def("setName",&EngineObject::setName)
-	;
+		;
+
+    class_<EngineGuiShape, bases<EngineObject> >("EngineGuiShape", init<Engine*>())
+		.def("setPosition",&EngineGuiShape::tupleSetPosition)
+		.def("getPosition",&EngineGuiShape::tupleGetPosition)
+		.def("setOrientation",&EngineGuiShape::tupleSetOrientation)
+		.def("getOrientation",&EngineGuiShape::tupleGetOrientation)
+		.def("setSize",&EngineGuiShape::tupleSetSize)
+		.def("getSize",&EngineGuiShape::tupleGetSize)
+		.def("isGuiShape",&EngineGuiShape::isGuiShape,return_value_policy<reference_existing_object>() )
+		;
 
     class_<Engine>("Engine")
         .def("createGuiBox",&Engine::createGuiBox,return_value_policy<reference_existing_object>() )
         .def("quit",&Engine::quit)
+		.def("setCameraPosition",&Engine::setCameraPosition)
+		.def("setCameraOrientation",&Engine::setCameraOrientation)
+		.def("getCameraPosition",&Engine::getCameraPosition)
+		.def("getCameraOrientation",&Engine::getCameraOrientation)
         ;
 
+    class_<Vec3>("Vec3",init<>())
+		.def(init<float,float,float>())
+		.def(init<object&>())
+
+		.def(self *= float())
+		.def(self * float())
+
+		/*
+		.def("X",&Vec3::X)
+		.def("Y",&Vec3::Y)
+		.def("Z",&Vec3::Z)
+		*/
+		.def("toTuple",&Vec3::toTuple)
+
+		;
+
+    class_<Quat>("Quat",init<>())
+		.def(init<float,float,float,float>())
+		.def(init<object&>())
+		.def("fromAngle",&Quat::fromAngle)
+		.def("tupleFromAngle",&Quat::tupleFromAngle)
+		/*
+		.def("W",&Quat::W)
+		.def("X",&Quat::X)
+		.def("Y",&Quat::Y)
+		.def("Z",&Quat::Z)
+		*/
+		.def("toTuple",&Quat::toTuple)
+
+		;
 
 
 }

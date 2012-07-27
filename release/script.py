@@ -1,4 +1,4 @@
-
+import temp
 
 print("main.py:hello")
 
@@ -6,6 +6,9 @@ print("Engine: " + str(Engine))
 print("EngineModule: " + str(EngineModule))
 
 print(globals())
+
+
+objects = {}
 
 
 def init():
@@ -18,7 +21,11 @@ def keyPressed(key):
 		print("q pressed")
 		Engine.quit()
 	if key ==  EngineModule.Keys.K_1:
-		o = Engine.createGuiBox()
+		objects["gui1"] = Engine.createGuiBox()
+	if key ==  EngineModule.Keys.K_T:
+		print("t pressed")
+		reload(temp)
+		temp.launch(Engine,objects,EngineModule)
 
 def keyReleased(key):
 	if key ==  EngineModule.Keys.K_A:

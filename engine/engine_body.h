@@ -4,10 +4,16 @@
 #include "engine.h"
 class Engine;
 
-class EngineBody {
+#include "engine_gui_shape.h"
+
+#include "box_physic.h"
+
+class EngineBody : EngineGuiShape {
     public:
         EngineBody(Engine*);
         ~EngineBody();
+	private:
+		PhysicBox*		mPhysicBox;
 };
 #endif
 

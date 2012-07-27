@@ -1,4 +1,3 @@
-//-------------------------------------
 #ifndef _GRAPHIC_SHAPE_H
 #define _GRAPHIC_SHAPE_H
 
@@ -7,40 +6,44 @@ using namespace Ogre;
 
 #include "engine_graphic.h"
 
-//-------------------------------------
+#include "math3d.h"
+
+#include <boost/python/module.hpp>
+#include <boost/python/def.hpp>
+#include <boost/python/tuple.hpp>
+#include <boost/python/extract.hpp>
+
 class GraphicsShape {
     public:
         GraphicsShape(GraphicsEngine*);
         virtual ~GraphicsShape();
 
-        virtual void        setPosition(float,float,float){}
-        virtual void        setPosition(Vector3&){}
-        //virtual Vector3&    getPosition(){return Vector3();}
-        virtual Vector3    getPosition(){return Vector3();}
+		void        tupleSetPosition(boost::python::object& tupleObject);
+		boost::python::tuple tupleGetPosition();
 
-        virtual void        setOrientation(float,float,float,float){}
-        virtual void        setOrientation(Quaternion&){}
-        virtual Quaternion getOrientation(){return Quaternion();}
+		void        tupleSetOrientation(boost::python::object& tupleObject);
+		boost::python::tuple tupleGetOrientation();
 
-        virtual void        setSize(float,float,float){}
-        virtual void        setSize(Vector3&){}
-        virtual Vector3    getSize(){return Vector3();}
+		void        tupleSetSize(boost::python::object& tupleObject);
+		boost::python::tuple tupleGetSize();
 
+		void        setPosition(Vec3& vec3);
+		Vec3    	getPosition();
+
+		void        setOrientation(Quat& quat);
+		Quat 		getOrientation();
+
+		void        setSize(Vec3& vec3);
+		Vec3    	getSize();
 
 		void				setEntity(Entity* entity){mEntity = entity;}
 		Entity*				getEntity(){return mEntity;}
 		SceneNode*			getNode(){return mNode;}
 		GraphicsEngine*		getGraphicsEngine(){return mGraphicsEngine;}
 
-    //protected:
 	private:
         GraphicsEngine* 	mGraphicsEngine;
         Entity*     		mEntity; 
         SceneNode*  		mNode;
 };
-//-------------------------------------
 #endif
-//-------------------------------------
-
-
-

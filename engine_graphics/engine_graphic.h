@@ -54,6 +54,9 @@ class GraphicsEngine :
 		void		setCameraPosition(Vector3&);
 		void		setCameraOrientation(Quaternion&);
 
+		const Vector3		getCameraPosition();
+		const Quaternion		getCameraOrientation();
+
 		unsigned long getElapsedTime();
 
 		//TODO set windows params

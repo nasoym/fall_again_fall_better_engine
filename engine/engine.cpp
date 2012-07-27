@@ -1,10 +1,12 @@
-//-------------------------------------
 #include "logger.h"
 #include "engine.h"
 #include "engine.py.h"
-#include "engine_gui_shape.h"
+
 #include "box_graphic.h"
-//-------------------------------------
+
+#include "engine_gui_shape.h"
+#include "engine_spacecage.h"
+
 Engine::Engine() :
 	mLoopRendering(true),
 	mPythonInitialized(false)
@@ -235,3 +237,32 @@ EngineObject*	Engine::createGuiBox(){
 	return engineObject;
 }
 
+EngineObject*	Engine::createPhysicBox(){
+	return 0;
+}
+
+EngineObject*	Engine::createSpaceCage(){
+	EngineSpaceCage* spaceCage = new EngineSpaceCage(this);
+	spaceCage->setShape(new GraphicsBox(getGraphicsEngine()));
+	spaceCage->setSize(Vec3(10,1,10));
+	spaceCage->setPosition(Vec3(0,-0.5,0));
+	return spaceCage;
+}
+
+void			Engine::setCameraPosition(Vec3 & vec){
+	getGraphicsEngine()->setCameraPosition(vec.toOgre());
+}
+
+void			Engine::setCameraOrientation(Quat & quat){
+	getGraphicsEngine()->setCameraOrientation(quat.toOgre());
+}
+
+Vec3			Engine::getCameraPosition(){
+	return Vec3(getGraphicsEngine()->getCameraPosition());
+}
+
+Quat			Engine::getCameraOrientation(){
+	return Quat(getGraphicsEngine()->getCameraOrientation());
+}
+
+	

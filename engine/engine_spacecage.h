@@ -3,9 +3,15 @@
 
 #include "engine.h"
 
-class EngineSpaceCage {
+#include "engine_gui_shape.h"
+
+#include "plane_physic.h"
+
+class EngineSpaceCage : public EngineGuiShape {
     public:
         EngineSpaceCage(Engine*);
-        ~EngineSpaceCage();
+
+	private:
+		PhysicPlane*	mBottomPlane;
 };
 #endif

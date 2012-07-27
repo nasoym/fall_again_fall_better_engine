@@ -1,7 +1,6 @@
-//-------------------------------------
 #include "logger.h"
 #include "box_graphic.h"
-//-------------------------------------
+
 GraphicsBox::GraphicsBox(GraphicsEngine* graphicsEngine):
 	GraphicsShape(graphicsEngine)
     {

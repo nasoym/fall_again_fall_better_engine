@@ -4,6 +4,20 @@
 #include <string>
 #include "uuid.h"
 
+/*
+#include "engine_gui_shape.h"
+#include "engine_gui_container.h"
+#include "engine_body.h"
+#include "engine_joint.h"
+#include "engine_spacecage.h"
+*/
+
+class EngineGuiShape;
+class EngineGuiContainer;
+class EngineBody;
+class EngineJoint;
+class EngineSpaceCage;
+
 #include "engine.h"
 class Engine;
 
@@ -24,6 +38,12 @@ class EngineObject {
 
 		virtual void	guiUpdate(){}
 		virtual void	physicUpdate(){}
+
+		virtual EngineGuiShape*			isGuiShape(){return 0;}
+		virtual EngineGuiContainer*		isGuiContainer(){return 0;}
+		virtual EngineBody*				isBody(){return 0;}
+		virtual EngineJoint*			isJoint(){return 0;}
+		virtual EngineSpaceCage*	 	isSpaceCage(){return 0;}
 
 	private:
 		Engine*		mEngine;

@@ -15,6 +15,8 @@ class EngineObject;
 
 #include "logger.h"
 
+#include "math3d.h"
+
 class Engine : public KeyboardListener {
     public:
         Engine();
@@ -40,19 +42,24 @@ class Engine : public KeyboardListener {
 		void	closePython();
 		void    runPython();
 
-
+		EngineObject*	createPhysicBox();
+		EngineObject*	createSpaceCage();
 		EngineObject*	createGuiBox();
+
 		void	callPythonKeyPressed(const OIS::KeyEvent& evt );
 		void	callPythonKeyReleased(const OIS::KeyEvent& evt );
 		void	callPythonKeyPysicUpdate();
 		void	callPythonKeyGuiUpdate();
 
-		virtual void keyPressed(const OIS::KeyEvent& evt);
-		virtual void keyReleased(const OIS::KeyEvent& evt);
-		
+		virtual void 	keyPressed(const OIS::KeyEvent& evt);
+		virtual void 	keyReleased(const OIS::KeyEvent& evt);
 		virtual void	mousePressed(const OIS::MouseEvent& evt, OIS::MouseButtonID id);
 		virtual void	mouseReleased(const OIS::MouseEvent& evt, OIS::MouseButtonID id);
 
+		void			setCameraPosition(Vec3&);
+		void			setCameraOrientation(Quat&);
+		Vec3			getCameraPosition();
+		Quat			getCameraOrientation();
 
     private:
         void    setup();

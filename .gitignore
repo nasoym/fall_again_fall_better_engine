@@ -8,4 +8,5 @@
 *.obj
 *.pyd
 *.exe
+*.*~
 Ogre.log

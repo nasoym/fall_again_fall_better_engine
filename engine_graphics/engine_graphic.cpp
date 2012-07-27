@@ -121,6 +121,14 @@ void		GraphicsEngine::setCameraOrientation(Quaternion& quat){
 	getCamera()->setOrientation(quat);
 }
 
+const Vector3		GraphicsEngine::getCameraPosition(){
+	return getCamera()->getPosition();
+}
+
+const Quaternion		GraphicsEngine::getCameraOrientation(){
+	return getCamera()->getOrientation();
+}
+
 unsigned long GraphicsEngine::getElapsedTime() {
 	unsigned long timeDifference = 0;
 
