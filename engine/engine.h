@@ -4,6 +4,8 @@
 #include <boost/python.hpp>
 using namespace boost::python;
 
+enum Keys;
+
 #include "engine_physic.h"
 
 #include "engine_graphic.h"
@@ -12,6 +14,7 @@ using namespace boost::python;
 class EngineObject;
 
 #include <set>
+#include <vector>
 
 #include "logger.h"
 
@@ -47,8 +50,9 @@ class Engine : public KeyboardListener {
 		EngineObject*	createSpaceCage();
 		EngineObject*	createGuiBox();
 
-		void	callPythonKeyPressed(const OIS::KeyEvent& evt );
-		void	callPythonKeyReleased(const OIS::KeyEvent& evt );
+		void	callPythonKeyPressed(Keys);
+		void	callPythonKeyDown(Keys);
+		void	callPythonKeyReleased(Keys);
 		void	callPythonKeyPysicUpdate();
 		void	callPythonKeyGuiUpdate();
 
@@ -56,6 +60,9 @@ class Engine : public KeyboardListener {
 		virtual void 	keyReleased(const OIS::KeyEvent& evt);
 		virtual void	mousePressed(const OIS::MouseEvent& evt, OIS::MouseButtonID id);
 		virtual void	mouseReleased(const OIS::MouseEvent& evt, OIS::MouseButtonID id);
+		Keys	keyEventToKeys(const OIS::KeyEvent & evt);
+
+		void updateKeysDown();
 
 		void			setCameraPosition(Vec3&);
 		void			setCameraOrientation(Quat&);
@@ -77,10 +84,13 @@ class Engine : public KeyboardListener {
         object main_namespace;
 
 		object pyFunctionKeyPressed;
+		object pyFunctionKeyDown;
 		object pyFunctionKeyReleased;
 		object pyFunctionInit;
 		object pyFunctionGuiUpdate;
 		object pyFunctionPhysicUpdate;
+
+		std::vector<Keys>		mPressedKeys;
 };
 
 #endif

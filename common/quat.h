@@ -31,15 +31,16 @@ class Quat {
 		) { }
 
 	public:
-		void tupleFromAngle(boost::python::object& tupleObject) {
+		Quat tupleFromAngle(boost::python::object& tupleObject) {
 			fromAngle(
 				boost::python::extract<float>(tupleObject[0]),
 				boost::python::extract<float>(tupleObject[1]),
 				boost::python::extract<float>(tupleObject[2])
 			);
+			return *this;
 		}
 
-		void fromAngle(float t,float p,float r) {
+		Quat fromAngle(float t,float p,float r) {
 			Ogre::Matrix3	rotationMatrix = Ogre::Matrix3();
 			rotationMatrix.FromEulerAnglesXYZ(
 				Ogre::Degree(t),
@@ -48,6 +49,7 @@ class Quat {
 			);
 			mQuaternion.FromRotationMatrix(rotationMatrix);
 			mQuaternion.normalise();
+			return *this;
 		}
 
 		Vec3    operator * (const Vec3 vec3) {

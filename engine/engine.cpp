@@ -35,6 +35,7 @@ void	Engine::step() {
 	if (mGraphicsEngine->inputExit()) {
 		quit();
 	}
+	updateKeysDown();
 	//TODO camera pos/rot from node
 	guiUpdates();
 	mGraphicsEngine->render();
@@ -90,6 +91,7 @@ void    Engine::runPython(){
 			);
 
 		pyFunctionKeyPressed = main_namespace["keyPressed"];
+		pyFunctionKeyDown = main_namespace["keyDown"];
 		pyFunctionKeyReleased = main_namespace["keyReleased"];
 		pyFunctionInit = main_namespace["init"];
 		pyFunctionGuiUpdate = main_namespace["guiUpdate"];
@@ -103,32 +105,35 @@ void    Engine::runPython(){
     }
 }
 
-void	Engine::callPythonKeyPressed(const OIS::KeyEvent& evt ) {
+void	Engine::callPythonKeyPressed(Keys key) {
 	if (mPythonInitialized) {
-		std::map<OIS::KeyCode,Keys>::iterator keyListIterator;
-		keyListIterator = keyList.find(evt.key);
-		if (keyListIterator != keyList.end()) {
-			try {
-				pyFunctionKeyPressed(keyListIterator->second);
-			} catch( error_already_set ) {
-				Logger::debug("Python error");
-				PyErr_Print();
-			}
+		try {
+			pyFunctionKeyPressed(key);
+		} catch( error_already_set ) {
+			Logger::debug("Python error");
+			PyErr_Print();
 		}
 	}
 }
 
-void	Engine::callPythonKeyReleased(const OIS::KeyEvent& evt ) {
+void	Engine::callPythonKeyDown(Keys keyDown) {
 	if (mPythonInitialized) {
-		std::map<OIS::KeyCode,Keys>::iterator keyListIterator;
-		keyListIterator = keyList.find(evt.key);
-		if (keyListIterator != keyList.end()) {
-			try {
-				pyFunctionKeyReleased(keyListIterator->second);
-			} catch( error_already_set ) {
-				Logger::debug("Python error");
-				PyErr_Print();
-			}
+		try {
+			pyFunctionKeyDown(keyDown);
+		} catch( error_already_set ) {
+			Logger::debug("Python error");
+			PyErr_Print();
+		}
+	}
+}
+
+void	Engine::callPythonKeyReleased(Keys key) {
+	if (mPythonInitialized) {
+		try {
+			pyFunctionKeyReleased(key);
+		} catch( error_already_set ) {
+			Logger::debug("Python error");
+			PyErr_Print();
 		}
 	}
 }
@@ -213,11 +218,46 @@ void Engine::keyPressed(const OIS::KeyEvent& evt){
 		Logger::debug("esc pressed");
 		quit();
 	}
-	callPythonKeyPressed(evt);
+	Keys key = keyEventToKeys(evt);
+	if (key != K_NOP) {
+		callPythonKeyPressed(key);
+		mPressedKeys.push_back(key);
+	}
+
+}
+
+Keys	Engine::keyEventToKeys(const OIS::KeyEvent & evt) {
+	std::map<OIS::KeyCode,Keys>::iterator keyListIterator;
+	keyListIterator = keyList.find(evt.key);
+	if (keyListIterator != keyList.end()) {
+		return keyListIterator->second;
+	}
+	return K_NOP;
 }
 
 void Engine::keyReleased(const OIS::KeyEvent& evt){
-	callPythonKeyReleased(evt);
+	Keys key = keyEventToKeys(evt);
+	if (key != K_NOP) {
+		callPythonKeyReleased(key);
+
+		std::vector<Keys>::iterator  pressedKeysIterator;
+		for (pressedKeysIterator = mPressedKeys.begin(); 
+			pressedKeysIterator != mPressedKeys.end(); ++pressedKeysIterator) {
+			if ( (*pressedKeysIterator) == key) {
+				mPressedKeys.erase(pressedKeysIterator);
+				break;
+			}
+		}
+	}
+}
+
+void Engine::updateKeysDown() {
+	std::vector<Keys>::iterator  pressedKeysIterator;
+	for (pressedKeysIterator = mPressedKeys.begin(); 
+		pressedKeysIterator != mPressedKeys.end(); ++pressedKeysIterator) {
+		callPythonKeyDown((*pressedKeysIterator));
+	}
+
 }
 
 void	Engine::mousePressed(const OIS::MouseEvent& evt, OIS::MouseButtonID id){
@@ -239,6 +279,8 @@ void	Engine::mouseReleased(const OIS::MouseEvent& evt, OIS::MouseButtonID id){
 EngineObject*	Engine::createGuiBox(){
 	EngineGuiShape* engineObject = new EngineGuiShape(this);
 	engineObject->setShape(new GraphicsBox(getGraphicsEngine()));
+	engineObject->setSize(Vec3(10,1,10));
+	engineObject->setPosition(Vec3(0,-0.5,0));
 	return engineObject;
 }
 

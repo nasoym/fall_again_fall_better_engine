@@ -180,12 +180,20 @@ void GraphicsEngine::processOIS() {
         mKeyboard->capture();
         mMouse->capture();
         if( !mKeyboard->buffered() ) {
+            if( mKeyboard->isKeyDown(OIS::KC_SPACE)  ) {
+				
+				Logger::debug("s");
+			}
 
             if( mKeyboard->isKeyDown(OIS::KC_ESCAPE) || mKeyboard->isKeyDown(OIS::KC_Q) ) {
                 mExit = true;
             }
 
         }
+            if( mKeyboard->isKeyDown(OIS::KC_SPACE)  ) {
+				
+				Logger::debug("s");
+			}
 
         if( !mMouse->buffered() ) {
             const OIS::MouseState &ms = mMouse->getMouseState();

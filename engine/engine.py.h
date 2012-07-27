@@ -69,12 +69,13 @@ BOOST_PYTHON_MODULE(EngineModule) {
 		;
 
     class_<EngineGuiShape, bases<EngineObject> >("EngineGuiShape", init<Engine*>())
-		.def("setPosition",&EngineGuiShape::tupleSetPosition)
-		.def("getPosition",&EngineGuiShape::tupleGetPosition)
-		.def("setOrientation",&EngineGuiShape::tupleSetOrientation)
-		.def("getOrientation",&EngineGuiShape::tupleGetOrientation)
-		.def("setSize",&EngineGuiShape::tupleSetSize)
-		.def("getSize",&EngineGuiShape::tupleGetSize)
+		.def("setPosition",&EngineGuiShape::setPosition)
+		.def("getPosition",&EngineGuiShape::getPosition)
+		.def("setOrientation",&EngineGuiShape::setOrientation)
+		.def("getOrientation",&EngineGuiShape::getOrientation)
+		.def("setSize",&EngineGuiShape::setSize)
+		.def("getSize",&EngineGuiShape::getSize)
+
 		.def("isGuiShape",&EngineGuiShape::isGuiShape,return_value_policy<reference_existing_object>() )
 		;
 
