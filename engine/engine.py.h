@@ -80,6 +80,7 @@ BOOST_PYTHON_MODULE(EngineModule) {
 
     class_<Engine>("Engine")
         .def("createGuiBox",&Engine::createGuiBox,return_value_policy<reference_existing_object>() )
+        .def("step",&Engine::step)
         .def("quit",&Engine::quit)
 		.def("setCameraPosition",&Engine::setCameraPosition)
 		.def("setCameraOrientation",&Engine::setCameraOrientation)
@@ -94,11 +95,23 @@ BOOST_PYTHON_MODULE(EngineModule) {
 		.def(self *= float())
 		.def(self * float())
 
-		/*
+		.def(self /= float())
+		.def(self / float())
+
+		.def(self += Vec3())
+		.def(self + Vec3())
+
+		.def(self -= Vec3())
+		.def(self - Vec3())
+
+		.def("length",&Vec3::length)
+		.def("distance",&Vec3::distance)
+		.def("normalise",&Vec3::normalise)
+
 		.def("X",&Vec3::X)
 		.def("Y",&Vec3::Y)
 		.def("Z",&Vec3::Z)
-		*/
+		
 		.def("toTuple",&Vec3::toTuple)
 
 		;
@@ -108,12 +121,19 @@ BOOST_PYTHON_MODULE(EngineModule) {
 		.def(init<object&>())
 		.def("fromAngle",&Quat::fromAngle)
 		.def("tupleFromAngle",&Quat::tupleFromAngle)
-		/*
+
+		.def(self * Vec3())
+		.def(self * Quat())
+		.def(self + Quat())
+		.def(self - Quat())
+
+		.def("inverse",&Quat::inverse)
+		.def("normalise",&Quat::normalise)
+
 		.def("W",&Quat::W)
 		.def("X",&Quat::X)
 		.def("Y",&Quat::Y)
 		.def("Z",&Quat::Z)
-		*/
 		.def("toTuple",&Quat::toTuple)
 
 		;

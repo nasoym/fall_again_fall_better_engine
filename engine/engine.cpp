@@ -30,26 +30,31 @@ void Engine::setup(){
     mPhysicsEngine = new PhysicsEngine();
 }
 
+void	Engine::step() {
+	mGraphicsEngine->processOIS();
+	if (mGraphicsEngine->inputExit()) {
+		quit();
+	}
+	//TODO camera pos/rot from node
+	guiUpdates();
+	mGraphicsEngine->render();
+
+	unsigned long elapsedTime = mGraphicsEngine->getElapsedTime();
+
+	float 	mSimulationTimeStep = 1000.0f / 60.0f;	
+	float	timeToSimulate = elapsedTime;
+
+	while(timeToSimulate > mSimulationTimeStep) {
+		timeToSimulate -= mSimulationTimeStep;
+		physicUpdates();
+		mPhysicsEngine->simulate(mSimulationTimeStep / 1000.0f);
+	}
+
+}
+
 void Engine::run(){
     while(mLoopRendering) {
-        mGraphicsEngine->processOIS();
-        if (mGraphicsEngine->inputExit()) {
-            break;
-        }
-		//TODO camera pos/rot from node
-		guiUpdates();
-        mGraphicsEngine->render();
-
-		unsigned long elapsedTime = mGraphicsEngine->getElapsedTime();
-
-		float 	mSimulationTimeStep = 1000.0f / 60.0f;	
-		float	timeToSimulate = elapsedTime;
-
-		while(timeToSimulate > mSimulationTimeStep) {
-			timeToSimulate -= mSimulationTimeStep;
-			physicUpdates();
-			mPhysicsEngine->simulate(mSimulationTimeStep / 1000.0f);
-		}
+		step();
     }
 }
 

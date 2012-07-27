@@ -23,6 +23,7 @@ class Engine : public KeyboardListener {
         ~Engine();
 
         void    run();
+		void	step();
 
 		void	quit(){mLoopRendering=false;}
 

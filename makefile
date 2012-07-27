@@ -50,6 +50,8 @@ ALLPATHES=$(subst :, ,$(VPATH))
 OBJ=build/main.obj
 OBJ+=$(foreach dir,$(ALLPATHES), $(patsubst $(dir)/%.cpp,build/%.obj,$(wildcard $(dir)/*.cpp)) )
 
+dll:
+	$(LINK) $(LIBFLAGS) -DLL -OUT:release/EngineModule.pyd $(OBJ) $(LIBLIST)
 show:
 	echo $(OBJ)
 

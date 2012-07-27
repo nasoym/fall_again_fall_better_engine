@@ -12,7 +12,7 @@
 
 class Quat {
     public: // Constructors
-		Quat() : mQuaternion() {}
+		Quat() : mQuaternion(1,0,0,0) {}
 		Quat(float w,float x,float y,float z) : mQuaternion(w,x,y,z) {}
 		Quat(boost::python::object& tupleObject) : mQuaternion() {
 			mQuaternion.w = boost::python::extract<float>(tupleObject[0]);
@@ -20,9 +20,7 @@ class Quat {
 			mQuaternion.y = boost::python::extract<float>(tupleObject[2]);
 			mQuaternion.z = boost::python::extract<float>(tupleObject[3]);
 		}
-		Quat(Ogre::Quaternion& ogreQuaternion) : mQuaternion(ogreQuaternion) {}
 		Quat(const Ogre::Quaternion& ogreQuaternion) : mQuaternion(ogreQuaternion) {}
-		Quat(physx::PxQuat& physXQuat) : mQuaternion(physXQuat.w,physXQuat.x,physXQuat.y,physXQuat.z) {}
 		Quat(const physx::PxQuat& physXQuat) : mQuaternion(physXQuat.w,physXQuat.x,physXQuat.y,physXQuat.z) {}
 
 		Quat(const Quat & inputQuat) : mQuaternion(
@@ -44,32 +42,50 @@ class Quat {
 		void fromAngle(float t,float p,float r) {
 			Ogre::Matrix3	rotationMatrix = Ogre::Matrix3();
 			rotationMatrix.FromEulerAnglesXYZ(
-				//Ogre::Degree(t),
-				//Ogre::Degree(p),
-				//Ogre::Degree(r)
-				Ogre::Radian(t),
-				Ogre::Radian(p),
-				Ogre::Radian(r)
+				Ogre::Degree(t),
+				Ogre::Degree(p),
+				Ogre::Degree(r)
 			);
 			mQuaternion.FromRotationMatrix(rotationMatrix);
 			mQuaternion.normalise();
 		}
 
-    public: // Converters
-		boost::python::tuple toTuple(){
-			return boost::python::make_tuple(mQuaternion.w,mQuaternion.x, mQuaternion.y,mQuaternion.z);
-		}
-		physx::PxQuat toPhysx(){
-			return physx::PxQuat(mQuaternion.x, mQuaternion.y,mQuaternion.z,mQuaternion.w);
-		}
-		Ogre::Quaternion toOgre(){
-			return Ogre::Quaternion(mQuaternion.w,mQuaternion.x, mQuaternion.y,mQuaternion.z);
+		Vec3    operator * (const Vec3 vec3) {
+			return Vec3(mQuaternion * vec3.toOgre());
 		}
 
-		float	W(){return mQuaternion.w;}
-		float	X(){return mQuaternion.x;}
-		float	Y(){return mQuaternion.y;}
-		float	Z(){return mQuaternion.z;}
+		Quat    operator * (const Quat quat) {
+			return Quat(mQuaternion * quat.toOgre());
+		}
+
+		Quat    operator + (const Quat quat) {
+			return Quat(mQuaternion + quat.toOgre());
+		}
+
+		Quat    operator - (const Quat quat) {
+			return Quat(mQuaternion - quat.toOgre());
+		}
+
+
+		Quat	inverse() {
+			return Quat(mQuaternion.Inverse());
+		}
+
+		void	normalise() {
+			mQuaternion.normalise();
+		}
+
+
+    public: // Converters
+		boost::python::tuple toTuple() const{
+			return boost::python::make_tuple(mQuaternion.w,mQuaternion.x, mQuaternion.y,mQuaternion.z);
+		}
+		physx::PxQuat toPhysx() const {
+			return physx::PxQuat(mQuaternion.x, mQuaternion.y,mQuaternion.z,mQuaternion.w);
+		}
+		Ogre::Quaternion toOgre() const {
+			return Ogre::Quaternion(mQuaternion.w,mQuaternion.x, mQuaternion.y,mQuaternion.z);
+		}
 
 		float	W() const {return mQuaternion.w;}
 		float	X() const {return mQuaternion.x;}
