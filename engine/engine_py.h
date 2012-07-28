@@ -116,6 +116,7 @@ BOOST_PYTHON_MODULE(EngineModule) {
         .def("createSpaceCage",&Engine::createSpaceCage,return_value_policy<reference_existing_object>() )
         .def("createPhysicBox",&Engine::createPhysicBox,return_value_policy<reference_existing_object>() )
         .def("createJoint",&Engine::createJoint,return_value_policy<reference_existing_object>() )
+        .def("createPhysicStatic",&Engine::createPhysicStatic,return_value_policy<reference_existing_object>() )
 
         .def("step",&Engine::step)
         .def("quit",&Engine::quit)

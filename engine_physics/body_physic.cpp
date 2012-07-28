@@ -1,5 +1,12 @@
 #include "body_physic.h"
 
+PhysicBody::PhysicBody( ) {
+
+}
+PhysicBody::~PhysicBody( ) {
+    deleteAllJoints();
+}
+
 Vec3	PhysicBody::getPosition() {
     PxTransform t = getBody()->getGlobalPose();
 	return Vec3(t.p.x,t.p.y,t.p.z);

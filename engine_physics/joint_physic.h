@@ -6,7 +6,7 @@
 using namespace physx;
 
 #include "basejoint.h"
-#include "baseactor.h"
+#include "body_physic.h"
 
 #include "engine_physic.h"
 class PhysicsEngine;

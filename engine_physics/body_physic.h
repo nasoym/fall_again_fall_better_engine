@@ -7,6 +7,7 @@
 using namespace physx;
 
 #include <vector>
+#include "math3d.h"
 
 class BaseJoint;
 
@@ -15,8 +16,8 @@ class PhysicBody {
 		std::vector<BaseJoint*>    mJoints;
 
 	public:
-		PhysicBody(){}
-		virtual ~PhysicBody(){}
+		PhysicBody();
+		virtual ~PhysicBody();
 		virtual PxRigidActor*   getBody(){return 0;}
 		virtual void            wakeUp(){}
 

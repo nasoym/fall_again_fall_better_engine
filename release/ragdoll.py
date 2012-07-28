@@ -5,7 +5,7 @@ def createHumanBodyParts(engine,module,ragdoll,size=1):
     #ragdoll.parts["base"] = (physicstaticbody.PhysicStaticBody(app, (10*size,1*size,10*size), (0,0.5*size,0) )
     #ragdoll.parts["base"].setStatic()
 
-	ragdoll.parts["base"] = engine.createPhysicBox()
+	ragdoll.parts["base"] = engine.createPhysicStatic()
 	ragdoll.parts["base"].setSize(module.Vec3(10*size,1*size,10*size))
 	ragdoll.parts["base"].setPosition(module.Vec3(0,-0.5*size,0))
 

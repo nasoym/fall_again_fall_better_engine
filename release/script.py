@@ -130,6 +130,12 @@ def keyPressed(key):
 	if key == EngineModule.Keys.K_2:
 		guiTest()
 
+	if key == EngineModule.Keys.K_3:
+		o = Engine.createPhysicStatic()
+		o.setSize(EngineModule.Vec3(10,10,10))
+		o.setPosition(EngineModule.Vec3(0,30,0))
+
+
 def keyReleased(key):
 	pass
 

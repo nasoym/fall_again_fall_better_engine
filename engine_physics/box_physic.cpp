@@ -14,27 +14,12 @@ PhysicBox::PhysicBox(PhysicsEngine* engine, Vec3& position,Vec3& size) :
 }
 
 PhysicBox::~PhysicBox( ){
-    deleteAllJoints();
     mBody->release();
     mBody = 0;
 }
 
-PxRigidActor*    PhysicBox::getBody() {
-    return mBody;
-}
-
 void    PhysicBox::wakeUp() {
     mBody->wakeUp();
-}
-
-Vec3	PhysicBox::getPosition() {
-    PxTransform t = mBody->getGlobalPose();
-	return Vec3(t.p.x,t.p.y,t.p.z);
-}
-
-Quat	PhysicBox::getOrientation() {
-    PxTransform t = mBody->getGlobalPose();
-	return Quat(t.q.w,t.q.x,t.q.y,t.q.z);
 }
 
 Vec3	PhysicBox::getSize() {
@@ -43,25 +28,6 @@ Vec3	PhysicBox::getSize() {
 		return Vec3(boxGeometry.halfExtents);
 	}
 	return Vec3();
-}
-
-void    PhysicBox::setPosition(Vec3 vec3) {
-    PxTransform t = mBody->getGlobalPose();
-    t.p.x = vec3.X();
-    t.p.y = vec3.Y();
-    t.p.z = vec3.Z();
-    mBody->setGlobalPose(t);
-    wakeUp();
-}
-
-void    PhysicBox::setOrientation(Quat quat) {
-    PxTransform t = mBody->getGlobalPose();
-    t.q.x = quat.X();
-    t.q.y = quat.Y();
-    t.q.z = quat.Z();
-    t.q.w = quat.W();
-    mBody->setGlobalPose(t);
-    wakeUp();
 }
 
 void    PhysicBox::setSize(Vec3 vec3) {

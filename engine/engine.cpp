@@ -3,6 +3,7 @@
 //#include "engine_py.h"
 
 #include "box_graphic.h"
+#include "static_physic.h"
 
 #include "engine_gui_shape.h"
 #include "engine_spacecage.h"
@@ -129,8 +130,32 @@ EngineObject*	Engine::createGuiBox(){
 	return engineObject;
 }
 
+EngineObject*	Engine::createPhysicStatic(){
+	Logger::debug("phsyic static created");
+	EngineBody* engineObject = new EngineBody(this);
+	engineObject->setPhysicBody(
+		new PhysicStatic(
+			getPhysicsEngine(),
+			Vec3(0,0,0),
+			Vec3(1,1,1)
+			)
+	);
+	engineObject->setGuiUpdatesOff();
+	engineObject->setShape(new GraphicsBox(getGraphicsEngine()));
+	engineObject->setSize(Vec3(1,1,1));
+	engineObject->setPosition(Vec3(0,150,0));
+	return engineObject;
+}
+
 EngineObject*	Engine::createPhysicBox(){
 	EngineBody* engineObject = new EngineBody(this);
+	engineObject->setPhysicBody(
+		new PhysicBox(
+			getPhysicsEngine(),
+			Vec3(0,0,0),
+			Vec3(1,1,1)
+			)
+	);
 	engineObject->setShape(new GraphicsBox(getGraphicsEngine()));
 	engineObject->setSize(Vec3(1,1,1));
 	engineObject->setPosition(Vec3(0,150,0));
