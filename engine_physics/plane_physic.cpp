@@ -1,10 +1,11 @@
-
+#include "logger.h"
 #include "plane_physic.h"
 
 //PhysicPlane::PhysicPlane(Engine* engine, object pos, object quat):
 PhysicPlane::PhysicPlane(PhysicsEngine* engine, PxVec3 position, PxQuat orientation):
     mEngine(engine)  
 {
+    Logger::debug(format("creating PhysicPlane: %1% ") % this);
 	mBody = (mEngine->getPhysics())->createRigidStatic(
         PxTransform(position, orientation)
         );
@@ -16,6 +17,7 @@ PhysicPlane::PhysicPlane(PhysicsEngine* engine, PxVec3 position, PxQuat orientat
 }
 
 PhysicPlane::~PhysicPlane( ){
+    Logger::debug(format("delete PhysicPlane: %1% ") % this);
     mBody->release();
     mBody = 0;
 }

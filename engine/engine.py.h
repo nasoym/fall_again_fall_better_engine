@@ -11,12 +11,18 @@
 #include "engine_keys.h"
 #include "engine.h"
 class Engine;
+
 #include "engine_object.h"
 class EngineObject;
+
 #include "engine_gui_shape.h"
 class EngineGuiShape;
 
+#include "engine_spacecage.h"
+class EngineSpaceCage;
+
 #include "engine_body.h"
+class EngineBody;
 
 #include "math3d.h"
 

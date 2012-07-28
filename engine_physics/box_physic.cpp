@@ -2,16 +2,16 @@
 #include "logger.h"
 
 PhysicBox::PhysicBox(PhysicsEngine* engine, PxVec3 position,PxVec3 size) :
+	BaseActor(),
 	mEngine(engine),
 	mBody(0),
 	mShape(0)
 	{
-    Logger::debug(format("creating PhysicBox: %p ") % this);
+    Logger::debug(format("creating PhysicBox: %1% ") % this);
     mBody = (mEngine->getPhysics())->createRigidDynamic( PxTransform(position) );
     mShape = mBody->createShape( PxBoxGeometry(size), *(mEngine->getMaterial()) );
     PxRigidBodyExt::updateMassAndInertia(*mBody, 1.0f);
     (mEngine->getScene())->addActor(*mBody);
-    Logger::debug(format("body: %p ") % mBody);
 }
 
 PhysicBox::~PhysicBox( ){
@@ -30,10 +30,7 @@ void    PhysicBox::wakeUp() {
 }
 
 Vec3	PhysicBox::getPosition() {
-    Logger::debug(format("body: %p ") % mBody);
-	Logger::debug("call to getPosition");
     PxTransform t = mBody->getGlobalPose();
-	Logger::debug("got global pose");
 	return Vec3(t.p.x,t.p.y,t.p.z);
 }
 

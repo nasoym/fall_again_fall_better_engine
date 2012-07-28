@@ -38,7 +38,7 @@ class EngineObject {
 		Engine*			getEngine(){ return mEngine; }
 
 		virtual void	guiUpdate(){}
-		virtual void	physicUpdate(){printf(".");}
+		virtual void	physicUpdate(){}
 
 		virtual EngineGuiShape*			isGuiShape(){return 0;}
 		virtual EngineGuiContainer*		isGuiContainer(){return 0;}

@@ -1,6 +1,6 @@
 #include "logger.h"
 #include "engine.h"
-#include "engine.py.h"
+//#include "engine.py.h"
 
 #include "box_graphic.h"
 
@@ -10,7 +10,8 @@
 
 Engine::Engine() :
 	mLoopRendering(true),
-	mPythonInitialized(false)
+	mPythonInitialized(false),
+	mSimulationTime(0)
 	{
     Logger::debug(format("creating engine: %p ") % this);
     setup();
@@ -31,6 +32,17 @@ void Engine::setup(){
     mPhysicsEngine = new PhysicsEngine();
 }
 
+void Engine::close(){
+    delete mPhysicsEngine;
+    delete mGraphicsEngine;
+}
+
+void Engine::run(){
+    while(mLoopRendering) {
+		step();
+    }
+}
+
 void	Engine::step() {
 	mGraphicsEngine->processOIS();
 	if (mGraphicsEngine->inputExit()) {
@@ -40,125 +52,23 @@ void	Engine::step() {
 	//TODO camera pos/rot from node
 	guiUpdates();
 	mGraphicsEngine->render();
+	//printf("o");
 
 	unsigned long elapsedTime = mGraphicsEngine->getElapsedTime();
+    //Logger::debug(format("%1%") % elapsedTime);
 
 	float 	mSimulationTimeStep = 1000.0f / 60.0f;	
-	float	timeToSimulate = elapsedTime;
+	//float	timeToSimulate = elapsedTime;
+	mSimulationTime += elapsedTime;
 
-	while(timeToSimulate > mSimulationTimeStep) {
-		timeToSimulate -= mSimulationTimeStep;
-		physicUpdates();
+	while(mSimulationTime > mSimulationTimeStep) {
+		//Logger::debug("p");
+		//printf("+");
+		mSimulationTime -= mSimulationTimeStep;
 		mPhysicsEngine->simulate(mSimulationTimeStep / 1000.0f);
+		physicUpdates();
 	}
 
-}
-
-void Engine::run(){
-    while(mLoopRendering) {
-		step();
-    }
-}
-
-void	Engine::closePython() {
-	Logger::debug("close python");
-	Py_Finalize();
-	mPythonInitialized = false;
-}
-
-void	Engine::setupPython() {
-	Logger::debug("setup python");
-	Py_Initialize();
-	//printf("Py_GetPath: %s\n",Py_GetPath());
-	object main_module(( handle<>(borrowed(PyImport_AddModule("__main__"))) ));
-	main_namespace = main_module.attr("__dict__");
-	PyImport_AppendInittab("EngineModule", &initEngineModule ); 
-	object engineModule(( handle<>(borrowed(PyImport_ImportModule("EngineModule"))) ));
-	main_namespace["EngineModule"] = engineModule;
-	main_namespace["Engine"] = ptr(this);
-
-	mPythonInitialized = true;
-}
-
-void    Engine::runPython(){
-	if (!mPythonInitialized) {
-		setupPython();
-	}
-	Logger::debug("run python file");
-	try {
-        PyObject* file = PyFile_FromString("script.py", "r+");
-        PyRun_File(PyFile_AsFile(file), "script.py", Py_file_input, 
-			main_namespace.ptr(), main_namespace.ptr()
-			);
-
-		pyFunctionKeyPressed = main_namespace["keyPressed"];
-		pyFunctionKeyDown = main_namespace["keyDown"];
-		pyFunctionKeyReleased = main_namespace["keyReleased"];
-		pyFunctionInit = main_namespace["init"];
-		pyFunctionGuiUpdate = main_namespace["guiUpdate"];
-		pyFunctionPhysicUpdate = main_namespace["physicUpdate"];
-
-		pyFunctionInit();
-
-    } catch( error_already_set ) {
-		Logger::debug("python error");
-        PyErr_Print();
-    }
-}
-
-void	Engine::callPythonKeyPressed(Keys key) {
-	if (mPythonInitialized) {
-		try {
-			pyFunctionKeyPressed(key);
-		} catch( error_already_set ) {
-			Logger::debug("Python error");
-			PyErr_Print();
-		}
-	}
-}
-
-void	Engine::callPythonKeyDown(Keys keyDown) {
-	if (mPythonInitialized) {
-		try {
-			pyFunctionKeyDown(keyDown);
-		} catch( error_already_set ) {
-			Logger::debug("Python error");
-			PyErr_Print();
-		}
-	}
-}
-
-void	Engine::callPythonKeyReleased(Keys key) {
-	if (mPythonInitialized) {
-		try {
-			pyFunctionKeyReleased(key);
-		} catch( error_already_set ) {
-			Logger::debug("Python error");
-			PyErr_Print();
-		}
-	}
-}
-
-void	Engine::callPythonKeyGuiUpdate() {
-	if (mPythonInitialized) {
-		try {
-			pyFunctionGuiUpdate();
-		} catch( error_already_set ) {
-			Logger::debug("Python error");
-			PyErr_Print();
-		}
-	}
-}
-
-void	Engine::callPythonKeyPysicUpdate() {
-	if (mPythonInitialized) {
-		try {
-			pyFunctionPhysicUpdate();
-		} catch( error_already_set ) {
-			Logger::debug("Python error");
-			PyErr_Print();
-		}
-	}
 }
 
 void    Engine::guiUpdates() {
@@ -174,14 +84,10 @@ void    Engine::physicUpdates() {
 	std::set<EngineObject*>::iterator  mIterator;
 	for (mIterator = mObjects.begin(); 
 		mIterator != mObjects.end(); ++mIterator) {
+		//printf(".");
 		(*mIterator)->physicUpdate();
 	}
 	callPythonKeyPysicUpdate();
-}
-
-void Engine::close(){
-    delete mPhysicsEngine;
-    delete mGraphicsEngine;
 }
 
 void    Engine::deleteAllObjects() {
@@ -206,75 +112,12 @@ void    Engine::deleteObject(EngineObject* object) {
 	}
 }
 
-int     Engine::howManyObjects() {
-	return mObjects.size();
-}
-
 void    Engine::addObject(EngineObject* object){
 	mObjects.insert(object);
 }
 
-void Engine::keyPressed(const OIS::KeyEvent& evt){
-	if (evt.key == OIS::KC_ESCAPE) {
-		Logger::debug("esc pressed");
-		quit();
-	}
-	Keys key = keyEventToKeys(evt);
-	if (key != K_NOP) {
-		callPythonKeyPressed(key);
-		mPressedKeys.push_back(key);
-	}
-
-}
-
-Keys	Engine::keyEventToKeys(const OIS::KeyEvent & evt) {
-	std::map<OIS::KeyCode,Keys>::iterator keyListIterator;
-	keyListIterator = keyList.find(evt.key);
-	if (keyListIterator != keyList.end()) {
-		return keyListIterator->second;
-	}
-	return K_NOP;
-}
-
-void Engine::keyReleased(const OIS::KeyEvent& evt){
-	Keys key = keyEventToKeys(evt);
-	if (key != K_NOP) {
-		callPythonKeyReleased(key);
-
-		std::vector<Keys>::iterator  pressedKeysIterator;
-		for (pressedKeysIterator = mPressedKeys.begin(); 
-			pressedKeysIterator != mPressedKeys.end(); ++pressedKeysIterator) {
-			if ( (*pressedKeysIterator) == key) {
-				mPressedKeys.erase(pressedKeysIterator);
-				break;
-			}
-		}
-	}
-}
-
-void Engine::updateKeysDown() {
-	std::vector<Keys>::iterator  pressedKeysIterator;
-	for (pressedKeysIterator = mPressedKeys.begin(); 
-		pressedKeysIterator != mPressedKeys.end(); ++pressedKeysIterator) {
-		callPythonKeyDown((*pressedKeysIterator));
-	}
-
-}
-
-void	Engine::mousePressed(const OIS::MouseEvent& evt, OIS::MouseButtonID id){
-	if (id == OIS::MB_Left)  {
-		pyFunctionKeyPressed(K_MLEFT);
-	//} else if (id == OIS::MB_RIGHT) {
-	//	pyFunctionKeyPressed(K_MRIGHT);
-	}
-}
-
-void	Engine::mouseReleased(const OIS::MouseEvent& evt, OIS::MouseButtonID id){
-	if (id == OIS::MB_Left)  {
-		pyFunctionKeyReleased(K_MLEFT);
-	//} else if (id == OIS::MB_RIGHT) {
-//		pyFunctionKeyReleased(K_MRIGHT);
-	}
+int     Engine::howManyObjects() {
+	return mObjects.size();
 }
 
 EngineObject*	Engine::createGuiBox(){

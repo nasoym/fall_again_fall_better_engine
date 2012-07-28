@@ -12,6 +12,7 @@ class EngineBody : public EngineGuiShape {
     public:
         EngineBody(Engine*);
 		virtual void	physicUpdate();
+		virtual void	guiUpdate();
 	private:
 		PhysicBox*		mPhysicBox;
 };

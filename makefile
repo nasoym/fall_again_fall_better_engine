@@ -65,6 +65,9 @@ release/main.exe: $(OBJ)
 build/%.obj: %.cpp %.h
 	$(CC) $(CFLAGS) -Fo$@ $<
 
+build/%.obj: %.cpp
+	$(CC) $(CFLAGS) -Fo$@ $<
+
 build/main.obj: main.cpp
 	$(CC) $(CFLAGS) -Fo$@ $<
 

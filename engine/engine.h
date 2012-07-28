@@ -4,6 +4,7 @@
 #include <boost/python.hpp>
 using namespace boost::python;
 
+
 enum Keys;
 
 #include "engine_physic.h"
@@ -79,6 +80,8 @@ class Engine : public KeyboardListener {
 		bool					mLoopRendering;
 
 		std::set<EngineObject*> mObjects;
+
+		float	mSimulationTime;
 
 		bool	mPythonInitialized;
         object main_namespace;

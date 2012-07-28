@@ -13,6 +13,7 @@ class PhysicsEngine;
 
 class PhysicBox : public BaseActor {
     private:
+	public:
         PhysicsEngine*      mEngine;
         PxRigidDynamic*     mBody;
         PxShape*            mShape;

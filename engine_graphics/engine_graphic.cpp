@@ -135,6 +135,7 @@ unsigned long GraphicsEngine::getElapsedTime() {
 	mCurrentTime = mTimer.getMilliseconds();
 	timeDifference = mCurrentTime - mLastTime;
 	mLastTime = mCurrentTime;
+    //Logger::debug(format("%1% %2%") % mCurrentTime % timeDifference);
 	return timeDifference;
 }
 
