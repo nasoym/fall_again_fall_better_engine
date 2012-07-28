@@ -23,7 +23,7 @@ o.setSize(EngineModule.Vec3(200,1,200))
 
 objects["body"] = Engine.createPhysicBox()
 o = objects["body"]
-o.setPosition(EngineModule.Vec3(0,40,0))
+o.setPosition(EngineModule.Vec3(0,150,0))
 
 
 

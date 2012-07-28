@@ -1,6 +1,7 @@
 #ifndef _ENGINE_OBJECT_H
 #define _ENGINE_OBJECT_H
 
+#include "stdio.h"
 #include <string>
 #include "uuid.h"
 
@@ -37,7 +38,7 @@ class EngineObject {
 		Engine*			getEngine(){ return mEngine; }
 
 		virtual void	guiUpdate(){}
-		virtual void	physicUpdate(){}
+		virtual void	physicUpdate(){printf(".");}
 
 		virtual EngineGuiShape*			isGuiShape(){return 0;}
 		virtual EngineGuiContainer*		isGuiContainer(){return 0;}

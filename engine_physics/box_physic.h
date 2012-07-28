@@ -9,6 +9,8 @@ using namespace physx;
 #include "engine_physic.h"
 class PhysicsEngine;
 
+#include "math3d.h"
+
 class PhysicBox : public BaseActor {
     private:
         PhysicsEngine*      mEngine;
@@ -16,12 +18,20 @@ class PhysicBox : public BaseActor {
         PxShape*            mShape;
 
     public:
-        PxRigidActor*     	getBody();
-        void                wakeUp();
+        virtual PxRigidActor*     	getBody();
+        virtual void                wakeUp();
+
+		Vec3				getPosition();
+		Quat				getOrientation();
+		Vec3				getSize();
+
+		void				setPosition(Vec3);
+		void				setOrientation(Quat);
+		void				setSize(Vec3);
 
     public: // python
         PhysicBox(PhysicsEngine*, PxVec3, PxVec3);
-        ~PhysicBox();
+        virtual ~PhysicBox();
 
 };
 #endif

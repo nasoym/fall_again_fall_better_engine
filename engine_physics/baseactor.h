@@ -16,7 +16,7 @@ protected:
 
 public:
     BaseActor(){}
-    ~BaseActor(){}
+    virtual ~BaseActor(){}
     virtual PxRigidActor*   getBody(){return 0;}
     virtual void            wakeUp(){}
 

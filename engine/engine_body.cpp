@@ -10,3 +10,12 @@ EngineBody::EngineBody(Engine* engine) :
 		PxVec3(3,3,3)
 	);
 }
+
+void	EngineBody::physicUpdate(){
+	Logger::debug("p");
+	Vec3 pos = mPhysicBox->getPosition();
+	Logger::debug("got physic pos");
+	//setPosition(mPhysicBox->getPosition());
+	//setOrientation(mPhysicBox->getOrientation());
+}
+
