@@ -16,6 +16,8 @@ class EngineObject;
 #include "engine_gui_shape.h"
 class EngineGuiShape;
 
+#include "engine_body.h"
+
 #include "math3d.h"
 
 using namespace boost::python;
@@ -79,8 +81,17 @@ BOOST_PYTHON_MODULE(EngineModule) {
 		.def("isGuiShape",&EngineGuiShape::isGuiShape,return_value_policy<reference_existing_object>() )
 		;
 
+	class_<EngineSpaceCage,bases<EngineGuiShape> >("EngineSpaceCage", init<Engine*>())
+		;
+
+	class_<EngineBody,bases<EngineGuiShape> >("EngineBody", init<Engine*>())
+		;
+
     class_<Engine>("Engine")
         .def("createGuiBox",&Engine::createGuiBox,return_value_policy<reference_existing_object>() )
+        .def("createSpaceCage",&Engine::createSpaceCage,return_value_policy<reference_existing_object>() )
+        .def("createPhysicBox",&Engine::createPhysicBox,return_value_policy<reference_existing_object>() )
+
         .def("step",&Engine::step)
         .def("quit",&Engine::quit)
 		.def("setCameraPosition",&Engine::setCameraPosition)

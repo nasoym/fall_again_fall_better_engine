@@ -12,10 +12,6 @@ class PhysicsEngine;
 class PhysicBox : public BaseActor {
     private:
         PhysicsEngine*      mEngine;
-        float               mSizeX;
-        float               mSizeY;
-        float               mSizeZ;
-
         PxRigidDynamic*     mBody;
         PxShape*            mShape;
 

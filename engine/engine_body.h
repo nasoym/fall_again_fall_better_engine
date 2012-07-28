@@ -8,10 +8,9 @@ class Engine;
 
 #include "box_physic.h"
 
-class EngineBody : EngineGuiShape {
+class EngineBody : public EngineGuiShape {
     public:
         EngineBody(Engine*);
-        ~EngineBody();
 	private:
 		PhysicBox*		mPhysicBox;
 };

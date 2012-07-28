@@ -6,6 +6,7 @@
 
 #include "engine_gui_shape.h"
 #include "engine_spacecage.h"
+#include "engine_body.h"
 
 Engine::Engine() :
 	mLoopRendering(true),
@@ -285,7 +286,11 @@ EngineObject*	Engine::createGuiBox(){
 }
 
 EngineObject*	Engine::createPhysicBox(){
-	return 0;
+	EngineBody* engineObject = new EngineBody(this);
+	engineObject->setShape(new GraphicsBox(getGraphicsEngine()));
+	engineObject->setSize(Vec3(3,3,3));
+	engineObject->setPosition(Vec3(0,4,0));
+	return engineObject;
 }
 
 EngineObject*	Engine::createSpaceCage(){

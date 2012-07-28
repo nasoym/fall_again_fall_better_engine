@@ -7,16 +7,25 @@ import temp
 
 objects = {}
 
+"""
 objects["gui1"] = Engine.createGuiBox()
 o = objects["gui1"]
-#print(o)
-#print(dir(o))
 o.setPosition(EngineModule.Vec3(0,5,0))
 #o.setOrientation(EngineModule.Quat().fromAngle(45,0,0))
 o.setOrientation(EngineModule.Quat().fromAngle(0,0,45))
 o.setSize(EngineModule.Vec3(20,10,20))
+"""
 
 objects["ground"] = Engine.createSpaceCage()
+o = objects["ground"]
+o.setPosition(EngineModule.Vec3(0,-0.5,0))
+o.setSize(EngineModule.Vec3(200,1,200))
+
+objects["body"] = Engine.createPhysicBox()
+o = objects["body"]
+o.setPosition(EngineModule.Vec3(0,40,0))
+
+
 
 transformFactor = 0.5
 forwardDir = EngineModule.Vec3(0,0,-1)
