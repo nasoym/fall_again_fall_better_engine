@@ -13,5 +13,10 @@ class EngineSpaceCage : public EngineGuiShape {
 
 	private:
 		PhysicPlane*	mBottomPlane;
+		PhysicPlane*	mTopPlane;
+		PhysicPlane*	mFrontPlane;
+		PhysicPlane*	mBackPlane;
+		PhysicPlane*	mLeftPlane;
+		PhysicPlane*	mRightPlane;
 };
 #endif

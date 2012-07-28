@@ -36,3 +36,18 @@ void        EngineBody::setSize(Vec3& vec3){
 }
 
 
+
+
+Vec3    	EngineBody::getPosition(){
+	return mPhysicBox->getPosition();
+}
+
+Quat EngineBody::getOrientation(){
+	return mPhysicBox->getOrientation();
+}
+
+Vec3    EngineBody::getSize(){
+	return mPhysicBox->getSize();
+}
+
+

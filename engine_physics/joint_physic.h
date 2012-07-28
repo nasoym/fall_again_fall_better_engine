@@ -24,15 +24,15 @@ class PhysicsEngine;
 	#endif 
 
 //-------------------------------------
-class BaseActor;
+class PhysicBody;
 class Engine;
 
 class PhysicJoint : public BaseJoint {
     private:
         PhysicsEngine*         mEngine;
 
-        BaseActor*          mActor1;
-        BaseActor*          mActor2;
+        PhysicBody*          mActor1;
+        PhysicBody*          mActor2;
 
         PxD6Joint *     mJoint;
 
@@ -46,7 +46,7 @@ class PhysicJoint : public BaseJoint {
         float           mDContactDistance;
 
     public:
-        PhysicJoint(PhysicsEngine*,BaseActor*,BaseActor*);
+        PhysicJoint(PhysicsEngine*,PhysicBody*,PhysicBody*);
         virtual ~PhysicJoint();
 
     protected:
@@ -55,8 +55,8 @@ class PhysicJoint : public BaseJoint {
         void        createJoint();
 
     public:
-        BaseActor*      getActor1();
-        BaseActor*      getActor2();
+        PhysicBody*      getActor1();
+        PhysicBody*      getActor2();
 
         void        setAnchor1(Vec3&);
         void        setAnchor2(Vec3&);

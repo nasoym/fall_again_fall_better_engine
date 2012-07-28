@@ -221,7 +221,7 @@ void    GraphicsEngine::closeWindowEventListener() {
 
 //Adjust mouse clipping area
 void GraphicsEngine::windowResized(RenderWindow* rw) {
-    Logger::debug("windowResized");
+    //Logger::debug("windowResized");
     unsigned int width, height, depth;
     int left, top;
     rw->getMetrics(width, height, depth, left, top);

@@ -1,6 +1,6 @@
 #include "logger.h"
 #include "engine.h"
-//#include "engine.py.h"
+//#include "engine_py.h"
 
 #include "box_graphic.h"
 
@@ -132,7 +132,7 @@ EngineObject*	Engine::createGuiBox(){
 EngineObject*	Engine::createPhysicBox(){
 	EngineBody* engineObject = new EngineBody(this);
 	engineObject->setShape(new GraphicsBox(getGraphicsEngine()));
-	engineObject->setSize(Vec3(6,3,3));
+	engineObject->setSize(Vec3(1,1,1));
 	engineObject->setPosition(Vec3(0,150,0));
 	return engineObject;
 }

@@ -44,6 +44,20 @@ class Vec3 {
 			return Vec3(mVector / input_float);
 		}
 
+		Vec3    operator *= (const Vec3 vec3) {
+			mVector.x *= vec3.X();
+			mVector.y *= vec3.Y();
+			mVector.z *= vec3.Z();
+			return *this;
+		}
+		Vec3    operator * (const Vec3 vec3) {
+			return Vec3(
+				mVector.x * vec3.X(),
+				mVector.y * vec3.Y(),
+				mVector.z * vec3.Z()
+				);
+		}
+
 		Vec3    operator += (const Vec3 vec3) {
 			mVector += vec3.toOgre();
 			return *this;

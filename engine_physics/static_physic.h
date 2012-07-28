@@ -1,5 +1,5 @@
-#ifndef _PHYSIC_BOX_H
-	#define _PHYSIC_BOX_H
+#ifndef _PHYSIC_STATIC_H
+#define _PHYSIC_STATIC_H
 
 #include "baseactor.h"
 
@@ -11,25 +11,25 @@ class PhysicsEngine;
 
 #include "math3d.h"
 
-class PhysicBox : public PhysicBody {
+class PhysicStatic : public PhysicBody {
     private:
         PhysicsEngine*      mEngine;
-        PxRigidDynamic*     mBody;
+        PxRigidStatic*      mBody;
         PxShape*            mShape;
 
     public:
-        PhysicBox(PhysicsEngine*, Vec3&, Vec3&);
-        virtual ~PhysicBox();
+        PhysicStatic(PhysicsEngine*, Vec3&, Vec3&);
+        virtual ~PhysicStatic();
 
         virtual PxRigidActor*     	getBody();
-        virtual void                wakeUp();
 
 		Vec3				getPosition();
 		Quat				getOrientation();
-		virtual Vec3				getSize();
+		Vec3				getSize();
 
 		void				setPosition(Vec3);
 		void				setOrientation(Quat);
-		virtual void				setSize(Vec3);
+		void				setSize(Vec3);
 };
 #endif
+

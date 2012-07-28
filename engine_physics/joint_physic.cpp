@@ -1,7 +1,7 @@
 #include "joint_physic.h"
 
 
-PhysicJoint::PhysicJoint(PhysicsEngine* engine,BaseActor* actor1,BaseActor* actor2):
+PhysicJoint::PhysicJoint(PhysicsEngine* engine,PhysicBody* actor1,PhysicBody* actor2):
         mEngine(engine),
         mActor1(actor1),
         mActor2(actor2),
@@ -95,11 +95,11 @@ void PhysicJoint::unregisterJoint() {
     mJoint = 0;
 }
 
-BaseActor*  PhysicJoint::getActor1(){
+PhysicBody*  PhysicJoint::getActor1(){
     return mActor1;
 }
 
-BaseActor*  PhysicJoint::getActor2(){
+PhysicBody*  PhysicJoint::getActor2(){
     return mActor2;
 }
 

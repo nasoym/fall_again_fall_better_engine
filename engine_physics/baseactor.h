@@ -10,17 +10,25 @@ using namespace physx;
 
 class BaseJoint;
 
-class BaseActor {
+class PhysicBody {
 protected:
     std::vector<BaseJoint*>    mJoints;
 
 public:
-    BaseActor(){}
-    virtual ~BaseActor(){}
+    PhysicBody(){}
+    virtual ~PhysicBody(){}
     virtual PxRigidActor*   getBody(){return 0;}
     virtual void            wakeUp(){}
 
-    virtual void    BaseActor::deleteAllJoints() {
+		Vec3				getPosition();
+		Quat				getOrientation();
+		Vec3				getSize();
+
+		void				setPosition(Vec3);
+		void				setOrientation(Quat);
+		void				setSize(Vec3);
+
+    virtual void    PhysicBody::deleteAllJoints() {
         std::vector<BaseJoint*>::iterator  mJointsIterator;
         for (mJointsIterator = mJoints.begin(); 
             mJointsIterator != mJoints.end(); ++mJointsIterator) {
@@ -29,7 +37,7 @@ public:
         mJoints.clear();
     }
 
-    virtual void    BaseActor::deleteJoint(BaseJoint* joint) {
+    virtual void    PhysicBody::deleteJoint(BaseJoint* joint) {
         std::vector<BaseJoint*>::iterator  mJointsIterator;
         for (mJointsIterator = mJoints.begin(); 
             mJointsIterator != mJoints.end(); ++mJointsIterator) {
@@ -41,15 +49,15 @@ public:
         }
     }
 
-    virtual int     BaseActor::howManyJoints() {
+    virtual int     PhysicBody::howManyJoints() {
         return mJoints.size();
     }
 
-    virtual void    BaseActor::addJoint(BaseJoint* joint){
+    virtual void    PhysicBody::addJoint(BaseJoint* joint){
         mJoints.push_back(joint);
     }
 
-    virtual BaseJoint*  BaseActor::getJoint(int index) {
+    virtual BaseJoint*  PhysicBody::getJoint(int index) {
         return mJoints[index];
     }
 

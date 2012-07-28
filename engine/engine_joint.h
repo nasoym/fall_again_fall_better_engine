@@ -16,6 +16,8 @@ class EngineJoint : public EngineGuiShape {
 		virtual void	physicUpdate();
 		virtual void	guiUpdate();
 
+        void        setAnchor1Size(Vec3& vec3);
+        void        setAnchor2Size(Vec3& vec3);
 
         void        setAnchor1(Vec3& vec3){mJoint->setAnchor1(vec3);}
         void        setAnchor2(Vec3& vec3){mJoint->setAnchor2(vec3);}
@@ -35,6 +37,8 @@ class EngineJoint : public EngineGuiShape {
 
 	private:
 		PhysicJoint*	mJoint;
+		EngineBody*		mBody1;
+		EngineBody*		mBody2;
 };
 #endif
 

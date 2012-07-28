@@ -1,16 +1,16 @@
-#ifndef _ENGINE_BODY_H
-#define _ENGINE_BODY_H
+#ifndef _ENGINE_STATIC_H
+#define _ENGINE_STATIC_H
 
 #include "engine.h"
 class Engine;
 
 #include "engine_gui_shape.h"
 
-#include "box_physic.h"
+#include "static_physic.h"
 
-class EngineBody : public EngineGuiShape {
+class EngineStatic : public EngineGuiShape {
     public:
-        EngineBody(Engine*);
+        EngineStatic(Engine*);
 		virtual void	physicUpdate();
 		virtual void	guiUpdate();
 
@@ -21,13 +21,11 @@ class EngineBody : public EngineGuiShape {
 		virtual Vec3    	getPosition();
 		virtual Quat 		getOrientation();
 		virtual Vec3    	getSize();
-
-		PhysicBox*			getPhysicBody(){return mPhysicBox;}
-		virtual EngineBody*				isBody(){return this;}
 	private:
 
-		PhysicBox*		mPhysicBox;
+		PhysicStatic*		mPhysicBox;
 };
 #endif
+
 
 

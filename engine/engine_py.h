@@ -96,6 +96,8 @@ BOOST_PYTHON_MODULE(EngineModule) {
 		;
 
 	class_<EngineJoint,bases<EngineGuiShape> >("EngineJoint", init<Engine*,EngineBody*,EngineBody*>())
+		.def("setAnchor1Size",&EngineJoint::setAnchor1Size)
+		.def("setAnchor2Size",&EngineJoint::setAnchor2Size)
 		.def("setAnchor1",&EngineJoint::setAnchor1)
 		.def("setAnchor2",&EngineJoint::setAnchor2)
 		.def("setAnchor1Orientation",&EngineJoint::setAnchor1Orientation)
@@ -132,6 +134,9 @@ BOOST_PYTHON_MODULE(EngineModule) {
 
 		.def(self /= float())
 		.def(self / float())
+
+		.def(self *= Vec3())
+		.def(self * Vec3())
 
 		.def(self += Vec3())
 		.def(self + Vec3())
