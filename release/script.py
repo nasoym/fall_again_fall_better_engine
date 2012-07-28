@@ -18,12 +18,18 @@ o.setSize(EngineModule.Vec3(20,10,20))
 
 objects["ground"] = Engine.createSpaceCage()
 o = objects["ground"]
-o.setPosition(EngineModule.Vec3(0,-0.5,0))
-o.setSize(EngineModule.Vec3(200,1,200))
+#o.setPosition(EngineModule.Vec3(0,-0.5,0))
+#o.setSize(EngineModule.Vec3(200,1,200))
 
-objects["body"] = Engine.createPhysicBox()
-o = objects["body"]
-o.setPosition(EngineModule.Vec3(0,150,0))
+objects["body1"] = Engine.createPhysicBox()
+objects["body2"] = Engine.createPhysicBox()
+o1 = objects["body1"]
+o2 = objects["body2"]
+objects["joint1"] = Engine.createJoint(o1,o2)
+j = objects["joint1"]
+j.setAnchor1(EngineModule.Vec3(-6,0,0))
+j.setAnchor2(EngineModule.Vec3(6,0,0))
+#o.setPosition(EngineModule.Vec3(0,150,0))
 
 
 
@@ -40,8 +46,13 @@ def moveCamera(direction):
 	globalDir = Engine.getCameraOrientation() * localDir
 	Engine.setCameraPosition( Engine.getCameraPosition() + globalDir)
 
-
-
+def createArm():
+	o1 = Engine.createPhysicBox()
+	o2 = Engine.createPhysicBox()
+	j = Engine.createJoint(o1,o2)
+	j.setAnchor1(EngineModule.Vec3(-6,0,0))
+	j.setAnchor2(EngineModule.Vec3(6,0,0))
+	j.setLimits(20,20)
 
 def init():
 	pass
@@ -63,6 +74,10 @@ def keyDown(key):
 		moveCamera(downDir)
 	if key == EngineModule.Keys.K_E:
 		moveCamera(upDir)
+
+	if key == EngineModule.Keys.K_1:
+		#Engine.createPhysicBox()
+		createArm()
 
 def keyPressed(key):
 	if key == EngineModule.Keys.K_Q:

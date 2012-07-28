@@ -4,8 +4,6 @@
 GraphicsBox::GraphicsBox(GraphicsEngine* graphicsEngine):
 	GraphicsShape(graphicsEngine)
     {
-    Logger::debug(format("creating graphics box: %p") % this);
-
     setEntity(getGraphicsEngine()->getSceneManager()->createEntity("Prefab_Cube"));
     //ent->setMaterialName("Ogre/Skin");
     //ent->setMaterialName("Examples/Chrome");

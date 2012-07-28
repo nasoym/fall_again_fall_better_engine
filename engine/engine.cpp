@@ -7,6 +7,7 @@
 #include "engine_gui_shape.h"
 #include "engine_spacecage.h"
 #include "engine_body.h"
+#include "engine_joint.h"
 
 Engine::Engine() :
 	mLoopRendering(true),
@@ -131,15 +132,23 @@ EngineObject*	Engine::createGuiBox(){
 EngineObject*	Engine::createPhysicBox(){
 	EngineBody* engineObject = new EngineBody(this);
 	engineObject->setShape(new GraphicsBox(getGraphicsEngine()));
-	engineObject->setSize(Vec3(3,3,3));
-	engineObject->setPosition(Vec3(0,4,0));
+	engineObject->setSize(Vec3(6,3,3));
+	engineObject->setPosition(Vec3(0,150,0));
 	return engineObject;
+}
+
+EngineObject*	Engine::createJoint(EngineObject* obj1,EngineObject* obj2){
+	if (obj1->isBody() && obj2->isBody() ) {
+		EngineJoint* engineObject = new EngineJoint(this,obj1->isBody(),obj2->isBody());
+		return engineObject;
+	}
+	return 0;
 }
 
 EngineObject*	Engine::createSpaceCage(){
 	EngineSpaceCage* spaceCage = new EngineSpaceCage(this);
 	spaceCage->setShape(new GraphicsBox(getGraphicsEngine()));
-	spaceCage->setSize(Vec3(10,1,10));
+	spaceCage->setSize(Vec3(200,1,200));
 	spaceCage->setPosition(Vec3(0,-0.5,0));
 	return spaceCage;
 }

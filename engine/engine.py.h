@@ -24,6 +24,8 @@ class EngineSpaceCage;
 #include "engine_body.h"
 class EngineBody;
 
+#include "engine_joint.h"
+
 #include "math3d.h"
 
 using namespace boost::python;
@@ -93,10 +95,25 @@ BOOST_PYTHON_MODULE(EngineModule) {
 	class_<EngineBody,bases<EngineGuiShape> >("EngineBody", init<Engine*>())
 		;
 
+	class_<EngineJoint,bases<EngineGuiShape> >("EngineJoint", init<Engine*,EngineBody*,EngineBody*>())
+		.def("setAnchor1",&EngineJoint::setAnchor1)
+		.def("setAnchor2",&EngineJoint::setAnchor2)
+		.def("setAnchor1Orientation",&EngineJoint::setAnchor1Orientation)
+		.def("setAnchor2Orientation",&EngineJoint::setAnchor2Orientation)
+		.def("getAnchor1",&EngineJoint::getAnchor1)
+		.def("getAnchor2",&EngineJoint::getAnchor2)
+		.def("getAnchor1Orientation",&EngineJoint::getAnchor1Orientation)
+		.def("getAnchor2Orientation",&EngineJoint::getAnchor2Orientation)
+		.def("setLimits",&EngineJoint::setLimits)
+		.def("getYLimit",&EngineJoint::getYLimit)
+		.def("getZLimit",&EngineJoint::getZLimit)
+		;
+
     class_<Engine>("Engine")
         .def("createGuiBox",&Engine::createGuiBox,return_value_policy<reference_existing_object>() )
         .def("createSpaceCage",&Engine::createSpaceCage,return_value_policy<reference_existing_object>() )
         .def("createPhysicBox",&Engine::createPhysicBox,return_value_policy<reference_existing_object>() )
+        .def("createJoint",&Engine::createJoint,return_value_policy<reference_existing_object>() )
 
         .def("step",&Engine::step)
         .def("quit",&Engine::quit)

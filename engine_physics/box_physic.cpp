@@ -1,21 +1,19 @@
 #include "box_physic.h"
 #include "logger.h"
 
-PhysicBox::PhysicBox(PhysicsEngine* engine, PxVec3 position,PxVec3 size) :
+PhysicBox::PhysicBox(PhysicsEngine* engine, Vec3& position,Vec3& size) :
 	BaseActor(),
 	mEngine(engine),
 	mBody(0),
 	mShape(0)
 	{
-    Logger::debug(format("creating PhysicBox: %1% ") % this);
-    mBody = (mEngine->getPhysics())->createRigidDynamic( PxTransform(position) );
-    mShape = mBody->createShape( PxBoxGeometry(size), *(mEngine->getMaterial()) );
+    mBody = (mEngine->getPhysics())->createRigidDynamic( PxTransform(position.toPhysx()) );
+    mShape = mBody->createShape( PxBoxGeometry(size.toPhysx()), *(mEngine->getMaterial()) );
     PxRigidBodyExt::updateMassAndInertia(*mBody, 1.0f);
     (mEngine->getScene())->addActor(*mBody);
 }
 
 PhysicBox::~PhysicBox( ){
-    Logger::debug(format("deleting PhysicBox: %p ") % this);
     deleteAllJoints();
     mBody->release();
     mBody = 0;
@@ -73,5 +71,4 @@ void    PhysicBox::setSize(Vec3 vec3) {
     PxRigidBodyExt::updateMassAndInertia(*mBody, 1.0f);
     wakeUp();
 }
-
 

@@ -2,16 +2,6 @@
 #ifndef _PHYSIC_JOINT_H
 	#define _PHYSIC_JOINT_H
 
-#include <boost/python/module.hpp>
-#include <boost/python/def.hpp>
-#include <boost/python/tuple.hpp>
-#include <boost/python/extract.hpp>
-
-using ::boost::python::object;
-using ::boost::python::tuple;
-using ::boost::python::make_tuple;
-using ::boost::python::extract;
-
 #include "PxPhysicsAPI.h"
 using namespace physx;
 
@@ -19,6 +9,9 @@ using namespace physx;
 #include "baseactor.h"
 
 #include "engine_physic.h"
+class PhysicsEngine;
+
+#include "math3d.h"
 
 	#ifndef PI
 		#define 	PI (3.14159265f)
@@ -34,9 +27,9 @@ using namespace physx;
 class BaseActor;
 class Engine;
 
-class Joint : public BaseJoint {
+class PhysicJoint : public BaseJoint {
     private:
-        Engine*         mEngine;
+        PhysicsEngine*         mEngine;
 
         BaseActor*          mActor1;
         BaseActor*          mActor2;
@@ -53,8 +46,8 @@ class Joint : public BaseJoint {
         float           mDContactDistance;
 
     public:
-        Joint(Engine&,BaseActor&,BaseActor&);
-        virtual ~Joint();
+        PhysicJoint(PhysicsEngine*,BaseActor*,BaseActor*);
+        virtual ~PhysicJoint();
 
     protected:
         void        unregisterJoint();
@@ -65,26 +58,27 @@ class Joint : public BaseJoint {
         BaseActor*      getActor1();
         BaseActor*      getActor2();
 
-        void        setAnchor1(object);
-        void        setAnchor2(object);
+        void        setAnchor1(Vec3&);
+        void        setAnchor2(Vec3&);
 
-        void        setAnchor1Orientation(object);
-        void        setAnchor2Orientation(object);
+        void        setAnchor1Orientation(Quat&);
+        void        setAnchor2Orientation(Quat&);
 
-        tuple       getAnchor1();
-        tuple       getAnchor2();
+        Vec3       getAnchor1();
+        Vec3       getAnchor2();
         
-        tuple       getAnchor1Orientation();
-        tuple       getAnchor2Orientation();
+        Quat       getAnchor1Orientation();
+        Quat       getAnchor2Orientation();
 
-        void        setLimits(object);
-        tuple       getLimits();
+        void        setLimits(float,float);
+        float       getYLimit();
+        float       getZLimit();
 
         void        setMotorOn();
         void        setMotorOff();
         bool        isMotorOn();
-        void        setMotorTarget(object);
-        tuple       getMotorTarget();
+        void        setMotorTarget(Quat&);
+        Quat        getMotorTarget();
 
         void        setMotorStrength(float);
         float       getMotorStrength();

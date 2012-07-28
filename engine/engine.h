@@ -50,6 +50,7 @@ class Engine : public KeyboardListener {
 		EngineObject*	createPhysicBox();
 		EngineObject*	createSpaceCage();
 		EngineObject*	createGuiBox();
+		EngineObject*	createJoint(EngineObject* obj1,EngineObject* obj2);
 
 		void	callPythonKeyPressed(Keys);
 		void	callPythonKeyDown(Keys);

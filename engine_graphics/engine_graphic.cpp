@@ -236,17 +236,17 @@ void GraphicsEngine::windowMoved(RenderWindow* rw) {
 }
 
 bool windowClosing(RenderWindow* rw) {
-    Logger::debug("windowClosing");
+    //Logger::debug("windowClosing");
     return true;
 }
 
 void GraphicsEngine::windowClosed(RenderWindow* rw) {
-    Logger::debug("windowClosed");
+    //Logger::debug("windowClosed");
     mExit = true;
 }
 
 void GraphicsEngine::windowFocusChange(RenderWindow* rw) {
-    Logger::debug("windowFocusChange");
+    //Logger::debug("windowFocusChange");
 }
 
 bool GraphicsEngine::keyPressed(const OIS::KeyEvent& evt) {

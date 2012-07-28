@@ -13,12 +13,14 @@ class PhysicsEngine;
 
 class PhysicBox : public BaseActor {
     private:
-	public:
         PhysicsEngine*      mEngine;
         PxRigidDynamic*     mBody;
         PxShape*            mShape;
 
     public:
+        PhysicBox(PhysicsEngine*, Vec3&, Vec3&);
+        virtual ~PhysicBox();
+
         virtual PxRigidActor*     	getBody();
         virtual void                wakeUp();
 
@@ -29,10 +31,5 @@ class PhysicBox : public BaseActor {
 		void				setPosition(Vec3);
 		void				setOrientation(Quat);
 		void				setSize(Vec3);
-
-    public: // python
-        PhysicBox(PhysicsEngine*, PxVec3, PxVec3);
-        virtual ~PhysicBox();
-
 };
 #endif

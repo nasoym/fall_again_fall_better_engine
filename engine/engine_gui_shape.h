@@ -25,14 +25,14 @@ class EngineGuiShape : public EngineObject {
 		void        tupleSetSize(boost::python::object& tupleObject);
 		boost::python::tuple tupleGetSize();
 
-		void        setPosition(Vec3& vec3);
-		Vec3    	getPosition();
+		virtual void        setPosition(Vec3& vec3);
+		virtual Vec3    	getPosition();
 
-		void        setOrientation(Quat& quat);
-		Quat 		getOrientation();
+		virtual void        setOrientation(Quat& quat);
+		virtual Quat 		getOrientation();
 
-		void        setSize(Vec3& vec3);
-		Vec3    	getSize();
+		virtual void        setSize(Vec3& vec3);
+		virtual Vec3    	getSize();
 
 		virtual EngineGuiShape*			isGuiShape(){return this;}
 

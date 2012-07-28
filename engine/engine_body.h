@@ -13,7 +13,15 @@ class EngineBody : public EngineGuiShape {
         EngineBody(Engine*);
 		virtual void	physicUpdate();
 		virtual void	guiUpdate();
+
+		virtual void        setPosition(Vec3& vec3);
+		virtual void        setOrientation(Quat& quat);
+		virtual void        setSize(Vec3& vec3);
+
+		PhysicBox*			getPhysicBody(){return mPhysicBox;}
+		virtual EngineBody*				isBody(){return this;}
 	private:
+
 		PhysicBox*		mPhysicBox;
 };
 #endif
