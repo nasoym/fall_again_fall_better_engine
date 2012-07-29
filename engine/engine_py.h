@@ -109,6 +109,11 @@ BOOST_PYTHON_MODULE(EngineModule) {
 		.def("setLimits",&EngineJoint::setLimits)
 		.def("getYLimit",&EngineJoint::getYLimit)
 		.def("getZLimit",&EngineJoint::getZLimit)
+		.def("setMotorOn",&EngineJoint::setMotorOn)
+		.def("setMotorOff",&EngineJoint::setMotorOff)
+		.def("isMotorOn",&EngineJoint::isMotorOn)
+		.def("setMotorTarget",&EngineJoint::setMotorTarget)
+		.def("getMotorTarget",&EngineJoint::getMotorTarget)
 		;
 
     class_<Engine>("Engine")

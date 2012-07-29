@@ -64,11 +64,11 @@ class PhysicJoint : public BaseJoint {
         void        setAnchor1Orientation(Quat&);
         void        setAnchor2Orientation(Quat&);
 
-        Vec3       getAnchor1();
-        Vec3       getAnchor2();
+        Vec3        getAnchor1();
+        Vec3        getAnchor2();
         
-        Quat       getAnchor1Orientation();
-        Quat       getAnchor2Orientation();
+        Quat        getAnchor1Orientation();
+        Quat        getAnchor2Orientation();
 
         void        setLimits(float,float);
         float       getYLimit();

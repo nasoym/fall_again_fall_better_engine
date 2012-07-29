@@ -14,9 +14,10 @@ CFLAGS+=-I /c/Users/Sinan/Downloads/physx/PhysX-3.1.2_PC_VC10_SDK_Core/SDKs/PxTa
 CFLAGS+=-I /c/Python27/include
 CFLAGS+=-I /c/boost_1_47/
 CFLAGS+=-I ./common
+CFLAGS+=-I ./engine
 CFLAGS+=-I ./engine_graphics
 CFLAGS+=-I ./engine_physics
-CFLAGS+=-I ./engine
+CFLAGS+=-I ./stereoManager
 CFLAGS+=-c -MD -EHsc -D "NDEBUG" -nologo
 
 CC=cl.exe
@@ -44,7 +45,7 @@ LIBFLAGS=
 LIBFLAGS+=-NOLOGO
 LIBFLAGS+=-NODEFAULTLIB:LIBCMT
 
-VPATH=engine_physics:engine_graphics:common:engine
+VPATH=engine_physics:engine_graphics:common:engine:stereoManager
 ALLPATHES=$(subst :, ,$(VPATH))
 
 OBJ=build/main.obj

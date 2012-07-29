@@ -10,23 +10,28 @@ GraphicsEngine::GraphicsEngine() :
     {
     Logger::debug(format("creating graphics engine: %p ") % this);
     setup();
+	setupStereo();
     setupOIS();
     setupWindowEventListener();
+
 }
 
 GraphicsEngine::~GraphicsEngine(){
     Logger::debug(format("deleting graphics engine: %p ") % this);
     closeWindowEventListener();
     closeOIS();
+	closeStereo();
     close();
 }
 
 void GraphicsEngine::setup(){
-    mLogger = new Ogre::LogManager();
-    mLogger->createLog("log.log", true, false,true);
+    //mLogger = new Ogre::LogManager();
+    //mLogger->createLog("log.log", true, false,true);
 
 	//root = new Root("","");
 	mRoot = new Root();
+    setupResources();
+
     RenderSystemList rlist = mRoot->getAvailableRenderers();
     RenderSystemList::iterator it = rlist.begin();
     while (it !=rlist.end()) {
@@ -34,14 +39,13 @@ void GraphicsEngine::setup(){
 		mRoot->setRenderSystem(rSys);
     }
 	//mRoot->showConfigDialog();
-    setupResources();
 
-	//mWindow = mRoot->initialise(true);
-
-	mRoot->initialise(false);
-	mWindow = mRoot->createRenderWindow("main window",400,400,false);
+	mWindow = mRoot->initialise(true);
+	//mRoot->initialise(false);
+	//mWindow = mRoot->createRenderWindow("main window",400,400,false);
 
     mSceneMgr = mRoot->createSceneManager(ST_GENERIC, "ExampleSMInstance");
+    mSceneMgr->setAmbientLight(ColourValue(0.5,0.5,0.5));
 
     mRootSceneNode = mSceneMgr->getRootSceneNode();
     mDebugSceneNode = mRootSceneNode->createChildSceneNode();
@@ -62,10 +66,6 @@ void GraphicsEngine::setup(){
     // Alter the camera aspect ratio to match the viewport
     mCamera->setAspectRatio( Real(mViewport->getActualWidth()) / Real(mViewport->getActualHeight()));
 
-    //mFrameListener = new ExampleFrameListener(mWindow, mCamera);
-
-    mSceneMgr->setAmbientLight(ColourValue(0.5,0.5,0.5));
-
     Light * light = mSceneMgr->createLight("MainLight");
     light->setPosition(0,400,0);
 
@@ -81,7 +81,7 @@ void GraphicsEngine::setup(){
 }
 
 void GraphicsEngine::close(){
-    mRoot->shutdown();
+	OGRE_DELETE mRoot;
 }
 
 void GraphicsEngine::render(){
@@ -111,6 +111,13 @@ void GraphicsEngine::setupResources() {
                 archName, typeName, secName);
         }
     }
+}
+
+void 		GraphicsEngine::setupStereo() {
+	//mStereoManager.init(mViewport, NULL, "stereo.cfg");
+}
+
+void 		GraphicsEngine::closeStereo() {
 }
 
 void		GraphicsEngine::setCameraPosition(Vector3& vec){

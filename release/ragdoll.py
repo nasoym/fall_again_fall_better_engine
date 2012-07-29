@@ -1,10 +1,6 @@
 
 
 def createHumanBodyParts(engine,module,ragdoll,size=1):
-
-    #ragdoll.parts["base"] = (physicstaticbody.PhysicStaticBody(app, (10*size,1*size,10*size), (0,0.5*size,0) )
-    #ragdoll.parts["base"].setStatic()
-
 	ragdoll.parts["base"] = engine.createPhysicStatic()
 	ragdoll.parts["base"].setSize(module.Vec3(10*size,1*size,10*size))
 	ragdoll.parts["base"].setPosition(module.Vec3(0,-0.5*size,0))
@@ -129,10 +125,10 @@ def createLimitsHuman(engine,module,ragdoll):
 
     ragdoll.joints["j_rknee"].setLimits(1,80)
     ragdoll.joints["j_rknee"].setAnchor1Orientation( module.Quat().fromAngle(0,1,80) )
-    #ragdoll.joints["j_rknee"].setMotorTarget( module.Quat().fromAngle(0,1,-80) )
+    ragdoll.joints["j_rknee"].setMotorTarget( module.Quat().fromAngle(0,1,-80) )
     ragdoll.joints["j_lknee"].setLimits(1,80)
     ragdoll.joints["j_lknee"].setAnchor1Orientation( module.Quat().fromAngle(0,1,80) )
-    #ragdoll.joints["j_lknee"].setMotorTarget( module.Quat().fromAngle(0,1,-80) )
+    ragdoll.joints["j_lknee"].setMotorTarget( module.Quat().fromAngle(0,1,-80) )
 
     ragdoll.joints["j_rhip"].setLimits(60,60)
     ragdoll.joints["j_lhip"].setLimits(60,60)
@@ -142,14 +138,12 @@ def createLimitsHuman(engine,module,ragdoll):
 
     ragdoll.joints["j_relbow"].setLimits(1,80)
     ragdoll.joints["j_relbow"].setAnchor1Orientation( module.Quat().fromAngle(0,1,-80) )
-    #ragdoll.joints["j_relbow"].setMotorTarget( module.Quat().fromAngle(0,1,80) )
+    ragdoll.joints["j_relbow"].setMotorTarget( module.Quat().fromAngle(0,1,80) )
     ragdoll.joints["j_lelbow"].setLimits(1,80)
     ragdoll.joints["j_lelbow"].setAnchor1Orientation( module.Quat().fromAngle(0,1,-80) )
-    #ragdoll.joints["j_lelbow"].setMotorTarget( module.Quat().fromAngle(0,1,80) )
+    ragdoll.joints["j_lelbow"].setMotorTarget( module.Quat().fromAngle(0,1,80) )
 
-"""
-
-def driveJoints(app,ragdoll):
+def driveJoints(ragdoll):
     ragdoll.joints["j_rfoot"].setMotorOn()
     ragdoll.joints["j_lfoot"].setMotorOn()
 
@@ -166,7 +160,7 @@ def driveJoints(app,ragdoll):
     ragdoll.joints["j_neck"].setMotorOn()
     ragdoll.joints["j_head"].setMotorOn()
 
-def driveJointsOff(app,ragdoll):
+def driveJointsOff(ragdoll):
     ragdoll.joints["j_rfoot"].setMotorOff()
     ragdoll.joints["j_lfoot"].setMotorOff()
 
@@ -182,5 +176,3 @@ def driveJointsOff(app,ragdoll):
     ragdoll.joints["j_neck"].setMotorOff()
     ragdoll.joints["j_head"].setMotorOff()
 
-
-"""

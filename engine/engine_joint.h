@@ -35,6 +35,12 @@ class EngineJoint : public EngineGuiShape {
         float       getYLimit(){return mJoint->getYLimit();}
         float       getZLimit(){return mJoint->getZLimit();}
 
+        void        setMotorOn(){mJoint->setMotorOn();}
+        void        setMotorOff(){mJoint->setMotorOff();}
+        bool        isMotorOn(){return mJoint->isMotorOn();}
+        void        setMotorTarget(Quat& quat){mJoint->setMotorTarget(quat);}
+        Quat        getMotorTarget(){return mJoint->getMotorTarget();}
+
 	private:
 		PhysicJoint*	mJoint;
 		EngineBody*		mBody1;

@@ -59,15 +59,19 @@ void	Engine::step() {
 	unsigned long elapsedTime = mGraphicsEngine->getElapsedTime();
     //Logger::debug(format("%1%") % elapsedTime);
 
-	float 	mSimulationTimeStep = 1000.0f / 60.0f;	
+	//float 	mSimulationTimeStep = 1000.0f / 60.0f;	
+	float 	mSimulationTimeStep = 2.0f;	
 	//float	timeToSimulate = elapsedTime;
 	mSimulationTime += elapsedTime;
+	float	timeToSimulate = mSimulationTimeStep / 1000.0f;
+	timeToSimulate *= 3.0f;
 
 	while(mSimulationTime > mSimulationTimeStep) {
 		//Logger::debug("p");
 		//printf("+");
 		mSimulationTime -= mSimulationTimeStep;
-		mPhysicsEngine->simulate(mSimulationTimeStep / 1000.0f);
+		//mPhysicsEngine->simulate(mSimulationTimeStep / 1000.0f);
+		mPhysicsEngine->simulate(timeToSimulate);
 		physicUpdates();
 	}
 

@@ -38,6 +38,11 @@ class Ragdoll(object):
         self.parts = {}
         self.joints = {}
 
+doll = Ragdoll()
+ragdoll.createHumanBodyParts(Engine,EngineModule,doll,size=5)
+ragdoll.createHumanJoints(Engine,EngineModule,doll)
+ragdoll.createLimits(Engine,EngineModule,doll,45)
+ragdoll.createLimitsHuman(Engine,EngineModule,doll)
 
 transformFactor = 0.5
 forwardDir = EngineModule.Vec3(0,0,-1)
@@ -124,6 +129,15 @@ def keyPressed(key):
 		ragdoll.createHumanJoints(Engine,EngineModule,doll)
 		ragdoll.createLimits(Engine,EngineModule,doll,15)
 		ragdoll.createLimitsHuman(Engine,EngineModule,doll)
+
+	if key == EngineModule.Keys.K_Y:
+		global doll
+		ragdoll.driveJoints(doll)
+	if key == EngineModule.Keys.K_U:
+		global doll
+		ragdoll.driveJointsOff(doll)
+
+
 	if key == EngineModule.Keys.K_1:
 		createArm()
 

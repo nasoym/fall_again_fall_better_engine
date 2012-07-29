@@ -1,6 +1,8 @@
 #ifndef _GRAPHIC_ENGINE_H
 #define _GRAPHIC_ENGINE_H
 
+//#include "StereoManager.h"
+
 #include <Ogre.h>
 using namespace Ogre;
 
@@ -10,6 +12,7 @@ using namespace Ogre;
 #include <set>
 
 #include "keyboard_listener.h"
+
 
 class GraphicsEngine : 
         public WindowEventListener,
@@ -60,6 +63,8 @@ class GraphicsEngine :
 		unsigned long getElapsedTime();
 
 		//TODO set windows params
+		void 		setupStereo();
+		void 		closeStereo();
 
     private:
         void    setup();
@@ -91,6 +96,9 @@ class GraphicsEngine :
         bool            mExit;
 
 		std::set<KeyboardListener*>    mKeyboardListeners;
+
+
+		//StereoManager	mStereoManager;
 
 };
 #endif
