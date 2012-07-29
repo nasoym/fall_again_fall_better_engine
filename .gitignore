@@ -9,4 +9,5 @@
 *.pyd
 *.exe
 *.*~
+*.zip
 Ogre.log
