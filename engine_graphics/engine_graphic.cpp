@@ -32,15 +32,15 @@ void GraphicsEngine::setup(){
 	mRoot = new Root();
     setupResources();
 
-	/*
     RenderSystemList rlist = mRoot->getAvailableRenderers();
     RenderSystemList::iterator it = rlist.begin();
     while (it !=rlist.end()) {
         RenderSystem *rSys = *(it++);
+		rSys->setConfigOption("Full Screen", "No");
+		rSys->setConfigOption("Video Mode", "1024 x 768 @ 32-bit colour");
 		mRoot->setRenderSystem(rSys);
     }
-	*/
-	mRoot->showConfigDialog();
+	//mRoot->showConfigDialog();
 
 	mWindow = mRoot->initialise(true);
 	//mRoot->initialise(false);
@@ -199,20 +199,10 @@ void GraphicsEngine::processOIS() {
         mKeyboard->capture();
         mMouse->capture();
         if( !mKeyboard->buffered() ) {
-            if( mKeyboard->isKeyDown(OIS::KC_SPACE)  ) {
-				
-				Logger::debug("s");
-			}
-
             if( mKeyboard->isKeyDown(OIS::KC_ESCAPE) || mKeyboard->isKeyDown(OIS::KC_Q) ) {
                 mExit = true;
             }
-
         }
-            if( mKeyboard->isKeyDown(OIS::KC_SPACE)  ) {
-				
-				Logger::debug("s");
-			}
 
         if( !mMouse->buffered() ) {
             const OIS::MouseState &ms = mMouse->getMouseState();

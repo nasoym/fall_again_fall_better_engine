@@ -1,5 +1,8 @@
 import temp
+
+
 import ragdoll
+
 #print("main.py:hello")
 #print("Engine: " + str(Engine))
 #print("EngineModule: " + str(EngineModule))
@@ -17,7 +20,7 @@ o.setSize(EngineModule.Vec3(20,10,20))
 """
 
 objects["ground"] = Engine.createSpaceCage()
-o = objects["ground"]
+
 #o.setPosition(EngineModule.Vec3(0,-0.5,0))
 #o.setSize(EngineModule.Vec3(200,1,200))
 
@@ -38,11 +41,16 @@ class Ragdoll(object):
         self.parts = {}
         self.joints = {}
 
-doll = Ragdoll()
-ragdoll.createHumanBodyParts(Engine,EngineModule,doll,size=5)
-ragdoll.createHumanJoints(Engine,EngineModule,doll)
-ragdoll.createLimits(Engine,EngineModule,doll,45)
-#ragdoll.createLimitsHuman(Engine,EngineModule,doll)
+global doll
+
+def createMainRagdoll():
+	global doll
+	doll = Ragdoll()
+	doll.powered = False
+	ragdoll.createHumanBodyParts(Engine,EngineModule,doll,size=5)
+	ragdoll.createHumanJoints(Engine,EngineModule,doll)
+	ragdoll.createLimits(Engine,EngineModule,doll,45)
+	ragdoll.createLimitsHuman(Engine,EngineModule,doll)
 
 transformFactor = 0.5
 forwardDir = EngineModule.Vec3(0,0,-1)
@@ -52,11 +60,12 @@ downDir = EngineModule.Vec3(0,-1,0)
 leftDir = EngineModule.Vec3(-1,0,0)
 rightDir = EngineModule.Vec3(1,0,0)
 
+Engine.setCameraPosition(EngineModule.Vec3(0,100,300))
+
 def moveCamera(direction):
 	localDir = direction * transformFactor
 	globalDir = Engine.getCameraOrientation() * localDir
 	Engine.setCameraPosition( Engine.getCameraPosition() + globalDir)
-
 
 def guiTest():
 	o = Engine.createPhysicBox()
@@ -95,45 +104,56 @@ def createArm():
 #	print(j.getAnchor2().toTuple())
 
 
-
-
 def init():
 	pass
+	createMainRagdoll()
 
 def keyDown(key):
 	if key == EngineModule.Keys.K_T:
 		reload(temp)
 		temp.launch(Engine,objects,EngineModule)
 
-	if key == EngineModule.Keys.K_W:
+	if (key == EngineModule.Keys.K_W or
+		key == EngineModule.Keys.K_UP):
 		moveCamera(forwardDir)
-	if key == EngineModule.Keys.K_S:
+	if (key == EngineModule.Keys.K_S or
+		key == EngineModule.Keys.K_DOWN):
 		moveCamera(backwardDir)
-	if key == EngineModule.Keys.K_A:
+	if (key == EngineModule.Keys.K_A or
+		key == EngineModule.Keys.K_LEFT):
 		moveCamera(leftDir)
-	if key == EngineModule.Keys.K_D:
+	if (key == EngineModule.Keys.K_D or
+		key == EngineModule.Keys.K_RIGHT):
 		moveCamera(rightDir)
-	if key == EngineModule.Keys.K_Q:
+	if (key == EngineModule.Keys.K_Q or
+		key == EngineModule.Keys.K_PGDOWN):
 		moveCamera(downDir)
-	if key == EngineModule.Keys.K_E:
+	if (key == EngineModule.Keys.K_E or
+		key == EngineModule.Keys.K_PGUP):
 		moveCamera(upDir)
 
-
 def keyPressed(key):
-	if key == EngineModule.Keys.K_Q:
-		#Engine.quit()
-		pass
-
-	if key == EngineModule.Keys.K_Y:
-		global doll
-		ragdoll.driveJoints(doll)
-	if key == EngineModule.Keys.K_U:
-		global doll
-		ragdoll.driveJointsOff(doll)
-
-
+	pass
 	if key == EngineModule.Keys.K_1:
-		pass
+		o = Engine.createPhysicBox()
+		o.setSize(EngineModule.Vec3(10,10,10))
+		o.setPosition(EngineModule.Vec3(0,150,0))
+	if key == EngineModule.Keys.K_2:
+		char = Ragdoll()
+		char.powered = False
+		ragdoll.createHumanBodyParts(Engine,EngineModule,char,size=5,pos=100,base=False)
+		ragdoll.createHumanJoints(Engine,EngineModule,char)
+		ragdoll.createLimits(Engine,EngineModule,char,45)
+		ragdoll.createLimitsHuman(Engine,EngineModule,char)
+
+	if key == EngineModule.Keys.K_SPACE:
+		global doll
+		if doll.powered:
+			doll.powered = False
+			ragdoll.driveJointsOff(doll)
+		else:
+			doll.powered = True
+			ragdoll.driveJoints(doll)
 
 def keyReleased(key):
 	pass
@@ -143,4 +163,7 @@ def guiUpdate():
 
 def physicUpdate():
 	pass
+
+
+
 

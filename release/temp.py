@@ -1,5 +1,6 @@
 
 def launch(engine,objects,module):
+	pass
 	"""
 	print("hello  .")
 	print(objects["gui1"])
@@ -22,11 +23,11 @@ def launch(engine,objects,module):
 	direction *= transformFactor
 	globalDir = engine.getCameraOrientation() * direction
 	engine.setCameraPosition( engine.getCameraPosition() + globalDir)
-	"""
 
 
 	o = objects["body"]
 	o.setSize(module.Vec3(20,45,20))
+	"""
 
 
 

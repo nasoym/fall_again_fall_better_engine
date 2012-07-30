@@ -28,21 +28,31 @@ void    Engine::runPython(){
 	}
 	Logger::debug("run python file");
 	try {
+		Logger::debug("run script.py");
         PyObject* file = PyFile_FromString("script.py", "r+");
         PyRun_File(PyFile_AsFile(file), "script.py", Py_file_input, 
 			main_namespace.ptr(), main_namespace.ptr()
 			);
+		PyRun_SimpleString("print(globals())");
 
+		Logger::debug("load keyPressed");
 		pyFunctionKeyPressed = main_namespace["keyPressed"];
+		Logger::debug("load keyDown");
 		pyFunctionKeyDown = main_namespace["keyDown"];
+		Logger::debug("load keyReleased");
 		pyFunctionKeyReleased = main_namespace["keyReleased"];
+		Logger::debug("load init");
 		pyFunctionInit = main_namespace["init"];
+		Logger::debug("load guiUpdate");
 		pyFunctionGuiUpdate = main_namespace["guiUpdate"];
+		Logger::debug("load physicUpdate");
 		pyFunctionPhysicUpdate = main_namespace["physicUpdate"];
 
+		Logger::debug("run init");
 		pyFunctionInit();
 
     } catch( error_already_set ) {
+		mPythonInitialized = false;
 		Logger::debug("python error");
         PyErr_Print();
     }
