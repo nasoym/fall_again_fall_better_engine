@@ -25,27 +25,29 @@ GraphicsEngine::~GraphicsEngine(){
 }
 
 void GraphicsEngine::setup(){
-    //mLogger = new Ogre::LogManager();
-    //mLogger->createLog("log.log", true, false,true);
+    mLogger = new Ogre::LogManager();
+    mLogger->createLog("log.log", true, false,true);
 
 	//root = new Root("","");
 	mRoot = new Root();
     setupResources();
 
+	/*
     RenderSystemList rlist = mRoot->getAvailableRenderers();
     RenderSystemList::iterator it = rlist.begin();
     while (it !=rlist.end()) {
         RenderSystem *rSys = *(it++);
 		mRoot->setRenderSystem(rSys);
     }
-	//mRoot->showConfigDialog();
+	*/
+	mRoot->showConfigDialog();
 
 	mWindow = mRoot->initialise(true);
 	//mRoot->initialise(false);
 	//mWindow = mRoot->createRenderWindow("main window",400,400,false);
 
     mSceneMgr = mRoot->createSceneManager(ST_GENERIC, "ExampleSMInstance");
-    mSceneMgr->setAmbientLight(ColourValue(0.5,0.5,0.5));
+    mSceneMgr->setAmbientLight(ColourValue(0.2,0.2,0.2));
 
     mRootSceneNode = mSceneMgr->getRootSceneNode();
     mDebugSceneNode = mRootSceneNode->createChildSceneNode();
@@ -67,7 +69,16 @@ void GraphicsEngine::setup(){
     mCamera->setAspectRatio( Real(mViewport->getActualWidth()) / Real(mViewport->getActualHeight()));
 
     Light * light = mSceneMgr->createLight("MainLight");
-    light->setPosition(0,400,0);
+	light->setType(Light::LT_POINT);
+    light->setPosition(200,200,200);
+	light->setDiffuseColour(0.2,0.2,0.2);
+	light->setSpecularColour(0.5,0.5,0.5);
+
+    Light * light2 = mSceneMgr->createLight("MainLight2");
+	light2->setType(Light::LT_POINT);
+    light2->setPosition(-200,200,-200);
+	light2->setDiffuseColour(0.2,0.2,0.2);
+	light2->setSpecularColour(0.5,0.5,0.5);
 
 	/*
     //Entity *ent = mSceneMgr->createEntity("head","cube.mesh");
@@ -236,6 +247,8 @@ void GraphicsEngine::windowResized(RenderWindow* rw) {
     const OIS::MouseState &ms = mMouse->getMouseState();
     ms.width = width;
     ms.height = height;
+
+    mCamera->setAspectRatio( Real(width) / Real(height));
 }
 
 void GraphicsEngine::windowMoved(RenderWindow* rw) {
@@ -267,6 +280,11 @@ bool GraphicsEngine::keyReleased(const OIS::KeyEvent& evt) {
 }
 
 bool GraphicsEngine::mouseMoved(const OIS::MouseEvent& evt) {
+	const OIS::MouseState &ms = mMouse->getMouseState();
+	if( ms.buttonDown( OIS::MB_Left ) ) {
+		mCamera->yaw(Degree(-ms.X.rel * 0.13));
+		mCamera->pitch(Degree(-ms.Y.rel * 0.13));
+	}
     return true;
 }
 

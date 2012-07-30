@@ -55,11 +55,11 @@ def createHumanJoints(engine,module,ragdoll):
 
     ragdoll.joints["j_rhip"] = engine.createJoint(ragdoll.parts["ruleg"], ragdoll.parts["hip"] )
     ragdoll.joints["j_rhip"].setAnchor1Size( module.Vec3(1,0,0) )
-    ragdoll.joints["j_rhip"].setAnchor2Size( module.Vec3(-1.1,0,0.7) )
+    ragdoll.joints["j_rhip"].setAnchor2Size( module.Vec3(-1.1,0,0.8) )
 
     ragdoll.joints["j_lhip"] = engine.createJoint(ragdoll.parts["luleg"], ragdoll.parts["hip"] )
     ragdoll.joints["j_lhip"].setAnchor1Size( module.Vec3(1,0,0) )
-    ragdoll.joints["j_lhip"].setAnchor2Size( module.Vec3(-1.1,0,-0.7) )
+    ragdoll.joints["j_lhip"].setAnchor2Size( module.Vec3(-1.1,0,-0.8) )
 
     ragdoll.joints["j_belly"] = engine.createJoint(ragdoll.parts["belly"], ragdoll.parts["hip"] )
     ragdoll.joints["j_belly"].setAnchor1Size( module.Vec3(-1,0,0) )
@@ -122,6 +122,9 @@ def createLimits(engine,module,ragdoll,limit):
 def createLimitsHuman(engine,module,ragdoll):
     ragdoll.joints["j_rfoot"].setLimits(90,90)
     ragdoll.joints["j_lfoot"].setLimits(90,90)
+
+    ragdoll.joints["j_rfoot"].setLimits(180,180)
+    ragdoll.joints["j_lfoot"].setLimits(180,180)
 
     ragdoll.joints["j_rknee"].setLimits(1,80)
     ragdoll.joints["j_rknee"].setAnchor1Orientation( module.Quat().fromAngle(0,1,80) )
