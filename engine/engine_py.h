@@ -125,6 +125,10 @@ BOOST_PYTHON_MODULE(EngineModule) {
 
         .def("step",&Engine::step)
         .def("quit",&Engine::quit)
+
+        .def("setTimingFactor",&Engine::setTimingFactor)
+        .def("getTimingFactor",&Engine::getTimingFactor)
+
 		.def("setCameraPosition",&Engine::setCameraPosition)
 		.def("setCameraOrientation",&Engine::setCameraOrientation)
 		.def("getCameraPosition",&Engine::getCameraPosition)

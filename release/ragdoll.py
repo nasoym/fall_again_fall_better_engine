@@ -1,7 +1,12 @@
+class Ragdoll(object):
+	def __init__(self):
+		self.parts = {}
+		self.joints = {}
+		self.powered = False
 
+def createHumanBodyParts(engine,module,size=1,pos=100,base=True):
+	ragdoll = Ragdoll()
 
-def createHumanBodyParts(engine,module,ragdoll,size=1,pos=100,base=True):
-#def createHumanBodyParts(engine,module,ragdoll,size=1):
 	if base:
 		ragdoll.parts["base"] = engine.createPhysicStatic()
 		ragdoll.parts["base"].setSize(module.Vec3(10*size,1*size,10*size))
@@ -62,6 +67,8 @@ def createHumanBodyParts(engine,module,ragdoll,size=1,pos=100,base=True):
 	ragdoll.parts["head"] = engine.createPhysicBox()
 	ragdoll.parts["head"].setSize(module.Vec3(3.5*size,2*size,2*size))
 	ragdoll.parts["head"].setPosition(module.Vec3(0,pos,0))
+
+	return ragdoll
 
 def createHumanJoints(engine,module,ragdoll):
 	if ragdoll.parts.has_key("base"):

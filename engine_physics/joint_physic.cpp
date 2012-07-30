@@ -6,10 +6,10 @@ PhysicJoint::PhysicJoint(PhysicsEngine* engine,PhysicBody* actor1,PhysicBody* ac
         mActor1(actor1),
         mActor2(actor2),
         mMotorOn(false),
-        mDMotorSpring(7000),
-        mDMotorDamping(300),
+        mDMotorSpring(70000),
+        mDMotorDamping(10000),
         mDMotorAccel(true),
-        mDContactDistance(0.01f)
+        mDContactDistance(9.01f)
     {
     mActor1->addJoint(this);
     mActor2->addJoint(this);

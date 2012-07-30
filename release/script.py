@@ -36,18 +36,22 @@ j.setAnchor2Size(EngineModule.Vec3(1,0,0))
 #o.setPosition(EngineModule.Vec3(0,150,0))
 """
 
+"""
 class Ragdoll(object):
     def __init__(self):
         self.parts = {}
         self.joints = {}
+		"""
 
-global doll
+#global doll
+doll = None
 
 def createMainRagdoll():
 	global doll
-	doll = Ragdoll()
-	doll.powered = False
-	ragdoll.createHumanBodyParts(Engine,EngineModule,doll,size=5)
+	#doll = Ragdoll()
+	#doll.powered = False
+	#doll = ragdoll.createHumanBodyParts(Engine,EngineModule,doll,size=5)
+	doll = ragdoll.createHumanBodyParts(Engine,EngineModule,size=5)
 	ragdoll.createHumanJoints(Engine,EngineModule,doll)
 	ragdoll.createLimits(Engine,EngineModule,doll,45)
 	ragdoll.createLimitsHuman(Engine,EngineModule,doll)
@@ -109,9 +113,6 @@ def init():
 	createMainRagdoll()
 
 def keyDown(key):
-	if key == EngineModule.Keys.K_T:
-		reload(temp)
-		temp.launch(Engine,objects,EngineModule)
 
 	if (key == EngineModule.Keys.K_W or
 		key == EngineModule.Keys.K_UP):
@@ -133,7 +134,10 @@ def keyDown(key):
 		moveCamera(upDir)
 
 def keyPressed(key):
-	pass
+	if key == EngineModule.Keys.K_T:
+		reload(temp)
+		temp.launch(Engine,objects,EngineModule)
+
 	if key == EngineModule.Keys.K_1:
 		o = Engine.createPhysicBox()
 		o.setSize(EngineModule.Vec3(10,10,10))
@@ -150,9 +154,11 @@ def keyPressed(key):
 		global doll
 		if doll.powered:
 			doll.powered = False
+			Engine.setTimingFactor(0.55)
 			ragdoll.driveJointsOff(doll)
 		else:
 			doll.powered = True
+			Engine.setTimingFactor(2.0)
 			ragdoll.driveJoints(doll)
 
 def keyReleased(key):

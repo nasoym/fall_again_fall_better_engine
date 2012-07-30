@@ -13,7 +13,8 @@
 Engine::Engine() :
 	mLoopRendering(true),
 	mPythonInitialized(false),
-	mSimulationTime(0)
+	mSimulationTime(0),
+	mTimingFactor(1.0f)
 	{
     Logger::debug(format("creating engine: %p ") % this);
     setup();
@@ -64,7 +65,7 @@ void	Engine::step() {
 	//float	timeToSimulate = elapsedTime;
 	mSimulationTime += elapsedTime;
 	float	timeToSimulate = mSimulationTimeStep / 1000.0f;
-	timeToSimulate *= 3.0f;
+	timeToSimulate *= getTimingFactor();
 
 	while(mSimulationTime > mSimulationTimeStep) {
 		//Logger::debug("p");

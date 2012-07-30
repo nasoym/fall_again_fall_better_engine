@@ -72,6 +72,9 @@ class Engine : public KeyboardListener {
 		Vec3			getCameraPosition();
 		Quat			getCameraOrientation();
 
+		void			setTimingFactor(float factor){mTimingFactor=factor;}
+		float			getTimingFactor(){return mTimingFactor;}
+
     private:
         void    setup();
         void    close();
@@ -96,6 +99,7 @@ class Engine : public KeyboardListener {
 		object pyFunctionPhysicUpdate;
 
 		std::vector<Keys>		mPressedKeys;
+		float			mTimingFactor;
 };
 
 #endif
