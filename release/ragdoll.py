@@ -4,69 +4,75 @@ class Ragdoll(object):
 		self.joints = {}
 		self.powered = False
 
-def createHumanBodyParts(engine,module,size=1,pos=100,base=True):
+def createHumanBodyParts(engine,module,size=1,pos=None,base=True):
 	ragdoll = Ragdoll()
+
+	if pos == None:
+		pos = module.Vec3(0,size,0)
+
 
 	if base:
 		ragdoll.parts["base"] = engine.createPhysicStatic()
 		ragdoll.parts["base"].setSize(module.Vec3(10*size,1*size,10*size))
-		ragdoll.parts["base"].setPosition(module.Vec3(0,size,0))
+		ragdoll.parts["base"].setPosition(pos)
+
+		pos += module.Vec3(0,50 * size,0)
 
 	ragdoll.parts["hip"] = engine.createPhysicBox()
 	ragdoll.parts["hip"].setSize(module.Vec3(1*size,1*size,5*size))
-	ragdoll.parts["hip"].setPosition(module.Vec3(0,pos,0))
+	ragdoll.parts["hip"].setPosition(pos)
 
 	ragdoll.parts["ruleg"] = engine.createPhysicBox()
 	ragdoll.parts["ruleg"].setSize(module.Vec3(4*size,1*size,1*size))
-	ragdoll.parts["ruleg"].setPosition(module.Vec3(0,pos,0))
+	ragdoll.parts["ruleg"].setPosition(pos)
 
 	ragdoll.parts["luleg"] = engine.createPhysicBox()
 	ragdoll.parts["luleg"].setSize(module.Vec3(4*size,1*size,1*size))
-	ragdoll.parts["luleg"].setPosition(module.Vec3(0,pos,0))
+	ragdoll.parts["luleg"].setPosition(pos)
 
 	ragdoll.parts["rlleg"] = engine.createPhysicBox()
 	ragdoll.parts["rlleg"].setSize(module.Vec3(4*size,1*size,1*size))
-	ragdoll.parts["rlleg"].setPosition(module.Vec3(0,pos,0))
+	ragdoll.parts["rlleg"].setPosition(pos)
 
 	ragdoll.parts["llleg"] = engine.createPhysicBox()
 	ragdoll.parts["llleg"].setSize(module.Vec3(4*size,1*size,1*size))
-	ragdoll.parts["llleg"].setPosition(module.Vec3(0,pos,0))
+	ragdoll.parts["llleg"].setPosition(pos)
 
 	ragdoll.parts["belly"] = engine.createPhysicBox()
 	ragdoll.parts["belly"].setSize(module.Vec3(3*size,1*size,1*size))
-	ragdoll.parts["belly"].setPosition(module.Vec3(0,pos,0))
+	ragdoll.parts["belly"].setPosition(pos)
 
 	ragdoll.parts["breast"] = engine.createPhysicBox()
 	ragdoll.parts["breast"].setSize(module.Vec3(3*size,1*size,1*size))
-	ragdoll.parts["breast"].setPosition(module.Vec3(0,pos,0))
+	ragdoll.parts["breast"].setPosition(pos)
 
 	ragdoll.parts["shoulder"] = engine.createPhysicBox()
 	ragdoll.parts["shoulder"].setSize(module.Vec3(1*size,1*size,5*size))
-	ragdoll.parts["shoulder"].setPosition(module.Vec3(0,pos,0))
+	ragdoll.parts["shoulder"].setPosition(pos)
 
 	ragdoll.parts["ruarm"] = engine.createPhysicBox()
 	ragdoll.parts["ruarm"].setSize(module.Vec3(4*size,1*size,1*size))
-	ragdoll.parts["ruarm"].setPosition(module.Vec3(0,pos,0))
+	ragdoll.parts["ruarm"].setPosition(pos)
 
 	ragdoll.parts["luarm"] = engine.createPhysicBox()
 	ragdoll.parts["luarm"].setSize(module.Vec3(4*size,1*size,1*size))
-	ragdoll.parts["luarm"].setPosition(module.Vec3(0,pos,0))
+	ragdoll.parts["luarm"].setPosition(pos)
 
 	ragdoll.parts["rlarm"] = engine.createPhysicBox()
 	ragdoll.parts["rlarm"].setSize(module.Vec3(4*size,1*size,1*size))
-	ragdoll.parts["rlarm"].setPosition(module.Vec3(0,pos,0))
+	ragdoll.parts["rlarm"].setPosition(pos)
 
 	ragdoll.parts["llarm"] = engine.createPhysicBox()
 	ragdoll.parts["llarm"].setSize(module.Vec3(4*size,1*size,1*size))
-	ragdoll.parts["llarm"].setPosition(module.Vec3(0,pos,0))
+	ragdoll.parts["llarm"].setPosition(pos)
 
 	ragdoll.parts["neck"] = engine.createPhysicBox()
 	ragdoll.parts["neck"].setSize(module.Vec3(1*size,1*size,1*size))
-	ragdoll.parts["neck"].setPosition(module.Vec3(0,pos,0))
+	ragdoll.parts["neck"].setPosition(pos)
 
 	ragdoll.parts["head"] = engine.createPhysicBox()
 	ragdoll.parts["head"].setSize(module.Vec3(3.5*size,2*size,2*size))
-	ragdoll.parts["head"].setPosition(module.Vec3(0,pos,0))
+	ragdoll.parts["head"].setPosition(pos)
 
 	return ragdoll
 
@@ -185,6 +191,7 @@ def createLimitsHuman(engine,module,ragdoll):
 	ragdoll.joints["j_lelbow"].setMotorTarget( module.Quat().fromAngle(0,1,80) )
 
 def driveJoints(ragdoll):
+	ragdoll.powered = True
 	if ragdoll.joints.has_key("j_rfoot"):
 		ragdoll.joints["j_rfoot"].setMotorOn()
 	if ragdoll.joints.has_key("j_lfoot"):
@@ -204,6 +211,7 @@ def driveJoints(ragdoll):
 	ragdoll.joints["j_head"].setMotorOn()
 
 def driveJointsOff(ragdoll):
+	ragdoll.powered = False
 	if ragdoll.joints.has_key("j_rfoot"):
 		ragdoll.joints["j_rfoot"].setMotorOff()
 	if ragdoll.joints.has_key("j_lfoot"):

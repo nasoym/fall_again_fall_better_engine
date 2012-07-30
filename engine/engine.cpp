@@ -175,10 +175,10 @@ EngineObject*	Engine::createJoint(EngineObject* obj1,EngineObject* obj2){
 	return 0;
 }
 
-EngineObject*	Engine::createSpaceCage(){
-	EngineSpaceCage* spaceCage = new EngineSpaceCage(this);
+EngineObject*	Engine::createSpaceCage(Vec3& size){
+	EngineSpaceCage* spaceCage = new EngineSpaceCage(this,size);
 	spaceCage->setShape(new GraphicsBox(getGraphicsEngine()));
-	spaceCage->setSize(Vec3(200,1,200));
+	spaceCage->setSize(Vec3(size.X(),1,size.Z()));
 	spaceCage->setPosition(Vec3(0,-0.5,0));
 	return spaceCage;
 }

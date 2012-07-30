@@ -48,7 +48,7 @@ class Engine : public KeyboardListener {
 		void    runPython();
 
 		EngineObject*	createPhysicBox();
-		EngineObject*	createSpaceCage();
+		EngineObject*	createSpaceCage(Vec3&);
 		EngineObject*	createGuiBox();
 		EngineObject*	createJoint(EngineObject* obj1,EngineObject* obj2);
 		EngineObject*	createPhysicStatic();

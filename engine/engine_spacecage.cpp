@@ -3,12 +3,17 @@
 
 #include "math3d.h"
 
-EngineSpaceCage::EngineSpaceCage(Engine* engine) :
+EngineSpaceCage::EngineSpaceCage(Engine* engine,Vec3& size) :
 	EngineGuiShape(engine)
 	{
-	float ySize = 400;
-	float xSize = 200;
-	float zSize = 200;
+
+	//float xSize = 200;
+	//float ySize = 400;
+	//float zSize = 200;
+
+	float xSize = size.X();
+	float ySize = size.Y();
+	float zSize = size.Z();
 
 	mBottomPlane = new PhysicPlane( getEngine()->getPhysicsEngine(),
 		PxVec3(0,0,0), Quat().fromAngle(0,0,90).toPhysx() );

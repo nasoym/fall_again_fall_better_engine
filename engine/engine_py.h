@@ -89,7 +89,7 @@ BOOST_PYTHON_MODULE(EngineModule) {
 		.def("isGuiShape",&EngineGuiShape::isGuiShape,return_value_policy<reference_existing_object>() )
 		;
 
-	class_<EngineSpaceCage,bases<EngineGuiShape> >("EngineSpaceCage", init<Engine*>())
+	class_<EngineSpaceCage,bases<EngineGuiShape> >("EngineSpaceCage", init<Engine*,Vec3&>())
 		;
 
 	class_<EngineBody,bases<EngineGuiShape> >("EngineBody", init<Engine*>())
