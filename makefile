@@ -52,14 +52,14 @@ OBJ=build/main.obj
 OBJ+=$(foreach dir,$(ALLPATHES), $(patsubst $(dir)/%.cpp,build/%.obj,$(wildcard $(dir)/*.cpp)) )
 
 dll:
-	$(LINK) $(LIBFLAGS) -DLL -OUT:release/EngineModule.pyd $(OBJ) $(LIBLIST)
+	$(LINK) $(LIBFLAGS) -DLL -OUT:executable/EngineModule.pyd $(OBJ) $(LIBLIST)
 show:
 	echo $(OBJ)
 
-all: release/main.exe
+all: executable/main.exe
 	echo "main"
 
-release/main.exe: $(OBJ)
+executable/main.exe: $(OBJ)
 	echo "linking to:$@"
 	$(LINK) $(LIBFLAGS) -OUT:$@ $(OBJ) $(LIBLIST)
 
@@ -75,9 +75,9 @@ build/main.obj: main.cpp
 .PHONY: clean
 
 run: all
-	(cd release ; ./main.exe)
+	(cd executable ; ./main.exe)
 
 clean:
 	rm build/*.obj
-	rm release/main.exe
+	rm executable/main.exe
 

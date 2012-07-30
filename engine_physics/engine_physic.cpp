@@ -1,6 +1,7 @@
 //-------------------------------------
 #include "logger.h"
 #include "engine_physic.h"
+#include <boost/thread.hpp>
 //-------------------------------------
 PhysicsEngine::PhysicsEngine() :
     mForceFactor(300) {
@@ -41,7 +42,8 @@ void PhysicsEngine::setup(){
     sceneDesc.gravity = PxVec3(0.0f,-9.81f,0.0f);
 
 	if(!sceneDesc.cpuDispatcher) {
-		mCpuDispatcher = PxDefaultCpuDispatcherCreate(1);
+		int cpusToUse = boost::thread::hardware_concurrency() - 1;
+		mCpuDispatcher = PxDefaultCpuDispatcherCreate(cpusToUse);
 		sceneDesc.cpuDispatcher	= mCpuDispatcher;
 	}
 
