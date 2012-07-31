@@ -2,7 +2,6 @@
 #ifndef _ENGINE_GUI_SHAPE_H
 #define _ENGINE_GUI_SHAPE_H
 
-#include "engine.h"
 class Engine;
 
 #include "engine_object.h"

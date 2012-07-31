@@ -1,5 +1,7 @@
 #include "logger.h"
 #include "engine_gui_shape.h"
+#include "engine.h"
+#include "shape_graphic.h"
 
 EngineGuiShape::EngineGuiShape(Engine* engine) :
 	EngineObject(engine),

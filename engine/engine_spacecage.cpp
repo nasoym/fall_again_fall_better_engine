@@ -1,15 +1,14 @@
-#include "engine_spacecage.h"
 #include "logger.h"
-
 #include "math3d.h"
+
+#include "engine_spacecage.h"
+#include "engine.h"
+
+#include "plane_physic.h"
 
 EngineSpaceCage::EngineSpaceCage(Engine* engine,Vec3& size) :
 	EngineGuiShape(engine)
 	{
-
-	//float xSize = 200;
-	//float ySize = 400;
-	//float zSize = 200;
 
 	float xSize = size.X();
 	float ySize = size.Y();

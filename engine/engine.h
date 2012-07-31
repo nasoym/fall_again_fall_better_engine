@@ -4,22 +4,19 @@
 #include <boost/python.hpp>
 using namespace boost::python;
 
-
 enum Keys;
-
-#include "engine_physic.h"
-
-#include "engine_graphic.h"
-
-#include "engine_object.h"
-class EngineObject;
 
 #include <set>
 #include <vector>
 
-#include "logger.h"
-
 #include "math3d.h"
+#include "keyboard_listener.h"
+
+class PhysicsEngine;
+
+class GraphicsEngine;
+
+class EngineObject;
 
 class Engine : public KeyboardListener {
     public:

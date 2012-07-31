@@ -1,7 +1,10 @@
 
 #include "logger.h"
 #include "engine_joint.h"
+#include "engine.h"
+
 #include "engine_body.h"
+#include "joint_physic.h"
 
 EngineJoint::EngineJoint(Engine* engine,EngineBody* body1, EngineBody* body2) :
 	EngineGuiShape(engine),

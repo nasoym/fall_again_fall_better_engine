@@ -1,13 +1,10 @@
 #ifndef _ENGINE_BODY_H
 #define _ENGINE_BODY_H
 
-#include "engine.h"
-class Engine;
-
 #include "engine_gui_shape.h"
 
-#include "box_physic.h"
-#include "body_physic.h"
+class Engine;
+class PhysicBody;
 
 class EngineBody : public EngineGuiShape {
 

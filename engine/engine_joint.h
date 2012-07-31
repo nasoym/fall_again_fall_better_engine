@@ -1,14 +1,13 @@
 #ifndef _ENGINE_JOINT_H
 #define _ENGINE_JOINT_H
 
-#include "engine.h"
 class Engine;
-
-#include "engine_gui_shape.h"
 class EngineBody;
 
+#include "engine_gui_shape.h"
 
 #include "joint_physic.h"
+class PhysicJoint;
 
 class EngineJoint : public EngineGuiShape {
     public:

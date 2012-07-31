@@ -1,5 +1,10 @@
 #include "logger.h"
+
 #include "engine_body.h"
+#include "engine.h"
+
+#include "body_physic.h"
+#include "box_physic.h"
 
 EngineBody::EngineBody(Engine* engine) :
 	EngineGuiShape(engine),

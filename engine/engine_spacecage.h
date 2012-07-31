@@ -1,11 +1,12 @@
 #ifndef _ENGINE_SPACECAGE_H
 #define _ENGINE_SPACECAGE_H
 
-#include "engine.h"
+class Engine;
 
 #include "engine_gui_shape.h"
 
-#include "plane_physic.h"
+class PhysicPlane;
+
 #include "math3d.h"
 
 class EngineSpaceCage : public EngineGuiShape {
