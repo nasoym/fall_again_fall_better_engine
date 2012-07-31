@@ -2,8 +2,11 @@
 #include "engine.h"
 
 #include "box_graphic.h"
-#include "static_physic.h"
+#include "mesh_graphic.h"
+#include "engine_graphic.h"
+
 #include "box_physic.h"
+#include "static_physic.h"
 
 #include "engine_gui_shape.h"
 #include "engine_spacecage.h"
@@ -125,6 +128,14 @@ void    Engine::addObject(EngineObject* object){
 
 int     Engine::howManyObjects() {
 	return mObjects.size();
+}
+
+EngineObject*	Engine::createMesh(const char* meshName){
+	EngineGuiShape* engineObject = new EngineGuiShape(this);
+	engineObject->setShape(new GraphicsMesh(getGraphicsEngine(),meshName));
+	engineObject->setSize(Vec3(10,1,10));
+	engineObject->setPosition(Vec3(0,-0.5,0));
+	return engineObject;
 }
 
 EngineObject*	Engine::createGuiBox(){

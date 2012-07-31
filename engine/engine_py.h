@@ -7,32 +7,23 @@
 #include <boost/python/operators.hpp>
 #include <boost/python/return_value_policy.hpp>
 #include <boost/python/call_method.hpp>
+using namespace boost::python;
+
+#include "math3d.h"
 
 #include "engine_keys.h"
 
 #include "engine.h"
-class Engine;
 
 #include "engine_object.h"
-class EngineObject;
-
 #include "engine_gui_shape.h"
-class EngineGuiShape;
 
 #include "engine_spacecage.h"
-class EngineSpaceCage;
-
 #include "engine_body.h"
-class EngineBody;
-
 #include "engine_joint.h"
-
-#include "math3d.h"
-
-using namespace boost::python;
+#include "engine_mesh.h"
 
 BOOST_PYTHON_MODULE(EngineModule) {
-
 
 	enum_<Keys>("Keys")
 	.value("K_F1",K_F1) .value("K_F2",K_F2) .value("K_F3",K_F3) .value("K_F4",K_F4) .value("K_F5",K_F5) .value("K_F6",K_F6) .value("K_F7",K_F7) .value("K_F8",K_F8) .value("K_F9",K_F9) .value("K_F10",K_F10) .value("K_F11",K_F11) .value("K_F12",K_F12)
@@ -96,6 +87,9 @@ BOOST_PYTHON_MODULE(EngineModule) {
 	class_<EngineBody,bases<EngineGuiShape> >("EngineBody", init<Engine*>())
 		;
 
+	class_<EngineMesh,bases<EngineGuiShape> >("EngineMesh", init<Engine*>())
+		;
+
 	class_<EngineJoint,bases<EngineGuiShape> >("EngineJoint", init<Engine*,EngineBody*,EngineBody*>())
 		.def("setAnchor1Size",&EngineJoint::setAnchor1Size)
 		.def("setAnchor2Size",&EngineJoint::setAnchor2Size)
@@ -123,6 +117,7 @@ BOOST_PYTHON_MODULE(EngineModule) {
         .def("createPhysicBox",&Engine::createPhysicBox,return_value_policy<reference_existing_object>() )
         .def("createJoint",&Engine::createJoint,return_value_policy<reference_existing_object>() )
         .def("createPhysicStatic",&Engine::createPhysicStatic,return_value_policy<reference_existing_object>() )
+		.def("createMesh",&Engine::createMesh,return_value_policy<reference_existing_object>() )
 
         .def("step",&Engine::step)
         .def("quit",&Engine::quit)

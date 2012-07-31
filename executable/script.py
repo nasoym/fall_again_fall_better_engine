@@ -61,8 +61,8 @@ def keyDown(key):
 def keyPressed(key):
 	if key == EngineModule.Keys.K_T:
 		pass
-		#reload(temp)
-		#temp.launch(Engine,objects,EngineModule)
+		reload(temp)
+		temp.launch(Engine,objects,EngineModule)
 
 	if key == EngineModule.Keys.K_1:
 		o = Engine.createPhysicBox()
