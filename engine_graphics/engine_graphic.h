@@ -11,8 +11,7 @@ using namespace Ogre;
 
 #include <set>
 
-#include "keyboard_listener.h"
-
+class KeyboardListener;
 
 class GraphicsEngine : 
         public WindowEventListener,

@@ -6,10 +6,10 @@
 using namespace physx;
 
 #include "basejoint.h"
+
 #include "body_physic.h"
 
 #include "engine_physic.h"
-class PhysicsEngine;
 
 #include "math3d.h"
 

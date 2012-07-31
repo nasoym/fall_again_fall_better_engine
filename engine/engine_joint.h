@@ -7,7 +7,7 @@ class EngineBody;
 #include "engine_gui_shape.h"
 
 #include "joint_physic.h"
-class PhysicJoint;
+//class PhysicJoint;
 
 class EngineJoint : public EngineGuiShape {
     public:

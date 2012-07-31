@@ -9,27 +9,6 @@ EngineGuiShape::EngineGuiShape(Engine* engine) :
 	{
 }
 
-void        EngineGuiShape::tupleSetPosition(boost::python::object& tupleObject){
-	mShape->setPosition(Vec3(tupleObject));
-}
-boost::python::tuple EngineGuiShape::tupleGetPosition(){
-	return mShape->getPosition().toTuple();
-}
-
-void        EngineGuiShape::tupleSetOrientation(boost::python::object& tupleObject){
-	mShape->setOrientation(Quat(tupleObject));
-}
-boost::python::tuple EngineGuiShape::tupleGetOrientation(){
-	return mShape->getOrientation().toTuple();
-}
-
-void        EngineGuiShape::tupleSetSize(boost::python::object& tupleObject){
-	mShape->setSize(Vec3(tupleObject));
-}
-boost::python::tuple EngineGuiShape::tupleGetSize(){
-	return mShape->getSize().toTuple();
-}
-
 void        EngineGuiShape::setPosition(Vec3& vec3){
 	mShape->setPosition(vec3);
 }

@@ -1,14 +1,12 @@
 #ifndef _BASE_ACTOR_H
 	#define _BASE_ACTOR_H
 
-#include "basejoint.h"
-
 #include "PxPhysicsAPI.h"
 using namespace physx;
 
 #include <vector>
 
-class BaseJoint;
+#include "basejoint.h"
 
 class PhysicBody {
 protected:

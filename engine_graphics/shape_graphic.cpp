@@ -1,6 +1,6 @@
 #include "logger.h"
 #include "shape_graphic.h"
-
+#include "engine_graphic.h"
 
 GraphicsShape::GraphicsShape(GraphicsEngine* graphicsEngine):
     mGraphicsEngine(graphicsEngine) 
@@ -14,27 +14,6 @@ GraphicsShape::~GraphicsShape(){
     parentNode->removeChild(mNode);
     mEntity = 0;
     mNode = 0;
-}
-
-void        GraphicsShape::tupleSetPosition(boost::python::object& tupleObject){
-	setPosition(Vec3(tupleObject));
-}
-boost::python::tuple GraphicsShape::tupleGetPosition(){
-	return getPosition().toTuple();
-}
-
-void        GraphicsShape::tupleSetOrientation(boost::python::object& tupleObject){
-	setOrientation(Quat(tupleObject));
-}
-boost::python::tuple GraphicsShape::tupleGetOrientation(){
-	return getOrientation().toTuple();
-}
-
-void        GraphicsShape::tupleSetSize(boost::python::object& tupleObject){
-	setSize(Vec3(tupleObject));
-}
-boost::python::tuple GraphicsShape::tupleGetSize(){
-	return getSize().toTuple();
 }
 
 void        GraphicsShape::setPosition(Vec3& vec3){

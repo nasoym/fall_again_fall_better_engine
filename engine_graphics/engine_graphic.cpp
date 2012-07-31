@@ -1,7 +1,7 @@
-//-------------------------------------
 #include "logger.h"
 #include "engine_graphic.h"
-//-------------------------------------
+#include "keyboard_listener.h"
+
 GraphicsEngine::GraphicsEngine() :
     mExit(false),
     mInputManager(0),

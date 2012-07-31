@@ -1,7 +1,7 @@
 #include "logger.h"
 #include "plane_physic.h"
+#include "engine_physic.h"
 
-//PhysicPlane::PhysicPlane(Engine* engine, object pos, object quat):
 PhysicPlane::PhysicPlane(PhysicsEngine* engine, PxVec3 position, PxQuat orientation):
     mEngine(engine)  
 {

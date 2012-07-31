@@ -1,5 +1,8 @@
 #include "logger.h"
+#include <Ogre.h>
+using namespace Ogre;
 #include "box_graphic.h"
+#include "engine_graphic.h"
 
 GraphicsBox::GraphicsBox(GraphicsEngine* graphicsEngine):
 	GraphicsShape(graphicsEngine)

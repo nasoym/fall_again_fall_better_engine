@@ -6,7 +6,6 @@
 #include "PxPhysicsAPI.h"
 using namespace physx;
 
-#include "engine_physic.h"
 class PhysicsEngine;
 
 #include "math3d.h"

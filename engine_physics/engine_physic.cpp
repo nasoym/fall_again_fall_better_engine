@@ -1,8 +1,7 @@
-//-------------------------------------
 #include "logger.h"
 #include "engine_physic.h"
 #include <boost/thread.hpp>
-//-------------------------------------
+
 PhysicsEngine::PhysicsEngine() :
     mForceFactor(300) {
     Logger::debug(format("creating physics engine: %p") % this);

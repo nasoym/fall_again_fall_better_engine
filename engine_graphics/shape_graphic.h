@@ -4,28 +4,14 @@
 #include <Ogre.h>
 using namespace Ogre;
 
-#include "engine_graphic.h"
+class GraphicsEngine;
 
 #include "math3d.h"
-
-#include <boost/python/module.hpp>
-#include <boost/python/def.hpp>
-#include <boost/python/tuple.hpp>
-#include <boost/python/extract.hpp>
 
 class GraphicsShape {
     public:
         GraphicsShape(GraphicsEngine*);
         virtual ~GraphicsShape();
-
-		void        tupleSetPosition(boost::python::object& tupleObject);
-		boost::python::tuple tupleGetPosition();
-
-		void        tupleSetOrientation(boost::python::object& tupleObject);
-		boost::python::tuple tupleGetOrientation();
-
-		void        tupleSetSize(boost::python::object& tupleObject);
-		boost::python::tuple tupleGetSize();
 
 		void        setPosition(Vec3& vec3);
 		Vec3    	getPosition();

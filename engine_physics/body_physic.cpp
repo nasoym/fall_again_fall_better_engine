@@ -1,3 +1,4 @@
+#include "basejoint.h"
 #include "body_physic.h"
 
 PhysicBody::PhysicBody( ) {

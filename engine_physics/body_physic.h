@@ -1,15 +1,13 @@
 #ifndef _PHYSIC_BODY_H
 #define _PHYSIC_BODY_H
 
-#include "basejoint.h"
+class BaseJoint;
 
 #include "PxPhysicsAPI.h"
 using namespace physx;
 
 #include <vector>
 #include "math3d.h"
-
-class BaseJoint;
 
 class PhysicBody {
 	protected:
