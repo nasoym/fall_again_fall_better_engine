@@ -1,9 +1,8 @@
 #include "logger.h"
 #include "engine.h"
 
-#include "box_graphic.h"
-#include "mesh_graphic.h"
-#include "engine_graphic.h"
+//#include "box_graphic.h"
+//#include "mesh_graphic.h"
 
 #include "box_physic.h"
 #include "static_physic.h"
@@ -17,10 +16,18 @@ Engine::Engine() :
 	mLoopRendering(true),
 	mPythonInitialized(false),
 	mSimulationTime(0),
-	mTimingFactor(1.0f)
+	mTimingFactor(1.0f),
+    mExit(false),
+    mInputManager(0),
+	mCurrentTime(0),
+	mLastTime(0)
 	{
     Logger::debug(format("creating engine: %p ") % this);
+    setupPhysics();
     setup();
+	setupStereo();
+    setupOIS();
+    setupWindowEventListener();
 }
 
 Engine::~Engine(){
@@ -28,19 +35,19 @@ Engine::~Engine(){
 	if (mPythonInitialized) {
 		closePython();
 	}
+    closeWindowEventListener();
+    closeOIS();
+	closeStereo();
     close();
+    closePhysics();
 }
 
-void Engine::setup(){
-    mGraphicsEngine = new GraphicsEngine();
-	mGraphicsEngine->addKeyboardListener(this);
-
+void Engine::setupPhysics(){
     mPhysicsEngine = new PhysicsEngine();
 }
 
-void Engine::close(){
+void Engine::closePhysics(){
     delete mPhysicsEngine;
-    delete mGraphicsEngine;
 }
 
 void Engine::run(){
@@ -50,17 +57,17 @@ void Engine::run(){
 }
 
 void	Engine::step() {
-	mGraphicsEngine->processOIS();
-	if (mGraphicsEngine->inputExit()) {
+	processOIS();
+	if (inputExit()) {
 		quit();
 	}
 	updateKeysDown();
 	//TODO camera pos/rot from node
 	guiUpdates();
-	mGraphicsEngine->render();
+	render();
 	//printf("o");
 
-	unsigned long elapsedTime = mGraphicsEngine->getElapsedTime();
+	unsigned long elapsedTime = getElapsedTime();
     //Logger::debug(format("%1%") % elapsedTime);
 
 	//float 	mSimulationTimeStep = 1000.0f / 60.0f;	
@@ -132,7 +139,7 @@ int     Engine::howManyObjects() {
 
 EngineObject*	Engine::createMesh(const char* meshName){
 	EngineGuiShape* engineObject = new EngineGuiShape(this);
-	engineObject->setShape(new GraphicsMesh(getGraphicsEngine(),meshName));
+	engineObject->createMesh(meshName);
 	engineObject->setSize(Vec3(10,1,10));
 	engineObject->setPosition(Vec3(0,-0.5,0));
 	return engineObject;
@@ -140,7 +147,7 @@ EngineObject*	Engine::createMesh(const char* meshName){
 
 EngineObject*	Engine::createGuiBox(){
 	EngineGuiShape* engineObject = new EngineGuiShape(this);
-	engineObject->setShape(new GraphicsBox(getGraphicsEngine()));
+	engineObject->createBoxEntity();
 	engineObject->setSize(Vec3(10,1,10));
 	engineObject->setPosition(Vec3(0,-0.5,0));
 	return engineObject;
@@ -157,7 +164,7 @@ EngineObject*	Engine::createPhysicStatic(){
 			)
 	);
 	engineObject->setGuiUpdatesOff();
-	engineObject->setShape(new GraphicsBox(getGraphicsEngine()));
+	engineObject->createBoxEntity();
 	engineObject->setSize(Vec3(1,1,1));
 	engineObject->setPosition(Vec3(0,150,0));
 	return engineObject;
@@ -172,7 +179,7 @@ EngineObject*	Engine::createPhysicBox(){
 			Vec3(1,1,1)
 			)
 	);
-	engineObject->setShape(new GraphicsBox(getGraphicsEngine()));
+	engineObject->createBoxEntity();
 	engineObject->setSize(Vec3(1,1,1));
 	engineObject->setPosition(Vec3(0,150,0));
 	return engineObject;
@@ -188,26 +195,248 @@ EngineObject*	Engine::createJoint(EngineObject* obj1,EngineObject* obj2){
 
 EngineObject*	Engine::createSpaceCage(Vec3& size){
 	EngineSpaceCage* spaceCage = new EngineSpaceCage(this,size);
-	spaceCage->setShape(new GraphicsBox(getGraphicsEngine()));
+	spaceCage->createBoxEntity();
 	spaceCage->setSize(Vec3(size.X(),1,size.Z()));
 	spaceCage->setPosition(Vec3(0,-0.5,0));
 	return spaceCage;
 }
 
+
+
+
+void Engine::setup(){
+    mLogger = new Ogre::LogManager();
+    mLogger->createLog("log.log", true, false,true);
+
+	//root = new Root("","");
+	mRoot = new Root();
+    setupResources();
+
+    RenderSystemList rlist = mRoot->getAvailableRenderers();
+    RenderSystemList::iterator it = rlist.begin();
+    while (it !=rlist.end()) {
+        RenderSystem *rSys = *(it++);
+		rSys->setConfigOption("Full Screen", "No");
+		rSys->setConfigOption("Video Mode", "1024 x 768 @ 32-bit colour");
+		mRoot->setRenderSystem(rSys);
+    }
+	//mRoot->showConfigDialog();
+
+	mWindow = mRoot->initialise(true);
+	//mRoot->initialise(false);
+	//mWindow = mRoot->createRenderWindow("main window",400,400,false);
+
+    mSceneMgr = mRoot->createSceneManager(ST_GENERIC, "ExampleSMInstance");
+    mSceneMgr->setAmbientLight(ColourValue(0.2,0.2,0.2));
+
+    mRootSceneNode = mSceneMgr->getRootSceneNode();
+    mDebugSceneNode = mRootSceneNode->createChildSceneNode();
+    mFinalSceneNode = mRootSceneNode->createChildSceneNode();
+
+    ResourceGroupManager::getSingleton().initialiseAllResourceGroups();
+
+    mCamera = mSceneMgr->createCamera("PlayerCam");
+    // Position it at 500 in Z direction
+    mCamera->setPosition(Vector3(0,0,500));
+    // Look back along -Z
+    mCamera->lookAt(Vector3(0,0,-300));
+    mCamera->setNearClipDistance(5);
+
+    // Create one viewport, entire window
+    mViewport = mWindow->addViewport(mCamera);
+    mViewport->setBackgroundColour(ColourValue(0.5,0.3,0.2));
+    // Alter the camera aspect ratio to match the viewport
+    mCamera->setAspectRatio( Real(mViewport->getActualWidth()) / Real(mViewport->getActualHeight()));
+
+    Light * light = mSceneMgr->createLight("MainLight");
+	light->setType(Light::LT_POINT);
+    light->setPosition(200,200,200);
+	light->setDiffuseColour(0.2,0.2,0.2);
+	light->setSpecularColour(0.5,0.5,0.5);
+
+    Light * light2 = mSceneMgr->createLight("MainLight2");
+	light2->setType(Light::LT_POINT);
+    light2->setPosition(-200,200,-200);
+	light2->setDiffuseColour(0.2,0.2,0.2);
+	light2->setSpecularColour(0.5,0.5,0.5);
+
+	/*
+    //Entity *ent = mSceneMgr->createEntity("head","cube.mesh");
+    Entity *ent = mSceneMgr->createEntity("head","Prefab_Cube");
+    //ent->setMaterialName("Ogre/Skin");
+    //ent->setMaterialName("Examples/Chrome");
+    mSceneMgr->getRootSceneNode()->createChildSceneNode()->attachObject(ent);
+	*/
+
+
+}
+
+void Engine::close(){
+	OGRE_DELETE mRoot;
+}
+
+void Engine::render(){
+    WindowEventUtilities::messagePump();
+    mRoot->renderOneFrame();
+    //mRoot->startRendering();
+}
+
+void Engine::setupResources() {
+    ConfigFile cf;
+    cf.load("resources.cfg");
+
+    // Go through all sections & settings in the file
+    ConfigFile::SectionIterator seci = cf.getSectionIterator();
+
+    String secName, typeName, archName;
+    while (seci.hasMoreElements())
+    {
+        secName = seci.peekNextKey();
+        ConfigFile::SettingsMultiMap *settings = seci.getNext();
+        ConfigFile::SettingsMultiMap::iterator i;
+        for (i = settings->begin(); i != settings->end(); ++i)
+        {
+            typeName = i->first;
+            archName = i->second;
+            ResourceGroupManager::getSingleton().addResourceLocation(
+                archName, typeName, secName);
+        }
+    }
+}
+
+void 		Engine::setupStereo() {
+	//mStereoManager.init(mViewport, NULL, "stereo.cfg");
+}
+
+void 		Engine::closeStereo() {
+}
+
+
 void			Engine::setCameraPosition(Vec3 & vec){
-	getGraphicsEngine()->setCameraPosition(vec.toOgre());
+	getCamera()->setPosition(vec.toOgre());
 }
 
 void			Engine::setCameraOrientation(Quat & quat){
-	getGraphicsEngine()->setCameraOrientation(quat.toOgre());
+	getCamera()->setOrientation(quat.toOgre());
 }
 
 Vec3			Engine::getCameraPosition(){
-	return Vec3(getGraphicsEngine()->getCameraPosition());
+	return Vec3(getCamera()->getPosition());
 }
 
 Quat			Engine::getCameraOrientation(){
-	return Quat(getGraphicsEngine()->getCameraOrientation());
+	return Quat(getCamera()->getOrientation());
 }
 
-	
+unsigned long Engine::getElapsedTime() {
+	unsigned long timeDifference = 0;
+
+	mCurrentTime = mTimer.getMilliseconds();
+	timeDifference = mCurrentTime - mLastTime;
+	mLastTime = mCurrentTime;
+    //Logger::debug(format("%1% %2%") % mCurrentTime % timeDifference);
+	return timeDifference;
+}
+
+void Engine::setupOIS() {
+    OIS::ParamList pl;
+    size_t windowHnd = 0;
+    std::ostringstream windowHndStr;
+    bool bufferedKeys = true;
+    bool bufferedMouse = true;
+
+    mWindow->getCustomAttribute("WINDOW", &windowHnd);
+    windowHndStr << windowHnd;
+    pl.insert(std::make_pair(std::string("WINDOW"), windowHndStr.str()));
+    pl.insert(std::make_pair(std::string("w32_mouse"), "DISCL_FOREGROUND"));
+    pl.insert(std::make_pair(std::string("w32_mouse"), "DISCL_NONEXCLUSIVE"));
+
+    pl.insert(std::make_pair("w32_keyboard", "DISCL_FOREGROUND"));
+    pl.insert(std::make_pair("w32_keyboard", "DISCL_NONEXCLUSIVE"));
+
+    mInputManager = OIS::InputManager::createInputSystem( pl );
+
+    mKeyboard = static_cast<OIS::Keyboard*>(mInputManager->createInputObject( OIS::OISKeyboard, bufferedKeys ));
+    mMouse = static_cast<OIS::Mouse*>(mInputManager->createInputObject( OIS::OISMouse, bufferedMouse ));
+
+    mKeyboard->setEventCallback(this);
+    mMouse->setEventCallback(this);
+
+    windowResized(mWindow); 
+}
+
+void Engine::closeOIS() {
+    if( mInputManager ) {
+        mInputManager->destroyInputObject( mMouse );
+        mInputManager->destroyInputObject( mKeyboard );
+
+        OIS::InputManager::destroyInputSystem(mInputManager);
+        mInputManager = 0;
+    }
+}
+
+void Engine::processOIS() {
+    if( mInputManager ) {
+        mKeyboard->capture();
+        mMouse->capture();
+        if( !mKeyboard->buffered() ) {
+            if( mKeyboard->isKeyDown(OIS::KC_ESCAPE) || mKeyboard->isKeyDown(OIS::KC_Q) ) {
+                mExit = true;
+            }
+        }
+
+        if( !mMouse->buffered() ) {
+            const OIS::MouseState &ms = mMouse->getMouseState();
+            if( ms.buttonDown( OIS::MB_Right ) ) {
+                ms.X.rel;
+                ms.Y.rel;
+            } else {
+            }
+        }
+    }
+}
+
+bool    Engine::inputExit() {
+    return mExit;
+}
+
+void    Engine::setupWindowEventListener() {
+    WindowEventUtilities::addWindowEventListener(mWindow, this);
+}
+void    Engine::closeWindowEventListener() {
+    WindowEventUtilities::removeWindowEventListener(mWindow, this);
+}
+
+
+//Adjust mouse clipping area
+void Engine::windowResized(RenderWindow* rw) {
+    //Logger::debug("windowResized");
+    unsigned int width, height, depth;
+    int left, top;
+    rw->getMetrics(width, height, depth, left, top);
+
+    const OIS::MouseState &ms = mMouse->getMouseState();
+    ms.width = width;
+    ms.height = height;
+
+    mCamera->setAspectRatio( Real(width) / Real(height));
+}
+
+void Engine::windowMoved(RenderWindow* rw) {
+    //Logger::debug("windowMoved");
+}
+
+bool windowClosing(RenderWindow* rw) {
+    //Logger::debug("windowClosing");
+    return true;
+}
+
+void Engine::windowClosed(RenderWindow* rw) {
+    //Logger::debug("windowClosed");
+    mExit = true;
+}
+
+void Engine::windowFocusChange(RenderWindow* rw) {
+    //Logger::debug("windowFocusChange");
+}
+

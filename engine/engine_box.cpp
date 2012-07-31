@@ -1,13 +1,16 @@
 #include "logger.h"
+
 #include <Ogre.h>
 using namespace Ogre;
-#include "box_graphic.h"
-#include "engine_graphic.h"
 
-GraphicsBox::GraphicsBox(GraphicsEngine* graphicsEngine):
-	GraphicsShape(graphicsEngine)
-    {
-    setEntity(getGraphicsEngine()->getSceneManager()->createEntity("Prefab_Cube"));
+#include "engine_box.h"
+#include "engine.h"
+
+EngineBox::EngineBox(Engine* engine) :
+	EngineGuiShape(engine)
+	{
+
+    setEntity(getEngine()->getSceneManager()->createEntity("Prefab_Cube"));
     getEntity()->setMaterialName("test2");
 	getEntity()->setCastShadows(true);
     //ent->setMaterialName("Ogre/Skin");
@@ -19,5 +22,4 @@ GraphicsBox::GraphicsBox(GraphicsEngine* graphicsEngine):
     //cube.entity.setCastShadows(False)
 
 }
-
 

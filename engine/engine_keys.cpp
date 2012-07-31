@@ -45,19 +45,6 @@ boost::assign::map_list_of
 	//(OIS::KC_MLEFT,K_MLEFT) (OIS::KC_MRIGHT,K_MRIGHT) 
 ;
 
-void Engine::keyPressed(const OIS::KeyEvent& evt){
-	if (evt.key == OIS::KC_ESCAPE) {
-		Logger::debug("esc pressed");
-		quit();
-	}
-	Keys key = keyEventToKeys(evt);
-	if (key != K_NOP) {
-		callPythonKeyPressed(key);
-		mPressedKeys.push_back(key);
-	}
-
-}
-
 Keys	Engine::keyEventToKeys(const OIS::KeyEvent & evt) {
 	std::map<OIS::KeyCode,Keys>::iterator keyListIterator;
 	keyListIterator = keyList.find(evt.key);
@@ -67,7 +54,33 @@ Keys	Engine::keyEventToKeys(const OIS::KeyEvent & evt) {
 	return K_NOP;
 }
 
-void Engine::keyReleased(const OIS::KeyEvent& evt){
+void Engine::updateKeysDown() {
+	std::vector<Keys>::iterator  pressedKeysIterator;
+	for (pressedKeysIterator = mPressedKeys.begin(); 
+		pressedKeysIterator != mPressedKeys.end(); ++pressedKeysIterator) {
+		callPythonKeyDown((*pressedKeysIterator));
+	}
+}
+
+
+
+
+
+bool Engine::keyPressed(const OIS::KeyEvent& evt){
+	if (evt.key == OIS::KC_ESCAPE) {
+		Logger::debug("esc pressed");
+		quit();
+	}
+	Keys key = keyEventToKeys(evt);
+	if (key != K_NOP) {
+		callPythonKeyPressed(key);
+		mPressedKeys.push_back(key);
+	}
+	return true;
+
+}
+
+bool Engine::keyReleased(const OIS::KeyEvent& evt){
 	Keys key = keyEventToKeys(evt);
 	if (key != K_NOP) {
 		callPythonKeyReleased(key);
@@ -81,30 +94,35 @@ void Engine::keyReleased(const OIS::KeyEvent& evt){
 			}
 		}
 	}
+	return true;
 }
 
-void Engine::updateKeysDown() {
-	std::vector<Keys>::iterator  pressedKeysIterator;
-	for (pressedKeysIterator = mPressedKeys.begin(); 
-		pressedKeysIterator != mPressedKeys.end(); ++pressedKeysIterator) {
-		callPythonKeyDown((*pressedKeysIterator));
+bool Engine::mouseMoved(const OIS::MouseEvent& evt) {
+	const OIS::MouseState &ms = mMouse->getMouseState();
+	if( ms.buttonDown( OIS::MB_Left ) ) {
+		mCamera->yaw(Degree(-ms.X.rel * 0.13));
+		mCamera->pitch(Degree(-ms.Y.rel * 0.13));
 	}
-
+    return true;
 }
 
-void	Engine::mousePressed(const OIS::MouseEvent& evt, OIS::MouseButtonID id){
+bool	Engine::mousePressed(const OIS::MouseEvent& evt, OIS::MouseButtonID id){
 	if (id == OIS::MB_Left)  {
 		pyFunctionKeyPressed(K_MLEFT);
 	//} else if (id == OIS::MB_RIGHT) {
 	//	pyFunctionKeyPressed(K_MRIGHT);
 	}
+	return true;
 }
 
-void	Engine::mouseReleased(const OIS::MouseEvent& evt, OIS::MouseButtonID id){
+bool	Engine::mouseReleased(const OIS::MouseEvent& evt, OIS::MouseButtonID id){
 	if (id == OIS::MB_Left)  {
 		pyFunctionKeyReleased(K_MLEFT);
 	//} else if (id == OIS::MB_RIGHT) {
 //		pyFunctionKeyReleased(K_MRIGHT);
 	}
+	return true;
 }
 
+
+	

@@ -15,7 +15,6 @@ CFLAGS+=-I /c/Python27/include
 CFLAGS+=-I /c/boost_1_47/
 CFLAGS+=-I ./common
 CFLAGS+=-I ./engine
-CFLAGS+=-I ./engine_graphics
 CFLAGS+=-I ./engine_physics
 CFLAGS+=-I ./stereoManager
 CFLAGS+=-c -MD -EHsc -D "NDEBUG" -nologo
@@ -45,7 +44,7 @@ LIBFLAGS=
 LIBFLAGS+=-NOLOGO
 LIBFLAGS+=-NODEFAULTLIB:LIBCMT
 
-VPATH=engine_physics:engine_graphics:common:engine:stereoManager
+VPATH=engine_physics:common:engine:stereoManager
 ALLPATHES=$(subst :, ,$(VPATH))
 
 OBJ=build/main.obj

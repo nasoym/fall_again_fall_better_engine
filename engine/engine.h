@@ -4,13 +4,19 @@
 #include <boost/python.hpp>
 using namespace boost::python;
 
+#include <Ogre.h>
+using namespace Ogre;
+
+#define OIS_DYNAMIC_LIB
+#include <OIS/OIS.h>
+
 enum Keys;
 
 #include <set>
 #include <vector>
 
 #include "math3d.h"
-#include "keyboard_listener.h"
+//#include "keyboard_listener.h"
 
 class PhysicsEngine;
 
@@ -18,7 +24,11 @@ class GraphicsEngine;
 
 class EngineObject;
 
-class Engine : public KeyboardListener {
+class Engine : 
+        public WindowEventListener,
+		public OIS::KeyListener,
+		public OIS::MouseListener
+		{
     public:
         Engine();
         ~Engine();
@@ -34,7 +44,7 @@ class Engine : public KeyboardListener {
 		void    addObject(EngineObject*);
 		//TODO object query
 
-		GraphicsEngine*	getGraphicsEngine(){return mGraphicsEngine;}
+		//GraphicsEngine*	getGraphicsEngine(){return mGraphicsEngine;}
 		PhysicsEngine*	getPhysicsEngine(){return mPhysicsEngine;}
 
 		void    physicUpdates();
@@ -57,10 +67,10 @@ class Engine : public KeyboardListener {
 		void	callPythonKeyPysicUpdate();
 		void	callPythonKeyGuiUpdate();
 
-		virtual void 	keyPressed(const OIS::KeyEvent& evt);
-		virtual void 	keyReleased(const OIS::KeyEvent& evt);
-		virtual void	mousePressed(const OIS::MouseEvent& evt, OIS::MouseButtonID id);
-		virtual void	mouseReleased(const OIS::MouseEvent& evt, OIS::MouseButtonID id);
+		bool 	keyPressed(const OIS::KeyEvent& evt);
+		bool 	keyReleased(const OIS::KeyEvent& evt);
+		bool	mousePressed(const OIS::MouseEvent& evt, OIS::MouseButtonID id);
+		bool	mouseReleased(const OIS::MouseEvent& evt, OIS::MouseButtonID id);
 		Keys	keyEventToKeys(const OIS::KeyEvent & evt);
 
 		void updateKeysDown();
@@ -74,12 +84,12 @@ class Engine : public KeyboardListener {
 		float			getTimingFactor(){return mTimingFactor;}
 
     private:
-        void    setup();
-        void    close();
+        void    setupPhysics();
+        void    closePhysics();
 
     private:
         PhysicsEngine*  		mPhysicsEngine;
-        GraphicsEngine* 		mGraphicsEngine;
+        //GraphicsEngine* 		mGraphicsEngine;
 		bool					mLoopRendering;
 
 		std::set<EngineObject*> mObjects;
@@ -98,6 +108,65 @@ class Engine : public KeyboardListener {
 
 		std::vector<Keys>		mPressedKeys;
 		float			mTimingFactor;
+
+
+	public:
+
+        void    render();
+
+        SceneManager*   getSceneManager(){return mSceneMgr;}
+        SceneNode*      getFinalNode(){return mFinalSceneNode;}
+        SceneNode*      getDebugNode(){return mDebugSceneNode;}
+		Camera*			getCamera(){return mCamera;}
+
+        bool            inputExit();
+        void            processOIS();
+
+        void    windowResized(RenderWindow*);
+        void windowMoved(RenderWindow* rw);
+        void windowClosed(RenderWindow* rw);
+        void windowFocusChange(RenderWindow* rw);
+
+        bool mouseMoved(const OIS::MouseEvent& evt);
+	
+		unsigned long getElapsedTime();
+
+		//TODO set windows params
+		void 		setupStereo();
+		void 		closeStereo();
+
+    private:
+        void    setup();
+        void    close();
+        void    setupResources();
+        void    setupOIS();    
+        void    closeOIS();
+        void    setupWindowEventListener();
+        void    closeWindowEventListener();
+
+    private:
+        Root*           mRoot;
+        LogManager*     mLogger;
+        Camera*         mCamera;
+        SceneManager*   mSceneMgr;
+        RenderWindow*   mWindow;
+        Viewport*       mViewport;
+		Timer			mTimer;
+		unsigned long mCurrentTime;
+		unsigned long mLastTime;
+
+        SceneNode*      mRootSceneNode;
+        SceneNode*      mDebugSceneNode;
+        SceneNode*      mFinalSceneNode;
+
+        OIS::InputManager* mInputManager;
+        OIS::Mouse*     mMouse;
+        OIS::Keyboard*  mKeyboard;
+        bool            mExit;
+
+		//StereoManager	mStereoManager;
+
+
 };
 
 #endif
