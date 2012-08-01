@@ -10,20 +10,20 @@
 
 #include "PxPhysicsAPI.h"
 
-class Quat {
+class Quat : public Ogre::Quaternion {
     public: // Constructors
-		Quat() : mQuaternion(1,0,0,0) {}
-		Quat(float w,float x,float y,float z) : mQuaternion(w,x,y,z) {}
-		Quat(boost::python::object& tupleObject) : mQuaternion() {
-			mQuaternion.w = boost::python::extract<float>(tupleObject[0]);
-			mQuaternion.x = boost::python::extract<float>(tupleObject[1]);
-			mQuaternion.y = boost::python::extract<float>(tupleObject[2]);
-			mQuaternion.z = boost::python::extract<float>(tupleObject[3]);
+		Quat() : Ogre::Quaternion(1,0,0,0) {}
+		Quat(float iw,float ix,float iy,float iz) : Ogre::Quaternion(iw,ix,iy,iz) {}
+		Quat(boost::python::object& tupleObject) : Ogre::Quaternion() {
+			w = boost::python::extract<float>(tupleObject[0]);
+			x = boost::python::extract<float>(tupleObject[1]);
+			y = boost::python::extract<float>(tupleObject[2]);
+			z = boost::python::extract<float>(tupleObject[3]);
 		}
-		Quat(const Ogre::Quaternion& ogreQuaternion) : mQuaternion(ogreQuaternion) {}
-		Quat(const physx::PxQuat& physXQuat) : mQuaternion(physXQuat.w,physXQuat.x,physXQuat.y,physXQuat.z) {}
+		Quat(const Ogre::Quaternion& ogreQuaternion) : Ogre::Quaternion(ogreQuaternion) {}
+		Quat(const physx::PxQuat& physXQuat) : Ogre::Quaternion(physXQuat.w,physXQuat.x,physXQuat.y,physXQuat.z) {}
 
-		Quat(const Quat & inputQuat) : mQuaternion(
+		Quat(const Quat & inputQuat) : Ogre::Quaternion(
 			inputQuat.W(),
 			inputQuat.X(),
 			inputQuat.Y(),
@@ -47,55 +47,54 @@ class Quat {
 				Ogre::Degree(p),
 				Ogre::Degree(r)
 			);
-			mQuaternion.FromRotationMatrix(rotationMatrix);
-			mQuaternion.normalise();
+			FromRotationMatrix(rotationMatrix);
+			normalise();
 			return *this;
 		}
 
 		Vec3    operator * (const Vec3 vec3) {
-			return Vec3(mQuaternion * vec3.toOgre());
+			return Vec3(toOgre() * vec3.toOgre());
 		}
 
 		Quat    operator * (const Quat quat) {
-			return Quat(mQuaternion * quat.toOgre());
+			return Quat(toOgre() * quat.toOgre());
 		}
 
 		Quat    operator + (const Quat quat) {
-			return Quat(mQuaternion + quat.toOgre());
+			return Quat(toOgre() + quat.toOgre());
 		}
 
 		Quat    operator - (const Quat quat) {
-			return Quat(mQuaternion - quat.toOgre());
+			return Quat(toOgre() - quat.toOgre());
 		}
 
 
 		Quat	inverse() {
-			return Quat(mQuaternion.Inverse());
+			return Quat(Inverse());
 		}
 
 		void	normalise() {
-			mQuaternion.normalise();
+			Ogre::Quaternion::normalise();
 		}
 
 
     public: // Converters
 		boost::python::tuple toTuple() const{
-			return boost::python::make_tuple(mQuaternion.w,mQuaternion.x, mQuaternion.y,mQuaternion.z);
+			return boost::python::make_tuple(w,x,y,z);
 		}
 		physx::PxQuat toPhysx() const {
-			return physx::PxQuat(mQuaternion.x, mQuaternion.y,mQuaternion.z,mQuaternion.w);
+			return physx::PxQuat(x,y,z,w);
 		}
 		Ogre::Quaternion toOgre() const {
-			return Ogre::Quaternion(mQuaternion.w,mQuaternion.x, mQuaternion.y,mQuaternion.z);
+			return *this;
 		}
 
-		float	W() const {return mQuaternion.w;}
-		float	X() const {return mQuaternion.x;}
-		float	Y() const {return mQuaternion.y;}
-		float	Z() const {return mQuaternion.z;}
+		float	W() const {return w;}
+		float	X() const {return x;}
+		float	Y() const {return y;}
+		float	Z() const {return z;}
 
 	public:
-		Ogre::Quaternion	mQuaternion;
 };
 
 #endif
