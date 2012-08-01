@@ -1,9 +1,6 @@
 #include "logger.h"
 #include "engine.h"
 
-//#include "box_graphic.h"
-//#include "mesh_graphic.h"
-
 #include "box_physic.h"
 #include "static_physic.h"
 

@@ -34,7 +34,6 @@ class EngineGuiShape : public EngineObject {
 		void				setEntity(Entity* entity){mEntity = entity;}
 		Entity*				getEntity(){return mEntity;}
 		SceneNode*			getNode(){return mNode;}
-		//GraphicsEngine*		getGraphicsEngine(){return mGraphicsEngine;}
 
 	private:
         Entity*     		mEntity; 
