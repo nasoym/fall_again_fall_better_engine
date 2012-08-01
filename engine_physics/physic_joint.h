@@ -5,11 +5,11 @@
 #include "PxPhysicsAPI.h"
 using namespace physx;
 
-#include "basejoint.h"
+#include "physic_basejoint.h"
 
-#include "body_physic.h"
+#include "physic_body.h"
 
-#include "engine_physic.h"
+#include "physic_engine.h"
 
 #include "math3d.h"
 

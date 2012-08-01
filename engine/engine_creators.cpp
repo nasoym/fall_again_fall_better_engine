@@ -1,8 +1,8 @@
 #include "logger.h"
 #include "engine.h"
 
-#include "box_physic.h"
-#include "static_physic.h"
+#include "physic_box.h"
+#include "physic_static.h"
 
 #include "engine_gui_shape.h"
 #include "engine_spacecage.h"

@@ -1,6 +1,6 @@
 #include "logger.h"
-#include "plane_physic.h"
-#include "engine_physic.h"
+#include "physic_plane.h"
+#include "physic_engine.h"
 
 PhysicPlane::PhysicPlane(PhysicsEngine* engine, PxVec3 position, PxQuat orientation):
     mEngine(engine)  

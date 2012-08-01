@@ -4,7 +4,7 @@
 #include "engine_spacecage.h"
 #include "engine.h"
 
-#include "plane_physic.h"
+#include "physic_plane.h"
 
 EngineSpaceCage::EngineSpaceCage(Engine* engine,Vec3& size) :
 	EngineGuiShape(engine)

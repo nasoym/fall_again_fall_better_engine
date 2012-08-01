@@ -1,5 +1,5 @@
-#include "box_physic.h"
-#include "engine_physic.h"
+#include "physic_box.h"
+#include "physic_engine.h"
 #include "logger.h"
 
 PhysicBox::PhysicBox(PhysicsEngine* engine, Vec3& position,Vec3& size) :

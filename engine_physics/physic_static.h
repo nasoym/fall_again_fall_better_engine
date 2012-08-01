@@ -1,7 +1,7 @@
 #ifndef _PHYSIC_STATIC_H
 #define _PHYSIC_STATIC_H
 
-#include "body_physic.h"
+#include "physic_body.h"
 
 #include "PxPhysicsAPI.h"
 using namespace physx;

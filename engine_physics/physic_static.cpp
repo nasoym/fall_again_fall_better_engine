@@ -1,5 +1,5 @@
-#include "static_physic.h"
-#include "engine_physic.h"
+#include "physic_static.h"
+#include "physic_engine.h"
 #include "logger.h"
 
 PhysicStatic::PhysicStatic(PhysicsEngine* engine, Vec3& position,Vec3& size) :

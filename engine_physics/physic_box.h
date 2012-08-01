@@ -1,7 +1,7 @@
 #ifndef _PHYSIC_BOX_H
 	#define _PHYSIC_BOX_H
 
-#include "body_physic.h"
+#include "physic_body.h"
 
 #include "PxPhysicsAPI.h"
 using namespace physx;

@@ -6,7 +6,7 @@ using namespace physx;
 
 #include <vector>
 
-#include "basejoint.h"
+#include "physic_basejoint.h"
 
 class PhysicBody {
 protected:

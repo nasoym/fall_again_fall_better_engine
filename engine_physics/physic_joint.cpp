@@ -1,6 +1,6 @@
-#include "joint_physic.h"
-#include "body_physic.h"
-#include "engine_physic.h"
+#include "physic_joint.h"
+#include "physic_body.h"
+#include "physic_engine.h"
 
 PhysicJoint::PhysicJoint(PhysicsEngine* engine,PhysicBody* actor1,PhysicBody* actor2):
         mEngine(engine),

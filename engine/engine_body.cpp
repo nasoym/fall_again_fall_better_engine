@@ -3,8 +3,8 @@
 #include "engine_body.h"
 #include "engine.h"
 
-#include "body_physic.h"
-#include "box_physic.h"
+#include "physic_body.h"
+#include "physic_box.h"
 
 EngineBody::EngineBody(Engine* engine) :
 	EngineGuiShape(engine),
