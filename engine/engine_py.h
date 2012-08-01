@@ -87,7 +87,7 @@ BOOST_PYTHON_MODULE(EngineModule) {
 	class_<EngineBody,bases<EngineGuiShape> >("EngineBody", init<Engine*>())
 		;
 
-	class_<EngineMesh,bases<EngineGuiShape> >("EngineMesh", init<Engine*>())
+	class_<EngineMesh,bases<EngineGuiShape> >("EngineMesh", init<Engine*,const char*>())
 		;
 
 	class_<EngineJoint,bases<EngineGuiShape> >("EngineJoint", init<Engine*,EngineBody*,EngineBody*>())

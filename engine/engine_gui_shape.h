@@ -14,7 +14,7 @@ class Engine;
 class EngineGuiShape : public EngineObject {
     public:
         EngineGuiShape(Engine* engine);
-        ~EngineGuiShape();
+        virtual ~EngineGuiShape();
 
 		virtual void        setPosition(Vec3& vec3);
 		virtual Vec3    	getPosition();
@@ -28,8 +28,6 @@ class EngineGuiShape : public EngineObject {
 		virtual EngineGuiShape*			isGuiShape(){return this;}
 
 		void	createBoxEntity();
-		void	createMesh(const char* meshName);
-		void	enableBones();
 
 		void				setEntity(Entity* entity){mEntity = entity;}
 		Entity*				getEntity(){return mEntity;}

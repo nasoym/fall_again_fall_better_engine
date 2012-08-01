@@ -34,7 +34,7 @@ def createMainRagdoll():
 
 def init():
 	pass
-	createMainRagdoll()
+	#createMainRagdoll()
 
 def keyDown(key):
 
@@ -60,7 +60,6 @@ def keyDown(key):
 
 def keyPressed(key):
 	if key == EngineModule.Keys.K_T:
-		pass
 		reload(temp)
 		temp.launch(Engine,objects,EngineModule)
 

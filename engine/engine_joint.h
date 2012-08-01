@@ -40,6 +40,8 @@ class EngineJoint : public EngineGuiShape {
         void        setMotorTarget(Quat& quat){mJoint->setMotorTarget(quat);}
         Quat        getMotorTarget(){return mJoint->getMotorTarget();}
 
+		virtual EngineJoint*			isJoint(){return this;}
+
 	private:
 		PhysicJoint*	mJoint;
 		EngineBody*		mBody1;

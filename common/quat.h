@@ -53,6 +53,7 @@ class Quat : public Ogre::Quaternion {
 		}
 
 		Vec3    operator * (const Vec3 vec3) {
+			// rotate vec3 by quaternion
 			return Vec3(toOgre() * vec3.toOgre());
 		}
 

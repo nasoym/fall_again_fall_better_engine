@@ -1,28 +1,60 @@
 #ifndef _ENGINE_MESH_H
 #define _ENGINE_MESH_H
 
+#include <Ogre.h>
+using namespace Ogre;
+
+#include <vector>
+
 #include "engine_gui_shape.h"
 
 class Engine;
+class EngineBody;
+
+struct BoneBody {
+	Bone*		bone;
+	EngineBody*	body;
+	BoneBody(Bone* b) : bone(b),body(0) {}
+	BoneBody(Bone* b,EngineBody* eb) : bone(b),body(eb) {}
+};
 
 class EngineMesh : public EngineGuiShape {
 
     public:
-        EngineMesh(Engine*);
-		virtual void		physicUpdate();
-		virtual void		guiUpdate();
 
-		virtual void        setPosition(Vec3& vec3);
-		virtual void        setOrientation(Quat& quat);
-		virtual void        setSize(Vec3& vec3);
+        EngineMesh(Engine*,const char*);
+		virtual ~EngineMesh();
 
-		virtual Vec3    	getPosition();
-		virtual Quat 		getOrientation();
-		virtual Vec3    	getSize();
+		void	enableBones();
 
+		virtual void	guiUpdate();
+		virtual void	physicUpdate();
+
+		void	createRootBone();
+		void	createPhysicBodies();
+		void	createPhsyisJoints();
+
+		Vec3	getBonePosition(Bone* bone);
+		Quat	getBoneOrientation(Bone* bone);
+		float	getBoneSize(Bone* bone);
+		EngineBody*	getBodyOfBone(Bone* bone);
+		Bone*	getBoneParent(Bone* bone);
+		void	checkForJointCollision();
+
+		Bone*	getBoneOfBody(EngineBody* body);
+		void	updateBone(Bone* bone);
+		void	boneSetOrientation(Bone* bone,Quat quat);
+
+		virtual EngineMesh*				isMesh(){return this;}
+		EngineBody*				getRootBone();
 	private:
+		EngineBody*		mRootBody;
+		Bone*			mRootBone;
+
+		std::vector<BoneBody> mBoneBodies;
+
+
+		
 };
 #endif
-
-
 

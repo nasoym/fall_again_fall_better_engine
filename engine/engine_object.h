@@ -12,6 +12,7 @@ class EngineGuiContainer;
 class EngineBody;
 class EngineJoint;
 class EngineSpaceCage;
+class EngineMesh;
 
 class EngineObject {
     public:
@@ -36,6 +37,7 @@ class EngineObject {
 		virtual EngineBody*				isBody(){return 0;}
 		virtual EngineJoint*			isJoint(){return 0;}
 		virtual EngineSpaceCage*	 	isSpaceCage(){return 0;}
+		virtual EngineMesh*				isMesh(){return 0;}
 
 	private:
 		Engine*		mEngine;
