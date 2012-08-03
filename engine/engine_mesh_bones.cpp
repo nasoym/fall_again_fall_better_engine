@@ -6,6 +6,24 @@
 #include "engine_body.h"
 #include "engine_joint.h"
 
+Bone*	EngineMesh::findRootBone() {
+	std::vector<BoneBody>::iterator	iter;
+	for(iter=mBoneBodies.begin();iter!=mBoneBodies.end();++iter){
+		if (!getBoneParent((*iter).bone)) {
+			return (*iter).bone;
+		}
+	}
+	return 0;
+}
+
+bool	EngineMesh::hasBoneAParent(Bone* bone){
+	if (getBoneParent(bone) && getBodyOfBone(getBoneParent(bone)) ) {
+		return true;
+	} else {
+		return false;
+	}
+}
+
 Bone*	EngineMesh::getBoneParent(Bone* bone){
 	return (Bone*) bone->getParent();
 }

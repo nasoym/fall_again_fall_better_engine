@@ -27,9 +27,31 @@ Vec3	PhysicStatic::getSize() {
 }
 
 void    PhysicStatic::setSize(Vec3 vec3) {
+    (mEngine->getScene())->removeActor(*mBody);
     mShape->setGeometry(PxBoxGeometry(
 		vec3.toPhysx()
 		));
+    (mEngine->getScene())->addActor(*mBody);
 }
 
+void    PhysicStatic::setPosition(Vec3 vec3) {
+    (mEngine->getScene())->removeActor(*mBody);
+    PxTransform t = getBody()->getGlobalPose();
+    t.p.x = vec3.X();
+    t.p.y = vec3.Y();
+    t.p.z = vec3.Z();
+    getBody()->setGlobalPose(t);
+    (mEngine->getScene())->addActor(*mBody);
+}
+
+void    PhysicStatic::setOrientation(Quat quat) {
+    (mEngine->getScene())->removeActor(*mBody);
+    PxTransform t = getBody()->getGlobalPose();
+    t.q.x = quat.X();
+    t.q.y = quat.Y();
+    t.q.z = quat.Z();
+    t.q.w = quat.W();
+    getBody()->setGlobalPose(t);
+    (mEngine->getScene())->addActor(*mBody);
+}
 

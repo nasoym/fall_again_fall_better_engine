@@ -29,11 +29,11 @@ class EngineMesh : public EngineGuiShape {
 		void	enableBones();
 
 		virtual void	guiUpdate();
-		virtual void	physicUpdate();
+		//virtual void	physicUpdate();
 
-		void	createRootBone();
-		void	createPhysicBodies();
-		void	createPhsyisJoints();
+		void	createRootBody();
+		void	createPhysicBodies(Bone* bone);
+		//void	createPhsyisJoints();
 
 		Vec3	getBonePosition(Bone* bone);
 		Quat	getBoneOrientation(Bone* bone);
@@ -41,16 +41,22 @@ class EngineMesh : public EngineGuiShape {
 		EngineBody*	getBodyOfBone(Bone* bone);
 		EngineJoint*	getJointOfBone(Bone* bone);
 		Bone*	getBoneParent(Bone* bone);
-		void	checkForJointCollision();
+		void	checkForJointCollision(Bone* bone);
 		void	boneSetPosition(Bone* bone,Vec3 vec3);
 
 		Bone*	getBoneOfBody(EngineBody* body);
 		void	updateBone(Bone* bone);
 		void	boneSetOrientation(Bone* bone,Quat quat);
+		void	createPhysics(Bone* bone);
 
 		void	createDebugObjects();
+		void	setBodyForBone(Bone* bone,EngineBody* body);
+		void	setJointForBone(Bone* bone,EngineJoint* joint);
 
-		Bone*	getRootBone();
+		bool	hasBoneAParent(Bone* bone);
+		EngineJoint* 	createJointToParent(Bone* bone);
+
+		Bone*	findRootBone();
 
 		virtual EngineMesh*				isMesh(){return this;}
 		EngineBody*				getRootBody();

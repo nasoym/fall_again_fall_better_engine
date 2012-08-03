@@ -27,7 +27,6 @@ EngineObject*	Engine::createGuiBox(){
 }
 
 EngineObject*	Engine::createPhysicStatic(){
-	Logger::debug("phsyic static created");
 	EngineBody* engineObject = new EngineBody(this);
 	engineObject->setPhysicBody(
 		new PhysicStatic(

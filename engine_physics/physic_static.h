@@ -23,6 +23,9 @@ class PhysicStatic : public PhysicBody {
 
 		Vec3				getSize();
 		void				setSize(Vec3);
+
+		virtual void	  	setPosition(Vec3);
+		virtual void	  	setOrientation(Quat);
 };
 #endif
 
