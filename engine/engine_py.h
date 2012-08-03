@@ -78,6 +78,9 @@ BOOST_PYTHON_MODULE(EngineModule) {
 		.def("setSize",&EngineGuiShape::setSize)
 		.def("getSize",&EngineGuiShape::getSize)
 
+		.def("setMaterialName",&EngineGuiShape::setMaterialName)
+		.def("setColour",&EngineGuiShape::setColour)
+
 		.def("isGuiShape",&EngineGuiShape::isGuiShape,return_value_policy<reference_existing_object>() )
 		;
 

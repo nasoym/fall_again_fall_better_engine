@@ -52,6 +52,17 @@ class Quat : public Ogre::Quaternion {
 			return *this;
 		}
 
+		Vec3	toAngles(){
+			Ogre::Matrix3	rotationMatrix = Ogre::Matrix3();
+			ToRotationMatrix(rotationMatrix);
+			Ogre::Radian x,y,z;
+			rotationMatrix.ToEulerAnglesXYZ(x,y,z);
+		  	return Vec3(
+				x.valueDegrees(),
+				y.valueDegrees(),
+				z.valueDegrees());
+		}
+
 		Vec3    operator * (const Vec3 vec3) {
 			// rotate vec3 by quaternion
 			return Vec3(toOgre() * vec3.toOgre());

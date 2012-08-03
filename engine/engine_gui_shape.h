@@ -27,6 +27,10 @@ class EngineGuiShape : public EngineObject {
 
 		virtual EngineGuiShape*			isGuiShape(){return this;}
 
+		void	setMaterialName(const char* name);
+		void	setColour(float red,float green,float blue,float alpha);
+		void	setupCustomMaterial();
+
 		void	createBoxEntity();
 
 		void				setEntity(Entity* entity){mEntity = entity;}
@@ -36,6 +40,7 @@ class EngineGuiShape : public EngineObject {
 	private:
         Entity*     		mEntity; 
         SceneNode*  		mNode;
+		MaterialPtr	mMaterial;
 
 };
 
