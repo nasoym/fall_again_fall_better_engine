@@ -2,6 +2,7 @@
 #define _QUAT_H
 
 #include <Ogre.h>
+#include <math.h>
 
 #include <boost/python/module.hpp>
 #include <boost/python/def.hpp>
@@ -9,6 +10,18 @@
 #include <boost/python/extract.hpp>
 
 #include "PxPhysicsAPI.h"
+
+#include "logger.h"
+
+	#ifndef PI
+		#define 	PI (3.14159265f)
+	#endif
+	#ifndef DEG2RAD
+		#define 	DEG2RAD (PI / 180.0f)
+	#endif 
+	#ifndef RAD2DEG
+		#define 	RAD2DEG (180.0f / PI)
+	#endif 
 
 class Quat : public Ogre::Quaternion {
     public: // Constructors
@@ -22,6 +35,8 @@ class Quat : public Ogre::Quaternion {
 		}
 		Quat(const Ogre::Quaternion& ogreQuaternion) : Ogre::Quaternion(ogreQuaternion) {}
 		Quat(const physx::PxQuat& physXQuat) : Ogre::Quaternion(physXQuat.w,physXQuat.x,physXQuat.y,physXQuat.z) {}
+		Quat(const float angle,const Vec3 & axis) :
+			Ogre::Quaternion(Ogre::Radian(angle),axis.toOgre()) {}
 
 		Quat(const Quat & inputQuat) : Ogre::Quaternion(
 			inputQuat.W(),
@@ -31,6 +46,41 @@ class Quat : public Ogre::Quaternion {
 		) { }
 
 	public:
+
+		Quat fromTwoVectors(Vec3 & vec1, Vec3 & vec2) {
+			Ogre::Quaternion q = vec1.toOgre().getRotationTo(vec2.toOgre());	
+			w = q.w;
+			x = q.x;
+			y = q.y;
+			z = q.z;
+/*
+			Vec3 vector1 = Vec3(vec1);
+			Vec3 vector2 = Vec3(vec2);
+			vector1.normalise();
+			vector2.normalise();
+			double	dot = vector1.dot(vector2);
+			//double	angle = acos(dot);
+			Vec3 cross = vector1.cross(vector2);
+			double	qw = sqrt(
+				(vector1.length() * vector1.length())
+				*
+				(vector2.length() * vector2.length())
+				+
+				dot
+				);
+			w = sqrt(dot);
+			x = cross.X();
+			y = cross.Y();
+			z = cross.Z();
+			normalise();
+			//FromAngleAxis(
+		//		Ogre::Radian(Ogre::Real(angle)),
+		//		Vec3(cross).toOgre()
+		//	);
+		*/
+			return *this;
+		}
+
 		Quat tupleFromAngle(boost::python::object& tupleObject) {
 			fromAngle(
 				boost::python::extract<float>(tupleObject[0]),

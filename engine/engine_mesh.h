@@ -36,7 +36,7 @@ class EngineMesh : public EngineGuiShape {
 		//void	createPhsyisJoints();
 
 		Vec3	getBonePosition(Bone* bone);
-		Quat	getBoneOrientation(Bone* bone);
+		Quat	getBoneOrientation(Bone* bone,bool rotated=true);
 		float	getBoneSize(Bone* bone);
 		EngineBody*	getBodyOfBone(Bone* bone);
 		EngineJoint*	getJointOfBone(Bone* bone);
@@ -52,6 +52,9 @@ class EngineMesh : public EngineGuiShape {
 		void	createDebugObjects();
 		void	setBodyForBone(Bone* bone,EngineBody* body);
 		void	setJointForBone(Bone* bone,EngineJoint* joint);
+		void		printEulerAngles(Quat quat);
+
+		Vec3		translateGlobalAnchorToLocal(EngineBody* body,Vec3 & globalAnchor);
 
 		bool	hasBoneAParent(Bone* bone);
 		EngineJoint* 	createJointToParent(Bone* bone);

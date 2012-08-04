@@ -6,6 +6,40 @@
 #include "engine_body.h"
 #include "engine_joint.h"
 
+Vec3		EngineMesh::translateGlobalAnchorToLocal(EngineBody* body,Vec3 & globalAnchor) {
+	return Vec3(
+		body->getOrientation().inverse() 
+		* (
+			globalAnchor - body->getPosition()
+		));
+}
+
+
+void	EngineMesh::setBodyForBone(Bone* bone,EngineBody* body){
+	std::vector<BoneBody>::iterator	iter;
+	for(iter=mBoneBodies.begin();iter!=mBoneBodies.end();++iter){
+		if ((*iter).bone == bone) {
+			(*iter).body = body;
+			break;
+		}
+	}
+}
+
+void	EngineMesh::setJointForBone(Bone* bone,EngineJoint* joint){
+	std::vector<BoneBody>::iterator	iter;
+	for(iter=mBoneBodies.begin();iter!=mBoneBodies.end();++iter){
+		if ((*iter).bone == bone) {
+			(*iter).joint = joint;
+			break;
+		}
+	}
+}
+
+
+EngineBody*				EngineMesh::getRootBody(){
+	return mRootBody;
+}
+
 Bone*	EngineMesh::findRootBone() {
 	std::vector<BoneBody>::iterator	iter;
 	for(iter=mBoneBodies.begin();iter!=mBoneBodies.end();++iter){
@@ -28,11 +62,13 @@ Bone*	EngineMesh::getBoneParent(Bone* bone){
 	return (Bone*) bone->getParent();
 }
 
-Quat	EngineMesh::getBoneOrientation(Bone* bone){
-	//Quat boneQuat = Quat(bone->_getDerivedOrientation());
-	//return Quat(boneQuat * getOrientation());
+Quat	EngineMesh::getBoneOrientation(Bone* bone,bool rotated){
 	Quat boneQuat = Quat(bone->_getDerivedOrientation()) * getOrientation();
-	return Quat(boneQuat * Quat().fromAngle(0,0,90) );
+	if (rotated) {
+		return Quat(boneQuat * Quat().fromAngle(0,0,90) );
+	} else {
+		return Quat(boneQuat);
+	}
 }
 
 void	EngineMesh::boneSetOrientation(Bone* bone,Quat quat){

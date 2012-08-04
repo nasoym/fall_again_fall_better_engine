@@ -28,6 +28,7 @@ EngineMesh::EngineMesh(Engine* engine,const char* meshName) :
 	createRootBody();
 	createPhysics(mRootBone);
 	createDebugObjects();
+
 }
 
 EngineMesh::~EngineMesh(){
@@ -45,10 +46,6 @@ void		EngineMesh::enableBones(){
 	}
 }
 
-EngineBody*				EngineMesh::getRootBody(){
-	return mRootBody;
-}
-
 void	EngineMesh::guiUpdate(){
 	if(getRootBody()){
 		setPosition(getRootBody()->getPosition());
@@ -58,13 +55,12 @@ void	EngineMesh::guiUpdate(){
 }
 
 void	EngineMesh::updateBone(Bone* bone){
-	EngineBody* 	body = getBodyOfBone(bone);
+	EngineBody* body = getBodyOfBone(bone);
 	if (body) {
 		boneSetOrientation(bone, body->getOrientation());
 		Vec3	localPos = Vec3();
 		if (getJointOfBone(bone) ) {
-			localPos = body->getOrientation() * 
-				getJointOfBone(bone)->getAnchor2();
+			localPos = body->getOrientation() * getJointOfBone(bone)->getAnchor2();
 		}
 		Vec3	finalPos = localPos + body->getPosition();
 		boneSetPosition(bone,finalPos);
@@ -153,118 +149,139 @@ void	EngineMesh::createDebugObjects(){
 
 }
 
-void	EngineMesh::setBodyForBone(Bone* bone,EngineBody* body){
-	std::vector<BoneBody>::iterator	iter;
-	for(iter=mBoneBodies.begin();iter!=mBoneBodies.end();++iter){
-		if ((*iter).bone == bone) {
-			(*iter).body = body;
-			break;
-		}
-	}
-}
-
-void	EngineMesh::setJointForBone(Bone* bone,EngineJoint* joint){
-	std::vector<BoneBody>::iterator	iter;
-	for(iter=mBoneBodies.begin();iter!=mBoneBodies.end();++iter){
-		if ((*iter).bone == bone) {
-			(*iter).joint = joint;
-			break;
-		}
-	}
-}
-
 void	EngineMesh::createPhysicBodies(Bone* bone){
 	Logger::debug(format("create physic body for: %1% ") % bone->getName());
-	float boneWidth = 1.0f;
+
 	EngineBody* body;
-	EngineJoint* joint;
 	bool bodyIsStatic = false;
 	if (getBoneParent( bone ) ) {
 		if (getBoneParent(getBoneParent( bone) ) ) {
 			body = getEngine()->createPhysicBox()->isBody();
-
 		} else {
 			body = getEngine()->createPhysicStatic()->isBody();
 			bodyIsStatic = true;
+			//body = getEngine()->createPhysicBox()->isBody();
 		}
 	} else {
 		body = getEngine()->createPhysicStatic()->isBody();
 		bodyIsStatic = true;
 	}
-	//TODO why crashing at shutdown when using statics ?
+
 	if (bodyIsStatic) {
 		Logger::debug("bone is static");
 	}
 
 	body->setColour(1,1,1,0.5f);
 
-	float size = getBoneSize(bone);
-	//Vec3	localSize = Vec3(0,size,0);
-	Vec3	localSize = Vec3(size,0,0);
-	Vec3	localPos = getBoneOrientation(bone) * localSize;
-
-	//body->setSize(Vec3(boneWidth,size,boneWidth));
-	body->setSize(Vec3(size,boneWidth,boneWidth));
-	body->setPosition(localPos + getBonePosition(bone));
-	body->setOrientation(
-		getBoneOrientation(bone)
-		//* Quat().fromAngle(0,0,90)
+	float 	boneWidth = 1.0f;
+	float 	boneLength = getBoneSize(bone);
+	body->setSize(Vec3(boneLength,boneWidth,boneWidth));
+	body->setPosition(
+		getBoneOrientation(bone) * Vec3(boneLength,0,0)
+		+ getBonePosition(bone)
 		);
+	body->setOrientation(getBoneOrientation(bone));
 	setBodyForBone(bone,body);
 
 	if (!bodyIsStatic) {
-		joint = createJointToParent(bone);
+		EngineJoint* joint = createJointToParent(bone);
 		setJointForBone(bone,joint);
-		checkForJointCollision( bone );
+		checkForJointCollision(bone);
 	}
 }
 
+void		EngineMesh::printEulerAngles(Quat quat){
+	Vec3 euler = quat.toAngles();
+	Logger::debug(format("orientation in euler: %1% %2% %3%") % 
+			euler.X() % euler.Y() % euler.Z() );
+}
+
+void		printVector3(Vec3 & vec3){
+	Logger::debug(format("vec: %1% %2% %3%") % 
+			vec3.X() % vec3.Y() % vec3.Z() );
+}
+
 EngineJoint* 	EngineMesh::createJointToParent(Bone* bone) {
-	EngineBody*	parentBone;
-	EngineBody* body;
 	EngineJoint* joint = 0;
-	Vec3		globalAnchor;
-	Vec3		anchor1;
-	Vec3		anchor2;
+
 	Quat		parentOrientation;
 	Quat	 	bodyOrientation;
 	Quat		jointOrientation;
 
-	Vec3 jointEuler;
-	if (getBoneParent(bone) && getBodyOfBone(getBoneParent(bone)) ) {
-		parentBone = getBodyOfBone(getBoneParent(bone));
-		body = getBodyOfBone(bone);
+	if (getBodyOfBone(bone) && getBoneParent(bone) && getBodyOfBone(getBoneParent(bone)) ) {
+		EngineBody*	parentBody = getBodyOfBone(getBoneParent(bone));
+		EngineBody* body = getBodyOfBone(bone);
 		Logger::debug(format("create joint from : %1% to %2%") %bone->getName() % getBoneParent(bone)->getName());
-		if(!body) {
-			Logger::debug("bone has no body");
-		}
 
-		if (!getBoneOfBody(parentBone)) {
-			parentOrientation = parentBone->getOrientation();
+		if (!getBoneOfBody(parentBody)) {
+			Logger::debug("parent bone has no body");
+			parentOrientation = parentBody->getOrientation();
 			//parentOrientation = parentOrientation * Quat().fromAngle(-90,0,0);
 		} else {
-			//parentOrientation = getBoneOrientation(getBoneOfBody(parentBone));
-			parentOrientation = parentBone->getOrientation();
+			parentOrientation = getBoneOrientation(getBoneOfBody(parentBody),false);
+			//parentOrientation = parentBody->getOrientation();
 		}
-		//bodyOrientation = getBoneOrientation(getBoneOfBody(body));
-		bodyOrientation = body->getOrientation();
+
+		bodyOrientation = getBoneOrientation(getBoneOfBody(body),false);
+		//bodyOrientation = body->getOrientation();
+
+		/*
+		Logger::debug("parent orientation:");
+		printEulerAngles(parentOrientation);
+		printEulerAngles(parentBody->getOrientation());
+		Logger::debug("body orientation:");
+		printEulerAngles(bodyOrientation);
+		printEulerAngles(body->getOrientation());
+
 		jointOrientation = bodyOrientation * parentOrientation.inverse();
-		//jointEuler = jointOrientation.toAngles();
-		//Logger::debug(format("orientationA: %1% %2% %3%") % 
-		//		jointEuler.X() % jointEuler.Y() % jointEuler.Z() );
+		Logger::debug("orientation difference:");
+		printEulerAngles(jointOrientation);
+		printEulerAngles( body->getOrientation() * parentBody->getOrientation().inverse());
 
-		globalAnchor = getBonePosition(bone);
-		anchor1 = globalAnchor - parentBone->getPosition();
-		anchor1 = parentBone->getOrientation().inverse() * anchor1;
-		anchor2 = globalAnchor - body->getPosition();
-		anchor2 = body->getOrientation().inverse() * anchor2;
+		//Logger::debug("rotated orientation difference:");
+		//printEulerAngles(jointOrientation * Quat().fromAngle(0,0,90));
 
-		joint = getEngine()->createJoint(parentBone, body)->isJoint();
+		//Logger::debug("bone getOrientation:");
+		//printEulerAngles(Quat(bone->getOrientation()));
+		//printEulerAngles(Quat(bone->getOrientation())* Quat().fromAngle(90,0,0).inverse());
+		//printEulerAngles(Quat(bone->getOrientation())* Quat().fromAngle(0,90,0).inverse());
+		//printEulerAngles(Quat(bone->getOrientation())* Quat().fromAngle(0,0,90).inverse());
+		//Logger::debug("bone derived Orientation:");
+		//printEulerAngles(Quat(bone->_getDerivedOrientation()));
+	Vec3		EngineMesh::translateGlobalAnchorToLocal(EngineBody* body,Vec3 & globalAnchor) {
+		return Vec3(
+			body->getOrientation().inverse() 
+			* (
+				globalAnchor - body->getPosition()
+			));
+	}
+		*/
 
-		joint->setAnchor1(anchor1);
-		joint->setAnchor2(anchor2);
-		joint->setAnchor2Orientation(jointOrientation);
-		joint->setLimits(30,30);
+		//Vec3 localPosition = translateGlobalAnchorToLocal(parentBody,body->getPosition());
+
+		Vec3 localCenter = getBonePosition(bone);
+		//Quat localCenterOrientation = getBoneOrientation(getBoneOfBody(parentBody));
+		Quat localCenterOrientation = parentBody->getOrientation();
+
+		Vec3 globalPosition = body->getPosition(); 
+		Vec3 localPosition = localCenterOrientation.inverse() *
+			(globalPosition -localCenter);
+		Logger::debug("local bone pos:");
+		printVector3(localPosition);
+		localPosition.normalise();
+		printVector3(localPosition);
+		Quat localOrientation = Quat().fromTwoVectors(Vec3(1,0,0),localPosition);
+		printEulerAngles(localOrientation);
+		printVector3( localOrientation * Vec3(1,0,0) );
+
+		joint = getEngine()->createJoint(parentBody, body)->isJoint();
+		Vec3 globalAnchor = getBonePosition(bone);
+		joint->setAnchor1(translateGlobalAnchorToLocal(parentBody,globalAnchor));
+		joint->setAnchor2(translateGlobalAnchorToLocal(body,globalAnchor));
+		//joint->setAnchor1Orientation(jointOrientation);
+		//joint->setAnchor2Orientation(Quat().fromAngle(0,10,0));
+		joint->setAnchor1Orientation(localOrientation);
+		joint->setLimits(0,0);
 	}
 	return joint;
 }
@@ -294,7 +311,8 @@ void	EngineMesh::checkForJointCollision(Bone* bone){
 				));
 			if ( joint ) {
 				Logger::debug("increase limits");
-				joint->setLimits(60,60);
+				//joint->setLimits(30,30);
+				joint->setLimits(0,0);
 			}
 		}
 	}
