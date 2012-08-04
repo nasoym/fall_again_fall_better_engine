@@ -17,6 +17,7 @@ using namespace boost::python;
 
 #include "engine_object.h"
 #include "engine_gui_shape.h"
+#include "engine_gui_container.h"
 
 #include "engine_spacecage.h"
 #include "engine_body.h"
@@ -82,6 +83,20 @@ BOOST_PYTHON_MODULE(EngineModule) {
 		.def("setColour",&EngineGuiShape::setColour)
 
 		.def("isGuiShape",&EngineGuiShape::isGuiShape,return_value_policy<reference_existing_object>() )
+		;
+
+    class_<EngineGuiContainer, bases<EngineObject> >("EngineGuiContainer", init<Engine*>())
+		.def("setPosition",&EngineGuiContainer::setPosition)
+		.def("getPosition",&EngineGuiContainer::getPosition)
+		.def("setOrientation",&EngineGuiContainer::setOrientation)
+		.def("getOrientation",&EngineGuiContainer::getOrientation)
+		.def("setSize",&EngineGuiContainer::setSize)
+		.def("getSize",&EngineGuiContainer::getSize)
+		.def("getShapeByIndex",&EngineGuiContainer::getShapeByIndex,return_value_policy<reference_existing_object>() )
+		.def("getShapeByName",&EngineGuiContainer::getShapeByName,return_value_policy<reference_existing_object>() )
+		.def("addShape",&EngineGuiContainer::addShape)
+		.def("removeShape",&EngineGuiContainer::removeShape)
+		.def("isGuiContainer",&EngineGuiContainer::isGuiContainer,return_value_policy<reference_existing_object>() )
 		;
 
 	class_<EngineSpaceCage,bases<EngineGuiShape> >("EngineSpaceCage", init<Engine*,Vec3&>())

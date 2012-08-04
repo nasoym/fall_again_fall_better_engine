@@ -4,7 +4,11 @@
 
 EngineGuiShape::EngineGuiShape(Engine* engine) :
 	EngineObject(engine),
-	mMaterial(0)
+	mMaterial(0),
+	mLocalPosition(Vec3()),
+	mLocalOrientation(Quat()),
+	mLocalSize(Vec3(1,1,1)),
+	mContainer(0)
 	{
     mNode = getEngine()->getDebugNode()->createChildSceneNode();
 }
@@ -29,8 +33,16 @@ void	EngineGuiShape::createBoxEntity(){
     getNode()->attachObject(getEntity());
 }
 
-void        EngineGuiShape::setPosition(Vec3& vec3){
-	getNode()->setPosition(vec3.toOgre());
+void	EngineGuiShape::setContainer(EngineGuiContainer* container){
+	mContainer = container;
+}
+
+EngineGuiContainer* EngineGuiShape::getContainer(){
+	return mContainer;
+}
+
+void    EngineGuiShape::setPosition(Vec3& vec3){
+	getNode()->setPosition((vec3 + mLocalPosition).toOgre());
 }
 
 Vec3    	EngineGuiShape::getPosition(){
@@ -38,7 +50,7 @@ Vec3    	EngineGuiShape::getPosition(){
 }
 
 void        EngineGuiShape::setOrientation(Quat& quat){
-	getNode()->setOrientation(quat.toOgre());
+	getNode()->setOrientation((quat * mLocalOrientation).toOgre());
 }
 
 Quat EngineGuiShape::getOrientation(){

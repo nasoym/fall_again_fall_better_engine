@@ -31,7 +31,6 @@ class EngineMesh : public EngineGuiShape {
 		virtual void	guiUpdate();
 		//virtual void	physicUpdate();
 
-		void	createRootBody();
 		void	createPhysicBodies(Bone* bone);
 		//void	createPhsyisJoints();
 
@@ -63,15 +62,15 @@ class EngineMesh : public EngineGuiShape {
 		Bone*	findRootBone();
 
 		virtual EngineMesh*				isMesh(){return this;}
-		EngineBody*				getRootBody();
 	private:
-		EngineBody*		mRootBody;
 		Bone*			mRootBone;
 
 		std::vector<BoneBody> mBoneBodies;
 
 		Vec3 mLocalPos;
 		Quat mLocalQuat;
+
+		EngineGuiShape*	mRootShape;
 
 		
 };

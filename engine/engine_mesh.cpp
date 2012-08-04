@@ -8,13 +8,11 @@
 
 EngineMesh::EngineMesh(Engine* engine,const char* meshName) :
 	EngineGuiShape(engine),
-	mRootBody(0),
 	mRootBone(0)
 	{
 
     setEntity(getEngine()->getSceneManager()->createEntity(meshName));
 	setColour(0.2f,0.2f,0.2f,0.3f);
-	//getEntity()->setCastShadows(true);
     getNode()->attachObject(getEntity());
 
 	setSize(Vec3(1000,1000,1000));
@@ -24,18 +22,29 @@ EngineMesh::EngineMesh(Engine* engine,const char* meshName) :
 
 	mRootBone = findRootBone();
 	Logger::debug(format("found root bone: %1% ") % mRootBone->getName());
-
-	//createRootBody();
 	createPhysics(mRootBone);
-
 	calcLocalPosOfRootBone();
-	Logger::debug("done with creating physics");
-	//createDebugObjects();
+	createDebugObjects();
 
-	Logger::debug("done with creating debugs");
+	mRootShape = getEngine()->createGuiBox()->isGuiShape();
+	mRootShape->setColour(1,0,0,0.5f);
+	mRootShape->setSize(Vec3(20,6,6));
+	mRootShape->setPosition(getPosition());
+	mRootShape->setOrientation(getOrientation());
 }
 
 EngineMesh::~EngineMesh(){
+}
+
+void		EngineMesh::printEulerAngles(Quat quat){
+	Vec3 euler = quat.toAngles();
+	Logger::debug(format("orientation in euler: %1% %2% %3%") % 
+			euler.X() % euler.Y() % euler.Z() );
+}
+
+void		printVector3(Vec3 & vec3){
+	Logger::debug(format("vec: %1% %2% %3%") % 
+			vec3.X() % vec3.Y() % vec3.Z() );
 }
 
 void		EngineMesh::enableBones(){
@@ -51,59 +60,68 @@ void		EngineMesh::enableBones(){
 }
 
 void	EngineMesh::guiUpdate(){
-	/*
-	if(getRootBody()){
-		//setPosition(getRootBody()->getPosition());
-		//setOrientation(getRootBody()->getOrientation());
+	EngineBody* rootBody = getBodyOfBone(mRootBone);
+	if (rootBody) {
+	//if (false) {
+		Vec3	rootBodyPos = rootBody->getPosition();
+		Quat	rootBodyQuat = rootBody->getOrientation();
+		setPosition(rootBodyPos - (rootBodyQuat* mLocalPos));
+		setOrientation(rootBodyQuat * mLocalQuat);
 	}
-	*/
-
-	EngineBody* rootBody;
-	rootBody = getBodyOfBone(mRootBone);
-	Vec3	rootBodyPos = rootBody->getPosition();
-	Quat	rootBodyQuat = rootBody->getOrientation();
-
-	setPosition(rootBodyPos + mLocalPos);
-	setOrientation(rootBodyQuat * mLocalQuat);
-
+	if (mRootShape) {
+	//if (false) {
+		mRootShape->setPosition(getPosition());
+		mRootShape->setOrientation(getOrientation());
+	}
 	updateBone(mRootBone);
-	/*
-	Bone*	childBone;
-	Ogre::Bone::ChildNodeIterator childIter = mRootBone->getChildIterator();
-	while(childIter.hasMoreElements()){
-		childBone = (Ogre::Bone*)childIter.getNext();
-		updateBone(childBone);
-	}
-	*/
 }
 
 void 	EngineMesh::calcLocalPosOfRootBone() {
-	EngineBody* rootBody;
-	rootBody = getBodyOfBone(mRootBone);
+	EngineBody* rootBody = getBodyOfBone(mRootBone);
+	if (rootBody) {
+		Vec3	rootBodyPos = rootBody->getPosition();
+		Quat	rootBodyQuat = rootBody->getOrientation();
+		//Logger::debug("root body pos");
+		//printVector3(rootBodyPos);
 
-	Vec3	rootBodyPos = rootBody->getPosition();
-	Quat	rootBodyQuat = rootBody->getOrientation();
+		mLocalPos = rootBodyPos - getPosition();
+		//Logger::debug("root body local pos");
+		//printVector3(mLocalPos);
+		mLocalPos = rootBodyQuat.inverse() * mLocalPos;
+		//printVector3(mLocalPos);
 
-	mLocalPos = getPosition() - rootBodyPos;
-	mLocalQuat = getOrientation() * rootBodyQuat.inverse();
+		//Logger::debug("global pos");
+		//printVector3(getPosition());
+		//Logger::debug("added pos");
+		//printVector3(rootBodyPos - (rootBodyQuat* mLocalPos));
+
+		mLocalQuat = getOrientation() * rootBodyQuat.inverse();
+		//mLocalQuat = mLocalQuat * Quat().fromAngle(0,0,90).inverse() ;
+	}
 }
 
 void	EngineMesh::updateBone(Bone* bone){
-	EngineBody* body = getBodyOfBone(bone);
-	if (body) {
-		boneSetOrientation(bone, body->getOrientation());
-		Vec3	localPos = Vec3();
-		if (getJointOfBone(bone) ) {
-			localPos = body->getOrientation() * getJointOfBone(bone)->getAnchor2();
+		EngineBody* body = getBodyOfBone(bone);
+		if (body) {
+			boneSetOrientation(bone, body->getOrientation());
+			Vec3	localPos = Vec3();
+			if (getJointOfBone(bone) ) {
+				localPos = body->getOrientation() * getJointOfBone(bone)->getAnchor2();
+			} else {
+				Vec3 localSize = body->getSize();
+				localSize = Vec3(localSize.X() * -1, 0,0);
+				localPos = body->getOrientation() * localSize;
+			}
+			Vec3	finalPos = localPos + body->getPosition();
+			boneSetPosition(bone,finalPos);
 		}
-		Vec3	finalPos = localPos + body->getPosition();
-		boneSetPosition(bone,finalPos);
-	}
-	Bone*	childBone;
-	Ogre::Bone::ChildNodeIterator childIter = bone->getChildIterator();
-	while(childIter.hasMoreElements()){
-		childBone = (Ogre::Bone*)childIter.getNext();
-		updateBone(childBone);
+	if (bone) {
+		Bone*	childBone;
+		Ogre::Bone::ChildNodeIterator childIter = bone->getChildIterator();
+		while(childIter.hasMoreElements()){
+			childBone = (Ogre::Bone*)childIter.getNext();
+			updateBone(childBone);
+		}
 	}
 }
 
@@ -117,16 +135,6 @@ void	EngineMesh::createPhysics(Bone* bone) {
 	}
 }
 
-void	EngineMesh::createRootBody(){
-	//mRootBody = getEngine()->createPhysicBox()->isBody();
-	mRootBody = getEngine()->createPhysicStatic()->isBody();
-	mRootBody->setMaterialName("Body");
-	mRootBody->setPosition(getPosition());
-	mRootBody->setOrientation(getOrientation());
-	mRootBody->setSize(Vec3(5,3,3));
-	mRootBody->setColour(1,0,0,0.5f);
-}
-
 void	EngineMesh::createDebugObjects(){
 	Bone* bone;
 	EngineGuiShape* shape;
@@ -138,28 +146,6 @@ void	EngineMesh::createDebugObjects(){
 	std::vector<BoneBody>::iterator	iter;
 	for(iter=mBoneBodies.begin();iter!=mBoneBodies.end();++iter){
 		bone = (*iter).bone;
-
-		/*
-		boneSize = getBoneSize(bone);
-		localSize = Vec3(0,boneSize,0);
-		localPos = getBoneOrientation(bone) * localSize;
-
-		shape = getEngine()->createGuiBox()->isGuiShape();
-		shape->setColour(1,1,1,0.5f);
-		shape->setSize(Vec3(boneWidth,boneSize,boneWidth));
-		shape->setPosition(localPos + getBonePosition(bone));
-		shape->setOrientation(getBoneOrientation(bone));
-
-		boneSize = getBoneSize(bone);
-		localSize = Vec3(boneSize,0,0);
-		localPos = getBoneOrientation(bone) * localSize;
-
-		shape = getEngine()->createGuiBox()->isGuiShape();
-		shape->setColour(0,1,1,0.5f);
-		shape->setSize(Vec3(boneSize,boneWidth,boneWidth));
-		shape->setPosition(localPos + getBonePosition(bone));
-		shape->setOrientation(getBoneOrientation(bone)); 
-		*/
 
 		shape = getEngine()->createGuiBox()->isGuiShape();
 		shape->setColour(1,0,0,0.5f);
@@ -188,28 +174,28 @@ void	EngineMesh::createPhysicBodies(Bone* bone){
 
 	EngineBody* body;
 	bool bodyIsStatic = false;
+	bool createJoint = false;
 	if (getBoneParent( bone ) ) {
 		if (getBoneParent(getBoneParent( bone) ) ) {
-			body = getEngine()->createPhysicBox()->isBody();
-			//body = getEngine()->createPhysicStatic()->isBody();
 		} else {
-			//body = getEngine()->createPhysicStatic()->isBody();
 			//bodyIsStatic = true;
-			body = getEngine()->createPhysicBox()->isBody();
 		}
+		createJoint = true;
 	} else {
-		//body = getEngine()->createPhysicStatic()->isBody();
-		body = getEngine()->createPhysicBox()->isBody();
-		bodyIsStatic = true;
+		//bodyIsStatic = true;
 	}
+	bodyIsStatic = true;
 
 	if (bodyIsStatic) {
 		Logger::debug("bone is static");
+		body = getEngine()->createPhysicStatic()->isBody();
+		createJoint = false;
+	} else {
+		body = getEngine()->createPhysicBox()->isBody();
 	}
 
 	body->setColour(1,1,1,0.5f);
-
-	float 	boneWidth = 1.0f;
+	float 	boneWidth = 2.0f;
 	float 	boneLength = getBoneSize(bone);
 	body->setSize(Vec3(boneLength,boneWidth,boneWidth));
 	body->setPosition(
@@ -219,22 +205,11 @@ void	EngineMesh::createPhysicBodies(Bone* bone){
 	body->setOrientation(getBoneOrientation(bone));
 	setBodyForBone(bone,body);
 
-	if (!bodyIsStatic) {
+	if (createJoint) {
 		EngineJoint* joint = createJointToParent(bone);
 		setJointForBone(bone,joint);
 		checkForJointCollision(bone);
 	}
-}
-
-void		EngineMesh::printEulerAngles(Quat quat){
-	Vec3 euler = quat.toAngles();
-	Logger::debug(format("orientation in euler: %1% %2% %3%") % 
-			euler.X() % euler.Y() % euler.Z() );
-}
-
-void		printVector3(Vec3 & vec3){
-	Logger::debug(format("vec: %1% %2% %3%") % 
-			vec3.X() % vec3.Y() % vec3.Z() );
 }
 
 EngineJoint* 	EngineMesh::createJointToParent(Bone* bone) {
@@ -258,7 +233,7 @@ EngineJoint* 	EngineMesh::createJointToParent(Bone* bone) {
 		joint->setAnchor1(translateGlobalAnchorToLocal(parentBody,globalAnchor));
 		joint->setAnchor2(translateGlobalAnchorToLocal(body,globalAnchor));
 		joint->setAnchor1Orientation(localOrientation);
-		joint->setLimits(10,10);
+		joint->setLimits(2,2);
 	}
 	return joint;
 }
@@ -279,7 +254,6 @@ void	EngineMesh::checkForJointCollision(Bone* bone){
 		if (parentBone->numChildren() > 1) {
 			Logger::debug(format("parent of: %1% is: %2% and has children: %3% ") % bone->getName() % parentBone->getName() % parentBone->numChildren());
 			Vec3 bodySize = body->getSize();
-			Logger::debug("resize");
 			body->setSize(
 				Vec3(
 					bodySize.X() * 0.3f, 
@@ -287,9 +261,8 @@ void	EngineMesh::checkForJointCollision(Bone* bone){
 					bodySize.Z() * 0.6f
 				));
 			if ( joint ) {
-				Logger::debug("increase limits");
 				//joint->setLimits(30,30);
-				joint->setLimits(0,0);
+				//joint->setLimits(0,0);
 			}
 		}
 	}

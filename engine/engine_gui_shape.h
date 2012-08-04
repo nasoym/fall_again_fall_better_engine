@@ -6,6 +6,7 @@
 using namespace Ogre;
 
 class Engine;
+class EngineGuiContainer;
 
 #include "engine_object.h"
 
@@ -37,10 +38,30 @@ class EngineGuiShape : public EngineObject {
 		Entity*				getEntity(){return mEntity;}
 		SceneNode*			getNode(){return mNode;}
 
+
+		virtual void        setLocalPosition(Vec3& vec3){mLocalPosition = vec3;}
+		virtual Vec3    	getLocalPosition(){return mLocalPosition;}
+
+		virtual void        setLocalOrientation(Quat& quat){mLocalOrientation = quat;}
+		virtual Quat 		getLocalOrientation(){return mLocalOrientation;}
+
+		virtual void        setLocalSize(Vec3& vec3){mLocalSize = vec3;}
+		virtual Vec3    	getLocalSize(){return mLocalSize;}
+
+		void				setContainer(EngineGuiContainer* container);
+		EngineGuiContainer* getContainer();
+
+
 	private:
         Entity*     		mEntity; 
         SceneNode*  		mNode;
-		MaterialPtr	mMaterial;
+		MaterialPtr			mMaterial;
+
+		Vec3				mLocalPosition;
+		Quat				mLocalOrientation;
+		Vec3				mLocalSize;
+
+		EngineGuiContainer*	mContainer;
 
 };
 

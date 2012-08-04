@@ -35,11 +35,6 @@ void	EngineMesh::setJointForBone(Bone* bone,EngineJoint* joint){
 	}
 }
 
-
-EngineBody*				EngineMesh::getRootBody(){
-	return mRootBody;
-}
-
 Bone*	EngineMesh::findRootBone() {
 	std::vector<BoneBody>::iterator	iter;
 	for(iter=mBoneBodies.begin();iter!=mBoneBodies.end();++iter){

@@ -68,6 +68,7 @@ EngineObject*	Engine::createJoint(EngineObject* obj1,EngineObject* obj2){
 EngineObject*	Engine::createSpaceCage(Vec3& size){
 	EngineSpaceCage* spaceCage = new EngineSpaceCage(this,size);
 	spaceCage->createBoxEntity();
+	spaceCage->setColour(1.0f,1.0f,1.0f,0.3f);
 	spaceCage->setSize(Vec3(size.X(),1,size.Z()));
 	spaceCage->setPosition(Vec3(0,-0.5,0));
 	return spaceCage;
