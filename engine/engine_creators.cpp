@@ -12,7 +12,7 @@
 #include "engine_mesh.h"
 
 EngineObject*	Engine::createMesh(const char* meshName){
-	EngineGuiShape* engineObject = new EngineMesh(this,meshName);
+	EngineMesh* engineObject = new EngineMesh(this,meshName);
 	//engineObject->setSize(Vec3(10,1,10));
 	//engineObject->setPosition(Vec3(0,-0.5,0));
 	return engineObject;

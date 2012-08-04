@@ -25,10 +25,14 @@ EngineMesh::EngineMesh(Engine* engine,const char* meshName) :
 	mRootBone = findRootBone();
 	Logger::debug(format("found root bone: %1% ") % mRootBone->getName());
 
-	createRootBody();
+	//createRootBody();
 	createPhysics(mRootBone);
-	createDebugObjects();
 
+	calcLocalPosOfRootBone();
+	Logger::debug("done with creating physics");
+	//createDebugObjects();
+
+	Logger::debug("done with creating debugs");
 }
 
 EngineMesh::~EngineMesh(){
@@ -47,11 +51,41 @@ void		EngineMesh::enableBones(){
 }
 
 void	EngineMesh::guiUpdate(){
+	/*
 	if(getRootBody()){
-		setPosition(getRootBody()->getPosition());
-		setOrientation(getRootBody()->getOrientation());
+		//setPosition(getRootBody()->getPosition());
+		//setOrientation(getRootBody()->getOrientation());
 	}
+	*/
+
+	EngineBody* rootBody;
+	rootBody = getBodyOfBone(mRootBone);
+	Vec3	rootBodyPos = rootBody->getPosition();
+	Quat	rootBodyQuat = rootBody->getOrientation();
+
+	setPosition(rootBodyPos + mLocalPos);
+	setOrientation(rootBodyQuat * mLocalQuat);
+
 	updateBone(mRootBone);
+	/*
+	Bone*	childBone;
+	Ogre::Bone::ChildNodeIterator childIter = mRootBone->getChildIterator();
+	while(childIter.hasMoreElements()){
+		childBone = (Ogre::Bone*)childIter.getNext();
+		updateBone(childBone);
+	}
+	*/
+}
+
+void 	EngineMesh::calcLocalPosOfRootBone() {
+	EngineBody* rootBody;
+	rootBody = getBodyOfBone(mRootBone);
+
+	Vec3	rootBodyPos = rootBody->getPosition();
+	Quat	rootBodyQuat = rootBody->getOrientation();
+
+	mLocalPos = getPosition() - rootBodyPos;
+	mLocalQuat = getOrientation() * rootBodyQuat.inverse();
 }
 
 void	EngineMesh::updateBone(Bone* bone){
@@ -157,13 +191,15 @@ void	EngineMesh::createPhysicBodies(Bone* bone){
 	if (getBoneParent( bone ) ) {
 		if (getBoneParent(getBoneParent( bone) ) ) {
 			body = getEngine()->createPhysicBox()->isBody();
+			//body = getEngine()->createPhysicStatic()->isBody();
 		} else {
-			body = getEngine()->createPhysicStatic()->isBody();
-			bodyIsStatic = true;
-			//body = getEngine()->createPhysicBox()->isBody();
+			//body = getEngine()->createPhysicStatic()->isBody();
+			//bodyIsStatic = true;
+			body = getEngine()->createPhysicBox()->isBody();
 		}
 	} else {
-		body = getEngine()->createPhysicStatic()->isBody();
+		//body = getEngine()->createPhysicStatic()->isBody();
+		body = getEngine()->createPhysicBox()->isBody();
 		bodyIsStatic = true;
 	}
 
@@ -222,7 +258,7 @@ EngineJoint* 	EngineMesh::createJointToParent(Bone* bone) {
 		joint->setAnchor1(translateGlobalAnchorToLocal(parentBody,globalAnchor));
 		joint->setAnchor2(translateGlobalAnchorToLocal(body,globalAnchor));
 		joint->setAnchor1Orientation(localOrientation);
-		joint->setLimits(0,0);
+		joint->setLimits(10,10);
 	}
 	return joint;
 }

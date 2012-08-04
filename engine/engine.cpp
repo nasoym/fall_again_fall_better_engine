@@ -73,6 +73,7 @@ void	Engine::step() {
 		//printf("+");
 		mSimulationTime -= mSimulationTimeStep;
 		//mPhysicsEngine->simulate(mSimulationTimeStep / 1000.0f);
+
 		mPhysicsEngine->simulate(timeToSimulate);
 		physicUpdates();
 	}

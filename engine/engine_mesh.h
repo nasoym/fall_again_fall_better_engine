@@ -55,6 +55,7 @@ class EngineMesh : public EngineGuiShape {
 		void		printEulerAngles(Quat quat);
 
 		Vec3		translateGlobalAnchorToLocal(EngineBody* body,Vec3 & globalAnchor);
+		void	calcLocalPosOfRootBone();
 
 		bool	hasBoneAParent(Bone* bone);
 		EngineJoint* 	createJointToParent(Bone* bone);
@@ -69,6 +70,8 @@ class EngineMesh : public EngineGuiShape {
 
 		std::vector<BoneBody> mBoneBodies;
 
+		Vec3 mLocalPos;
+		Quat mLocalQuat;
 
 		
 };

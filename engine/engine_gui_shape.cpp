@@ -23,6 +23,8 @@ EngineGuiShape::~EngineGuiShape(){
 
 void	EngineGuiShape::createBoxEntity(){
     setEntity(getEngine()->getSceneManager()->createEntity("Prefab_Cube"));
+    //setEntity(getEngine()->getSceneManager()->createEntity("Cube.mesh"));
+    //setEntity(getEngine()->getSceneManager()->createEntity("Character.mesh"));
 	getEntity()->setCastShadows(true);
     getNode()->attachObject(getEntity());
 }
