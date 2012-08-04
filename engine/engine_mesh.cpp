@@ -203,83 +203,24 @@ void		printVector3(Vec3 & vec3){
 
 EngineJoint* 	EngineMesh::createJointToParent(Bone* bone) {
 	EngineJoint* joint = 0;
-
-	Quat		parentOrientation;
-	Quat	 	bodyOrientation;
-	Quat		jointOrientation;
-
 	if (getBodyOfBone(bone) && getBoneParent(bone) && getBodyOfBone(getBoneParent(bone)) ) {
 		EngineBody*	parentBody = getBodyOfBone(getBoneParent(bone));
 		EngineBody* body = getBodyOfBone(bone);
 		Logger::debug(format("create joint from : %1% to %2%") %bone->getName() % getBoneParent(bone)->getName());
 
-		if (!getBoneOfBody(parentBody)) {
-			Logger::debug("parent bone has no body");
-			parentOrientation = parentBody->getOrientation();
-			//parentOrientation = parentOrientation * Quat().fromAngle(-90,0,0);
-		} else {
-			parentOrientation = getBoneOrientation(getBoneOfBody(parentBody),false);
-			//parentOrientation = parentBody->getOrientation();
-		}
-
-		bodyOrientation = getBoneOrientation(getBoneOfBody(body),false);
-		//bodyOrientation = body->getOrientation();
-
-		/*
-		Logger::debug("parent orientation:");
-		printEulerAngles(parentOrientation);
-		printEulerAngles(parentBody->getOrientation());
-		Logger::debug("body orientation:");
-		printEulerAngles(bodyOrientation);
-		printEulerAngles(body->getOrientation());
-
-		jointOrientation = bodyOrientation * parentOrientation.inverse();
-		Logger::debug("orientation difference:");
-		printEulerAngles(jointOrientation);
-		printEulerAngles( body->getOrientation() * parentBody->getOrientation().inverse());
-
-		//Logger::debug("rotated orientation difference:");
-		//printEulerAngles(jointOrientation * Quat().fromAngle(0,0,90));
-
-		//Logger::debug("bone getOrientation:");
-		//printEulerAngles(Quat(bone->getOrientation()));
-		//printEulerAngles(Quat(bone->getOrientation())* Quat().fromAngle(90,0,0).inverse());
-		//printEulerAngles(Quat(bone->getOrientation())* Quat().fromAngle(0,90,0).inverse());
-		//printEulerAngles(Quat(bone->getOrientation())* Quat().fromAngle(0,0,90).inverse());
-		//Logger::debug("bone derived Orientation:");
-		//printEulerAngles(Quat(bone->_getDerivedOrientation()));
-	Vec3		EngineMesh::translateGlobalAnchorToLocal(EngineBody* body,Vec3 & globalAnchor) {
-		return Vec3(
-			body->getOrientation().inverse() 
-			* (
-				globalAnchor - body->getPosition()
-			));
-	}
-		*/
-
-		//Vec3 localPosition = translateGlobalAnchorToLocal(parentBody,body->getPosition());
-
 		Vec3 localCenter = getBonePosition(bone);
-		//Quat localCenterOrientation = getBoneOrientation(getBoneOfBody(parentBody));
 		Quat localCenterOrientation = parentBody->getOrientation();
 
 		Vec3 globalPosition = body->getPosition(); 
 		Vec3 localPosition = localCenterOrientation.inverse() *
 			(globalPosition -localCenter);
-		Logger::debug("local bone pos:");
-		printVector3(localPosition);
 		localPosition.normalise();
-		printVector3(localPosition);
 		Quat localOrientation = Quat().fromTwoVectors(Vec3(1,0,0),localPosition);
-		printEulerAngles(localOrientation);
-		printVector3( localOrientation * Vec3(1,0,0) );
 
 		joint = getEngine()->createJoint(parentBody, body)->isJoint();
 		Vec3 globalAnchor = getBonePosition(bone);
 		joint->setAnchor1(translateGlobalAnchorToLocal(parentBody,globalAnchor));
 		joint->setAnchor2(translateGlobalAnchorToLocal(body,globalAnchor));
-		//joint->setAnchor1Orientation(jointOrientation);
-		//joint->setAnchor2Orientation(Quat().fromAngle(0,10,0));
 		joint->setAnchor1Orientation(localOrientation);
 		joint->setLimits(0,0);
 	}
