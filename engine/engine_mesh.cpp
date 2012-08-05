@@ -81,22 +81,9 @@ void 	EngineMesh::calcLocalPosOfRootBone() {
 	if (rootBody) {
 		Vec3	rootBodyPos = rootBody->getPosition();
 		Quat	rootBodyQuat = rootBody->getOrientation();
-		//Logger::debug("root body pos");
-		//printVector3(rootBodyPos);
-
 		mLocalPos = rootBodyPos - getPosition();
-		//Logger::debug("root body local pos");
-		//printVector3(mLocalPos);
 		mLocalPos = rootBodyQuat.inverse() * mLocalPos;
-		//printVector3(mLocalPos);
-
-		//Logger::debug("global pos");
-		//printVector3(getPosition());
-		//Logger::debug("added pos");
-		//printVector3(rootBodyPos - (rootBodyQuat* mLocalPos));
-
 		mLocalQuat = getOrientation() * rootBodyQuat.inverse();
-		//mLocalQuat = mLocalQuat * Quat().fromAngle(0,0,90).inverse() ;
 	}
 }
 
@@ -120,7 +107,7 @@ void	EngineMesh::updateBone(Bone* bone){
 	EngineGuiContainer* container = getContainerOfBone(bone);
 	if (container) {
 		container->setPosition(getBonePosition(bone));
-		container->setOrientation(getBoneOrientation(bone));
+		container->setOrientation(getBoneOrientation(bone,false));
 		//container->setOrientation(body->getOrientation());
 	}
 
@@ -159,26 +146,6 @@ void	EngineMesh::createDebugObjects(){
 		container = new EngineGuiContainer(getEngine());
 		setContainerForBone(bone,container);
 		container->addDebugAxises(5,0.5);
-
-		/*
-		shape = getEngine()->createGuiBox()->isGuiShape();
-		shape->setColour(1,0,0,0.5f);
-		shape->setLocalSize(Vec3(debugSize,1,1));
-		shape->setLocalPosition(Vec3(debugSize,0,0));
-		container->addShape(shape);
-
-		shape = getEngine()->createGuiBox()->isGuiShape();
-		shape->setColour(0,1,0,0.5f);
-		shape->setLocalSize(Vec3(1,debugSize,1));
-		shape->setLocalPosition(Vec3(0,debugSize,0));
-		container->addShape(shape);
-
-		shape = getEngine()->createGuiBox()->isGuiShape();
-		shape->setColour(0,0,1,0.5f);
-		shape->setLocalSize(Vec3(1,1,debugSize));
-		shape->setLocalPosition(Vec3(0,0,debugSize));
-		container->addShape(shape);
-		*/
 	}
 }
 
@@ -249,31 +216,6 @@ EngineJoint* 	EngineMesh::createJointToParent(Bone* bone) {
 		joint->setLimits(2,2);
 
 		joint->addDebugAxises(8,0.25);
-
-
-		/*
-		EngineGuiShape*	shape;
-		float debugSize = 8;
-		float debugWidth = 0.25;
-		shape = getEngine()->createGuiBox()->isGuiShape();
-		shape->setColour(1,0,0,0.5f);
-		shape->setLocalSize(Vec3(debugSize,debugWidth,debugWidth));
-		shape->setLocalPosition(Vec3(debugSize,0,0));
-		joint->addShape(shape);
-
-		shape = getEngine()->createGuiBox()->isGuiShape();
-		shape->setColour(0,1,0,0.5f);
-		shape->setLocalSize(Vec3(debugWidth,debugSize,debugWidth));
-		shape->setLocalPosition(Vec3(0,debugSize,0));
-		joint->addShape(shape);
-
-		shape = getEngine()->createGuiBox()->isGuiShape();
-		shape->setColour(0,0,1,0.5f);
-		shape->setLocalSize(Vec3(debugWidth,debugWidth,debugSize));
-		shape->setLocalPosition(Vec3(0,0,debugSize));
-		joint->addShape(shape);
-		*/
-
 
 	}
 	return joint;

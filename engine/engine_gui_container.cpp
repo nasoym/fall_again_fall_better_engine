@@ -76,19 +76,19 @@ void	EngineGuiContainer::addDebugAxises(float debugSize, float debugWidth){
 	EngineGuiShape* shape;
 	shape = getEngine()->createGuiBox()->isGuiShape();
 	shape->setColour(1,0,0,0.5f);
-	shape->setLocalSize(Vec3(debugSize,1,1));
+	shape->setLocalSize(Vec3(debugSize,debugWidth,debugWidth));
 	shape->setLocalPosition(Vec3(debugSize,0,0));
 	addShape(shape);
 
 	shape = getEngine()->createGuiBox()->isGuiShape();
 	shape->setColour(0,1,0,0.5f);
-	shape->setLocalSize(Vec3(1,debugSize,1));
+	shape->setLocalSize(Vec3(debugWidth,debugSize,debugWidth));
 	shape->setLocalPosition(Vec3(0,debugSize,0));
 	addShape(shape);
 
 	shape = getEngine()->createGuiBox()->isGuiShape();
 	shape->setColour(0,0,1,0.5f);
-	shape->setLocalSize(Vec3(1,1,debugSize));
+	shape->setLocalSize(Vec3(debugWidth,debugWidth,debugSize));
 	shape->setLocalPosition(Vec3(0,0,debugSize));
 	addShape(shape);
 }
