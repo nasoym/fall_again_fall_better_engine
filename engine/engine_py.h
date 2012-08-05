@@ -166,6 +166,8 @@ BOOST_PYTHON_MODULE(EngineModule) {
 		.def("setCameraOrientation",&Engine::setCameraOrientation)
 		.def("getCameraPosition",&Engine::getCameraPosition)
 		.def("getCameraOrientation",&Engine::getCameraOrientation)
+
+		.def("physicPauseToggle",&Engine::physicPauseToggle)
         ;
 
     class_<Vec3>("Vec3",init<>())

@@ -36,6 +36,7 @@ class EngineMesh : public EngineGuiShape {
 		Vec3			translateGlobalAnchorToLocal(EngineBody* body,Vec3 & globalAnchor);
 		void			calcLocalPosOfRootBone();
 		EngineJoint* 	createJointToParent(Bone* bone);
+		Quat			calcJointOrientation(Bone* bone);
 
 		virtual void	guiUpdate();
 

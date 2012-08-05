@@ -36,15 +36,15 @@ EngineMesh::EngineMesh(Engine* engine,const char* meshName) :
 EngineMesh::~EngineMesh(){
 }
 
-void		printEulerAngles(Quat quat){
+void		printEulerAngles(Quat quat,const char* text){
 	Vec3 euler = quat.toAngles();
-	Logger::debug(format("euler: %1% %2% %3%") % 
-			euler.X() % euler.Y() % euler.Z() );
+	Logger::debug(format("%s: %3.3f %3.3f %3.3f") % 
+			text % euler.X() % euler.Y() % euler.Z() );
 }
 
-void		printVector3(Vec3 & vec3){
-	Logger::debug(format("vec: %1% %2% %3%") % 
-			vec3.X() % vec3.Y() % vec3.Z() );
+void		printVector3(Vec3 & vec3,const char* text){
+	Logger::debug(format("%s: %3.3f %3.3f %3.3f") % 
+			text % vec3.X() % vec3.Y() % vec3.Z() );
 }
 
 void		EngineMesh::enableBones(){
@@ -89,15 +89,14 @@ void 	EngineMesh::calcLocalPosOfRootBone() {
 
 void	EngineMesh::updateBone(Bone* bone){
 	EngineBody* body = getBodyOfBone(bone);
-	if (body) {
+	//if (body) {
+	if (false) {
 		boneSetOrientation(bone, body->getOrientation());
 		Vec3	localPos = Vec3();
 		EngineJoint* joint = getJointOfBone(bone);
 		if (joint) {
 			localPos = body->getOrientation() * joint->getAnchor2();
 		} else {
-			//Vec3 localSize = body->getSize();
-			//localSize = Vec3(localSize.X() * -1, 0,0);
 			localPos = body->getOrientation() * 
 				(body->getSize() * Vec3(-1,0,0));
 		}
@@ -185,6 +184,48 @@ void	EngineMesh::createPhysicBodies(Bone* bone){
 	}
 }
 
+Quat			EngineMesh::calcJointOrientation(Bone* bone) {
+	EngineBody*	parentBody = getBodyOfBone(getBoneParent(bone));
+	EngineBody* body = getBodyOfBone(bone);
+
+	Vec3 localCenter = getBonePosition(bone);
+	Quat localCenterOrientation = parentBody->getOrientation();
+
+	Vec3 globalPosition = body->getPosition(); 
+	Vec3 localPosition = localCenterOrientation.inverse() *
+		(globalPosition -localCenter);
+	localPosition.normalise();
+	Quat jointOrientation = Quat().fromTwoVectors(Vec3(1,0,0),localPosition);
+
+
+	printEulerAngles(jointOrientation,"joint orientation from vec");
+
+	Quat	parentOrientation = parentBody->getOrientation();
+	Quat	myOrientation = body->getOrientation();
+
+	//Quat	parentOrientation = getBoneOrientation(getBoneParent(bone));
+	//Quat	myOrientation = getBoneOrientation(bone);
+
+	Quat	deltaOrientation;
+	deltaOrientation = myOrientation * parentOrientation.inverse();
+	//printEulerAngles(deltaOrientation,"delta orientation");
+	printEulerAngles(deltaOrientation.inverse(),"delta orientation inv");
+	Quat	deltaOrientationInv = deltaOrientation.inverse();
+
+	Quat	test = (
+		deltaOrientationInv * 
+		Quat().fromAngle(0,0,90) 
+		) * Quat().fromAngle(0,90,90) ;
+
+	Quat	oneTotwo = jointOrientation * deltaOrientation.inverse();
+	//printEulerAngles(test,"test");
+	//printEulerAngles(oneTotwo,"one to two");
+	//printEulerAngles(deltaOrientation * oneTotwo,"mult");
+
+	return jointOrientation;
+	//return deltaOrientationInv;
+}
+
 EngineJoint* 	EngineMesh::createJointToParent(Bone* bone) {
 	EngineJoint* joint = 0;
 	if (getBodyOfBone(bone) && getBoneParent(bone) && getBodyOfBone(getBoneParent(bone)) ) {
@@ -192,20 +233,13 @@ EngineJoint* 	EngineMesh::createJointToParent(Bone* bone) {
 		EngineBody* body = getBodyOfBone(bone);
 		Logger::debug(format("create joint from : %1% to %2%") %bone->getName() % getBoneParent(bone)->getName());
 
-		Vec3 localCenter = getBonePosition(bone);
-		Quat localCenterOrientation = parentBody->getOrientation();
-
-		Vec3 globalPosition = body->getPosition(); 
-		Vec3 localPosition = localCenterOrientation.inverse() *
-			(globalPosition -localCenter);
-		localPosition.normalise();
-		Quat localOrientation = Quat().fromTwoVectors(Vec3(1,0,0),localPosition);
-
 		joint = getEngine()->createJoint(parentBody, body)->isJoint();
 		Vec3 globalAnchor = getBonePosition(bone);
 		joint->setAnchor1(translateGlobalAnchorToLocal(parentBody,globalAnchor));
 		joint->setAnchor2(translateGlobalAnchorToLocal(body,globalAnchor));
-		joint->setAnchor1Orientation(localOrientation);
+
+		joint->setAnchor1Orientation(calcJointOrientation(bone));
+
 		joint->setLimits(2,2);
 
 		joint->addDebugAxises(8,0.25);

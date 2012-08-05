@@ -1,10 +1,11 @@
 
 def launch(Engine,objects,EngineModule):
 
-	#Engine.setTimingFactor(0.1)
+	Engine.setTimingFactor(0.0001)
 	#print("timingfactor: " +str(Engine.getTimingFactor()))
 
 	objects["mesh"] = Engine.createMesh("Character.mesh")
+	#Engine.physicPauseToggle()
 	#objects["mesh"] = Engine.createMesh("tube.mesh")
 	#objects["mesh"] = Engine.createMesh("Cube.mesh")
 	#objects["mesh"] = Engine.createMesh("sphere.mesh")

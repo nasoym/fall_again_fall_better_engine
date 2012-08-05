@@ -11,7 +11,8 @@ Engine::Engine() :
     mExit(false),
     mInputManager(0),
 	mCurrentTime(0),
-	mLastTime(0)
+	mLastTime(0),
+	mPhysicPaused(false)
 	{
     Logger::debug(format("creating engine: %p ") % this);
     setupPhysics();
@@ -47,6 +48,14 @@ void Engine::run(){
     }
 }
 
+void Engine::physicPauseToggle() {
+	if (mPhysicPaused) {
+		mPhysicPaused = false;
+	} else {
+		mPhysicPaused = true;
+	}
+}
+
 void	Engine::step() {
 	processOIS();
 	if (inputExit()) {
@@ -74,7 +83,9 @@ void	Engine::step() {
 		mSimulationTime -= mSimulationTimeStep;
 		//mPhysicsEngine->simulate(mSimulationTimeStep / 1000.0f);
 
-		mPhysicsEngine->simulate(timeToSimulate);
+		if (!mPhysicPaused) {
+			mPhysicsEngine->simulate(timeToSimulate);
+		}
 		physicUpdates();
 	}
 

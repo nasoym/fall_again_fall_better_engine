@@ -50,6 +50,8 @@ class Engine :
 		void    physicUpdates();
 		void    guiUpdates();
 
+		void	physicPauseToggle();
+
 		void	setupPython();
 		void	closePython();
 		void    runPython();
@@ -163,6 +165,8 @@ class Engine :
         OIS::Mouse*     mMouse;
         OIS::Keyboard*  mKeyboard;
         bool            mExit;
+
+		bool			mPhysicPaused;
 
 		//StereoManager	mStereoManager;
 

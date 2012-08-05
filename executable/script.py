@@ -193,6 +193,9 @@ def keyPressed(key):
 	if key == EngineModule.Keys.K_4:
 		o = Engine.createGuiBox()
 
+	if key == EngineModule.Keys.K_P:
+		Engine.physicPauseToggle()
+
 def keyReleased(key):
 	pass
 
