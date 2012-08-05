@@ -33,7 +33,6 @@ class EngineMesh : public EngineGuiShape {
 		void			updateBone(Bone* bone);
 		void			createPhysics(Bone* bone);
 		void			createDebugObjects();
-		void			printEulerAngles(Quat quat);
 		Vec3			translateGlobalAnchorToLocal(EngineBody* body,Vec3 & globalAnchor);
 		void			calcLocalPosOfRootBone();
 		EngineJoint* 	createJointToParent(Bone* bone);

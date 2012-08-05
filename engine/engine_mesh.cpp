@@ -36,9 +36,9 @@ EngineMesh::EngineMesh(Engine* engine,const char* meshName) :
 EngineMesh::~EngineMesh(){
 }
 
-void		EngineMesh::printEulerAngles(Quat quat){
+void		printEulerAngles(Quat quat){
 	Vec3 euler = quat.toAngles();
-	Logger::debug(format("orientation in euler: %1% %2% %3%") % 
+	Logger::debug(format("euler: %1% %2% %3%") % 
 			euler.X() % euler.Y() % euler.Z() );
 }
 
@@ -96,12 +96,12 @@ void	EngineMesh::updateBone(Bone* bone){
 		if (joint) {
 			localPos = body->getOrientation() * joint->getAnchor2();
 		} else {
-			Vec3 localSize = body->getSize();
-			localSize = Vec3(localSize.X() * -1, 0,0);
-			localPos = body->getOrientation() * localSize;
+			//Vec3 localSize = body->getSize();
+			//localSize = Vec3(localSize.X() * -1, 0,0);
+			localPos = body->getOrientation() * 
+				(body->getSize() * Vec3(-1,0,0));
 		}
-		Vec3	finalPos = localPos + body->getPosition();
-		boneSetPosition(bone,finalPos);
+		boneSetPosition(bone, localPos + body->getPosition());
 	}
 
 	EngineGuiContainer* container = getContainerOfBone(bone);
@@ -133,12 +133,6 @@ void	EngineMesh::createPhysics(Bone* bone) {
 
 void	EngineMesh::createDebugObjects(){
 	Bone* bone;
-	EngineGuiShape* shape;
-	float 	boneWidth = 1.0f;
-	float	boneSize;
-	float	debugSize = 5.0f;
-	Vec3	localSize;
-	Vec3	localPos;
 	EngineGuiContainer* container;
 	std::vector<BoneBody>::iterator	iter;
 	for(iter=mBoneBodies.begin();iter!=mBoneBodies.end();++iter){
@@ -174,7 +168,6 @@ void	EngineMesh::createPhysicBodies(Bone* bone){
 		body = getEngine()->createPhysicBox()->isBody();
 	}
 
-	//body->setColour(1,1,1,0.5f);
 	float 	boneWidth = 2.0f;
 	float 	boneLength = getBoneSize(bone);
 	body->setSize(Vec3(boneLength,boneWidth,boneWidth));
@@ -222,31 +215,14 @@ EngineJoint* 	EngineMesh::createJointToParent(Bone* bone) {
 }
 
 void	EngineMesh::checkForJointCollision(Bone* bone){
-	Bone* parentBone;
+	Bone* parentBone = getBoneParent(bone);
 	EngineBody* body = getBodyOfBone(bone);
-	EngineJoint* joint = getJointOfBone(bone);
-	if(!body) {
-		Logger::debug("bone has no body");
-	}
-	if(!joint) {
-		Logger::debug("bone has no joint");
-	}
-
-	if (getBoneParent(bone) ) {
-		parentBone = getBoneParent(bone);
-		if (parentBone->numChildren() > 1) {
-			Logger::debug(format("parent of: %1% is: %2% and has children: %3% ") % bone->getName() % parentBone->getName() % parentBone->numChildren());
-			Vec3 bodySize = body->getSize();
-			body->setSize(
-				Vec3(
-					bodySize.X() * 0.3f, 
-					bodySize.Y() * 0.6f, 
-					bodySize.Z() * 0.6f
-				));
-			if ( joint ) {
-				//joint->setLimits(30,30);
-				//joint->setLimits(0,0);
-			}
+	if (body && parentBone && (parentBone->numChildren()>1) ) {
+		Logger::debug(format("parent of: %1% is: %2% and has children: %3% ") % bone->getName() % parentBone->getName() % parentBone->numChildren());
+		body->setSize( body->getSize() * Vec3(0.3,0.6,0.6) );
+		EngineJoint* joint = getJointOfBone(bone);
+		if ( joint ) {
+			//joint->setLimits(30,30);
 		}
 	}
 }
