@@ -89,16 +89,17 @@ void 	EngineMesh::calcLocalPosOfRootBone() {
 
 void	EngineMesh::updateBone(Bone* bone){
 	EngineBody* body = getBodyOfBone(bone);
-	//if (body) {
-	if (false) {
-		boneSetOrientation(bone, body->getOrientation());
+	if (body) {
+	//if (false) {
+		boneSetOrientation(bone, body->getOrientation(),false);
 		Vec3	localPos = Vec3();
 		EngineJoint* joint = getJointOfBone(bone);
 		if (joint) {
 			localPos = body->getOrientation() * joint->getAnchor2();
 		} else {
 			localPos = body->getOrientation() * 
-				(body->getSize() * Vec3(-1,0,0));
+				//(body->getSize() * Vec3(-1,0,0));
+				(body->getSize() * Vec3(0,-1,0));
 		}
 		boneSetPosition(bone, localPos + body->getPosition());
 	}
@@ -169,12 +170,14 @@ void	EngineMesh::createPhysicBodies(Bone* bone){
 
 	float 	boneWidth = 2.0f;
 	float 	boneLength = getBoneSize(bone);
-	body->setSize(Vec3(boneLength,boneWidth,boneWidth));
+	//body->setSize(Vec3(boneLength,boneWidth,boneWidth));
+	body->setSize(Vec3(boneWidth,boneLength,boneWidth));
 	body->setPosition(
-		getBoneOrientation(bone) * Vec3(boneLength,0,0)
+		//getBoneOrientation(bone) * Vec3(boneLength,0,0)
+		getBoneOrientation(bone,false) * Vec3(0,boneLength,0)
 		+ getBonePosition(bone)
 		);
-	body->setOrientation(getBoneOrientation(bone));
+	body->setOrientation(getBoneOrientation(bone,false));
 	setBodyForBone(bone,body);
 
 	if (createJoint) {
@@ -222,7 +225,10 @@ Quat			EngineMesh::calcJointOrientation(Bone* bone) {
 	//printEulerAngles(oneTotwo,"one to two");
 	//printEulerAngles(deltaOrientation * oneTotwo,"mult");
 
-	return jointOrientation;
+	//Quat boneQuat = Quat(getOrientation() * bone->_getDerivedOrientation());
+
+	return Quat( bone->getOrientation() );
+	//return jointOrientation;
 	//return deltaOrientationInv;
 }
 
@@ -253,7 +259,8 @@ void	EngineMesh::checkForJointCollision(Bone* bone){
 	EngineBody* body = getBodyOfBone(bone);
 	if (body && parentBone && (parentBone->numChildren()>1) ) {
 		Logger::debug(format("parent of: %1% is: %2% and has children: %3% ") % bone->getName() % parentBone->getName() % parentBone->numChildren());
-		body->setSize( body->getSize() * Vec3(0.3,0.6,0.6) );
+		//body->setSize( body->getSize() * Vec3(0.3,0.6,0.6) );
+		body->setSize( body->getSize() * Vec3(0.6,0.3,0.6) );
 		EngineJoint* joint = getJointOfBone(bone);
 		if ( joint ) {
 			//joint->setLimits(30,30);

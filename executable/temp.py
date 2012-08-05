@@ -1,7 +1,7 @@
 
 def launch(Engine,objects,EngineModule):
 
-	Engine.setTimingFactor(0.0001)
+	#Engine.setTimingFactor(0.0001)
 	#print("timingfactor: " +str(Engine.getTimingFactor()))
 
 	objects["mesh"] = Engine.createMesh("Character.mesh")
