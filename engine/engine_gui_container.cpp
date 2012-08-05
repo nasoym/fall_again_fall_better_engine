@@ -1,5 +1,6 @@
 #include "logger.h"
 
+#include "engine.h"
 #include "engine_gui_container.h"
 #include "engine_gui_shape.h"
 
@@ -69,5 +70,26 @@ void        EngineGuiContainer::setSize(Vec3& vec3){
 		(*iter)->setSize(vec3);
 	}
 	mSize = vec3;
+}
+
+void	EngineGuiContainer::addDebugAxises(float debugSize, float debugWidth){
+	EngineGuiShape* shape;
+	shape = getEngine()->createGuiBox()->isGuiShape();
+	shape->setColour(1,0,0,0.5f);
+	shape->setLocalSize(Vec3(debugSize,1,1));
+	shape->setLocalPosition(Vec3(debugSize,0,0));
+	addShape(shape);
+
+	shape = getEngine()->createGuiBox()->isGuiShape();
+	shape->setColour(0,1,0,0.5f);
+	shape->setLocalSize(Vec3(1,debugSize,1));
+	shape->setLocalPosition(Vec3(0,debugSize,0));
+	addShape(shape);
+
+	shape = getEngine()->createGuiBox()->isGuiShape();
+	shape->setColour(0,0,1,0.5f);
+	shape->setLocalSize(Vec3(1,1,debugSize));
+	shape->setLocalPosition(Vec3(0,0,debugSize));
+	addShape(shape);
 }
 

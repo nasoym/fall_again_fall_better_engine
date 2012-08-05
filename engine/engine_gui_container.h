@@ -28,6 +28,9 @@ class EngineGuiContainer : public EngineObject {
 		void				addShape(EngineGuiShape*);
 		void				removeShape(EngineGuiShape*);
 
+		void				addDebugAxises(float debugSize=5.0, float debugWidth=0.5);
+		//void				addDebugAxises(float,float);
+
 		virtual EngineGuiContainer*		isGuiContainer(){return this;}
 
 	private:

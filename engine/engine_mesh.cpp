@@ -158,7 +158,9 @@ void	EngineMesh::createDebugObjects(){
 		bone = (*iter).bone;
 		container = new EngineGuiContainer(getEngine());
 		setContainerForBone(bone,container);
+		container->addDebugAxises(5,0.5);
 
+		/*
 		shape = getEngine()->createGuiBox()->isGuiShape();
 		shape->setColour(1,0,0,0.5f);
 		shape->setLocalSize(Vec3(debugSize,1,1));
@@ -176,6 +178,7 @@ void	EngineMesh::createDebugObjects(){
 		shape->setLocalSize(Vec3(1,1,debugSize));
 		shape->setLocalPosition(Vec3(0,0,debugSize));
 		container->addShape(shape);
+		*/
 	}
 }
 
@@ -245,7 +248,10 @@ EngineJoint* 	EngineMesh::createJointToParent(Bone* bone) {
 		joint->setAnchor1Orientation(localOrientation);
 		joint->setLimits(2,2);
 
+		joint->addDebugAxises(8,0.25);
 
+
+		/*
 		EngineGuiShape*	shape;
 		float debugSize = 8;
 		float debugWidth = 0.25;
@@ -266,6 +272,7 @@ EngineJoint* 	EngineMesh::createJointToParent(Bone* bone) {
 		shape->setLocalSize(Vec3(debugWidth,debugWidth,debugSize));
 		shape->setLocalPosition(Vec3(0,0,debugSize));
 		joint->addShape(shape);
+		*/
 
 
 	}
