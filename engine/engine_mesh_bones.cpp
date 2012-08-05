@@ -5,6 +5,7 @@
 
 #include "engine_body.h"
 #include "engine_joint.h"
+#include "engine_gui_container.h"
 
 Vec3		EngineMesh::translateGlobalAnchorToLocal(EngineBody* body,Vec3 & globalAnchor) {
 	return Vec3(
@@ -14,6 +15,15 @@ Vec3		EngineMesh::translateGlobalAnchorToLocal(EngineBody* body,Vec3 & globalAnc
 		));
 }
 
+void	EngineMesh::setContainerForBone(Bone* bone,EngineGuiContainer* container){
+	std::vector<BoneBody>::iterator	iter;
+	for(iter=mBoneBodies.begin();iter!=mBoneBodies.end();++iter){
+		if ((*iter).bone == bone) {
+			(*iter).container = container;
+			break;
+		}
+	}
+}
 
 void	EngineMesh::setBodyForBone(Bone* bone,EngineBody* body){
 	std::vector<BoneBody>::iterator	iter;
@@ -58,7 +68,8 @@ Bone*	EngineMesh::getBoneParent(Bone* bone){
 }
 
 Quat	EngineMesh::getBoneOrientation(Bone* bone,bool rotated){
-	Quat boneQuat = Quat(bone->_getDerivedOrientation()) * getOrientation();
+	//Quat boneQuat = Quat(bone->_getDerivedOrientation()) * getOrientation();
+	Quat boneQuat = Quat(getOrientation() * bone->_getDerivedOrientation());
 	if (rotated) {
 		return Quat(boneQuat * Quat().fromAngle(0,0,90) );
 	} else {
@@ -103,6 +114,16 @@ void	EngineMesh::boneSetPosition(Bone* bone,Vec3 vec3){
 	} else {
 		bone->_setDerivedPosition(bonePos.toOgre());
 	}
+}
+
+EngineGuiContainer*	EngineMesh::getContainerOfBone(Bone* bone) {
+	std::vector<BoneBody>::iterator	iter;
+	for(iter=mBoneBodies.begin();iter!=mBoneBodies.end();++iter){
+		if ( (*iter).bone == bone) {
+			return (*iter).container;
+		}
+	}
+	return 0;
 }
 
 EngineJoint*	EngineMesh::getJointOfBone(Bone* bone) {

@@ -101,20 +101,29 @@ void 	EngineMesh::calcLocalPosOfRootBone() {
 }
 
 void	EngineMesh::updateBone(Bone* bone){
-		EngineBody* body = getBodyOfBone(bone);
-		if (body) {
-			boneSetOrientation(bone, body->getOrientation());
-			Vec3	localPos = Vec3();
-			if (getJointOfBone(bone) ) {
-				localPos = body->getOrientation() * getJointOfBone(bone)->getAnchor2();
-			} else {
-				Vec3 localSize = body->getSize();
-				localSize = Vec3(localSize.X() * -1, 0,0);
-				localPos = body->getOrientation() * localSize;
-			}
-			Vec3	finalPos = localPos + body->getPosition();
-			boneSetPosition(bone,finalPos);
+	EngineBody* body = getBodyOfBone(bone);
+	if (body) {
+		boneSetOrientation(bone, body->getOrientation());
+		Vec3	localPos = Vec3();
+		EngineJoint* joint = getJointOfBone(bone);
+		if (joint) {
+			localPos = body->getOrientation() * joint->getAnchor2();
+		} else {
+			Vec3 localSize = body->getSize();
+			localSize = Vec3(localSize.X() * -1, 0,0);
+			localPos = body->getOrientation() * localSize;
 		}
+		Vec3	finalPos = localPos + body->getPosition();
+		boneSetPosition(bone,finalPos);
+	}
+
+	EngineGuiContainer* container = getContainerOfBone(bone);
+	if (container) {
+		container->setPosition(getBonePosition(bone));
+		container->setOrientation(getBoneOrientation(bone));
+		//container->setOrientation(body->getOrientation());
+	}
+
 	if (bone) {
 		Bone*	childBone;
 		Ogre::Bone::ChildNodeIterator childIter = bone->getChildIterator();
@@ -143,30 +152,31 @@ void	EngineMesh::createDebugObjects(){
 	float	debugSize = 5.0f;
 	Vec3	localSize;
 	Vec3	localPos;
+	EngineGuiContainer* container;
 	std::vector<BoneBody>::iterator	iter;
 	for(iter=mBoneBodies.begin();iter!=mBoneBodies.end();++iter){
 		bone = (*iter).bone;
+		container = new EngineGuiContainer(getEngine());
+		setContainerForBone(bone,container);
 
 		shape = getEngine()->createGuiBox()->isGuiShape();
 		shape->setColour(1,0,0,0.5f);
-		shape->setSize(Vec3(debugSize,1,1));
-		shape->setPosition(getBonePosition(bone));
-		shape->setOrientation(getBoneOrientation(bone));
+		shape->setLocalSize(Vec3(debugSize,1,1));
+		shape->setLocalPosition(Vec3(debugSize,0,0));
+		container->addShape(shape);
 
 		shape = getEngine()->createGuiBox()->isGuiShape();
 		shape->setColour(0,1,0,0.5f);
-		shape->setSize(Vec3(1,debugSize,1));
-		shape->setPosition(getBonePosition(bone));
-		shape->setOrientation(getBoneOrientation(bone));
+		shape->setLocalSize(Vec3(1,debugSize,1));
+		shape->setLocalPosition(Vec3(0,debugSize,0));
+		container->addShape(shape);
 
 		shape = getEngine()->createGuiBox()->isGuiShape();
 		shape->setColour(0,0,1,0.5f);
-		shape->setSize(Vec3(1,1,debugSize));
-		shape->setPosition(getBonePosition(bone));
-		shape->setOrientation(getBoneOrientation(bone));
-
+		shape->setLocalSize(Vec3(1,1,debugSize));
+		shape->setLocalPosition(Vec3(0,0,debugSize));
+		container->addShape(shape);
 	}
-
 }
 
 void	EngineMesh::createPhysicBodies(Bone* bone){
@@ -184,7 +194,7 @@ void	EngineMesh::createPhysicBodies(Bone* bone){
 	} else {
 		//bodyIsStatic = true;
 	}
-	bodyIsStatic = true;
+	//bodyIsStatic = true;
 
 	if (bodyIsStatic) {
 		Logger::debug("bone is static");
@@ -234,6 +244,30 @@ EngineJoint* 	EngineMesh::createJointToParent(Bone* bone) {
 		joint->setAnchor2(translateGlobalAnchorToLocal(body,globalAnchor));
 		joint->setAnchor1Orientation(localOrientation);
 		joint->setLimits(2,2);
+
+
+		EngineGuiShape*	shape;
+		float debugSize = 8;
+		float debugWidth = 0.25;
+		shape = getEngine()->createGuiBox()->isGuiShape();
+		shape->setColour(1,0,0,0.5f);
+		shape->setLocalSize(Vec3(debugSize,debugWidth,debugWidth));
+		shape->setLocalPosition(Vec3(debugSize,0,0));
+		joint->addShape(shape);
+
+		shape = getEngine()->createGuiBox()->isGuiShape();
+		shape->setColour(0,1,0,0.5f);
+		shape->setLocalSize(Vec3(debugWidth,debugSize,debugWidth));
+		shape->setLocalPosition(Vec3(0,debugSize,0));
+		joint->addShape(shape);
+
+		shape = getEngine()->createGuiBox()->isGuiShape();
+		shape->setColour(0,0,1,0.5f);
+		shape->setLocalSize(Vec3(debugWidth,debugWidth,debugSize));
+		shape->setLocalPosition(Vec3(0,0,debugSize));
+		joint->addShape(shape);
+
+
 	}
 	return joint;
 }
