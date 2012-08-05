@@ -49,7 +49,7 @@ class EngineMesh : public EngineGuiShape {
 		float			getBoneSize(Bone* bone);
 
 		void			boneSetPosition(Bone* bone,Vec3 vec3);
-		void			boneSetOrientation(Bone* bone,Quat quat);
+		void			boneSetOrientation(Bone* bone,Quat quat,bool rotated=true);
 
 		EngineBody*		getBodyOfBone(Bone* bone);
 		EngineJoint*	getJointOfBone(Bone* bone);

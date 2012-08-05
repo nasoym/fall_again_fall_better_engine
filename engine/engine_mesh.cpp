@@ -198,7 +198,7 @@ Quat			EngineMesh::calcJointOrientation(Bone* bone) {
 	Quat jointOrientation = Quat().fromTwoVectors(Vec3(1,0,0),localPosition);
 
 
-	printEulerAngles(jointOrientation,"joint orientation from vec");
+	//printEulerAngles(jointOrientation,"joint orientation from vec");
 
 	Quat	parentOrientation = parentBody->getOrientation();
 	Quat	myOrientation = body->getOrientation();
@@ -209,7 +209,7 @@ Quat			EngineMesh::calcJointOrientation(Bone* bone) {
 	Quat	deltaOrientation;
 	deltaOrientation = myOrientation * parentOrientation.inverse();
 	//printEulerAngles(deltaOrientation,"delta orientation");
-	printEulerAngles(deltaOrientation.inverse(),"delta orientation inv");
+	//printEulerAngles(deltaOrientation.inverse(),"delta orientation inv");
 	Quat	deltaOrientationInv = deltaOrientation.inverse();
 
 	Quat	test = (

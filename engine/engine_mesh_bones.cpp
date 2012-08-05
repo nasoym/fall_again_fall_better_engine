@@ -77,25 +77,43 @@ Quat	EngineMesh::getBoneOrientation(Bone* bone,bool rotated){
 	}
 }
 
-void	EngineMesh::boneSetOrientation(Bone* bone,Quat quat){
-	if (bone == mRootBone) {
-		bone->setOrientation(
-			Quat(
-				getOrientation().inverse() 
-				* quat
-				* Quat().fromAngle(0,0,90).inverse() 
-				).toOgre()
-			//Quat(getOrientation().inverse() * quat).toOgre()
-			);
+void	EngineMesh::boneSetOrientation(Bone* bone,Quat quat,bool rotated){
+	if (rotated) {
+		if (bone == mRootBone) {
+			bone->setOrientation(
+				Quat(
+					getOrientation().inverse() 
+					* quat
+					* Quat().fromAngle(0,0,90).inverse() 
+					).toOgre()
+				//Quat(getOrientation().inverse() * quat).toOgre()
+				);
+		} else {
+			bone->_setDerivedOrientation(
+				Quat(
+					getOrientation().inverse() 
+					* quat
+					* Quat().fromAngle(0,0,90).inverse() 
+					).toOgre()
+				//Quat(getOrientation().inverse() * quat).toOgre()
+				);
+		}
 	} else {
-		bone->_setDerivedOrientation(
-			Quat(
-				getOrientation().inverse() 
-				* quat
-				* Quat().fromAngle(0,0,90).inverse() 
-				).toOgre()
-			//Quat(getOrientation().inverse() * quat).toOgre()
-			);
+		if (bone == mRootBone) {
+			bone->setOrientation(
+				Quat(
+					getOrientation().inverse() 
+					* quat
+					).toOgre()
+				);
+		} else {
+			bone->_setDerivedOrientation(
+				Quat(
+					getOrientation().inverse() 
+					* quat
+					).toOgre()
+				);
+		}
 	}
 }
 
