@@ -1,5 +1,6 @@
 #include "logger.h"
 #include "engine_gui_shape.h"
+#include "engine_gui_container.h"
 #include "engine.h"
 
 EngineGuiShape::EngineGuiShape(Engine* engine) :
@@ -25,14 +26,6 @@ EngineGuiShape::~EngineGuiShape(){
 	}
 }
 
-void	EngineGuiShape::createBoxEntity(){
-    setEntity(getEngine()->getSceneManager()->createEntity("Prefab_Cube"));
-    //setEntity(getEngine()->getSceneManager()->createEntity("Cube.mesh"));
-    //setEntity(getEngine()->getSceneManager()->createEntity("Character.mesh"));
-	getEntity()->setCastShadows(true);
-    getNode()->attachObject(getEntity());
-}
-
 void	EngineGuiShape::setContainer(EngineGuiContainer* container){
 	mContainer = container;
 }
@@ -42,7 +35,14 @@ EngineGuiContainer* EngineGuiShape::getContainer(){
 }
 
 void    EngineGuiShape::setPosition(Vec3& vec3){
-	getNode()->setPosition((vec3 + mLocalPosition).toOgre());
+	Vec3	globalPos;
+	if (getContainer()) {
+		globalPos = getContainer()->getOrientation() * getLocalPosition();
+	} else {
+		globalPos = getLocalPosition();
+	}
+	globalPos = globalPos + vec3;
+	getNode()->setPosition(globalPos.toOgre());
 }
 
 Vec3    	EngineGuiShape::getPosition(){
@@ -50,15 +50,36 @@ Vec3    	EngineGuiShape::getPosition(){
 }
 
 void        EngineGuiShape::setOrientation(Quat& quat){
-	getNode()->setOrientation((quat * mLocalOrientation).toOgre());
+	getNode()->setOrientation((quat * getLocalOrientation()).toOgre());
 }
 
 Quat EngineGuiShape::getOrientation(){
 	return Quat(getNode()->getOrientation());
 }
 
-void        EngineGuiShape::setSize(Vec3& vec3){
+void        EngineGuiShape::setLocalSize(Vec3& vec3){
+	mLocalSize = vec3;
 	getNode()->setScale(vec3.toOgre() * (2.0f / 100.0f));
+}
+
+void        EngineGuiShape::setSize(Vec3& vec3){
+	if (getContainer()) {
+		Vec3 scaling = vec3 / getContainer()->getSize();
+		//Logger::debug(format("scaling: %1% %2% %3%") % 
+	//			scaling.X() % vec3.Y() % vec3.Z() );
+		if (mScalingType != FIX) {
+			setLocalPosition(getLocalPosition() * scaling);
+		}
+		if (mScalingType == ONE_TO_ONE) {
+			//Logger::debug("one to one");
+			getNode()->setScale(vec3.toOgre() * (2.0f / 100.0f));
+		} else if (mScalingType == SCALING) {
+			//Logger::debug("scaling");
+			getNode()->setScale((getSize() * scaling).toOgre() * (2.0f / 100.0f));
+		}
+	} else {
+		getNode()->setScale(vec3.toOgre() * (2.0f / 100.0f));
+	}
 }
 
 Vec3    EngineGuiShape::getSize(){

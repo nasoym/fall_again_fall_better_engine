@@ -194,7 +194,7 @@ void	EngineMesh::createPhysicBodies(Bone* bone){
 		body = getEngine()->createPhysicBox()->isBody();
 	}
 
-	body->setColour(1,1,1,0.5f);
+	//body->setColour(1,1,1,0.5f);
 	float 	boneWidth = 2.0f;
 	float 	boneLength = getBoneSize(bone);
 	body->setSize(Vec3(boneLength,boneWidth,boneWidth));

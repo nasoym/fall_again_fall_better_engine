@@ -6,7 +6,6 @@
 class Engine;
 
 class EngineBox : public EngineGuiShape {
-
     public:
         EngineBox(Engine*);
 	private:

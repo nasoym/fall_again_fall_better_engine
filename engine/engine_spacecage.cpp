@@ -7,7 +7,7 @@
 #include "physic_plane.h"
 
 EngineSpaceCage::EngineSpaceCage(Engine* engine,Vec3& size) :
-	EngineGuiShape(engine)
+	EngineGuiContainer(engine)
 	{
 
 	float xSize = size.X();

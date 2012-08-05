@@ -11,7 +11,7 @@ EngineBox::EngineBox(Engine* engine) :
 	{
 
     setEntity(getEngine()->getSceneManager()->createEntity("Prefab_Cube"));
-    getEntity()->setMaterialName("test2");
+    //getEntity()->setMaterialName("test2");
 	getEntity()->setCastShadows(true);
     //ent->setMaterialName("Ogre/Skin");
     //ent->setMaterialName("Examples/Chrome");

@@ -32,11 +32,12 @@ EngineGuiShape*		EngineGuiContainer::getShapeByName(const char* name){
 	return foundShape;
 }
 
-void				EngineGuiContainer::addShape(EngineGuiShape* shape){
+void	EngineGuiContainer::addShape(EngineGuiShape* shape){
 	mShapes.push_back(shape);
+	shape->setContainer(this);
 }
 
-void				EngineGuiContainer::removeShape(EngineGuiShape* shape){
+void	EngineGuiContainer::removeShape(EngineGuiShape* shape){
 	std::vector<EngineGuiShape*>::iterator	iter;
 	for(iter=mShapes.begin();iter!=mShapes.end();++iter){
 		if ( (*iter) == shape ) {
@@ -51,6 +52,7 @@ void        EngineGuiContainer::setPosition(Vec3& vec3){
 	for(iter=mShapes.begin();iter!=mShapes.end();++iter){
 		(*iter)->setPosition(vec3);
 	}
+	mPosition = vec3;
 }
 
 void        EngineGuiContainer::setOrientation(Quat& quat){
@@ -58,6 +60,7 @@ void        EngineGuiContainer::setOrientation(Quat& quat){
 	for(iter=mShapes.begin();iter!=mShapes.end();++iter){
 		(*iter)->setOrientation(quat);
 	}
+	mOrientation = quat;
 }
 
 void        EngineGuiContainer::setSize(Vec3& vec3){
@@ -65,5 +68,6 @@ void        EngineGuiContainer::setSize(Vec3& vec3){
 	for(iter=mShapes.begin();iter!=mShapes.end();++iter){
 		(*iter)->setSize(vec3);
 	}
+	mSize = vec3;
 }
 

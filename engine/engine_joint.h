@@ -4,16 +4,20 @@
 class Engine;
 class EngineBody;
 
-#include "engine_gui_shape.h"
+#include "math3d.h"
+
+#include "engine_gui_container.h"
 
 #include "physic_joint.h"
-//class PhysicJoint;
 
-class EngineJoint : public EngineGuiShape {
+class EngineJoint : public EngineGuiContainer {
     public:
         EngineJoint(Engine*,EngineBody*,EngineBody*);
-		virtual void	physicUpdate();
-		virtual void	guiUpdate();
+
+		virtual void		guiUpdate();
+
+		virtual Vec3    	getPosition();
+		virtual Quat 		getOrientation();
 
         void        setAnchor1Size(Vec3& vec3);
         void        setAnchor2Size(Vec3& vec3);

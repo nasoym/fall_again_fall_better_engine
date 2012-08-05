@@ -19,6 +19,8 @@ using namespace boost::python;
 #include "engine_gui_shape.h"
 #include "engine_gui_container.h"
 
+#include "engine_box.h"
+
 #include "engine_spacecage.h"
 #include "engine_body.h"
 #include "engine_joint.h"
@@ -82,6 +84,18 @@ BOOST_PYTHON_MODULE(EngineModule) {
 		.def("setMaterialName",&EngineGuiShape::setMaterialName)
 		.def("setColour",&EngineGuiShape::setColour)
 
+		.def("setScalingNone",&EngineGuiShape::setScalingNone)
+		.def("setScaling1To1",&EngineGuiShape::setScaling1To1)
+		.def("setScalingScaling",&EngineGuiShape::setScalingScaling)
+		.def("setScalingFixed",&EngineGuiShape::setScalingFixed)
+
+		.def("setLocalPosition",&EngineGuiShape::setLocalPosition)
+		.def("getLocalPosition",&EngineGuiShape::getLocalPosition)
+		.def("setLocalOrientation",&EngineGuiShape::setLocalOrientation)
+		.def("getLocalOrientation",&EngineGuiShape::getLocalOrientation)
+		.def("setLocalSize",&EngineGuiShape::setLocalSize)
+		.def("getLocalSize",&EngineGuiShape::getLocalSize)
+
 		.def("isGuiShape",&EngineGuiShape::isGuiShape,return_value_policy<reference_existing_object>() )
 		;
 
@@ -92,23 +106,28 @@ BOOST_PYTHON_MODULE(EngineModule) {
 		.def("getOrientation",&EngineGuiContainer::getOrientation)
 		.def("setSize",&EngineGuiContainer::setSize)
 		.def("getSize",&EngineGuiContainer::getSize)
+
 		.def("getShapeByIndex",&EngineGuiContainer::getShapeByIndex,return_value_policy<reference_existing_object>() )
 		.def("getShapeByName",&EngineGuiContainer::getShapeByName,return_value_policy<reference_existing_object>() )
 		.def("addShape",&EngineGuiContainer::addShape)
 		.def("removeShape",&EngineGuiContainer::removeShape)
+
 		.def("isGuiContainer",&EngineGuiContainer::isGuiContainer,return_value_policy<reference_existing_object>() )
+		;
+
+	class_<EngineBox,bases<EngineGuiShape> >("EngineBox", init<Engine*>())
 		;
 
 	class_<EngineSpaceCage,bases<EngineGuiShape> >("EngineSpaceCage", init<Engine*,Vec3&>())
 		;
 
-	class_<EngineBody,bases<EngineGuiShape> >("EngineBody", init<Engine*>())
+	class_<EngineBody,bases<EngineGuiContainer> >("EngineBody", init<Engine*>())
 		;
 
 	class_<EngineMesh,bases<EngineGuiShape> >("EngineMesh", init<Engine*,const char*>())
 		;
 
-	class_<EngineJoint,bases<EngineGuiShape> >("EngineJoint", init<Engine*,EngineBody*,EngineBody*>())
+	class_<EngineJoint,bases<EngineGuiContainer> >("EngineJoint", init<Engine*,EngineBody*,EngineBody*>())
 		.def("setAnchor1Size",&EngineJoint::setAnchor1Size)
 		.def("setAnchor2Size",&EngineJoint::setAnchor2Size)
 		.def("setAnchor1",&EngineJoint::setAnchor1)

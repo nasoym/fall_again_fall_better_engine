@@ -7,7 +7,7 @@
 #include "physic_joint.h"
 
 EngineJoint::EngineJoint(Engine* engine,EngineBody* body1, EngineBody* body2) :
-	EngineGuiShape(engine),
+	EngineGuiContainer(engine),
 	mBody1(body1),
 	mBody2(body2)
 	{
@@ -18,12 +18,6 @@ EngineJoint::EngineJoint(Engine* engine,EngineBody* body1, EngineBody* body2) :
 	);
 }
 
-void	EngineJoint::physicUpdate(){
-}
-
-void	EngineJoint::guiUpdate(){
-}
-
 void        EngineJoint::setAnchor1Size(Vec3& vec3){
 	setAnchor1(vec3 * mBody1->getSize() );
 }
@@ -31,4 +25,23 @@ void        EngineJoint::setAnchor1Size(Vec3& vec3){
 void        EngineJoint::setAnchor2Size(Vec3& vec3){
 	setAnchor2(vec3 * mBody2->getSize() );
 }
+
+void	EngineJoint::guiUpdate(){
+	//TODO check if any body is awake
+	setPosition(getPosition());
+	setOrientation(getOrientation());
+}
+
+Vec3    	EngineJoint::getPosition(){
+	Vec3	jointPosition = mBody1->getPosition();
+	jointPosition += mBody1->getOrientation() * getAnchor1();
+	return jointPosition;
+}
+
+Quat EngineJoint::getOrientation(){
+	Quat 	jointOrientation;
+	jointOrientation = mBody1->getOrientation() * getAnchor1Orientation();
+	return jointOrientation;
+}
+
 

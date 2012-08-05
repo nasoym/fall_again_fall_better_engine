@@ -7,7 +7,7 @@
 #include "physic_box.h"
 
 EngineBody::EngineBody(Engine* engine) :
-	EngineGuiShape(engine),
+	EngineGuiContainer(engine),
 	mDoGuiUpdates(true)
 	{
 }
@@ -24,17 +24,17 @@ void	EngineBody::guiUpdate(){
 
 void        EngineBody::setPosition(Vec3& vec3){
 	getPhysicBody()->setPosition(vec3);
-	EngineGuiShape::setPosition(vec3);
+	EngineGuiContainer::setPosition(vec3);
 }
 
 void        EngineBody::setOrientation(Quat& quat){
 	getPhysicBody()->setOrientation(quat);
-	EngineGuiShape::setOrientation(quat);
+	EngineGuiContainer::setOrientation(quat);
 }
 
 void        EngineBody::setSize(Vec3& vec3){
+	EngineGuiContainer::setSize(vec3);
 	getPhysicBody()->setSize(vec3);
-	EngineGuiShape::setSize(vec3);
 }
 
 Vec3    	EngineBody::getPosition(){

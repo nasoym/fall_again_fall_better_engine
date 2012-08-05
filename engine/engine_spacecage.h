@@ -3,13 +3,13 @@
 
 class Engine;
 
-#include "engine_gui_shape.h"
+#include "engine_gui_container.h"
 
 class PhysicPlane;
 
 #include "math3d.h"
 
-class EngineSpaceCage : public EngineGuiShape {
+class EngineSpaceCage : public EngineGuiContainer {
     public:
         EngineSpaceCage(Engine*,Vec3&);
 
