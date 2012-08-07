@@ -27,21 +27,20 @@ class EngineMesh : public EngineGuiShape {
         EngineMesh(Engine*,const char*);
 		virtual ~EngineMesh();
 
-		void			enableBones();
+		void			setupAllBones();
 		void			createPhysics(Bone* bone);
 		void			checkForJointCollision(Bone* bone);
 		void			updateBone(Bone* bone);
-		void			createDebugObjects();
+		void			createAllDebugObjects();
 		Vec3			translateGlobalAnchorToLocal(EngineBody* body,Vec3 & globalAnchor);
 		void			calcLocalPosOfRootBone();
-		EngineJoint* 	createJointToParent2(Bone* bone,Vec3 &,Quat & jointOrienration);
+		EngineJoint* 	createJointToParent(Bone* bone,Vec3 &,Quat & jointOrienration);
 
 		void			createPhysicBodiesFromParent(Bone* bone);
 
 		virtual void	guiUpdate();
 
 		Bone*			findRootBone();
-		bool			hasBoneAParent(Bone* bone);
 		Bone*			getBoneParent(Bone* bone);
 
 		Vec3			getBonePosition(Bone* bone);
