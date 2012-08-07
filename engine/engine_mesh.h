@@ -35,6 +35,7 @@ class EngineMesh : public EngineGuiShape {
 		Vec3			translateGlobalAnchorToLocal(EngineBody* body,Vec3 & globalAnchor);
 		void			calcLocalPosOfRootBone();
 		EngineJoint* 	createJointToParent(Bone* bone,Vec3 &,Quat & jointOrienration);
+		void			createDebugForBone(Bone* bone);
 
 		void			createPhysicBodiesFromParent(Bone* bone);
 
@@ -66,8 +67,8 @@ class EngineMesh : public EngineGuiShape {
 		EngineGuiShape*			mRootShape;
 		std::vector<BoneBody> 	mBoneBodies;
 		Bone*					mRootBone;
-		Vec3 mLocalPos;
-		Quat mLocalQuat;
+		Vec3 					mLocalPos;
+		Quat 					mLocalQuat;
 
 
 		

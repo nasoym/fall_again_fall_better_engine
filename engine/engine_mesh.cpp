@@ -7,16 +7,19 @@
 #include "engine_joint.h"
 #include "engine_gui_shape.h"
 
-
 EngineMesh::EngineMesh(Engine* engine,const char* meshName) :
 	EngineGuiShape(engine),
-	mRootBone(0)
+	mRootBone(0),
+	mRootShape(0),
+	mLocalPos(Vec3()),
+	mLocalQuat(Quat())
 	{
     setEntity(getEngine()->getSceneManager()->createEntity(meshName));
 	setColour(0.6f,0.6f,0.6f,0.8f);
 	//setMaterialName("Body");
     getNode()->attachObject(getEntity());
-	setSize(Vec3(1000,1000,1000));
+	setSize(Vec3(1,1,1) * 1000);
+	//setSize(Vec3(1000,1000,1000));
 	setPosition(Vec3(0,150,0));
 
 	setupAllBones();
@@ -27,12 +30,15 @@ EngineMesh::EngineMesh(Engine* engine,const char* meshName) :
 
 	calcLocalPosOfRootBone();
 	//createAllDebugObjects();
+	//createDebugForBone(mRootBone);
 
+	/*
 	mRootShape = getEngine()->createGuiBox()->isGuiShape();
 	mRootShape->setColour(1,0,0,0.5f);
 	mRootShape->setSize(Vec3(5,2,2));
 	mRootShape->setPosition(getPosition());
 	mRootShape->setOrientation(getOrientation());
+	*/
 }
 
 EngineMesh::~EngineMesh(){
@@ -103,15 +109,18 @@ void	EngineMesh::updateBone(Bone* bone){
 }
 
 void	EngineMesh::createAllDebugObjects(){
-	Bone* bone;
 	EngineGuiContainer* container;
 	std::vector<BoneBody>::iterator	iter;
 	for(iter=mBoneBodies.begin();iter!=mBoneBodies.end();++iter){
-		bone = (*iter).bone;
-		container = new EngineGuiContainer(getEngine());
-		setContainerForBone(bone,container);
-		container->addDebugAxises(5,0.3);
+		createDebugForBone( (*iter).bone );
 	}
+}
+
+void	EngineMesh::createDebugForBone(Bone* bone) {
+	EngineGuiContainer* container;
+	container = new EngineGuiContainer(getEngine());
+	setContainerForBone(bone,container);
+	container->addDebugAxises(5,0.3);
 }
 
 void	EngineMesh::createPhysics(Bone* bone) {
@@ -181,7 +190,7 @@ void	EngineMesh::createPhysicBodiesFromParent(Bone* bone){
 		Logger::debug(format("bone: %1% has no parent") % bone->getName());
 		boneBody->setOrientation(
 			getBoneOrientation(bone,false)
-			//* Quat().fromAngles(0,0,90)
+			* Quat().fromAngles(0,0,90)
 			);
 		boneBody->setPosition(
 			getBonePosition(bone)
