@@ -3,7 +3,8 @@ import temp
 import ragdoll
 
 objects = {}
-objects["ground"] = Engine.createSpaceCage(EngineModule.Vec3(400,400,400))
+#objects["ground"] = Engine.createSpaceCage(EngineModule.Vec3(400,400,400))
+objects["ground"] = Engine.createSpaceCage(EngineModule.Vec3(600,600,600))
 
 transformFactor = 0.7
 forwardDir = EngineModule.Vec3(0,0,-1)
