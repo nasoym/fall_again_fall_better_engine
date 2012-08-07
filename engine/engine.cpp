@@ -84,11 +84,16 @@ void	Engine::step() {
 		//mPhysicsEngine->simulate(mSimulationTimeStep / 1000.0f);
 
 		if (!mPhysicPaused) {
-			mPhysicsEngine->simulate(timeToSimulate);
+			//mPhysicsEngine->simulate(timeToSimulate);
+			simulatePhysics(timeToSimulate);
 		}
 		physicUpdates();
 	}
 
+}
+
+void	Engine::simulatePhysics(float time) {
+	mPhysicsEngine->simulate(time);
 }
 
 void    Engine::guiUpdates() {

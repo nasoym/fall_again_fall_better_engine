@@ -35,6 +35,7 @@ class Engine :
 
         void    run();
 		void	step();
+		void	simulatePhysics(float time);
 
 		void	quit(){mLoopRendering=false;}
 
