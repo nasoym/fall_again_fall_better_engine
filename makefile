@@ -58,6 +58,9 @@ show:
 all: executable/main.exe
 	echo "main"
 
+test: build/test.obj
+	$(LINK) $(LIBFLAGS) -OUT:test.exe $+ $(LIBLIST)
+
 executable/main.exe: $(OBJ)
 	echo "linking to:$@"
 	$(LINK) $(LIBFLAGS) -OUT:$@ $(OBJ) $(LIBLIST)
@@ -70,6 +73,7 @@ build/%.obj: %.cpp
 
 build/main.obj: main.cpp
 	$(CC) $(CFLAGS) -Fo$@ $<
+
 
 .PHONY: clean
 
