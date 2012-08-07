@@ -3,20 +3,21 @@
 
 #include <Ogre.h>
 #include <math.h>
+#include <string>
 
 #include "PxPhysicsAPI.h"
 
-#include "logger.h"
+#include "boost/format.hpp"
 
-	#ifndef PI
-		#define 	PI (3.14159265f)
-	#endif
-	#ifndef DEG2RAD
-		#define 	DEG2RAD (PI / 180.0f)
-	#endif 
-	#ifndef RAD2DEG
-		#define 	RAD2DEG (180.0f / PI)
-	#endif 
+#ifndef PI
+	#define 	PI (3.14159265f)
+#endif
+#ifndef DEG2RAD
+	#define 	DEG2RAD (PI / 180.0f)
+#endif 
+#ifndef RAD2DEG
+	#define 	RAD2DEG (180.0f / PI)
+#endif 
 
 class Quat : public Ogre::Quaternion {
     public: // Constructors
@@ -93,21 +94,24 @@ class Quat : public Ogre::Quaternion {
 				z.valueDegrees());
 		}
 
-		void	fromAngleAxis(float angle,Vec3 axis) {
+		Quat	fromAngleAxis(float angle,Vec3 axis) {
 			FromAngleAxis(
-				Ogre::Radian(angle),
+				//Ogre::Radian(angle),
+				Ogre::Degree(angle),
 				axis.toOgre()
 			);
+			normalise();
+			return *this;
 		}
 
-		Vec3	getAxis(){
+		Vec3	toAxis(){
 			Ogre::Vector3	axis;
 			Ogre::Radian	angle;
 			ToAngleAxis(angle,axis);
 			return Vec3(axis);
 		}
 
-		float	getAngle(){
+		float	toAngle(){
 			Ogre::Vector3	axis;
 			Ogre::Radian	angle;
 			ToAngleAxis(angle,axis);
@@ -140,6 +144,10 @@ class Quat : public Ogre::Quaternion {
 			Ogre::Quaternion::normalise();
 		}
 
+		std::string	toString(){
+			return (boost::format("%3.3f %3.3f %3.3f %3.3f") % 
+					w % x % y % z).str();
+		}
 
     public: // Converters
 		physx::PxQuat toPhysx() const {

@@ -5,6 +5,8 @@
 
 #include "PxPhysicsAPI.h"
 
+#include "boost/format.hpp"
+
 class Vec3 : public Ogre::Vector3 {
     public:
 		Vec3() : Ogre::Vector3(0,0,0) {}
@@ -119,6 +121,11 @@ class Vec3 : public Ogre::Vector3 {
 				Z()*vec3.X() - X()*vec3.Z(),
 				X()*vec3.Y() - Y()*vec3.X()
 				);
+		}
+
+		std::string	toString(){
+			return (boost::format("%3.3f %3.3f %3.3f") % 
+					x % y % z).str();
 		}
 
 	public:

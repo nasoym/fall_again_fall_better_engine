@@ -50,6 +50,8 @@ ALLPATHES=$(subst :, ,$(VPATH))
 OBJ=build/main.obj
 OBJ+=$(foreach dir,$(ALLPATHES), $(patsubst $(dir)/%.cpp,build/%.obj,$(wildcard $(dir)/*.cpp)) )
 
+.PHONY: clean test
+
 dll:
 	$(LINK) $(LIBFLAGS) -DLL -OUT:executable/EngineModule.pyd $(OBJ) $(LIBLIST)
 show:
@@ -59,7 +61,7 @@ all: executable/main.exe
 	echo "main"
 
 test: build/test.obj
-	$(LINK) $(LIBFLAGS) -OUT:test.exe $+ $(LIBLIST)
+	$(LINK) $(LIBFLAGS) -OUT:test.exe $< $(LIBLIST)
 
 executable/main.exe: $(OBJ)
 	echo "linking to:$@"
@@ -75,7 +77,6 @@ build/main.obj: main.cpp
 	$(CC) $(CFLAGS) -Fo$@ $<
 
 
-.PHONY: clean
 
 run: all
 	(cd executable ; ./main.exe)
