@@ -104,7 +104,7 @@ def keyPressed(key):
 		j.setAnchor2Size( EngineModule.Vec3(-1,0,0) )
 		j.setLimits(20,20)
 		j.setAnchor1Orientation(
-			EngineModule.Quat().fromAngle(0,0,45) )
+			EngineModule.Quat().fromAngles(0,0,45) )
 
 		b = Engine.createGuiBox()
 		b.setLocalPosition(EngineModule.Vec3(10,0,0))

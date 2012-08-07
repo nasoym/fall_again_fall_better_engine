@@ -37,6 +37,7 @@ class EngineMesh : public EngineGuiShape {
 		void			calcLocalPosOfRootBone();
 		EngineJoint* 	createJointToParent(Bone* bone);
 		Quat			calcJointOrientation(Bone* bone);
+		void			createPhysicBodiesFromParent(Bone* bone);
 
 		virtual void	guiUpdate();
 

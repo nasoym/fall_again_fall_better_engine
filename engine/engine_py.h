@@ -205,7 +205,7 @@ BOOST_PYTHON_MODULE(EngineModule) {
     class_<Quat>("Quat",init<>())
 		.def(init<float,float,float,float>())
 		//.def(init<object&>())
-		.def("fromAngle",&Quat::fromAngle)
+		.def("fromAngles",&Quat::fromAngles)
 		//.def("tupleFromAngle",&Quat::tupleFromAngle)
 
 		.def(self * Vec3())

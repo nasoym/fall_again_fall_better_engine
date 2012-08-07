@@ -71,7 +71,7 @@ Quat	EngineMesh::getBoneOrientation(Bone* bone,bool rotated){
 	//Quat boneQuat = Quat(bone->_getDerivedOrientation()) * getOrientation();
 	Quat boneQuat = Quat(getOrientation() * bone->_getDerivedOrientation());
 	if (rotated) {
-		return Quat(boneQuat * Quat().fromAngle(0,0,90) );
+		return Quat(boneQuat * Quat().fromAngles(0,0,90) );
 	} else {
 		return Quat(boneQuat);
 	}
@@ -84,7 +84,7 @@ void	EngineMesh::boneSetOrientation(Bone* bone,Quat quat,bool rotated){
 				Quat(
 					getOrientation().inverse() 
 					* quat
-					* Quat().fromAngle(0,0,90).inverse() 
+					* Quat().fromAngles(0,0,90).inverse() 
 					).toOgre()
 				//Quat(getOrientation().inverse() * quat).toOgre()
 				);
@@ -93,7 +93,7 @@ void	EngineMesh::boneSetOrientation(Bone* bone,Quat quat,bool rotated){
 				Quat(
 					getOrientation().inverse() 
 					* quat
-					* Quat().fromAngle(0,0,90).inverse() 
+					* Quat().fromAngles(0,0,90).inverse() 
 					).toOgre()
 				//Quat(getOrientation().inverse() * quat).toOgre()
 				);

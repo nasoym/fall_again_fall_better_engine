@@ -9,6 +9,7 @@
 
 #include "boost/format.hpp"
 
+/*
 #ifndef PI
 	#define 	PI (3.14159265f)
 #endif
@@ -18,6 +19,7 @@
 #ifndef RAD2DEG
 	#define 	RAD2DEG (180.0f / PI)
 #endif 
+*/
 
 class Quat : public Ogre::Quaternion {
     public: // Constructors
@@ -71,7 +73,7 @@ class Quat : public Ogre::Quaternion {
 			return *this;
 		}
 
-		Quat fromAngle(float t,float p,float r) {
+		Quat fromAngles(float t,float p,float r) {
 			Ogre::Matrix3	rotationMatrix = Ogre::Matrix3();
 			rotationMatrix.FromEulerAnglesXYZ(
 				Ogre::Degree(t),
@@ -96,11 +98,10 @@ class Quat : public Ogre::Quaternion {
 
 		Quat	fromAngleAxis(float angle,Vec3 axis) {
 			FromAngleAxis(
-				//Ogre::Radian(angle),
 				Ogre::Degree(angle),
 				axis.toOgre()
 			);
-			normalise();
+			//normalise();
 			return *this;
 		}
 

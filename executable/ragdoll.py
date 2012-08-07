@@ -81,12 +81,12 @@ def createHumanJoints(engine,module,ragdoll):
 		ragdoll.joints["j_rfoot"] = engine.createJoint(ragdoll.parts["base"], ragdoll.parts["rlleg"] )
 		ragdoll.joints["j_rfoot"].setAnchor1Size( module.Vec3(0,1,0.35) )
 		ragdoll.joints["j_rfoot"].setAnchor2Size( module.Vec3(-1,0,0) )
-		ragdoll.joints["j_rfoot"].setAnchor1Orientation( module.Quat().fromAngle(0,1,90) )
+		ragdoll.joints["j_rfoot"].setAnchor1Orientation( module.Quat().fromAngles(0,1,90) )
 
 		ragdoll.joints["j_lfoot"] = engine.createJoint(ragdoll.parts["base"], ragdoll.parts["llleg"] )
 		ragdoll.joints["j_lfoot"].setAnchor1Size( module.Vec3(0,1,-0.35) )
 		ragdoll.joints["j_lfoot"].setAnchor2Size( module.Vec3(-1,0,0) )
-		ragdoll.joints["j_lfoot"].setAnchor1Orientation( module.Quat().fromAngle(0,1,90) )
+		ragdoll.joints["j_lfoot"].setAnchor1Orientation( module.Quat().fromAngles(0,1,90) )
 
 	ragdoll.joints["j_rknee"] = engine.createJoint(ragdoll.parts["rlleg"], ragdoll.parts["ruleg"] )
 	ragdoll.joints["j_rknee"].setAnchor1Size( module.Vec3(1,0,0) )
@@ -171,11 +171,11 @@ def createLimitsHuman(engine,module,ragdoll):
 		ragdoll.joints["j_lfoot"].setLimits(90,90)
 
 	ragdoll.joints["j_rknee"].setLimits(1,80)
-	ragdoll.joints["j_rknee"].setAnchor1Orientation( module.Quat().fromAngle(0,1,80) )
-	ragdoll.joints["j_rknee"].setMotorTarget( module.Quat().fromAngle(0,1,-80) )
+	ragdoll.joints["j_rknee"].setAnchor1Orientation( module.Quat().fromAngles(0,1,80) )
+	ragdoll.joints["j_rknee"].setMotorTarget( module.Quat().fromAngles(0,1,-80) )
 	ragdoll.joints["j_lknee"].setLimits(1,80)
-	ragdoll.joints["j_lknee"].setAnchor1Orientation( module.Quat().fromAngle(0,1,80) )
-	ragdoll.joints["j_lknee"].setMotorTarget( module.Quat().fromAngle(0,1,-80) )
+	ragdoll.joints["j_lknee"].setAnchor1Orientation( module.Quat().fromAngles(0,1,80) )
+	ragdoll.joints["j_lknee"].setMotorTarget( module.Quat().fromAngles(0,1,-80) )
 
 	ragdoll.joints["j_rhip"].setLimits(60,60)
 	ragdoll.joints["j_lhip"].setLimits(60,60)
@@ -184,11 +184,11 @@ def createLimitsHuman(engine,module,ragdoll):
 	ragdoll.joints["j_lshoulder"].setLimits(40,40)
 
 	ragdoll.joints["j_relbow"].setLimits(1,80)
-	ragdoll.joints["j_relbow"].setAnchor1Orientation( module.Quat().fromAngle(0,1,-80) )
-	ragdoll.joints["j_relbow"].setMotorTarget( module.Quat().fromAngle(0,1,80) )
+	ragdoll.joints["j_relbow"].setAnchor1Orientation( module.Quat().fromAngles(0,1,-80) )
+	ragdoll.joints["j_relbow"].setMotorTarget( module.Quat().fromAngles(0,1,80) )
 	ragdoll.joints["j_lelbow"].setLimits(1,80)
-	ragdoll.joints["j_lelbow"].setAnchor1Orientation( module.Quat().fromAngle(0,1,-80) )
-	ragdoll.joints["j_lelbow"].setMotorTarget( module.Quat().fromAngle(0,1,80) )
+	ragdoll.joints["j_lelbow"].setAnchor1Orientation( module.Quat().fromAngles(0,1,-80) )
+	ragdoll.joints["j_lelbow"].setMotorTarget( module.Quat().fromAngles(0,1,80) )
 
 def driveJoints(ragdoll):
 	ragdoll.powered = True
