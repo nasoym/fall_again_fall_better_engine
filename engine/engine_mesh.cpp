@@ -83,7 +83,8 @@ EngineMesh::EngineMesh(Engine* engine,const char* meshName) :
 	{
 
     setEntity(getEngine()->getSceneManager()->createEntity(meshName));
-	setColour(0.2f,0.2f,0.2f,0.3f);
+	//setColour(0.6f,0.6f,0.6f,0.8f);
+	setMaterialName("Body");
     getNode()->attachObject(getEntity());
 
 	setSize(Vec3(1000,1000,1000));
@@ -97,7 +98,7 @@ EngineMesh::EngineMesh(Engine* engine,const char* meshName) :
 	Logger::debug(format("found root bone: %1% ") % mRootBone->getName());
 	createPhysics(mRootBone);
 	calcLocalPosOfRootBone();
-	createDebugObjects();
+	//createDebugObjects();
 
 	mRootShape = getEngine()->createGuiBox()->isGuiShape();
 	mRootShape->setColour(1,0,0,0.5f);
@@ -135,7 +136,6 @@ void		EngineMesh::enableBones(){
 void	EngineMesh::guiUpdate(){
 	
 	EngineBody* rootBody = getBodyOfBone(mRootBone);
-	/*
 	if (rootBody) {
 	//if (false) {
 		Vec3	rootBodyPos = rootBody->getPosition();
@@ -143,7 +143,6 @@ void	EngineMesh::guiUpdate(){
 		setPosition(rootBodyPos - (rootBodyQuat* mLocalPos));
 		setOrientation(rootBodyQuat * mLocalQuat);
 	}
-	*/
 	if (mRootShape) {
 	//if (false) {
 		mRootShape->setPosition(getPosition());
@@ -167,7 +166,7 @@ void	EngineMesh::updateBone(Bone* bone){
 	EngineBody* body = getBodyOfBone(bone);
 	if (body) {
 	//if (false) {
-		if (isInBoneNames(bone->getName())) {
+		//if (isInBoneNames(bone->getName())) {
 			boneSetOrientation(bone, body->getOrientation());
 			//boneSetOrientation(bone, body->getOrientation(),false); //Y
 			Vec3	localPos = Vec3();
@@ -180,8 +179,8 @@ void	EngineMesh::updateBone(Bone* bone){
 					//(body->getSize() * Vec3(0,-1,0)); //Y
 			}
 			boneSetPosition(bone, localPos + body->getPosition());
-		} else {
 			/*
+		} else {
 			//boneSetOrientation(bone, body->getOrientation());
 			boneSetOrientation(bone, body->getOrientation(),false); //Y
 			Vec3	localPos = Vec3();
@@ -194,8 +193,8 @@ void	EngineMesh::updateBone(Bone* bone){
 					//(body->getSize() * Vec3(0,-1,0)); //Y
 			}
 			boneSetPosition(bone, localPos + body->getPosition());
-			*/
 		}
+			*/
 	}
 
 	EngineGuiContainer* container = getContainerOfBone(bone);
@@ -225,15 +224,9 @@ void	EngineMesh::createDebugObjects(){
 	std::vector<BoneBody>::iterator	iter;
 	for(iter=mBoneBodies.begin();iter!=mBoneBodies.end();++iter){
 		bone = (*iter).bone;
-		//if (isInBoneNames(bone->getName())) {
-		if ( 
-			(bone->getName().compare("Bone.004") == 0 ) ||
-			(bone->getName().compare("Bone.010") == 0 ) 
-		){ 
-			container = new EngineGuiContainer(getEngine());
-			setContainerForBone(bone,container);
-			container->addDebugAxises(5,0.3);
-		}
+		container = new EngineGuiContainer(getEngine());
+		setContainerForBone(bone,container);
+		container->addDebugAxises(5,0.3);
 	}
 }
 
@@ -249,235 +242,69 @@ void	EngineMesh::createPhysics(Bone* bone) {
 }
 
 void	EngineMesh::createPhysicBodiesFromParent(Bone* bone){
+	float 	boneWidth = 2.0f;
 	if (getBoneParent(bone) ) {
 		if (getBodyOfBone(getBoneParent(bone))) {
-			if (isInBoneNames(bone->getName())) {
-				Bone* parentBone = getBoneParent(bone);
-				EngineBody*	parentBody = getBodyOfBone(parentBone);
-				Logger::debug(format("create: %1% as child of: %2%") % bone->getName() % parentBone->getName());
+			Bone* parentBone = getBoneParent(bone);
+			EngineBody*	parentBody = getBodyOfBone(parentBone);
+			Logger::debug(format("create: %1% as child of: %2%") % bone->getName() % parentBone->getName());
 
-				Vec3	boneLocalPosition = Vec3(bone->getPosition());
-				Quat	boneLocalOrientation = Quat(bone->getOrientation());
-				Vec3	scaledBoneLocalPosition = boneLocalPosition * Vec3(getNode()->getScale());
+			Vec3	boneLocalPosition = Vec3(bone->getPosition());
+			Quat	boneLocalOrientation = Quat(bone->getOrientation());
+			Vec3	scaledBoneLocalPosition = boneLocalPosition * Vec3(getNode()->getScale());
 
-				Vec3	boneLocalEuler = boneLocalOrientation.toAngles();
+			Vec3	scaledFlippedBoneLocalPosition;
+			scaledFlippedBoneLocalPosition.x = scaledBoneLocalPosition.y;
+			scaledFlippedBoneLocalPosition.y = scaledBoneLocalPosition.x;
+			scaledFlippedBoneLocalPosition.z = scaledBoneLocalPosition.z;
 
-				Vec3	scaledFlippedBoneLocalPosition;
-				scaledFlippedBoneLocalPosition.x = scaledBoneLocalPosition.y;
-				scaledFlippedBoneLocalPosition.y = scaledBoneLocalPosition.x;
-				scaledFlippedBoneLocalPosition.z = scaledBoneLocalPosition.z;
+			Quat	flippedBoneLocalOrientation;
 
-				Quat	flippedBoneLocalOrientation;
-				flippedBoneLocalOrientation.fromAngles(
-						-boneLocalEuler.y,
-						-boneLocalEuler.x,
-						-boneLocalEuler.z
-					);
+			Vec3	obaxis = boneLocalOrientation.toAxis();
+			float	oba = boneLocalOrientation.toAngle();
 
-				Vec3	obaxis = boneLocalOrientation.toAxis();
-				float	oba = boneLocalOrientation.toAngle();
+			Vec3	newAxis = Vec3();
+			newAxis = Quat().fromAngles(0,0,-90) * obaxis;
 
-				Vec3	oaaxis = flippedBoneLocalOrientation.toAxis();
-				float	oaa = flippedBoneLocalOrientation.toAngle();
+			flippedBoneLocalOrientation.fromAngleAxis(oba,newAxis);
 
-				Logger::debug(format("before: %1% %2%") % obaxis % oba);
-				Logger::debug(format("after: %1% %2%") % oaaxis % oaa);
+			Quat	parentOrientation = parentBody->getOrientation();
+			Vec3	parentPosition = parentBody->getPosition();
 
-				Quat	ob2a = Quat().fromTwoVectors(obaxis,oaaxis);
+			float 	parentBoneLength = getBoneSize(parentBone);
+			float 	boneLength = getBoneSize(bone);
 
-				Logger::debug(format("q b2a %1%") % ob2a);
-				Logger::debug(format("q b2a %1%") % ob2a.toAngles());
+			EngineBody* boneBody;
+			//boneBody = getEngine()->createPhysicStatic()->isBody();
+			boneBody = getEngine()->createPhysicBox()->isBody();
+			boneBody->setSize(Vec3(boneLength,boneWidth,boneWidth));
+			boneBody->setOrientation(parentOrientation * flippedBoneLocalOrientation);
+			boneBody->setPosition( parentPosition  
+				- (parentOrientation * Vec3(parentBoneLength,0,0))
+				+ (parentOrientation * scaledFlippedBoneLocalPosition)
+				+ (boneBody->getOrientation() * Vec3(boneLength,0,0) )
+				);
+			//boneBody->addDebugAxises(2,0.2);
+			setBodyForBone(bone,boneBody);
+			EngineJoint* joint = createJointToParent2(
+				bone,
+				parentPosition  
+				- (parentOrientation * Vec3(parentBoneLength,0,0))
+				+ (parentOrientation * scaledFlippedBoneLocalPosition)
+				,
+				flippedBoneLocalOrientation);
+			setJointForBone(bone,joint);
+			checkForJointCollision(bone);
 
-				Vec3	newAxis = Vec3();
-				newAxis.x = obaxis.y * -1;
-				newAxis.y = obaxis.x * -1;
-				newAxis.z = obaxis.z * -1;
-
-				newAxis.x = obaxis.y * -1;
-				newAxis.y = obaxis.x * -1;
-				newAxis.z = obaxis.z * -1;
-
-				newAxis = Quat().fromAngles(0,0,-90) * obaxis;
-
-				flippedBoneLocalOrientation.fromAngleAxis(oba,newAxis);
-
-
-
-
-				Quat	parentOrientation = parentBody->getOrientation();
-				Vec3	parentPosition = parentBody->getPosition();
-
-				float 	parentBoneLength = getBoneSize(parentBone);
-				float 	boneLength = getBoneSize(bone);
-				float 	boneWidth = 1.0f;
-
-				//if ((bone->getName().compare("Bone.004") == 0 ) || (bone->getName().compare("Bone.010") == 0 ) ) {
-					Matrix3	rotationMatrix = Matrix3();
-					boneLocalOrientation.toOgre().ToRotationMatrix(rotationMatrix);
-					Radian x,y,z;
-					Matrix3	newMatrix = Matrix3();
-
-					/*
-					Vec3	childBonePos;
-					Bone*	childBone;
-					Ogre::Bone::ChildNodeIterator childIter = bone->getChildIterator();
-					while(childIter.hasMoreElements()){
-						childBone = (Ogre::Bone*)childIter.getNext();
-						childBonePos = getBonePosition(childBone);
-						EngineGuiShape*	box = getEngine()->createGuiBox()->isGuiShape();
-						box->setSize(Vec3(1,1,1));
-						box->setPosition(childBonePos);
-						box->setColour(0,0,1,0.5);
-						break;
-					}
-					*/
-
-					float	closest_dist = 0;
-
-					/*
-					for(int i=0;i<6;++i) {
-						for(int j=0;j<6;++j) {
-						*/
-							int i = 2;
-							//int i = 3;
-							//int j = 2;
-							//int j = 0;
-							int j = 4;
-							switch(i){
-								case 0:
-									rotationMatrix.ToEulerAnglesXYZ(x,y,z);
-									break;
-								case 1:
-									rotationMatrix.ToEulerAnglesXZY(x,y,z);
-									break;
-								case 2:
-									rotationMatrix.ToEulerAnglesYXZ(x,y,z);
-									break;
-								case 3:
-									rotationMatrix.ToEulerAnglesYZX(x,y,z);
-									break;
-								case 4:
-									rotationMatrix.ToEulerAnglesZXY(x,y,z);
-									break;
-								case 5:
-									rotationMatrix.ToEulerAnglesZYX(x,y,z);
-									break;
-							}
-							switch(j){
-								case 0:
-									newMatrix.FromEulerAnglesXYZ(-y,-x,z);
-									break;
-								case 1:
-									newMatrix.FromEulerAnglesXZY(-y,-x,z);
-									break;
-								case 2:
-									newMatrix.FromEulerAnglesYXZ(-y,-x,z);
-									break;
-								case 3:
-									newMatrix.FromEulerAnglesYZX(-y,-x,z);
-									break;
-								case 4:
-									newMatrix.FromEulerAnglesZXY(-y,-x,z);
-									break;
-								case 5:
-									newMatrix.FromEulerAnglesZYX(-y,-x,z);
-									break;
-							}
-
-							//Logger::debug(format("case: %1% %2%") % i % j );
-							Quaternion	q = Quaternion();
-							q.FromRotationMatrix(newMatrix);
-							q.normalise();
-
-							//flippedBoneLocalOrientation = Quat(q);
-
-							EngineBody* boneBody;
-							boneBody = getEngine()->createPhysicStatic()->isBody();
-							boneBody->setSize(Vec3(boneLength,boneWidth,boneWidth));
-							boneBody->setOrientation(parentOrientation * flippedBoneLocalOrientation);
-							boneBody->setPosition( parentPosition  
-								- (parentOrientation * Vec3(parentBoneLength,0,0))
-								+ (parentOrientation * scaledFlippedBoneLocalPosition)
-								+ (boneBody->getOrientation() * Vec3(boneLength,0,0) )
-								);
-							boneBody->addDebugAxises(2,0.2);
-							setBodyForBone(bone,boneBody);
-
-							/*
-							Vec3 finalPoint;
-							finalPoint =
-								boneBody->getPosition() +
-								(boneBody->getOrientation() * Vec3(boneLength,0,0))
-								;
-							EngineGuiShape*	box = getEngine()->createGuiBox()->isGuiShape();
-							box->setSize(Vec3(1,1,1));
-							box->setPosition(finalPoint);
-							box->setColour(1,0,0,0.5);
-		
-							float localDist = finalPoint.distance(childBonePos);
-							//Logger::debug(format("dist: %3.3f ") % localDist  );
-							if (closest_dist == 0 ){
-								closest_dist = localDist;
-							} else if (localDist<closest_dist) {
-								closest_dist = localDist;
-							}
-							if (localDist < 0.2f ) {
-								Logger::debug(format("case: %1% %2%") % i % j );
-								Logger::debug(format("dist: %3.3f ") % localDist  );
-							}
-							*/
-
-						/*
-						}
-					}
-					*/
-
-					//Logger::debug(format("closest: %3.3f ") % closest_dist  );
-
-
-				/*
-				} else {
-
-					EngineBody* boneBody;
-					boneBody = getEngine()->createPhysicStatic()->isBody();
-					setBodyForBone(bone,boneBody);
-					boneBody->setSize(Vec3(boneLength,boneWidth,boneWidth));
-					boneBody->setOrientation(parentOrientation * flippedBoneLocalOrientation);
-					boneBody->setPosition( parentPosition  
-						- (parentOrientation * Vec3(parentBoneLength,0,0))
-						+ (parentOrientation * scaledFlippedBoneLocalPosition)
-						+ (boneBody->getOrientation() * Vec3(boneLength,0,0) )
-						);
-					boneBody->addDebugAxises(2,0.2);
-				}
-				*/
-
-
-
-				/*
-				if (	
-					(bone->getName().compare("Bone.005") == 0 )  ||
-					(bone->getName().compare("Bone.006") == 0 )  
-					) {
-					Logger::debug(format("parent bone length: %3.3f") % parentBoneLength);
-					Logger::debug(format("bone length: %3.3f") % boneLength);
-					printVector3(boneLocalPosition,"bone local pos");
-					printVector3(scaledBoneLocalPosition,"scaled bone local pos");
-					printVector3(scaledFlippedBoneLocalPosition,"scaled bone local pos");
-					printEulerAngles(boneLocalOrientation,"bone local ori");
-					printEulerAngles(flippedBoneLocalOrientation,"bone local ori");
-				}
-				*/
-			}
 		}
 	} else {
 		Logger::debug(format("bone: %1% has no parent") % bone->getName());
 		EngineBody* boneBody;
-		boneBody = getEngine()->createPhysicStatic()->isBody();
+		//boneBody = getEngine()->createPhysicStatic()->isBody();
+		boneBody = getEngine()->createPhysicBox()->isBody();
 		setBodyForBone(bone,boneBody);
 
 		float 	boneLength = getBoneSize(bone);
-		float 	boneWidth = 1.0f;
 
 		boneBody->setSize(Vec3(boneLength,boneWidth,boneWidth));
 		boneBody->setOrientation(
@@ -644,6 +471,26 @@ Quat			EngineMesh::calcJointOrientation(Bone* bone) {
 	}
 	*/
 	return Quat( bone->getOrientation() ); //Y
+}
+
+EngineJoint* 	EngineMesh::createJointToParent2(Bone* bone,Vec3 & anchor,Quat & jointOrientation){
+	EngineJoint* joint = 0;
+	if (getBodyOfBone(bone) && getBoneParent(bone) && getBodyOfBone(getBoneParent(bone)) ) {
+		EngineBody*	parentBody = getBodyOfBone(getBoneParent(bone));
+		EngineBody* body = getBodyOfBone(bone);
+		Logger::debug(format("create joint from : %1% to %2%") %bone->getName() % getBoneParent(bone)->getName());
+
+		joint = getEngine()->createJoint(parentBody, body)->isJoint();
+		joint->setAnchor1(translateGlobalAnchorToLocal(parentBody,anchor));
+		joint->setAnchor2(translateGlobalAnchorToLocal(body,anchor));
+		joint->setAnchor1Orientation(jointOrientation);
+		//joint->addDebugAxises(8,0.25);
+
+		joint->setLimits(10,10);
+		//joint->setLimits(0,0);
+
+	}
+	return joint;
 }
 
 EngineJoint* 	EngineMesh::createJointToParent(Bone* bone) {
