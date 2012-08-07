@@ -109,7 +109,7 @@ EngineObject*	Engine::createPhysicStatic(){
 			Vec3(1,1,1)
 			)
 	);
-	engineObject->setGuiUpdatesOff();
+	//engineObject->setGuiUpdatesOff();
 
 	EngineBox* shape = new EngineBox(this);
 	shape->setScaling1To1();
