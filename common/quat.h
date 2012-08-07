@@ -4,11 +4,6 @@
 #include <Ogre.h>
 #include <math.h>
 
-#include <boost/python/module.hpp>
-#include <boost/python/def.hpp>
-#include <boost/python/tuple.hpp>
-#include <boost/python/extract.hpp>
-
 #include "PxPhysicsAPI.h"
 
 #include "logger.h"
@@ -27,12 +22,6 @@ class Quat : public Ogre::Quaternion {
     public: // Constructors
 		Quat() : Ogre::Quaternion(1,0,0,0) {}
 		Quat(float iw,float ix,float iy,float iz) : Ogre::Quaternion(iw,ix,iy,iz) {}
-		Quat(boost::python::object& tupleObject) : Ogre::Quaternion() {
-			w = boost::python::extract<float>(tupleObject[0]);
-			x = boost::python::extract<float>(tupleObject[1]);
-			y = boost::python::extract<float>(tupleObject[2]);
-			z = boost::python::extract<float>(tupleObject[3]);
-		}
 		Quat(const Ogre::Quaternion& ogreQuaternion) : Ogre::Quaternion(ogreQuaternion) {}
 		Quat(const physx::PxQuat& physXQuat) : Ogre::Quaternion(physXQuat.w,physXQuat.x,physXQuat.y,physXQuat.z) {}
 		Quat(const float angle,const Vec3 & axis) :
@@ -81,15 +70,6 @@ class Quat : public Ogre::Quaternion {
 			return *this;
 		}
 
-		Quat tupleFromAngle(boost::python::object& tupleObject) {
-			fromAngle(
-				boost::python::extract<float>(tupleObject[0]),
-				boost::python::extract<float>(tupleObject[1]),
-				boost::python::extract<float>(tupleObject[2])
-			);
-			return *this;
-		}
-
 		Quat fromAngle(float t,float p,float r) {
 			Ogre::Matrix3	rotationMatrix = Ogre::Matrix3();
 			rotationMatrix.FromEulerAnglesXYZ(
@@ -111,6 +91,27 @@ class Quat : public Ogre::Quaternion {
 				x.valueDegrees(),
 				y.valueDegrees(),
 				z.valueDegrees());
+		}
+
+		void	fromAngleAxis(float angle,Vec3 axis) {
+			FromAngleAxis(
+				Ogre::Radian(angle),
+				axis.toOgre()
+			);
+		}
+
+		Vec3	getAxis(){
+			Ogre::Vector3	axis;
+			Ogre::Radian	angle;
+			ToAngleAxis(angle,axis);
+			return Vec3(axis);
+		}
+
+		float	getAngle(){
+			Ogre::Vector3	axis;
+			Ogre::Radian	angle;
+			ToAngleAxis(angle,axis);
+			return angle.valueDegrees();
 		}
 
 		Vec3    operator * (const Vec3 vec3) {
@@ -141,9 +142,6 @@ class Quat : public Ogre::Quaternion {
 
 
     public: // Converters
-		boost::python::tuple toTuple() const{
-			return boost::python::make_tuple(w,x,y,z);
-		}
 		physx::PxQuat toPhysx() const {
 			return physx::PxQuat(x,y,z,w);
 		}

@@ -3,22 +3,12 @@
 
 #include <Ogre.h>
 
-#include <boost/python/module.hpp>
-#include <boost/python/def.hpp>
-#include <boost/python/tuple.hpp>
-#include <boost/python/extract.hpp>
-
 #include "PxPhysicsAPI.h"
 
 class Vec3 : public Ogre::Vector3 {
     public:
 		Vec3() : Ogre::Vector3(0,0,0) {}
 		Vec3(float x,float y,float z) : Ogre::Vector3(x,y,z) {}
-		Vec3(boost::python::object& tupleObject) : Ogre::Vector3() {
-			x = boost::python::extract<float>(tupleObject[0]);
-			y = boost::python::extract<float>(tupleObject[1]);
-			z = boost::python::extract<float>(tupleObject[2]);
-		}
 		Vec3(const Ogre::Vector3& ogreVector) : Ogre::Vector3(ogreVector) {}
 		Vec3(const physx::PxVec3& physXVector) : Ogre::Vector3(physXVector.x,physXVector.y,physXVector.z) {}
 		Vec3(const Vec3 & inputVec) : Ogre::Vector3(
@@ -132,9 +122,6 @@ class Vec3 : public Ogre::Vector3 {
 		}
 
 	public:
-		boost::python::tuple toTuple() const {
-			return boost::python::make_tuple(x,y,z);
-		}
 		physx::PxVec3 toPhysx() const {
 			return physx::PxVec3(x,y,z);
 		}
