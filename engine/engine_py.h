@@ -166,13 +166,14 @@ BOOST_PYTHON_MODULE(EngineModule) {
 		.def("setCameraOrientation",&Engine::setCameraOrientation)
 		.def("getCameraPosition",&Engine::getCameraPosition)
 		.def("getCameraOrientation",&Engine::getCameraOrientation)
+		.def("simulatePhysics",&Engine::simulatePhysics)
 
 		.def("physicPauseToggle",&Engine::physicPauseToggle)
         ;
 
     class_<Vec3>("Vec3",init<>())
 		.def(init<float,float,float>())
-		.def(init<object&>())
+		//.def(init<object&>())
 
 		.def(self *= float())
 		.def(self * float())
@@ -197,15 +198,15 @@ BOOST_PYTHON_MODULE(EngineModule) {
 		.def("Y",&Vec3::Y)
 		.def("Z",&Vec3::Z)
 		
-		.def("toTuple",&Vec3::toTuple)
+		//.def("toTuple",&Vec3::toTuple)
 
 		;
 
     class_<Quat>("Quat",init<>())
 		.def(init<float,float,float,float>())
-		.def(init<object&>())
+		//.def(init<object&>())
 		.def("fromAngle",&Quat::fromAngle)
-		.def("tupleFromAngle",&Quat::tupleFromAngle)
+		//.def("tupleFromAngle",&Quat::tupleFromAngle)
 
 		.def(self * Vec3())
 		.def(self * Quat())
@@ -219,7 +220,7 @@ BOOST_PYTHON_MODULE(EngineModule) {
 		.def("X",&Quat::X)
 		.def("Y",&Quat::Y)
 		.def("Z",&Quat::Z)
-		.def("toTuple",&Quat::toTuple)
+		//.def("toTuple",&Quat::toTuple)
 
 		;
 
