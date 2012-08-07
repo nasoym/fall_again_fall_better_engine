@@ -113,7 +113,7 @@ void	EngineGuiShape::setupCustomMaterial(){
 	wireFramePass->setSceneBlending(SBT_TRANSPARENT_ALPHA);
 	wireFramePass->setDepthWriteEnabled(true);
 	wireFramePass->setPolygonMode(PM_WIREFRAME);
-	wireFramePass->setDiffuse(ColourValue(0,0,0,0.5f));
+	wireFramePass->setDiffuse(ColourValue(0,0,0,0.2f));
     getEntity()->setMaterial(mMaterial);
     //getEntity()->setMaterialName(readUuid());
 }

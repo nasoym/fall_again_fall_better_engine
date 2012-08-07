@@ -28,16 +28,14 @@ class EngineMesh : public EngineGuiShape {
 		virtual ~EngineMesh();
 
 		void			enableBones();
-		void			createPhysicBodies(Bone* bone);
+		void			createPhysics(Bone* bone);
 		void			checkForJointCollision(Bone* bone);
 		void			updateBone(Bone* bone);
-		void			createPhysics(Bone* bone);
 		void			createDebugObjects();
 		Vec3			translateGlobalAnchorToLocal(EngineBody* body,Vec3 & globalAnchor);
 		void			calcLocalPosOfRootBone();
-		EngineJoint* 	createJointToParent(Bone* bone);
 		EngineJoint* 	createJointToParent2(Bone* bone,Vec3 &,Quat & jointOrienration);
-		Quat			calcJointOrientation(Bone* bone);
+
 		void			createPhysicBodiesFromParent(Bone* bone);
 
 		virtual void	guiUpdate();
