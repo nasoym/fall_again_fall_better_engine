@@ -5,6 +5,8 @@
 #include <map>
 #include "boost/assign.hpp"
 
+//OIS::MouseButtonID
+//std::map<int,Keys> keyList = 
 std::map<OIS::KeyCode,Keys> keyList = 
 boost::assign::map_list_of
 	(OIS::KC_F1,K_F1) (OIS::KC_F2,K_F2) (OIS::KC_F3,K_F3) (OIS::KC_F4,K_F4) (OIS::KC_F5,K_F5) (OIS::KC_F6,K_F6) (OIS::KC_F7,K_F7) (OIS::KC_F8,K_F8) (OIS::KC_F9,K_F9) (OIS::KC_F10,K_F10) (OIS::KC_F11,K_F11) (OIS::KC_F12,K_F12)
@@ -42,7 +44,7 @@ boost::assign::map_list_of
 	(OIS::KC_UP,K_UP) (OIS::KC_DOWN,K_DOWN)
 	(OIS::KC_PGDOWN,K_PGDOWN) (OIS::KC_PGUP,K_PGUP)
 
-	//(OIS::KC_MLEFT,K_MLEFT) (OIS::KC_MRIGHT,K_MRIGHT) 
+	//(OIS::MB_Left,K_MLEFT) (OIS::MB_Right,K_MRIGHT) (OIS::MB_Middle,K_MMIDDLE) 
 ;
 
 Keys	Engine::keyEventToKeys(const OIS::KeyEvent & evt) {
@@ -109,8 +111,14 @@ bool Engine::mouseMoved(const OIS::MouseEvent& evt) {
 bool	Engine::mousePressed(const OIS::MouseEvent& evt, OIS::MouseButtonID id){
 	if (id == OIS::MB_Left)  {
 		pyFunctionKeyPressed(K_MLEFT);
-	//} else if (id == OIS::MB_RIGHT) {
-	//	pyFunctionKeyPressed(K_MRIGHT);
+	} else if (id == OIS::MB_Right) {
+		pyFunctionKeyPressed(K_MRIGHT);
+	} else if (id == OIS::MB_Middle) {
+		pyFunctionKeyPressed(K_MMIDDLE);
+	}
+	const OIS::MouseState &ms = mMouse->getMouseState();
+	if( ms.buttonDown( OIS::MB_Left ) ) {
+		Logger::debug(format("x: %1% y: %2%") % ms.X.abs % ms.Y.abs);
 	}
 	return true;
 }
@@ -118,8 +126,10 @@ bool	Engine::mousePressed(const OIS::MouseEvent& evt, OIS::MouseButtonID id){
 bool	Engine::mouseReleased(const OIS::MouseEvent& evt, OIS::MouseButtonID id){
 	if (id == OIS::MB_Left)  {
 		pyFunctionKeyReleased(K_MLEFT);
-	//} else if (id == OIS::MB_RIGHT) {
-//		pyFunctionKeyReleased(K_MRIGHT);
+	} else if (id == OIS::MB_Right) {
+		pyFunctionKeyReleased(K_MRIGHT);
+	} else if (id == OIS::MB_Middle) {
+		pyFunctionKeyReleased(K_MMIDDLE);
 	}
 	return true;
 }

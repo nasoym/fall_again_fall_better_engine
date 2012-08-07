@@ -23,7 +23,7 @@ EngineObject*	Engine::createSpaceCage(Vec3& size){
 	EngineSpaceCage* engineObject = new EngineSpaceCage(this,size);
 
 	float wall = 1.0;
-	float ground_opacity = 0.5;
+	float ground_opacity = 1.0;
 	float ceiling_opacity = 0.25;
 	float wall_opacity = 0.1;
 	float red = 1.0;

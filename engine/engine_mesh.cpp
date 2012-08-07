@@ -15,11 +15,10 @@ EngineMesh::EngineMesh(Engine* engine,const char* meshName) :
 	mLocalQuat(Quat())
 	{
     setEntity(getEngine()->getSceneManager()->createEntity(meshName));
-	setColour(0.6f,0.6f,0.6f,0.8f);
-	//setMaterialName("Body");
+	//setColour(0.8f,0.8f,1.0f,0.8f);
+	setMaterialName("Body");
     getNode()->attachObject(getEntity());
 	setSize(Vec3(1,1,1) * 1000);
-	//setSize(Vec3(1000,1000,1000));
 	setPosition(Vec3(0,150,0));
 
 	setupAllBones();
