@@ -20,7 +20,7 @@ Engine::Engine() :
     setupPhysics();
     setup();
 	setupStereo();
-	setupSSAO();
+	//setupSSAO();
     setupOIS();
     setupWindowEventListener();
 }
@@ -197,14 +197,13 @@ int     Engine::howManyObjects() {
 
 
 void Engine::setup(){
-    //mLogger = new Ogre::LogManager();
-    //mLogger->createLog("log.log", true, false,true);
+    mLogger = new Ogre::LogManager();
+    mLogger->createLog("log.log", true, false,true);
 
 	//root = new Root("","");
 	mRoot = new Root();
     setupResources();
 
-	/*
     RenderSystemList rlist = mRoot->getAvailableRenderers();
     RenderSystemList::iterator it = rlist.begin();
     while (it !=rlist.end()) {
@@ -212,9 +211,9 @@ void Engine::setup(){
 		rSys->setConfigOption("Full Screen", "No");
 		rSys->setConfigOption("Video Mode", "1024 x 768 @ 32-bit colour");
 		mRoot->setRenderSystem(rSys);
+		break;
     }
-	*/
-	mRoot->showConfigDialog();
+	//mRoot->showConfigDialog();
 
 	mWindow = mRoot->initialise(true);
 	//mRoot->initialise(false);

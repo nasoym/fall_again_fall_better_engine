@@ -16,8 +16,8 @@ EngineMesh::EngineMesh(Engine* engine,const char* meshName) :
 	{
     setEntity(getEngine()->getSceneManager()->createEntity(meshName));
 	//setColour(0.8f,0.8f,1.0f,0.8f);
-	//setMaterialName("Body");
-	setMaterialName("SSAO/GBuffer");
+	setMaterialName("Body");
+	//setMaterialName("SSAO/GBuffer");
 
     getNode()->attachObject(getEntity());
 	setSize(Vec3(1,1,1) * 1000);
