@@ -14,7 +14,8 @@ Engine::Engine() :
     mInputManager(0),
 	mCurrentTime(0),
 	mLastTime(0),
-	mPhysicPaused(false)
+	mPhysicPaused(false),
+	mUseFirstRenderer(true)
 	{
     Logger::debug(format("creating engine: %p ") % this);
     setupPhysics();
@@ -204,16 +205,19 @@ void Engine::setup(){
 	mRoot = new Root();
     setupResources();
 
-    RenderSystemList rlist = mRoot->getAvailableRenderers();
-    RenderSystemList::iterator it = rlist.begin();
-    while (it !=rlist.end()) {
-        RenderSystem *rSys = *(it++);
-		rSys->setConfigOption("Full Screen", "No");
-		rSys->setConfigOption("Video Mode", "1024 x 768 @ 32-bit colour");
-		mRoot->setRenderSystem(rSys);
-		break;
-    }
-	//mRoot->showConfigDialog();
+	if (mUseFirstRenderer){ 
+		RenderSystemList rlist = mRoot->getAvailableRenderers();
+		RenderSystemList::iterator it = rlist.begin();
+		while (it !=rlist.end()) {
+			RenderSystem *rSys = *(it++);
+			rSys->setConfigOption("Full Screen", "No");
+			rSys->setConfigOption("Video Mode", "1024 x 768 @ 32-bit colour");
+			mRoot->setRenderSystem(rSys);
+			break;
+		}
+	} else {
+		mRoot->showConfigDialog();
+	}
 
 	mWindow = mRoot->initialise(true);
 	//mRoot->initialise(false);

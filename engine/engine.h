@@ -16,7 +16,6 @@ enum Keys;
 #include <vector>
 
 #include "math3d.h"
-//#include "keyboard_listener.h"
 
 class PhysicsEngine;
 
@@ -45,7 +44,6 @@ class Engine :
 		void    addObject(EngineObject*);
 		//TODO object query
 
-		//GraphicsEngine*	getGraphicsEngine(){return mGraphicsEngine;}
 		PhysicsEngine*	getPhysicsEngine(){return mPhysicsEngine;}
 
 		void    physicUpdates();
@@ -88,13 +86,15 @@ class Engine :
 		void			setTimingFactor(float factor){mTimingFactor=factor;}
 		float			getTimingFactor(){return mTimingFactor;}
 
+		void			setUseFirstRenderer(){mUseFirstRenderer=true;}
+		void			setNotUseFirstRenderer(){mUseFirstRenderer=false;}
+
     private:
         void    setupPhysics();
         void    closePhysics();
 
     private:
         PhysicsEngine*  		mPhysicsEngine;
-        //GraphicsEngine* 		mGraphicsEngine;
 		bool					mLoopRendering;
 
 		std::set<EngineObject*> mObjects;
@@ -170,10 +170,9 @@ class Engine :
         bool            mExit;
 
 		bool			mPhysicPaused;
+		bool			mUseFirstRenderer;
 
 		//StereoManager	mStereoManager;
 
-
 };
-
 #endif
