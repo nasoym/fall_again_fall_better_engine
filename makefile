@@ -7,6 +7,7 @@ CFLAGS+=-I /c/Procs/MicrosoftSDKs/Windows/v7.0A/Include
 CFLAGS+=-I /c/Procs/MicrosoftPlatformSDK/Include
 CFLAGS+=-I /c/Users/Sinan/Downloads/ogre/OgreSDK_vc10_v1-8-0/include/
 CFLAGS+=-I /c/Users/Sinan/Downloads/ogre/OgreSDK_vc10_v1-8-0/include/OGRE/
+CFLAGS+=-I /c/Users/Sinan/Downloads/ogre/OgreSDK_vc10_v1-8-0/include/OGRE/RTShaderSystem
 CFLAGS+=-I /c/Users/Sinan/Downloads/physx/PhysX-3.1.2_PC_VC10_SDK_Core/SDKs/PhysXAPI
 CFLAGS+=-I /c/Users/Sinan/Downloads/physx/PhysX-3.1.2_PC_VC10_SDK_Core/SDKs/PhysXAPI/extensions
 CFLAGS+=-I /c/Users/Sinan/Downloads/physx/PhysX-3.1.2_PC_VC10_SDK_Core/SDKs/PxFoundation
@@ -38,6 +39,7 @@ LIBLIST+=/c/Users/Sinan/Downloads/physx/PhysX-3.1.2_PC_VC10_SDK_Core/SDKs/lib/wi
 LIBLIST+=/c/Users/Sinan/Downloads/physx/PhysX-3.1.2_PC_VC10_SDK_Core/SDKs/lib/win32/Foundation.lib
 LIBLIST+=/c/Users/Sinan/Downloads/physx/PhysX-3.1.2_PC_VC10_SDK_Core/SDKs/lib/win32/PxTask.lib
 LIBLIST+=/c/Users/Sinan/Downloads/ogre/OgreSDK_vc10_v1-8-0/lib/release/OgreMain.lib
+LIBLIST+=/c/Users/Sinan/Downloads/ogre/OgreSDK_vc10_v1-8-0/lib/release/OgreRTShaderSystem.lib
 LIBLIST+=/c/Users/Sinan/Downloads/ogre/OgreSDK_vc10_v1-8-0/lib/release/OIS.lib
 
 LIBFLAGS=

@@ -3,6 +3,8 @@
 #include "physic_engine.h"
 #include "engine_object.h"
 
+#include "OgreRTShaderSystem.h"
+
 Engine::Engine() :
 	mLoopRendering(true),
 	mPythonInitialized(false),
@@ -18,6 +20,7 @@ Engine::Engine() :
     setupPhysics();
     setup();
 	setupStereo();
+	setupSSAO();
     setupOIS();
     setupWindowEventListener();
 }
@@ -32,6 +35,52 @@ Engine::~Engine(){
 	closeStereo();
     close();
     closePhysics();
+}
+
+void	Engine::setupSSAO(){
+		/*
+        mCompositorNames.push_back("SSAO/HemisphereMC");
+        mCompositorNames.push_back("SSAO/Volumetric");
+        mCompositorNames.push_back("SSAO/HorizonBased");
+        mCompositorNames.push_back("SSAO/Crytek");
+        mCompositorNames.push_back("SSAO/CreaseShading");
+        mCompositorNames.push_back("SSAO/UnsharpMask");
+        mCompositorNames.push_back("SSAO/ShowDepth");
+        mCompositorNames.push_back("SSAO/ShowNormals");
+        mCompositorNames.push_back("SSAO/ShowViewPos");
+        
+        mPostNames.push_back("SSAO/Post/NoFilter");
+        mPostNames.push_back("SSAO/Post/CrossBilateralFilter");
+        mPostNames.push_back("SSAO/Post/SmartBoxFilter");
+        mPostNames.push_back("SSAO/Post/BoxFilter");
+		*/
+		
+        if (CompositorManager::getSingleton().addCompositor(mViewport, "SSAO/GBuffer")) {
+            CompositorManager::getSingleton().setCompositorEnabled(mViewport, "SSAO/GBuffer", true);
+        } else {
+            Logger::debug("Sample_SSAO: Failed to add GBuffer compositor");
+        } 
+
+		if (CompositorManager::getSingleton().addCompositor(mViewport, "SSAO/HemisphereMC")) {
+			CompositorManager::getSingleton().setCompositorEnabled(mViewport, "SSAO/HemisphereMC", true);
+		} else {
+			Logger::debug("Sample_SSAO: Failed to add compositor: ");
+		}
+        
+		if (CompositorManager::getSingleton().addCompositor(mViewport, "SSAO/Post/NoFilter")) {
+			CompositorManager::getSingleton().setCompositorEnabled(mViewport, "SSAO/Post/NoFilter", false);
+		} else {
+			Logger::debug("Sample_SSAO: Failed to add Post");
+		}
+
+		/*
+		Ogre::Viewport* mainVP = mCamera->getViewport();
+		//const Ogre::String& curMaterialScheme = mainVP->getMaterialScheme();
+		if(mRoot->getRenderSystem()->getCapabilities()->hasCapability(Ogre::RSC_FIXED_FUNCTION) == false)
+		{
+			mainVP->setMaterialScheme(Ogre::RTShader::ShaderGenerator::DEFAULT_SCHEME_NAME);
+		}
+		*/
 }
 
 void Engine::setupPhysics(){
@@ -148,13 +197,14 @@ int     Engine::howManyObjects() {
 
 
 void Engine::setup(){
-    mLogger = new Ogre::LogManager();
-    mLogger->createLog("log.log", true, false,true);
+    //mLogger = new Ogre::LogManager();
+    //mLogger->createLog("log.log", true, false,true);
 
 	//root = new Root("","");
 	mRoot = new Root();
     setupResources();
 
+	/*
     RenderSystemList rlist = mRoot->getAvailableRenderers();
     RenderSystemList::iterator it = rlist.begin();
     while (it !=rlist.end()) {
@@ -163,7 +213,8 @@ void Engine::setup(){
 		rSys->setConfigOption("Video Mode", "1024 x 768 @ 32-bit colour");
 		mRoot->setRenderSystem(rSys);
     }
-	//mRoot->showConfigDialog();
+	*/
+	mRoot->showConfigDialog();
 
 	mWindow = mRoot->initialise(true);
 	//mRoot->initialise(false);
@@ -184,6 +235,9 @@ void Engine::setup(){
     // Look back along -Z
     mCamera->lookAt(Vector3(0,0,-300));
     mCamera->setNearClipDistance(5);
+	//mCamera->setFOVy(Radian(Degree(45).valueRadians())); // i.e. 60deg * 1.3.. maya and ogre use fovX and fovY
+	//mCamera->setFarClipDistance(400);
+	//mCamera->setNearClipDistance(0.1);
 
     // Create one viewport, entire window
     mViewport = mWindow->addViewport(mCamera);

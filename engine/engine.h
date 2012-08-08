@@ -53,6 +53,8 @@ class Engine :
 
 		void	physicPauseToggle();
 
+		void	setupSSAO();
+
 		void	setupPython();
 		void	closePython();
 		void    runPython();
