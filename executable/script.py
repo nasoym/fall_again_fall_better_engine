@@ -4,7 +4,7 @@ import ragdoll
 
 objects = {}
 #objects["ground"] = Engine.createSpaceCage(EngineModule.Vec3(400,400,400))
-objects["ground"] = Engine.createSpaceCage(EngineModule.Vec3(600,600,600))
+#objects["ground"] = Engine.createSpaceCage(EngineModule.Vec3(600,600,600))
 
 transformFactor = 0.7
 forwardDir = EngineModule.Vec3(0,0,-1)
@@ -33,36 +33,20 @@ def createMainRagdoll():
 	ragdoll.createLimitsHuman(Engine,EngineModule,doll)
 	dolls.append(doll)
 
-def init():
-	pass
-	#createMainRagdoll()
-
-def keyDown(key):
-
-	if (key == EngineModule.Keys.K_W or
-		key == EngineModule.Keys.K_UP):
-		moveCamera(forwardDir)
-	if (key == EngineModule.Keys.K_S or
-		key == EngineModule.Keys.K_DOWN):
-		moveCamera(backwardDir)
-	if (key == EngineModule.Keys.K_A or
-		key == EngineModule.Keys.K_LEFT):
-		moveCamera(leftDir)
-	if (key == EngineModule.Keys.K_D or
-		key == EngineModule.Keys.K_RIGHT):
-		moveCamera(rightDir)
-	if (key == EngineModule.Keys.K_Q or
-		key == EngineModule.Keys.K_PGDOWN):
-		moveCamera(downDir)
-	if (key == EngineModule.Keys.K_E or
-		key == EngineModule.Keys.K_PGUP):
-		moveCamera(upDir)
-
 def createBox():
 	o = Engine.createPhysicBox()
 	o.setSize(EngineModule.Vec3(10,10,10))
 	o.setPosition(EngineModule.Vec3(0,150,0))
+	print(o.readUuid())
+	o.setUuid("021e9c23-c850-434b-90dd-7fd96aa991f0")
+	print(o.readUuid())
+	"""
+	021e9c23-c850-434b-90dd-7fd96aa991f0
+	f11f6535-d602-4fee-aed5-c8befe31ca63
+	2ccbce46-54e1-4d04-b461-623d2d997abb
+	"""
 
+	"""
 	b = Engine.createGuiBox()
 	b.setLocalPosition(EngineModule.Vec3(10,0,0))
 	b.setLocalSize(EngineModule.Vec3(10,0.5,0.5))
@@ -83,17 +67,56 @@ def createBox():
 	b.setColour(0,0,1,0.8)
 	b.setScalingFixed()
 	o.addShape(b)
+	"""
 
 	return o
 
 
-def keyPressed(key):
-	if key == EngineModule.Keys.K_T:
+def init():
+	pass
+	#createMainRagdoll()
+	if hasattr(temp,"init"):
 		reload(temp)
-		temp.launch(Engine,objects,EngineModule)
+		temp.init(Engine,EngineModule,objects)
+
+def keyDown(key):
+	if hasattr(temp,"keyDown"):
+		reload(temp)
+		temp.keyDown(Engine,EngineModule,objects,key)
+
+	if (key == EngineModule.Keys.K_W or
+		key == EngineModule.Keys.K_UP):
+		moveCamera(forwardDir)
+	if (key == EngineModule.Keys.K_S or
+		key == EngineModule.Keys.K_DOWN):
+		moveCamera(backwardDir)
+	if (key == EngineModule.Keys.K_A or
+		key == EngineModule.Keys.K_LEFT):
+		moveCamera(leftDir)
+	if (key == EngineModule.Keys.K_D or
+		key == EngineModule.Keys.K_RIGHT):
+		moveCamera(rightDir)
+	if (key == EngineModule.Keys.K_Q or
+		key == EngineModule.Keys.K_PGDOWN):
+		moveCamera(downDir)
+	if (key == EngineModule.Keys.K_E or
+		key == EngineModule.Keys.K_PGUP):
+		moveCamera(upDir)
+
+
+def keyPressed(key):
+	if hasattr(temp,"keyPressed"):
+		reload(temp)
+		temp.keyPressed(Engine,EngineModule,objects,key)
+
+	if key == EngineModule.Keys.K_T:
+		if hasattr(temp,"launch"):
+			reload(temp)
+			temp.launch(Engine,EngineModule,objects)
 
 	if key == EngineModule.Keys.K_1:
 		createBox()
+
 
 	if key == EngineModule.Keys.K_5:
 		a = createBox()
@@ -192,13 +215,16 @@ def keyPressed(key):
 				ragdoll.driveJoints(d)
 
 	if key == EngineModule.Keys.K_4:
-		o = Engine.createGuiBox()
+		#o = Engine.createGuiBox()
+		objects["ground"] = Engine.createSpaceCage(EngineModule.Vec3(600,600,600))
 
 	if key == EngineModule.Keys.K_P:
 		Engine.physicPauseToggle()
 
 def keyReleased(key):
-	pass
+	if hasattr(temp,"keyReleased"):
+		reload(temp)
+		temp.keyReleased(Engine,EngineModule,objects,key)
 
 def guiUpdate():
 	pass

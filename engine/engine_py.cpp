@@ -1,6 +1,9 @@
 #include "logger.h"
 #include "engine_py.h"
 #include "engine.h"
+#include <boost/python/list.hpp>
+
+
 
 void	Engine::closePython() {
 	Logger::debug("close python");
@@ -33,7 +36,7 @@ void    Engine::runPython(){
         PyRun_File(PyFile_AsFile(file), "script.py", Py_file_input, 
 			main_namespace.ptr(), main_namespace.ptr()
 			);
-		PyRun_SimpleString("print(globals())");
+		//PyRun_SimpleString("print(globals())");
 
 		Logger::debug("load keyPressed");
 		pyFunctionKeyPressed = main_namespace["keyPressed"];

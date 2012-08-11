@@ -124,7 +124,7 @@ class Vec3 : public Ogre::Vector3 {
 		}
 
 		std::string	toString(){
-			return (boost::format("%3.3f %3.3f %3.3f") % 
+			return (boost::format("%9.9f,%9.9f,%9.9f") % 
 					x % y % z).str();
 		}
 

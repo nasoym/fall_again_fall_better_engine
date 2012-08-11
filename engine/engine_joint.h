@@ -45,6 +45,10 @@ class EngineJoint : public EngineGuiContainer {
         Quat        getMotorTarget(){return mJoint->getMotorTarget();}
 
 		virtual EngineJoint*			isJoint(){return this;}
+		virtual ObjectType		getType(){ return JOINT;}
+
+		EngineBody*		getBody1();
+		EngineBody*		getBody2();
 
 	private:
 		PhysicJoint*	mJoint;

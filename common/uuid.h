@@ -12,7 +12,6 @@
 //-------------------------------------
 class Uuid {
     public:
-		//TODO create specific
         Uuid() : 
 			mUuid(boost::uuids::random_generator()())
 			{ }
@@ -23,7 +22,17 @@ class Uuid {
 			return boost::lexical_cast<std::string>(mUuid);
 		}
 
-		//TODO compare operators
+		void		fromString(std::string value){
+			mUuid = boost::uuids::string_generator()(value);
+		}
+
+		bool		isEqual(std::string value) {
+			if (toString().compare(value) == 0 ) {
+				return true;
+			}
+			return false;	
+		}
+
 	private:
 		boost::uuids::uuid mUuid;
 };

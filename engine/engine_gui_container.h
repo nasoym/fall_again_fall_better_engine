@@ -28,10 +28,13 @@ class EngineGuiContainer : public EngineObject {
 		void				addShape(EngineGuiShape*);
 		void				removeShape(EngineGuiShape*);
 
+		int     			howManyShapes();
+
 		void				addDebugAxises(float debugSize=5.0, float debugWidth=0.5);
 		//void				addDebugAxises(float,float);
 
 		virtual EngineGuiContainer*		isGuiContainer(){return this;}
+		virtual ObjectType		getType(){ return GUICONTAINER;}
 
 	private:
 		std::vector<EngineGuiShape*>	mShapes;

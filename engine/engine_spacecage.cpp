@@ -7,7 +7,8 @@
 #include "physic_plane.h"
 
 EngineSpaceCage::EngineSpaceCage(Engine* engine,Vec3& size) :
-	EngineGuiContainer(engine)
+	EngineGuiContainer(engine),
+	mSpaceCageSize(size)
 	{
 
 	float xSize = size.X();
@@ -32,3 +33,9 @@ EngineSpaceCage::EngineSpaceCage(Engine* engine,Vec3& size) :
 	mRightPlane = new PhysicPlane( getEngine()->getPhysicsEngine(),
 		PxVec3(-xSize,0,0), Quat().fromAngles(0,0,0).toPhysx() );
 }
+
+EngineSpaceCage::~EngineSpaceCage(){
+	Logger::debug("spacecage delete");
+}
+
+

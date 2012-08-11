@@ -12,6 +12,48 @@
 #include "engine_mesh.h"
 #include "engine_box.h"
 
+
+EngineObject*	Engine::createLLBox(){
+	return new EngineBox(this);
+}
+
+EngineObject*	Engine::createLLSpaceCage(Vec3& size){
+	return new EngineSpaceCage(this,size);
+}
+
+EngineObject*	Engine::createLLMesh(const char* meshName){
+	return new EngineMesh(this,meshName);
+}
+
+EngineObject*	Engine::createLLPhysicBody(){
+	EngineBody* engineObject = new EngineBody(this);
+	engineObject->setPhysicBody(
+		new PhysicBox(getPhysicsEngine(),
+			Vec3(0,0,0), Vec3(1,1,1) ) );
+	return engineObject;
+}
+
+EngineObject*	Engine::createLLPhysicStatic(){
+	EngineBody* engineObject = new EngineBody(this);
+	engineObject->setPhysicBody(
+		new PhysicStatic( getPhysicsEngine(),
+			Vec3(0,0,0), Vec3(1,1,1) ) );
+	return engineObject;
+}
+
+EngineObject*	Engine::createLLJoint(EngineObject* obj1,EngineObject* obj2){
+	if (obj1->isBody() && obj2->isBody() ) {
+		EngineJoint* engineObject = new EngineJoint(this,obj1->isBody(),obj2->isBody());
+		return engineObject;
+	}
+	return 0;
+}
+
+
+
+
+
+
 EngineObject*	Engine::createGuiBox(){
 	EngineBox* engineObject = new EngineBox(this);
 	engineObject->setSize(Vec3(10,10,10));

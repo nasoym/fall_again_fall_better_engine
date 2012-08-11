@@ -147,7 +147,7 @@ void	Engine::simulatePhysics(float time) {
 }
 
 void    Engine::guiUpdates() {
-	std::set<EngineObject*>::iterator  mIterator;
+	std::vector<EngineObject*>::iterator  mIterator;
 	for (mIterator = mObjects.begin(); 
 		mIterator != mObjects.end(); ++mIterator) {
 		(*mIterator)->guiUpdate();
@@ -156,7 +156,7 @@ void    Engine::guiUpdates() {
 }
 
 void    Engine::physicUpdates() {
-	std::set<EngineObject*>::iterator  mIterator;
+	std::vector<EngineObject*>::iterator  mIterator;
 	for (mIterator = mObjects.begin(); 
 		mIterator != mObjects.end(); ++mIterator) {
 		//printf(".");
@@ -166,9 +166,9 @@ void    Engine::physicUpdates() {
 }
 
 void    Engine::deleteAllObjects() {
-	std::set<EngineObject*>	objectsCopy=std::set<EngineObject*>(mObjects);
+	std::vector<EngineObject*>	objectsCopy=std::vector<EngineObject*>(mObjects);
 	mObjects.clear();
-	std::set<EngineObject*>::iterator  mIterator;
+	std::vector<EngineObject*>::iterator  mIterator;
 	for (mIterator = objectsCopy.begin(); 
 		mIterator != objectsCopy.end(); ++mIterator) {
 		delete (*mIterator);
@@ -176,7 +176,7 @@ void    Engine::deleteAllObjects() {
 }
 
 void    Engine::deleteObject(EngineObject* object) {
-	std::set<EngineObject*>::iterator  mIterator;
+	std::vector<EngineObject*>::iterator  mIterator;
 	for (mIterator = mObjects.begin(); 
 		mIterator != mObjects.end(); ++mIterator) {
 		if ( (*mIterator) == object ){
@@ -188,14 +188,27 @@ void    Engine::deleteObject(EngineObject* object) {
 }
 
 void    Engine::addObject(EngineObject* object){
-	mObjects.insert(object);
+	mObjects.push_back(object);
 }
 
 int     Engine::howManyObjects() {
 	return mObjects.size();
 }
 
+EngineObject* Engine::getObject(int index){
+	return mObjects[index];
+}
 
+EngineObject* Engine::getFromUuid(std::string uuidToFind){
+	std::vector<EngineObject*>::iterator  mIterator;
+	for (mIterator = mObjects.begin(); 
+		mIterator != mObjects.end(); ++mIterator) {
+		if( (*mIterator)->getUuid().isEqual(uuidToFind) ) {
+			return (*mIterator);
+		}
+	}
+	return 0;
+}
 
 void Engine::setup(){
     mLogger = new Ogre::LogManager();

@@ -146,7 +146,7 @@ class Quat : public Ogre::Quaternion {
 		}
 
 		std::string	toString(){
-			return (boost::format("%3.3f %3.3f %3.3f %3.3f") % 
+			return (boost::format("%9.9f,%9.9f,%9.9f,%9.9f") % 
 					w % x % y % z).str();
 		}
 

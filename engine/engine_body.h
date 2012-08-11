@@ -23,7 +23,9 @@ class EngineBody : public EngineGuiContainer {
 
 		void				setPhysicBody(PhysicBody* physicBody){mPhysicBody=physicBody;}
 		PhysicBody*			getPhysicBody(){return mPhysicBody;}
+
 		virtual EngineBody*				isBody(){return this;}
+		virtual ObjectType		getType(){ return BODY;}
 
 		void				setGuiUpdatesOff(){mDoGuiUpdates=false;}
 		void				setGuiUpdatesOn(){mDoGuiUpdates=true;}

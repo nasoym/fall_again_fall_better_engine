@@ -7,6 +7,8 @@
 #include <boost/python/operators.hpp>
 #include <boost/python/return_value_policy.hpp>
 #include <boost/python/call_method.hpp>
+#include <boost/python/return_internal_reference.hpp>
+#include <boost/python/copy_const_reference.hpp>
 using namespace boost::python;
 
 #include "math3d.h"
@@ -27,6 +29,18 @@ using namespace boost::python;
 #include "engine_mesh.h"
 
 BOOST_PYTHON_MODULE(EngineModule) {
+
+	enum_<ObjectType>("ObjectType")
+	.value("OBJECT",OBJECT)
+	.value("GUISHAPE",GUISHAPE)
+	.value("MESH",MESH)
+	.value("SPACECAGE",SPACECAGE)
+	.value("JOINT",JOINT)
+	.value("BODY",BODY)
+	.value("BOX",BOX)
+	.value("GUICONTAINER",GUICONTAINER)
+	;
+
 
 	enum_<Keys>("Keys")
 	.value("K_F1",K_F1) .value("K_F2",K_F2) .value("K_F3",K_F3) .value("K_F4",K_F4) .value("K_F5",K_F5) .value("K_F6",K_F6) .value("K_F7",K_F7) .value("K_F8",K_F8) .value("K_F9",K_F9) .value("K_F10",K_F10) .value("K_F11",K_F11) .value("K_F12",K_F12)
@@ -71,6 +85,17 @@ BOOST_PYTHON_MODULE(EngineModule) {
     class_<EngineObject>("EngineObject", init<Engine*>())
         .def("getName",&EngineObject::getName)
         .def("setName",&EngineObject::setName)
+        .def("readUuid",&EngineObject::readUuid)
+        .def("setUuid",&EngineObject::setUuid)
+		.def("getType",&EngineObject::getType)
+
+		.def("isGuiShape",&EngineObject::isGuiShape,return_value_policy<reference_existing_object>())
+		.def("isGuiContainer",&EngineObject::isGuiContainer,return_value_policy<reference_existing_object>())
+		.def("isBody",&EngineObject::isBody,return_value_policy<reference_existing_object>())
+		.def("isJoint",&EngineObject::isJoint,return_value_policy<reference_existing_object>())
+		.def("isSpaceCage",&EngineObject::isSpaceCage,return_value_policy<reference_existing_object>())
+		.def("isMesh",&EngineObject::isMesh,return_value_policy<reference_existing_object>())
+
 		;
 
     class_<EngineGuiShape, bases<EngineObject> >("EngineGuiShape", init<Engine*>())
@@ -96,7 +121,8 @@ BOOST_PYTHON_MODULE(EngineModule) {
 		.def("setLocalSize",&EngineGuiShape::setLocalSize)
 		.def("getLocalSize",&EngineGuiShape::getLocalSize)
 
-		.def("isGuiShape",&EngineGuiShape::isGuiShape,return_value_policy<reference_existing_object>() )
+		.def("isGuiShape",&EngineObject::isGuiShape,return_value_policy<reference_existing_object>())
+
 		;
 
     class_<EngineGuiContainer, bases<EngineObject> >("EngineGuiContainer", init<Engine*>())
@@ -111,20 +137,25 @@ BOOST_PYTHON_MODULE(EngineModule) {
 		.def("getShapeByName",&EngineGuiContainer::getShapeByName,return_value_policy<reference_existing_object>() )
 		.def("addShape",&EngineGuiContainer::addShape)
 		.def("removeShape",&EngineGuiContainer::removeShape)
+		.def("howManyShapes",&EngineGuiContainer::howManyShapes)
 
-		.def("isGuiContainer",&EngineGuiContainer::isGuiContainer,return_value_policy<reference_existing_object>() )
+		//.def("isGuiContainer",&EngineObject::isGuiContainer,return_value_policy<reference_existing_object>())
+
 		;
 
 	class_<EngineBox,bases<EngineGuiShape> >("EngineBox", init<Engine*>())
 		;
 
-	class_<EngineSpaceCage,bases<EngineGuiShape> >("EngineSpaceCage", init<Engine*,Vec3&>())
+	class_<EngineSpaceCage,bases<EngineGuiContainer> >("EngineSpaceCage", init<Engine*,Vec3&>())
+		//.def("isSpaceCage",&EngineObject::isSpaceCage,return_value_policy<reference_existing_object>())
 		;
 
 	class_<EngineBody,bases<EngineGuiContainer> >("EngineBody", init<Engine*>())
+		//.def("isBody",&EngineObject::isBody,return_value_policy<reference_existing_object>())
 		;
 
 	class_<EngineMesh,bases<EngineGuiShape> >("EngineMesh", init<Engine*,const char*>())
+		//.def("isMesh",&EngineObject::isMesh,return_value_policy<reference_existing_object>())
 		;
 
 	class_<EngineJoint,bases<EngineGuiContainer> >("EngineJoint", init<Engine*,EngineBody*,EngineBody*>())
@@ -146,7 +177,15 @@ BOOST_PYTHON_MODULE(EngineModule) {
 		.def("isMotorOn",&EngineJoint::isMotorOn)
 		.def("setMotorTarget",&EngineJoint::setMotorTarget)
 		.def("getMotorTarget",&EngineJoint::getMotorTarget)
+
+		.def("getBody1",&EngineJoint::getBody1,return_value_policy<reference_existing_object>() )
+		.def("getBody2",&EngineJoint::getBody2,return_value_policy<reference_existing_object>() )
+
+		//.def("isJoint",&EngineObject::isJoint,return_value_policy<reference_existing_object>())
 		;
+
+
+
 
     class_<Engine>("Engine")
         .def("createGuiBox",&Engine::createGuiBox,return_value_policy<reference_existing_object>() )
@@ -155,6 +194,14 @@ BOOST_PYTHON_MODULE(EngineModule) {
         .def("createJoint",&Engine::createJoint,return_value_policy<reference_existing_object>() )
         .def("createPhysicStatic",&Engine::createPhysicStatic,return_value_policy<reference_existing_object>() )
 		.def("createMesh",&Engine::createMesh,return_value_policy<reference_existing_object>() )
+
+		.def("createLLBox",&Engine::createLLBox,return_value_policy<reference_existing_object>() )
+		.def("createLLSpaceCage",&Engine::createLLSpaceCage,return_value_policy<reference_existing_object>() )
+		.def("createLLMesh",&Engine::createLLMesh,return_value_policy<reference_existing_object>() )
+		.def("createLLPhysicBody",&Engine::createLLPhysicBody,return_value_policy<reference_existing_object>() )
+		.def("createLLPhysicStatic",&Engine::createLLPhysicStatic,return_value_policy<reference_existing_object>() )
+		.def("createLLJoint",&Engine::createLLJoint,return_value_policy<reference_existing_object>() )
+
 
         .def("step",&Engine::step)
         .def("quit",&Engine::quit)
@@ -169,11 +216,18 @@ BOOST_PYTHON_MODULE(EngineModule) {
 		.def("simulatePhysics",&Engine::simulatePhysics)
 
 		.def("physicPauseToggle",&Engine::physicPauseToggle)
+
+        .def("howManyObjects",&Engine::howManyObjects)
+        .def("getObject",&Engine::getObject,return_value_policy<reference_existing_object>() )
+        .def("getFromUuid",&Engine::getFromUuid,return_value_policy<reference_existing_object>() )
+
+
         ;
 
     class_<Vec3>("Vec3",init<>())
 		.def(init<float,float,float>())
 		//.def(init<object&>())
+		.def("__str__",&Vec3::toString)
 
 		.def(self *= float())
 		.def(self * float())
@@ -206,6 +260,7 @@ BOOST_PYTHON_MODULE(EngineModule) {
 		.def(init<float,float,float,float>())
 		//.def(init<object&>())
 		.def("fromAngles",&Quat::fromAngles)
+		.def("__str__",&Quat::toString)
 		//.def("tupleFromAngle",&Quat::tupleFromAngle)
 
 		.def(self * Vec3())

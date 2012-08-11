@@ -2,6 +2,7 @@
 #define _ENGINE_H
 
 #include <boost/python.hpp>
+#include <boost/python/list.hpp>
 using namespace boost::python;
 
 #include <Ogre.h>
@@ -14,6 +15,7 @@ enum Keys;
 
 #include <set>
 #include <vector>
+#include <string>
 
 #include "math3d.h"
 
@@ -21,7 +23,8 @@ class PhysicsEngine;
 
 class GraphicsEngine;
 
-class EngineObject;
+#include "engine_object.h"
+//class EngineObject;
 
 class Engine : 
         public WindowEventListener,
@@ -42,6 +45,8 @@ class Engine :
 		void    deleteObject(EngineObject*);
 		int     howManyObjects();
 		void    addObject(EngineObject*);
+		EngineObject* getObject(int index);
+		EngineObject* getFromUuid(std::string);
 		//TODO object query
 
 		PhysicsEngine*	getPhysicsEngine(){return mPhysicsEngine;}
@@ -63,6 +68,14 @@ class Engine :
 		EngineObject*	createJoint(EngineObject* obj1,EngineObject* obj2);
 		EngineObject*	createPhysicStatic();
 		EngineObject*	createMesh(const char*);
+
+		EngineObject*	createLLBox();
+		EngineObject*	createLLSpaceCage(Vec3& size);
+		EngineObject*	createLLMesh(const char* meshName);
+		EngineObject*	createLLPhysicBody();
+		EngineObject*	createLLPhysicStatic();
+		EngineObject*	createLLJoint(EngineObject* obj1,EngineObject* obj2);
+
 
 		void	callPythonKeyPressed(Keys);
 		void	callPythonKeyDown(Keys);
@@ -89,6 +102,7 @@ class Engine :
 		void			setUseFirstRenderer(){mUseFirstRenderer=true;}
 		void			setNotUseFirstRenderer(){mUseFirstRenderer=false;}
 
+
     private:
         void    setupPhysics();
         void    closePhysics();
@@ -97,7 +111,7 @@ class Engine :
         PhysicsEngine*  		mPhysicsEngine;
 		bool					mLoopRendering;
 
-		std::set<EngineObject*> mObjects;
+		std::vector<EngineObject*> mObjects;
 
 		float	mSimulationTime;
 

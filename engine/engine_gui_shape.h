@@ -34,6 +34,7 @@ class EngineGuiShape : public EngineObject {
 		virtual Vec3    	getSize();
 
 		virtual EngineGuiShape*			isGuiShape(){return this;}
+		virtual ObjectType		getType(){ return GUISHAPE;}
 
 		void	setMaterialName(const char* name);
 		void	setColour(float red,float green,float blue,float alpha);

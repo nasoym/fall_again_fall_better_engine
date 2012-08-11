@@ -8,6 +8,8 @@ class Engine;
 class EngineBox : public EngineGuiShape {
     public:
         EngineBox(Engine*);
+		virtual EngineBox*				isBox(){return this;}
+		virtual ObjectType		getType(){ return BOX;}
 	private:
 };
 #endif

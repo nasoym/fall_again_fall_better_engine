@@ -62,6 +62,7 @@ class EngineMesh : public EngineGuiShape {
 		void			setContainerForBone(Bone* bone,EngineGuiContainer* container);
 
 		virtual EngineMesh*				isMesh(){return this;}
+		virtual ObjectType		getType(){ return MESH;}
 
 	private:
 		EngineGuiShape*			mRootShape;

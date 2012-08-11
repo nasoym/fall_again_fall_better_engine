@@ -48,6 +48,10 @@ void	EngineGuiContainer::removeShape(EngineGuiShape* shape){
 	}
 }
 
+int     EngineGuiContainer::howManyShapes() {
+	return mShapes.size();
+}
+
 void        EngineGuiContainer::setPosition(Vec3& vec3){
 	std::vector<EngineGuiShape*>::iterator	iter;
 	for(iter=mShapes.begin();iter!=mShapes.end();++iter){

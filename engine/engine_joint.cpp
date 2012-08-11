@@ -18,6 +18,13 @@ EngineJoint::EngineJoint(Engine* engine,EngineBody* body1, EngineBody* body2) :
 	);
 }
 
+EngineBody*		EngineJoint::getBody1(){
+	return mBody1;
+}
+EngineBody*		EngineJoint::getBody2(){
+	return mBody2;
+}
+
 void        EngineJoint::setAnchor1Size(Vec3& vec3){
 	setAnchor1(vec3 * mBody1->getSize() );
 }
