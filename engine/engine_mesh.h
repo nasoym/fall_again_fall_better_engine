@@ -73,6 +73,8 @@ class EngineMesh : public EngineGuiShape {
 		void			setBodyForBoneName(std::string,EngineBody*);
 		void			setJointForBoneName(std::string,EngineJoint*);
 
+		void			createAllPhysics();
+
 	private:
 		EngineGuiShape*			mRootShape;
 		std::vector<BoneBody> 	mBoneBodies;

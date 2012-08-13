@@ -123,6 +123,10 @@ BOOST_PYTHON_MODULE(EngineModule) {
 		.def("setLocalSize",&EngineGuiShape::setLocalSize)
 		.def("getLocalSize",&EngineGuiShape::getLocalSize)
 
+		.def("getMaterialName",&EngineGuiShape::getMaterialName)
+		.def("hasColour",&EngineGuiShape::hasColour)
+		.def("getAlpha",&EngineGuiShape::getAlpha)
+		.def("getColour",&EngineGuiShape::getColour)
 		;
 
     class_<EngineGuiContainer, bases<EngineObject> >("EngineGuiContainer", init<Engine*>())
@@ -161,6 +165,9 @@ BOOST_PYTHON_MODULE(EngineModule) {
 		.def("getBoneNameByIndex",&EngineMesh::getBoneNameByIndex)
 		.def("setBodyForBoneName",&EngineMesh::setBodyForBoneName)
 		.def("setJointForBoneName",&EngineMesh::setJointForBoneName)
+
+		.def("createAllPhysics",&EngineMesh::createAllPhysics)
+
 		;
 
 	class_<EngineJoint,bases<EngineGuiContainer> >("EngineJoint", init<Engine*,EngineBody*,EngineBody*>())

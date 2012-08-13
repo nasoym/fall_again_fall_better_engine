@@ -127,7 +127,7 @@ EngineObject*	Engine::createPhysicBox(){
 
 	EngineBox* shape = new EngineBox(this);
 	shape->setScaling1To1();
-	//shape->setColour(1,1,1,0.6f);
+	shape->setColour(0.8,1,0.8,0.6f);
 	engineObject->addShape(shape);
 
 	engineObject->setSize(Vec3(1,1,1));
@@ -137,6 +137,7 @@ EngineObject*	Engine::createPhysicBox(){
 
 EngineObject*	Engine::createMesh(const char* meshName){
 	EngineMesh* engineObject = new EngineMesh(this,meshName);
+	engineObject->createAllPhysics();
 	//engineObject->setSize(Vec3(10,1,10));
 	//engineObject->setPosition(Vec3(0,-0.5,0));
 	return engineObject;

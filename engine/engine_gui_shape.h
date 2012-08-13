@@ -10,6 +10,8 @@ class EngineGuiContainer;
 
 #include "engine_object.h"
 
+#include <string>
+
 #include "math3d.h"
 
 enum GuiScaling {
@@ -62,6 +64,11 @@ class EngineGuiShape : public EngineObject {
 		void			setScaling1To1(){mScalingType=ONE_TO_ONE;}
 		void			setScalingScaling(){mScalingType=SCALING;}
 
+		bool				hasColour();
+		float 				getAlpha();
+		Vec3 				getColour();
+		std::string			getMaterialName(){return mMaterialName;}
+
 	private:
         Entity*     		mEntity; 
         SceneNode*  		mNode;
@@ -73,6 +80,8 @@ class EngineGuiShape : public EngineObject {
 
 		EngineGuiContainer*	mContainer;
 		GuiScaling			mScalingType;
+
+		std::string			mMaterialName;
 
 };
 

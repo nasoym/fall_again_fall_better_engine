@@ -31,12 +31,16 @@ EngineMesh::EngineMesh(Engine* engine,const char* meshName) :
 
 	mRootBone = findRootBone();
 	//Logger::debug(format("found root bone: %1% ") % mRootBone->getName());
+
+	Logger::debug("done creating mesh");
+}
+
+void			EngineMesh::createAllPhysics(){
 	Logger::debug("createPhysics");
-	//createPhysics(mRootBone);
+	createPhysics(mRootBone);
 
 	Logger::debug("calcLocalPosOfRootBone");
-	//calcLocalPosOfRootBone();
-
+	calcLocalPosOfRootBone();
 
 	//createAllDebugObjects();
 	//createDebugForBone(mRootBone);
@@ -47,7 +51,6 @@ EngineMesh::EngineMesh(Engine* engine,const char* meshName) :
 	mRootShape->setPosition(getPosition());
 	mRootShape->setOrientation(getOrientation());
 	*/
-	Logger::debug("done creating mesh");
 }
 
 int				EngineMesh::getNumberOfBones(){

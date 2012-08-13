@@ -35,6 +35,7 @@ def createMainRagdoll():
 
 def createBox():
 	o = Engine.createPhysicBox()
+	#o.setColour(0.8,0.5,0.1,0.8)
 	o.setSize(EngineModule.Vec3(10,10,10))
 	o.setPosition(EngineModule.Vec3(0,150,0))
 	print(o.readUuid())

@@ -87,6 +87,32 @@ Vec3    EngineGuiShape::getSize(){
 
 void	EngineGuiShape::setMaterialName(const char* name){
     getEntity()->setMaterialName(name);
+	mMaterialName = std::string(name);
+	//mMaterial = 0; //TODO do correct cleanup
+}
+
+bool	EngineGuiShape::hasColour(){
+	if(mMaterial.isNull()){
+		return false;
+	} else {
+		return true;
+	}
+}
+
+float 	EngineGuiShape::getAlpha(){
+	if(!mMaterial.isNull()){
+		ColourValue color = mMaterial->getTechnique(0)->getPass(0)->getDiffuse();
+		return color.a;
+	}
+	return 1.0f;
+}
+
+Vec3 	EngineGuiShape::getColour(){
+	if(!mMaterial.isNull()){
+		ColourValue color = mMaterial->getTechnique(0)->getPass(0)->getDiffuse();
+		return Vec3(color.r,color.g,color.b);
+	}
+	return Vec3();
 }
 
 void	EngineGuiShape::setColour(float red,float green,float blue,float alpha) {
