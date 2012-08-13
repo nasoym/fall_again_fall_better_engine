@@ -18,10 +18,11 @@ EngineMesh::EngineMesh(Engine* engine,const char* meshName) :
 	Logger::debug("creating mesh");
     setEntity(getEngine()->getSceneManager()->createEntity(meshName));
 	//setColour(0.8f,0.8f,1.0f,0.8f);
-	Logger::debug("set material");
-	setMaterialName("Body");
+	//Logger::debug("set material");
+	//setMaterialName("Body");
 	//setMaterialName("SSAO/GBuffer");
 
+	//TODO set size
     getNode()->attachObject(getEntity());
 	setSize(Vec3(1,1,1) * 1000);
 	setPosition(Vec3(0,150,0));

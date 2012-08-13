@@ -123,6 +123,7 @@ def keyPressed(Engine,EngineModule,objects,key):
 						body2 = node.prop("body2")
 						if (isGuiContainerFullfilled(node,Engine,EngineModule) and Engine.getFromUuid(body1) and Engine.getFromUuid(body2)):
 							o = Engine.createLLJoint(Engine.getFromUuid(body1),Engine.getFromUuid(body2))
+							loadGuiContainer(node,Engine,EngineModule,o)
 							if node.hasProp("anchor1"):
 								a = (node.prop("anchor1").split(","))
 								anchor1 = EngineModule.Vec3( float(a[0]),float(a[1]),float(a[2]))
@@ -190,6 +191,14 @@ def keyPressed(Engine,EngineModule,objects,key):
 									o.setJointForBoneName(
 										boneName,
 										Engine.getFromUuid(jointUuid))
+							if node.hasProp("colour") and node.hasProp("alpha"):
+								alpha = float(node.prop("alpha"))
+								a = (node.prop("colour").split(","))
+								colour = EngineModule.Vec3( float(a[0]),float(a[1]),float(a[2]))
+								o.setColour(colour.X(),colour.Y(),colour.Z(),alpha)
+							else:
+								materialName = node.prop("material")
+								o.setMaterialName(materialName)
 
 						res.remove(node)
 
@@ -201,8 +210,6 @@ def keyPressed(Engine,EngineModule,objects,key):
 					loadOrientation(node,Engine,EngineModule,o)
 					if node.hasProp("colour") and node.hasProp("alpha"):
 						alpha = float(node.prop("alpha"))
-						#colour = node.prop("colour")
-						#o.setColour(colour.x,colour.y,colour.z,alpha)
 						a = (node.prop("colour").split(","))
 						colour = EngineModule.Vec3( float(a[0]),float(a[1]),float(a[2]))
 						o.setColour(colour.X(),colour.Y(),colour.Z(),alpha)
@@ -259,7 +266,6 @@ def keyPressed(Engine,EngineModule,objects,key):
 				pass
 
 			elif o.getType()==EngineModule.ObjectType.MESH:
-				#TODO color material
 				node.setProp("mesh_file",str(o.getFileName()))
 				bonesNumber = o.getNumberOfBones()
 				bonesList = []
@@ -278,6 +284,11 @@ def keyPressed(Engine,EngineModule,objects,key):
 				node.setProp("position",str(o.getPosition()))
 				node.setProp("size",str(o.getSize()))
 				node.setProp("orientation",str(o.getOrientation()))
+				if o.hasColour():
+					node.setProp("colour",str(o.getColour()))
+					node.setProp("alpha",str(o.getAlpha()))
+				else:
+					node.setProp("material",str(o.getMaterialName()))
 
 			elif o.getType()==EngineModule.ObjectType.STATICBODY:
 				saveGuiContainer(node,Engine,EngineModule,o)
@@ -295,7 +306,8 @@ def keyPressed(Engine,EngineModule,objects,key):
 				node.setProp("position",str(o.getPosition()))
 				node.setProp("size",str(o.getSize()))
 				node.setProp("orientation",str(o.getOrientation()))
-				#TODO localPos,Orien,Size  material colour scaling type
+				#TODO localPos,Orien,Size
+				#TODO scaling type
 				if o.hasColour():
 					node.setProp("colour",str(o.getColour()))
 					node.setProp("alpha",str(o.getAlpha()))

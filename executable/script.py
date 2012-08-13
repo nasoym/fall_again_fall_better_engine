@@ -35,19 +35,9 @@ def createMainRagdoll():
 
 def createBox():
 	o = Engine.createPhysicBox()
-	#o.setColour(0.8,0.5,0.1,0.8)
 	o.setSize(EngineModule.Vec3(10,10,10))
 	o.setPosition(EngineModule.Vec3(0,150,0))
-	print(o.readUuid())
-	o.setUuid("021e9c23-c850-434b-90dd-7fd96aa991f0")
-	print(o.readUuid())
-	"""
-	021e9c23-c850-434b-90dd-7fd96aa991f0
-	f11f6535-d602-4fee-aed5-c8befe31ca63
-	2ccbce46-54e1-4d04-b461-623d2d997abb
-	"""
 
-	"""
 	b = Engine.createGuiBox()
 	b.setLocalPosition(EngineModule.Vec3(10,0,0))
 	b.setLocalSize(EngineModule.Vec3(10,0.5,0.5))
@@ -68,7 +58,6 @@ def createBox():
 	b.setColour(0,0,1,0.8)
 	b.setScalingFixed()
 	o.addShape(b)
-	"""
 
 	return o
 
@@ -130,6 +119,7 @@ def keyPressed(key):
 		j.setAnchor1Orientation(
 			EngineModule.Quat().fromAngles(0,0,45) )
 
+		"""
 		b = Engine.createGuiBox()
 		b.setLocalPosition(EngineModule.Vec3(10,0,0))
 		b.setLocalSize(EngineModule.Vec3(10,0.5,0.5))
@@ -150,6 +140,7 @@ def keyPressed(key):
 		b.setColour(0,0,1,0.8)
 		b.setScalingFixed()
 		j.addShape(b)
+		"""
 
 
 
