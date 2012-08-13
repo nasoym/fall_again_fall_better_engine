@@ -5,6 +5,7 @@
 using namespace Ogre;
 
 #include <vector>
+#include <string>
 
 #include "engine_gui_shape.h"
 
@@ -64,12 +65,21 @@ class EngineMesh : public EngineGuiShape {
 		virtual EngineMesh*				isMesh(){return this;}
 		virtual ObjectType		getType(){ return MESH;}
 
+		std::string		getFileName(){return mMeshFileName;}
+		int				getNumberOfBones();
+		EngineBody*		getBodyByIndex(int);
+		EngineJoint*	getJointByIndex(int);
+		std::string		getBoneNameByIndex(int);	
+		void			setBodyForBoneName(std::string,EngineBody*);
+		void			setJointForBoneName(std::string,EngineJoint*);
+
 	private:
 		EngineGuiShape*			mRootShape;
 		std::vector<BoneBody> 	mBoneBodies;
 		Bone*					mRootBone;
 		Vec3 					mLocalPos;
 		Quat 					mLocalQuat;
+		std::string				mMeshFileName;
 
 
 		

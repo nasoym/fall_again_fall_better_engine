@@ -7,6 +7,7 @@
 #include "engine_gui_shape.h"
 #include "engine_spacecage.h"
 #include "engine_body.h"
+#include "engine_static_body.h"
 #include "engine_joint.h"
 #include "engine_object.h"
 #include "engine_mesh.h"
@@ -34,7 +35,7 @@ EngineObject*	Engine::createLLPhysicBody(){
 }
 
 EngineObject*	Engine::createLLPhysicStatic(){
-	EngineBody* engineObject = new EngineBody(this);
+	EngineStaticBody* engineObject = new EngineStaticBody(this);
 	engineObject->setPhysicBody(
 		new PhysicStatic( getPhysicsEngine(),
 			Vec3(0,0,0), Vec3(1,1,1) ) );
@@ -126,7 +127,7 @@ EngineObject*	Engine::createPhysicBox(){
 
 	EngineBox* shape = new EngineBox(this);
 	shape->setScaling1To1();
-	shape->setColour(1,1,1,0.6f);
+	//shape->setColour(1,1,1,0.6f);
 	engineObject->addShape(shape);
 
 	engineObject->setSize(Vec3(1,1,1));
@@ -143,7 +144,7 @@ EngineObject*	Engine::createMesh(const char* meshName){
 
 
 EngineObject*	Engine::createPhysicStatic(){
-	EngineBody* engineObject = new EngineBody(this);
+	EngineStaticBody* engineObject = new EngineStaticBody(this);
 	engineObject->setPhysicBody(
 		new PhysicStatic(
 			getPhysicsEngine(),

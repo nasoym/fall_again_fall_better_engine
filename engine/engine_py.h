@@ -25,6 +25,7 @@ using namespace boost::python;
 
 #include "engine_spacecage.h"
 #include "engine_body.h"
+#include "engine_static_body.h"
 #include "engine_joint.h"
 #include "engine_mesh.h"
 
@@ -37,6 +38,7 @@ BOOST_PYTHON_MODULE(EngineModule) {
 	.value("SPACECAGE",SPACECAGE)
 	.value("JOINT",JOINT)
 	.value("BODY",BODY)
+	.value("STATICBODY",STATICBODY)
 	.value("BOX",BOX)
 	.value("GUICONTAINER",GUICONTAINER)
 	;
@@ -92,10 +94,10 @@ BOOST_PYTHON_MODULE(EngineModule) {
 		.def("isGuiShape",&EngineObject::isGuiShape,return_value_policy<reference_existing_object>())
 		.def("isGuiContainer",&EngineObject::isGuiContainer,return_value_policy<reference_existing_object>())
 		.def("isBody",&EngineObject::isBody,return_value_policy<reference_existing_object>())
+		.def("isStaticBody",&EngineObject::isStaticBody,return_value_policy<reference_existing_object>())
 		.def("isJoint",&EngineObject::isJoint,return_value_policy<reference_existing_object>())
 		.def("isSpaceCage",&EngineObject::isSpaceCage,return_value_policy<reference_existing_object>())
 		.def("isMesh",&EngineObject::isMesh,return_value_policy<reference_existing_object>())
-
 		;
 
     class_<EngineGuiShape, bases<EngineObject> >("EngineGuiShape", init<Engine*>())
@@ -121,8 +123,6 @@ BOOST_PYTHON_MODULE(EngineModule) {
 		.def("setLocalSize",&EngineGuiShape::setLocalSize)
 		.def("getLocalSize",&EngineGuiShape::getLocalSize)
 
-		.def("isGuiShape",&EngineObject::isGuiShape,return_value_policy<reference_existing_object>())
-
 		;
 
     class_<EngineGuiContainer, bases<EngineObject> >("EngineGuiContainer", init<Engine*>())
@@ -139,23 +139,28 @@ BOOST_PYTHON_MODULE(EngineModule) {
 		.def("removeShape",&EngineGuiContainer::removeShape)
 		.def("howManyShapes",&EngineGuiContainer::howManyShapes)
 
-		//.def("isGuiContainer",&EngineObject::isGuiContainer,return_value_policy<reference_existing_object>())
-
 		;
 
 	class_<EngineBox,bases<EngineGuiShape> >("EngineBox", init<Engine*>())
 		;
 
 	class_<EngineSpaceCage,bases<EngineGuiContainer> >("EngineSpaceCage", init<Engine*,Vec3&>())
-		//.def("isSpaceCage",&EngineObject::isSpaceCage,return_value_policy<reference_existing_object>())
 		;
 
 	class_<EngineBody,bases<EngineGuiContainer> >("EngineBody", init<Engine*>())
-		//.def("isBody",&EngineObject::isBody,return_value_policy<reference_existing_object>())
+		;
+
+	class_<EngineStaticBody,bases<EngineBody> >("EngineStaticBody", init<Engine*>())
 		;
 
 	class_<EngineMesh,bases<EngineGuiShape> >("EngineMesh", init<Engine*,const char*>())
-		//.def("isMesh",&EngineObject::isMesh,return_value_policy<reference_existing_object>())
+		.def("getFileName",&EngineMesh::getFileName)
+		.def("getNumberOfBones",&EngineMesh::getNumberOfBones)
+		.def("getBodyByIndex",&EngineMesh::getBodyByIndex,return_value_policy<reference_existing_object>())
+		.def("getJointByIndex",&EngineMesh::getJointByIndex,return_value_policy<reference_existing_object>())
+		.def("getBoneNameByIndex",&EngineMesh::getBoneNameByIndex)
+		.def("setBodyForBoneName",&EngineMesh::setBodyForBoneName)
+		.def("setJointForBoneName",&EngineMesh::setJointForBoneName)
 		;
 
 	class_<EngineJoint,bases<EngineGuiContainer> >("EngineJoint", init<Engine*,EngineBody*,EngineBody*>())
@@ -177,11 +182,8 @@ BOOST_PYTHON_MODULE(EngineModule) {
 		.def("isMotorOn",&EngineJoint::isMotorOn)
 		.def("setMotorTarget",&EngineJoint::setMotorTarget)
 		.def("getMotorTarget",&EngineJoint::getMotorTarget)
-
 		.def("getBody1",&EngineJoint::getBody1,return_value_policy<reference_existing_object>() )
 		.def("getBody2",&EngineJoint::getBody2,return_value_policy<reference_existing_object>() )
-
-		//.def("isJoint",&EngineObject::isJoint,return_value_policy<reference_existing_object>())
 		;
 
 

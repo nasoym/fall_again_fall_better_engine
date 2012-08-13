@@ -47,7 +47,6 @@ class Engine :
 		void    addObject(EngineObject*);
 		EngineObject* getObject(int index);
 		EngineObject* getFromUuid(std::string);
-		//TODO object query
 
 		PhysicsEngine*	getPhysicsEngine(){return mPhysicsEngine;}
 

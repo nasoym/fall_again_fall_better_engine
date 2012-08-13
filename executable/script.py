@@ -169,7 +169,9 @@ def keyPressed(key):
 				if k != "base":
 					d.parts[k].setPosition(EngineModule.Vec3(0,250,0))
 
-		if len(dolls) == 1:
+		if len(dolls) == 0:
+			createMainRagdoll()
+		elif len(dolls) == 1:
 
 			distance = 150
 

@@ -10,6 +10,7 @@ class Engine;
 class EngineGuiShape;
 class EngineGuiContainer;
 class EngineBody;
+class EngineStaticBody;
 class EngineJoint;
 class EngineSpaceCage;
 class EngineMesh;
@@ -22,6 +23,7 @@ enum ObjectType {
 	SPACECAGE,
 	JOINT,
 	BODY,
+	STATICBODY,
 	GUICONTAINER,
 	BOX,
 };
@@ -49,6 +51,7 @@ class EngineObject {
 		virtual EngineGuiShape*			isGuiShape(){return 0;}
 		virtual EngineGuiContainer*		isGuiContainer(){return 0;}
 		virtual EngineBody*				isBody(){return 0;}
+		virtual EngineStaticBody*	 	isStaticBody(){return 0;}
 		virtual EngineJoint*			isJoint(){return 0;}
 		virtual EngineSpaceCage*	 	isSpaceCage(){return 0;}
 		virtual EngineMesh*				isMesh(){return 0;}

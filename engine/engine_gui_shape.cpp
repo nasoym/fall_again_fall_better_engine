@@ -21,8 +21,7 @@ EngineGuiShape::~EngineGuiShape(){
     mEntity = 0;
     mNode = 0;
 	if(!mMaterial.isNull()){
-		//TODO?
-		//mMaterial.release();
+		//TODO?  mMaterial.release();
 	}
 }
 

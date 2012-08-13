@@ -12,10 +12,13 @@ EngineMesh::EngineMesh(Engine* engine,const char* meshName) :
 	mRootBone(0),
 	mRootShape(0),
 	mLocalPos(Vec3()),
-	mLocalQuat(Quat())
+	mLocalQuat(Quat()),
+	mMeshFileName(std::string(meshName))
 	{
+	Logger::debug("creating mesh");
     setEntity(getEngine()->getSceneManager()->createEntity(meshName));
 	//setColour(0.8f,0.8f,1.0f,0.8f);
+	Logger::debug("set material");
 	setMaterialName("Body");
 	//setMaterialName("SSAO/GBuffer");
 
@@ -23,16 +26,20 @@ EngineMesh::EngineMesh(Engine* engine,const char* meshName) :
 	setSize(Vec3(1,1,1) * 1000);
 	setPosition(Vec3(0,150,0));
 
+	Logger::debug("setupAllBones");
 	setupAllBones();
 
 	mRootBone = findRootBone();
 	//Logger::debug(format("found root bone: %1% ") % mRootBone->getName());
-	createPhysics(mRootBone);
+	Logger::debug("createPhysics");
+	//createPhysics(mRootBone);
 
-	calcLocalPosOfRootBone();
+	Logger::debug("calcLocalPosOfRootBone");
+	//calcLocalPosOfRootBone();
+
+
 	//createAllDebugObjects();
 	//createDebugForBone(mRootBone);
-
 	/*
 	mRootShape = getEngine()->createGuiBox()->isGuiShape();
 	mRootShape->setColour(1,0,0,0.5f);
@@ -40,6 +47,43 @@ EngineMesh::EngineMesh(Engine* engine,const char* meshName) :
 	mRootShape->setPosition(getPosition());
 	mRootShape->setOrientation(getOrientation());
 	*/
+	Logger::debug("done creating mesh");
+}
+
+int				EngineMesh::getNumberOfBones(){
+	return mBoneBodies.size();
+}
+
+EngineBody*		EngineMesh::getBodyByIndex(int index){
+	return mBoneBodies[index].body;
+}
+
+EngineJoint*	EngineMesh::getJointByIndex(int index){
+	return mBoneBodies[index].joint;
+}
+
+std::string		EngineMesh::getBoneNameByIndex(int index){
+	return mBoneBodies[index].bone->getName();
+}
+	
+void			EngineMesh::setBodyForBoneName(std::string boneName,EngineBody* body){
+	std::vector<BoneBody>::iterator	iter;
+	for(iter=mBoneBodies.begin();iter!=mBoneBodies.end();++iter){
+	    if( (*iter).bone->getName().compare(boneName) == 0 ) {
+			(*iter).body = body;
+			break;
+		}
+	}
+}
+
+void			EngineMesh::setJointForBoneName(std::string boneName,EngineJoint* joint){
+	std::vector<BoneBody>::iterator	iter;
+	for(iter=mBoneBodies.begin();iter!=mBoneBodies.end();++iter){
+	    if( (*iter).bone->getName().compare(boneName) == 0 ) {
+			(*iter).joint = joint;
+			break;
+		}
+	}
 }
 
 EngineMesh::~EngineMesh(){

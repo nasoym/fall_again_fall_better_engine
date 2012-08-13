@@ -15,15 +15,35 @@ def launch(Engine,EngineModule,objects):
 	#objects["mesh"].setSize(EngineModule.Vec3(1000,1000,1000))
 
 def loadStringArray(node,attributeName):
-	stringArray = (node.prop(attributeName)
+	if node.hasProp(attributeName):
+		stringArray = (node.prop(attributeName)
+			.replace("[","")
+			.replace("]","")
+			.replace("'","")
+			.replace(" ","")
+			.split(","))
+		if (len(stringArray)==1 and stringArray[0]==''):
+			stringArray = []
+		return [ num for num in stringArray ]
+	else:
+		return []
+
+def loadTupleArray(node,attributeName):
+	finalArray = []
+	tupleArray = (node.prop(attributeName)
+		.replace("),",")#")
 		.replace("[","")
 		.replace("]","")
 		.replace("'","")
 		.replace(" ","")
-		.split(","))
-	if (len(stringArray)==1 and stringArray[0]==''):
-		stringArray = []
-	return [ num for num in stringArray ]
+		.split("#"))
+	for t in tupleArray:
+		elementArray = (t
+			.replace("(","")
+			.replace(")","")
+			.split(","))
+		finalArray.append( elementArray )
+	return finalArray
 
 def isGuiContainerFullfilled(node,Engine,EngineModule):
 	shapes = loadStringArray(node,"shapes")
@@ -48,25 +68,30 @@ def saveGuiContainer(node,Engine,EngineModule,engineObject):
 	node.setProp("shapes",str(shapesList))
 
 def loadSize(node,Engine,EngineModule,engineObject):
-	a = (node.prop("size").split(","))
-	size = EngineModule.Vec3( float(a[0]),float(a[1]),float(a[2]))
-	engineObject.setSize(size)
+	if node.hasProp("size"):
+		a = (node.prop("size").split(","))
+		size = EngineModule.Vec3( float(a[0]),float(a[1]),float(a[2]))
+		engineObject.setSize(size)
 
 def loadPosition(node,Engine,EngineModule,engineObject):
-	a = (node.prop("position").split(","))
-	pos = EngineModule.Vec3( float(a[0]),float(a[1]),float(a[2]))
-	engineObject.setPosition(pos)
+	if node.hasProp("position"):
+		a = (node.prop("position").split(","))
+		pos = EngineModule.Vec3( float(a[0]),float(a[1]),float(a[2]))
+		engineObject.setPosition(pos)
 
 def loadOrientation(node,Engine,EngineModule,engineObject):
-	a = (node.prop("orientation").split(","))
-	orientation = EngineModule.Quat( float(a[0]),float(a[1]),float(a[2]),float(a[3]))
-	engineObject.setOrientation(orientation)
+	if node.hasProp("orientation"):
+		a = (node.prop("orientation").split(","))
+		orientation = EngineModule.Quat( float(a[0]),float(a[1]),float(a[2]),float(a[3]))
+		engineObject.setOrientation(orientation)
 
 def loadEngineObject(node,Engine,EngineModule,engineObject):
-	uuid = node.prop("uuid")
-	engineObject.setUuid(uuid)
-	#name = node.prop("name")
-	#engineObject.setName(name)
+	if node.hasProp("uuid"):
+		uuid = node.prop("uuid")
+		engineObject.setUuid(uuid)
+	if node.hasProp("name"):
+		name = node.prop("name")
+		#engineObject.setName(name)
 
 def init(Engine,EngineModule,objects):
 	pass
@@ -92,25 +117,84 @@ def keyPressed(Engine,EngineModule,objects,key):
 				pass
 
 				if node.name==str(EngineModule.ObjectType.JOINT):
-					body1 = node.prop("body1")
-					body2 = node.prop("body2")
-					if (isGuiContainerFullfilled(node,Engine,EngineModule) and Engine.getFromUuid(body1) and Engine.getFromUuid(body2)):
-						o = Engine.createLLJoint(Engine.getFromUuid(body1),Engine.getFromUuid(body2))
-						a = (node.prop("anchor1").split(","))
-						anchor1 = EngineModule.Vec3( float(a[0]),float(a[1]),float(a[2]))
-						a = (node.prop("anchor2").split(","))
-						anchor2 = EngineModule.Vec3( float(a[0]),float(a[1]),float(a[2]))
-						a = (node.prop("anchor1orientation").split(","))
-						anchor1orientation = EngineModule.Quat( float(a[0]),float(a[1]),float(a[2]),float(a[3]))
-						a = (node.prop("anchor2orientation").split(","))
-						anchor2orientation = EngineModule.Quat( float(a[0]),float(a[1]),float(a[2]),float(a[3]))
-						ylimit = node.prop("ylimit")
-						zlimit = node.prop("zlimit")
-						o.setAnchor1(anchor1)
-						o.setAnchor2(anchor2)
-						o.setAnchor1Orientation(anchor1orientation)
-						o.setAnchor2Orientation(anchor2orientation)
-						o.setLimits(float(ylimit),float(zlimit))
+					if node.hasProp("body1") and node.hasProp("body2"):
+						body1 = node.prop("body1")
+						body2 = node.prop("body2")
+						if (isGuiContainerFullfilled(node,Engine,EngineModule) and Engine.getFromUuid(body1) and Engine.getFromUuid(body2)):
+							o = Engine.createLLJoint(Engine.getFromUuid(body1),Engine.getFromUuid(body2))
+							if node.hasProp("anchor1"):
+								a = (node.prop("anchor1").split(","))
+								anchor1 = EngineModule.Vec3( float(a[0]),float(a[1]),float(a[2]))
+							if node.hasProp("anchor2"):
+								a = (node.prop("anchor2").split(","))
+								anchor2 = EngineModule.Vec3( float(a[0]),float(a[1]),float(a[2]))
+							if node.hasProp("anchor1orientation"):
+								a = (node.prop("anchor1orientation").split(","))
+								anchor1orientation = EngineModule.Quat( float(a[0]),float(a[1]),float(a[2]),float(a[3]))
+							if node.hasProp("anchor2orientation"):
+								a = (node.prop("anchor2orientation").split(","))
+								anchor2orientation = EngineModule.Quat( float(a[0]),float(a[1]),float(a[2]),float(a[3]))
+							ylimit=0
+							zlimit=0
+							if node.hasProp("ylimit"):
+								ylimit = node.prop("ylimit")
+							if node.hasProp("zlimit"):
+								zlimit = node.prop("zlimit")
+							o.setAnchor1(anchor1)
+							o.setAnchor2(anchor2)
+							o.setAnchor1Orientation(anchor1orientation)
+							o.setAnchor2Orientation(anchor2orientation)
+							o.setLimits(float(ylimit),float(zlimit))
+							loadEngineObject(node,Engine,EngineModule,o)
+							res.remove(node)
+					else:
+						res.remove(node)
+
+				elif node.name==str(EngineModule.ObjectType.GUISHAPE):
+					res.remove(node)
+
+				elif node.name==str(EngineModule.ObjectType.GUICONTAINER):
+					res.remove(node)
+
+				elif node.name==str(EngineModule.ObjectType.MESH):
+					#res.remove(node)
+					bonesList = loadTupleArray(node,"bones")
+					allObjectsExist = True
+					for boneData in bonesList:
+						bonename = boneData[0]
+						bodyUuid = boneData[1]
+						jointUuid = boneData[2]
+						if ( (not bodyUuid == "0") and (not Engine.getFromUuid(bodyUuid)) ):
+							print("not found: body:" + str(bodyUuid))
+							allObjectsExist = False
+							break
+						if ( (not jointUuid == "0") and (not Engine.getFromUuid(jointUuid)) ):
+							print("not found: joint:" + str(jointUuid))
+							allObjectsExist = False
+							break
+					#res.remove(node)
+					if allObjectsExist:
+						if node.hasProp("mesh_file"):
+							meshFile = node.prop("mesh_file")
+							o = Engine.createLLMesh(meshFile)
+							loadEngineObject(node,Engine,EngineModule,o)
+							loadSize(node,Engine,EngineModule,o)
+							loadPosition(node,Engine,EngineModule,o)
+							loadOrientation(node,Engine,EngineModule,o)
+							for boneData in bonesList:
+								boneName = boneData[0]
+								bodyUuid = boneData[1]
+								jointUuid = boneData[2]
+
+								if not bodyUuid == "0":
+									o.setBodyForBoneName(
+										boneName,
+										Engine.getFromUuid(bodyUuid))
+								if not jointUuid == "0":
+									o.setJointForBoneName(
+										boneName,
+										Engine.getFromUuid(jointUuid))
+
 						res.remove(node)
 
 				elif node.name==str(EngineModule.ObjectType.BOX):
@@ -120,6 +204,16 @@ def keyPressed(Engine,EngineModule,objects,key):
 					loadPosition(node,Engine,EngineModule,o)
 					loadOrientation(node,Engine,EngineModule,o)
 					res.remove(node)
+
+				elif node.name==str(EngineModule.ObjectType.STATICBODY):
+					if isGuiContainerFullfilled(node,Engine,EngineModule):
+						o = Engine.createLLPhysicStatic()
+						loadGuiContainer(node,Engine,EngineModule,o)
+						loadEngineObject(node,Engine,EngineModule,o)
+						loadSize(node,Engine,EngineModule,o)
+						loadPosition(node,Engine,EngineModule,o)
+						loadOrientation(node,Engine,EngineModule,o)
+						res.remove(node)
 
 				elif node.name==str(EngineModule.ObjectType.BODY):
 					if isGuiContainerFullfilled(node,Engine,EngineModule):
@@ -133,11 +227,12 @@ def keyPressed(Engine,EngineModule,objects,key):
 
 				elif node.name==str(EngineModule.ObjectType.SPACECAGE):
 					if isGuiContainerFullfilled(node,Engine,EngineModule):
-						a = (node.prop("size").split(","))
-						size = EngineModule.Vec3( float(a[0]),float(a[1]),float(a[2]))
-						o = Engine.createLLSpaceCage(size)
-						loadGuiContainer(node,Engine,EngineModule,o)
-						loadEngineObject(node,Engine,EngineModule,o)
+						if node.hasProp("size"):
+							a = (node.prop("size").split(","))
+							size = EngineModule.Vec3( float(a[0]),float(a[1]),float(a[2]))
+							o = Engine.createLLSpaceCage(size)
+							loadGuiContainer(node,Engine,EngineModule,o)
+							loadEngineObject(node,Engine,EngineModule,o)
 						res.remove(node)
 
 	if key == EngineModule.Keys.K_6:
@@ -147,21 +242,42 @@ def keyPressed(Engine,EngineModule,objects,key):
 		objectsNumber = Engine.howManyObjects()
 		for i in range(0,objectsNumber):
 			o = Engine.getObject(i)
-			#print(o)
-			#print(dir(o))
-			#print(o.isGuiShape())
-			#print(o.getType())
-
 			node = libxml2.newNode(str(o.getType()))
 			node.setProp("uuid",str(o.readUuid()))
 			node.setProp("name",str(o.getName()))
+
 			if o.getType()==EngineModule.ObjectType.GUISHAPE:
 				pass
 
 			elif o.getType()==EngineModule.ObjectType.GUICONTAINER:
 				pass
+
 			elif o.getType()==EngineModule.ObjectType.MESH:
-				pass
+				#TODO color material
+				node.setProp("mesh_file",str(o.getFileName()))
+				bonesNumber = o.getNumberOfBones()
+				bonesList = []
+				for i in range(0,bonesNumber):
+					body = o.getBodyByIndex(i)
+					joint = o.getJointByIndex(i)
+					boneName = o.getBoneNameByIndex(i)
+					bodyUuid = 0
+					jointUuid = 0
+					if body and body != 0:
+						bodyUuid = body.readUuid()
+					if joint and joint != 0:
+						jointUuid = joint.readUuid()
+					bonesList.append( (boneName,bodyUuid,jointUuid) )
+				node.setProp("bones",str(bonesList))
+				node.setProp("position",str(o.getPosition()))
+				node.setProp("size",str(o.getSize()))
+				node.setProp("orientation",str(o.getOrientation()))
+
+			elif o.getType()==EngineModule.ObjectType.STATICBODY:
+				saveGuiContainer(node,Engine,EngineModule,o)
+				node.setProp("position",str(o.getPosition()))
+				node.setProp("size",str(o.getSize()))
+				node.setProp("orientation",str(o.getOrientation()))
 
 			elif o.getType()==EngineModule.ObjectType.BODY:
 				saveGuiContainer(node,Engine,EngineModule,o)
@@ -173,7 +289,7 @@ def keyPressed(Engine,EngineModule,objects,key):
 				node.setProp("position",str(o.getPosition()))
 				node.setProp("size",str(o.getSize()))
 				node.setProp("orientation",str(o.getOrientation()))
-				#localPos,Orien,Size  material colour scaling type
+				#TODO localPos,Orien,Size  material colour scaling type
 
 			elif o.getType()==EngineModule.ObjectType.JOINT:
 				saveGuiContainer(node,Engine,EngineModule,o)

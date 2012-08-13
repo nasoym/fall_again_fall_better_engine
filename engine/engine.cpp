@@ -115,7 +115,6 @@ void	Engine::step() {
 	//TODO camera pos/rot from node
 	guiUpdates();
 	render();
-	//printf("o");
 
 	unsigned long elapsedTime = getElapsedTime();
     //Logger::debug(format("%1%") % elapsedTime);
@@ -128,8 +127,6 @@ void	Engine::step() {
 	timeToSimulate *= getTimingFactor();
 
 	while(mSimulationTime > mSimulationTimeStep) {
-		//Logger::debug("p");
-		//printf("+");
 		mSimulationTime -= mSimulationTimeStep;
 		//mPhysicsEngine->simulate(mSimulationTimeStep / 1000.0f);
 

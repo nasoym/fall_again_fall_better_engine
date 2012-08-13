@@ -256,11 +256,11 @@ bool PhysicJoint::isMotorOn() {
 }
 
 void PhysicJoint::setMotorStrength(float strength) {
-    //TODO
+    //TODO set motor strength
 }
 
 float PhysicJoint::getMotorStrength() {
-    //TODO
+    //TODO get motor strength
     return 1.0f;
 }
 
