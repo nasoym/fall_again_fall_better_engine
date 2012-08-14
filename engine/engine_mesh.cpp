@@ -60,17 +60,6 @@ void	EngineMesh::guiUpdate(){
 	updateBone(mRootBone);
 }
 
-void 	EngineMesh::calcLocalPosOfRootBone() {
-	EngineBody* rootBody = getBodyOfBone(mRootBone);
-	if (rootBody) {
-		Vec3	rootBodyPos = rootBody->getPosition();
-		Quat	rootBodyQuat = rootBody->getOrientation();
-		mLocalPos = rootBodyPos - getPosition();
-		mLocalPos = rootBodyQuat.inverse() * mLocalPos;
-		mLocalQuat = getOrientation() * rootBodyQuat.inverse();
-	}
-}
-
 void	EngineMesh::updateBone(Bone* bone){
 	EngineBody* body = getBodyOfBone(bone);
 	if (body) {
@@ -96,6 +85,18 @@ void	EngineMesh::updateBone(Bone* bone){
 		}
 	}
 }
+
+void 	EngineMesh::calcLocalPosOfRootBone() {
+	EngineBody* rootBody = getBodyOfBone(mRootBone);
+	if (rootBody) {
+		Vec3	rootBodyPos = rootBody->getPosition();
+		Quat	rootBodyQuat = rootBody->getOrientation();
+		mLocalPos = rootBodyPos - getPosition();
+		mLocalPos = rootBodyQuat.inverse() * mLocalPos;
+		mLocalQuat = getOrientation() * rootBodyQuat.inverse();
+	}
+}
+
 
 void	EngineMesh::createAllDebugObjects(){
 	EngineGuiContainer* container;
