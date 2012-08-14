@@ -17,7 +17,10 @@ def createBones(Engine,EngineModule,mesh,boneName=None):
 
 def createBoneBody(Engine,EngineModule,mesh,boneName):
 	boneWidth = 2.0
+	defaultBoneLength = 5
 	boneLength = mesh.getBoneNameSize(boneName)
+	if boneLength == 0:
+		boneLength = defaultBoneLength
 	#boneBody = createStaticBody(Engine,EngineModule)
 	boneBody = createBody(Engine,EngineModule)
 	boneBody.setSize(EngineModule.Vec3(boneLength,boneWidth,boneWidth))
@@ -61,6 +64,8 @@ def createBoneBody(Engine,EngineModule,mesh,boneName):
 		parentPosition = boneParentBody.getPosition()
 
 		parentBoneLength = mesh.getBoneNameSize(boneParentName)
+		if parentBoneLength == 0:
+			parentBoneLength = defaultBoneLength
 
 		boneBody.setOrientation(parentOrientation * rotatedLocalOrientation)
 

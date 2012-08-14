@@ -167,8 +167,6 @@ BOOST_PYTHON_MODULE(EngineModule) {
 		.def("setBodyForBoneName",&EngineMesh::setBodyForBoneName)
 		.def("setJointForBoneName",&EngineMesh::setJointForBoneName)
 
-		.def("createAllPhysics",&EngineMesh::createAllPhysics)
-
 		.def("getBodyOfBoneName",&EngineMesh::getBodyOfBoneName,return_value_policy<reference_existing_object>())
 		.def("getJointOfBoneName",&EngineMesh::getJointOfBoneName,return_value_policy<reference_existing_object>())
 		.def("getBoneNamePosition",&EngineMesh::getBoneNamePosition)
@@ -180,9 +178,9 @@ BOOST_PYTHON_MODULE(EngineModule) {
 		.def("getMeshScale",&EngineMesh::getMeshScale)
 
 		.def("getBoneNameChildren",&EngineMesh::getBoneNameChildren)
-		.def("translateGlobalAnchorToLocal",&EngineMesh::translateGlobalAnchorToLocal)
 		.def("getBoneNameChildName",&EngineMesh::getBoneNameChildName)
 		.def("getRootBoneName",&EngineMesh::getRootBoneName)
+		.def("calcLocalPosOfRootBone",&EngineMesh::calcLocalPosOfRootBone)
 
 		;
 

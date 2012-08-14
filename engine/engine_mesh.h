@@ -26,19 +26,13 @@ class EngineMesh : public EngineGuiShape {
 
     public:
         EngineMesh(Engine*,const char*);
-		virtual ~EngineMesh();
+		//virtual ~EngineMesh();
 
 		void			setupAllBones();
-		void			createPhysics(Bone* bone);
-		void			checkForJointCollision(Bone* bone);
 		void			updateBone(Bone* bone);
 		void			createAllDebugObjects();
-		Vec3			translateGlobalAnchorToLocal(EngineBody* body,Vec3 & globalAnchor);
 		void			calcLocalPosOfRootBone();
-		EngineJoint* 	createJointToParent(Bone* bone,Vec3 &,Quat & jointOrienration);
 		void			createDebugForBone(Bone* bone);
-
-		void			createPhysicBodiesFromParent(Bone* bone);
 
 		virtual void	guiUpdate();
 
@@ -74,8 +68,6 @@ class EngineMesh : public EngineGuiShape {
 		void			setBodyForBoneName(std::string,EngineBody*);
 		void			setJointForBoneName(std::string,EngineJoint*);
 
-		void			createAllPhysics();
-
 		Bone*			getBoneFromName(std::string boneName);
 
 
@@ -99,7 +91,6 @@ class EngineMesh : public EngineGuiShape {
 
 
 	private:
-		EngineGuiShape*			mRootShape;
 		std::vector<BoneBody> 	mBoneBodies;
 		Bone*					mRootBone;
 		Vec3 					mLocalPos;
