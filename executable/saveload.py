@@ -14,7 +14,7 @@ def load(Engine,EngineModule,fileName):
 					body1 = node.prop("body1")
 					body2 = node.prop("body2")
 					if (isGuiContainerFullfilled(node,Engine,EngineModule) and Engine.getFromUuid(body1) and Engine.getFromUuid(body2)):
-						o = Engine.createLLJoint(Engine.getFromUuid(body1),Engine.getFromUuid(body2))
+						o = Engine.createJoint(Engine.getFromUuid(body1),Engine.getFromUuid(body2))
 						loadGuiContainer(node,Engine,EngineModule,o)
 						if node.hasProp("anchor1"):
 							a = (node.prop("anchor1").split(","))
@@ -66,7 +66,7 @@ def load(Engine,EngineModule,fileName):
 				if allObjectsExist:
 					if node.hasProp("mesh_file"):
 						meshFile = node.prop("mesh_file")
-						o = Engine.createLLMesh(meshFile)
+						o = Engine.createMesh(meshFile)
 						loadEngineObject(node,Engine,EngineModule,o)
 						loadSize(node,Engine,EngineModule,o)
 						loadPosition(node,Engine,EngineModule,o)
@@ -95,7 +95,7 @@ def load(Engine,EngineModule,fileName):
 					res.remove(node)
 
 			elif node.name==str(EngineModule.ObjectType.BOX):
-				o = Engine.createLLBox()
+				o = Engine.createGuiBox()
 				loadEngineObject(node,Engine,EngineModule,o)
 				loadSize(node,Engine,EngineModule,o)
 				loadPosition(node,Engine,EngineModule,o)
@@ -112,7 +112,7 @@ def load(Engine,EngineModule,fileName):
 
 			elif node.name==str(EngineModule.ObjectType.STATICBODY):
 				if isGuiContainerFullfilled(node,Engine,EngineModule):
-					o = Engine.createLLPhysicStatic()
+					o = Engine.createPhysicStatic()
 					loadGuiContainer(node,Engine,EngineModule,o)
 					loadEngineObject(node,Engine,EngineModule,o)
 					loadSize(node,Engine,EngineModule,o)
@@ -122,7 +122,7 @@ def load(Engine,EngineModule,fileName):
 
 			elif node.name==str(EngineModule.ObjectType.BODY):
 				if isGuiContainerFullfilled(node,Engine,EngineModule):
-					o = Engine.createLLPhysicBody()
+					o = Engine.createPhysicBox()
 					loadGuiContainer(node,Engine,EngineModule,o)
 					loadEngineObject(node,Engine,EngineModule,o)
 					loadSize(node,Engine,EngineModule,o)
@@ -135,7 +135,7 @@ def load(Engine,EngineModule,fileName):
 					if node.hasProp("size"):
 						a = (node.prop("size").split(","))
 						size = EngineModule.Vec3( float(a[0]),float(a[1]),float(a[2]))
-						o = Engine.createLLSpaceCage(size)
+						o = Engine.createSpaceCage(size)
 						loadGuiContainer(node,Engine,EngineModule,o)
 						loadEngineObject(node,Engine,EngineModule,o)
 					res.remove(node)

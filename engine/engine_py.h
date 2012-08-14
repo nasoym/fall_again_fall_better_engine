@@ -218,14 +218,6 @@ BOOST_PYTHON_MODULE(EngineModule) {
         .def("createPhysicStatic",&Engine::createPhysicStatic,return_value_policy<reference_existing_object>() )
 		.def("createMesh",&Engine::createMesh,return_value_policy<reference_existing_object>() )
 
-		.def("createLLBox",&Engine::createLLBox,return_value_policy<reference_existing_object>() )
-		.def("createLLSpaceCage",&Engine::createLLSpaceCage,return_value_policy<reference_existing_object>() )
-		.def("createLLMesh",&Engine::createLLMesh,return_value_policy<reference_existing_object>() )
-		.def("createLLPhysicBody",&Engine::createLLPhysicBody,return_value_policy<reference_existing_object>() )
-		.def("createLLPhysicStatic",&Engine::createLLPhysicStatic,return_value_policy<reference_existing_object>() )
-		.def("createLLJoint",&Engine::createLLJoint,return_value_policy<reference_existing_object>() )
-
-
         .def("step",&Engine::step)
         .def("quit",&Engine::quit)
 

@@ -3,7 +3,6 @@ import temp
 import ragdoll
 import saveload
 import navigate
-#import mesh
 
 objects = {}
 

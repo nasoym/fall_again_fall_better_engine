@@ -63,7 +63,7 @@ def createBox(Engine,EngineModule):
 	return o
 
 def createSpaceCage(Engine,EngineModule,size):
-	o = Engine.createLLSpaceCage(size)
+	o = Engine.createSpaceCage(size)
 
 	wall = 1.0;
 	ground_opacity = 1.0;

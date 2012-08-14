@@ -68,14 +68,6 @@ class Engine :
 		EngineObject*	createPhysicStatic();
 		EngineObject*	createMesh(const char*);
 
-		EngineObject*	createLLBox();
-		EngineObject*	createLLSpaceCage(Vec3& size);
-		EngineObject*	createLLMesh(const char* meshName);
-		EngineObject*	createLLPhysicBody();
-		EngineObject*	createLLPhysicStatic();
-		EngineObject*	createLLJoint(EngineObject* obj1,EngineObject* obj2);
-
-
 		void	callPythonKeyPressed(Keys);
 		void	callPythonKeyDown(Keys);
 		void	callPythonKeyReleased(Keys);
