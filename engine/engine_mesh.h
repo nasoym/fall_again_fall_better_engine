@@ -70,10 +70,29 @@ class EngineMesh : public EngineGuiShape {
 		EngineBody*		getBodyByIndex(int);
 		EngineJoint*	getJointByIndex(int);
 		std::string		getBoneNameByIndex(int);	
+
 		void			setBodyForBoneName(std::string,EngineBody*);
 		void			setJointForBoneName(std::string,EngineJoint*);
 
 		void			createAllPhysics();
+
+		Bone*			getBoneFromName(std::string boneName);
+
+
+		EngineBody*		getBodyOfBoneName(std::string);
+		EngineJoint*	getJointOfBoneName(std::string);
+		Vec3			getBoneNamePosition(std::string);
+		Quat			getBoneNameOrientation(std::string,bool rotated=true);
+		float			getBoneNameSize(std::string);
+		std::string		getBoneNameParentName(std::string);
+
+		int				getBoneNameChildren(std::string);
+
+		Vec3			getBoneNameLocalPosition(std::string);
+		Quat			getBoneNameLocalOrientation(std::string);
+		Vec3			getMeshScale();
+
+
 
 	private:
 		EngineGuiShape*			mRootShape;

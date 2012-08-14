@@ -142,6 +142,7 @@ BOOST_PYTHON_MODULE(EngineModule) {
 		.def("addShape",&EngineGuiContainer::addShape)
 		.def("removeShape",&EngineGuiContainer::removeShape)
 		.def("howManyShapes",&EngineGuiContainer::howManyShapes)
+		.def("addDebugAxises",&EngineGuiContainer::addDebugAxises)
 
 		;
 
@@ -167,6 +168,19 @@ BOOST_PYTHON_MODULE(EngineModule) {
 		.def("setJointForBoneName",&EngineMesh::setJointForBoneName)
 
 		.def("createAllPhysics",&EngineMesh::createAllPhysics)
+
+		.def("getBodyOfBoneName",&EngineMesh::getBodyOfBoneName,return_value_policy<reference_existing_object>())
+		.def("getJointOfBoneName",&EngineMesh::getJointOfBoneName,return_value_policy<reference_existing_object>())
+		.def("getBoneNamePosition",&EngineMesh::getBoneNamePosition)
+		.def("getBoneNameOrientation",&EngineMesh::getBoneNameOrientation)
+		.def("getBoneNameSize",&EngineMesh::getBoneNameSize)
+		.def("getBoneNameParentName",&EngineMesh::getBoneNameParentName)
+		.def("getBoneNameLocalPosition",&EngineMesh::getBoneNameLocalPosition)
+		.def("getBoneNameLocalOrientation",&EngineMesh::getBoneNameLocalOrientation)
+		.def("getMeshScale",&EngineMesh::getMeshScale)
+
+		.def("getBoneNameChildren",&EngineMesh::getBoneNameChildren)
+		.def("translateGlobalAnchorToLocal",&EngineMesh::translateGlobalAnchorToLocal)
 
 		;
 
@@ -256,6 +270,8 @@ BOOST_PYTHON_MODULE(EngineModule) {
 		.def("length",&Vec3::length)
 		.def("distance",&Vec3::distance)
 		.def("normalise",&Vec3::normalise)
+		.def("cross",&Vec3::cross)
+		.def("dot",&Vec3::dot)
 
 		.def("X",&Vec3::X)
 		.def("Y",&Vec3::Y)
@@ -279,6 +295,13 @@ BOOST_PYTHON_MODULE(EngineModule) {
 
 		.def("inverse",&Quat::inverse)
 		.def("normalise",&Quat::normalise)
+
+		.def("toAngle",&Quat::toAngle)
+		.def("toAxis",&Quat::toAxis)
+		.def("fromAngleAxis",&Quat::fromAngleAxis)
+		.def("toAngles",&Quat::toAngles)
+		.def("fromAngles",&Quat::fromAngles)
+
 
 		.def("W",&Quat::W)
 		.def("X",&Quat::X)

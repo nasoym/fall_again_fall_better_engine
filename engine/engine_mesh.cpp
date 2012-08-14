@@ -108,6 +108,7 @@ void		EngineMesh::setupAllBones(){
 void	EngineMesh::guiUpdate(){
 	EngineBody* rootBody = getBodyOfBone(mRootBone);
 	if (rootBody) {
+	//if (false) {
 		Vec3	rootBodyPos = rootBody->getPosition();
 		Quat	rootBodyQuat = rootBody->getOrientation();
 		setPosition(rootBodyPos - (rootBodyQuat*mLocalPos));
@@ -181,6 +182,27 @@ void	EngineMesh::createPhysics(Bone* bone) {
 		createPhysics(childBone);
 	}
 }
+
+Vec3			EngineMesh::getBoneNameLocalPosition(std::string boneName){
+	Bone* bone = getBoneFromName(boneName);	
+	if (bone) {
+		return Vec3(bone->getPosition());
+	}
+	return Vec3();
+}
+
+Quat			EngineMesh::getBoneNameLocalOrientation(std::string boneName){
+	Bone* bone = getBoneFromName(boneName);	
+	if (bone) {
+		return Quat(bone->getOrientation());
+	}
+	return Quat();
+}
+
+Vec3			EngineMesh::getMeshScale(){
+	return Vec3(getNode()->getScale());
+}
+
 
 void	EngineMesh::createPhysicBodiesFromParent(Bone* bone){
 	float 	boneWidth = 2.0f;
@@ -458,6 +480,78 @@ float	EngineMesh::getBoneSize(Bone* bone) {
 		closestDist = 10;
 	}
 	return closestDist / 2.0f;
+}
+
+Bone*			EngineMesh::getBoneFromName(std::string boneName){
+	std::vector<BoneBody>::iterator	iter;
+	for(iter=mBoneBodies.begin();iter!=mBoneBodies.end();++iter){
+	    if( (*iter).bone->getName().compare(boneName) == 0 ) {
+			return (*iter).bone;
+		}
+	}
+	Logger::debug(format("bone for %1% was not found") % boneName );
+	return 0;
+}
+
+EngineBody*		EngineMesh::getBodyOfBoneName(std::string boneName){
+	Bone* bone = getBoneFromName(boneName);	
+	if (bone) {
+		return getBodyOfBone(bone);
+	}
+	return 0;
+}
+
+EngineJoint*	EngineMesh::getJointOfBoneName(std::string boneName){
+	Bone* bone = getBoneFromName(boneName);	
+	if (bone) {
+		return getJointOfBone(bone);
+	}
+	return 0;
+}
+
+Vec3			EngineMesh::getBoneNamePosition(std::string boneName){
+	Bone* bone = getBoneFromName(boneName);	
+	if (bone) {
+		return getBonePosition(bone);
+	}
+	return Vec3();
+}
+
+Quat			EngineMesh::getBoneNameOrientation(std::string boneName,bool rotated){
+	Bone* bone = getBoneFromName(boneName);	
+	if (bone) {
+		return getBoneOrientation(bone,rotated);
+	}
+	return Quat();
+}
+
+float			EngineMesh::getBoneNameSize(std::string boneName){
+	Bone* bone = getBoneFromName(boneName);	
+	if (bone) {
+		return getBoneSize(bone);
+	}
+	return 0;
+}
+
+std::string 	EngineMesh::getBoneNameParentName(std::string boneName){
+	Bone* bone = getBoneFromName(boneName);	
+	if (bone) {
+		Bone* parentBone = getBoneParent(bone);
+		if( parentBone) {
+			return parentBone->getName();
+		} else {
+			Logger::debug(format("parent for %1% was not found") % bone );
+		}
+	}
+	return std::string("");
+}
+
+int				EngineMesh::getBoneNameChildren(std::string boneName){
+	Bone* bone = getBoneFromName(boneName);	
+	if (bone) {
+		return bone->numChildren();
+	}
+	return 0;
 }
 
 
