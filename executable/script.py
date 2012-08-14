@@ -1,25 +1,11 @@
 import temp
-
 import ragdoll
+import saveload
+import navigate
 
 objects = {}
 #objects["ground"] = Engine.createSpaceCage(EngineModule.Vec3(400,400,400))
 #objects["ground"] = Engine.createSpaceCage(EngineModule.Vec3(600,600,600))
-
-transformFactor = 0.7
-forwardDir = EngineModule.Vec3(0,0,-1)
-backwardDir = EngineModule.Vec3(0,0,1)
-upDir = EngineModule.Vec3(0,1,0)
-downDir = EngineModule.Vec3(0,-1,0)
-leftDir = EngineModule.Vec3(-1,0,0)
-rightDir = EngineModule.Vec3(1,0,0)
-
-Engine.setCameraPosition(EngineModule.Vec3(0,100,300))
-
-def moveCamera(direction):
-	localDir = direction * transformFactor
-	globalDir = Engine.getCameraOrientation() * localDir
-	Engine.setCameraPosition( Engine.getCameraPosition() + globalDir)
 
 doll = None
 dolls = []
@@ -33,84 +19,33 @@ def createMainRagdoll():
 	ragdoll.createLimitsHuman(Engine,EngineModule,doll)
 	dolls.append(doll)
 
-def createBox():
-	o = Engine.createPhysicBox()
-	o.setSize(EngineModule.Vec3(10,10,10))
-	o.setPosition(EngineModule.Vec3(0,150,0))
-
-	b = Engine.createGuiBox()
-	b.setLocalPosition(EngineModule.Vec3(10,0,0))
-	b.setLocalSize(EngineModule.Vec3(10,0.5,0.5))
-	b.setColour(1,0,0,0.8)
-	b.setScalingFixed()
-	o.addShape(b)
-
-	b = Engine.createGuiBox()
-	b.setLocalPosition(EngineModule.Vec3(0,10,0))
-	b.setLocalSize(EngineModule.Vec3(0.5,10,0.5))
-	b.setColour(0,1,0,0.8)
-	b.setScalingFixed()
-	o.addShape(b)
-
-	b = Engine.createGuiBox()
-	b.setLocalPosition(EngineModule.Vec3(0,0,10))
-	b.setLocalSize(EngineModule.Vec3(0.5,0.5,10))
-	b.setColour(0,0,1,0.8)
-	b.setScalingFixed()
-	o.addShape(b)
-
-	return o
-
-
 def init():
-	pass
-	#createMainRagdoll()
 	if hasattr(temp,"init"):
 		reload(temp)
 		temp.init(Engine,EngineModule,objects)
+
+	if hasattr(navigate,"init"):
+		navigate.init(Engine,EngineModule,objects)
 
 def keyDown(key):
 	if hasattr(temp,"keyDown"):
 		reload(temp)
 		temp.keyDown(Engine,EngineModule,objects,key)
 
-	if (key == EngineModule.Keys.K_W or
-		key == EngineModule.Keys.K_UP):
-		moveCamera(forwardDir)
-	if (key == EngineModule.Keys.K_S or
-		key == EngineModule.Keys.K_DOWN):
-		moveCamera(backwardDir)
-	if (key == EngineModule.Keys.K_A or
-		key == EngineModule.Keys.K_LEFT):
-		moveCamera(leftDir)
-	if (key == EngineModule.Keys.K_D or
-		key == EngineModule.Keys.K_RIGHT):
-		moveCamera(rightDir)
-	if (key == EngineModule.Keys.K_Q or
-		key == EngineModule.Keys.K_PGDOWN):
-		moveCamera(downDir)
-	if (key == EngineModule.Keys.K_E or
-		key == EngineModule.Keys.K_PGUP):
-		moveCamera(upDir)
-
+	if hasattr(navigate,"keyDown"):
+		navigate.keyDown(Engine,EngineModule,objects,key)
 
 def keyPressed(key):
 	if hasattr(temp,"keyPressed"):
 		reload(temp)
 		temp.keyPressed(Engine,EngineModule,objects,key)
 
-	if key == EngineModule.Keys.K_T:
-		if hasattr(temp,"launch"):
-			reload(temp)
-			temp.launch(Engine,EngineModule,objects)
-
 	if key == EngineModule.Keys.K_1:
-		createBox()
-
+		createobjects.createBox()
 
 	if key == EngineModule.Keys.K_5:
-		a = createBox()
-		b = createBox()
+		a = createobjects.createBox()
+		b = createobjects.createBox()
 
 		j = Engine.createJoint(a,b)
 		j.setAnchor1Size( EngineModule.Vec3(1,0,0) )
@@ -118,31 +53,6 @@ def keyPressed(key):
 		j.setLimits(20,20)
 		j.setAnchor1Orientation(
 			EngineModule.Quat().fromAngles(0,0,45) )
-
-		"""
-		b = Engine.createGuiBox()
-		b.setLocalPosition(EngineModule.Vec3(10,0,0))
-		b.setLocalSize(EngineModule.Vec3(10,0.5,0.5))
-		b.setColour(1,0,0,0.8)
-		b.setScalingFixed()
-		j.addShape(b)
-
-		b = Engine.createGuiBox()
-		b.setLocalPosition(EngineModule.Vec3(0,10,0))
-		b.setLocalSize(EngineModule.Vec3(0.5,10,0.5))
-		b.setColour(0,1,0,0.8)
-		b.setScalingFixed()
-		j.addShape(b)
-
-		b = Engine.createGuiBox()
-		b.setLocalPosition(EngineModule.Vec3(0,0,10))
-		b.setLocalSize(EngineModule.Vec3(0.5,0.5,10))
-		b.setColour(0,0,1,0.8)
-		b.setScalingFixed()
-		j.addShape(b)
-		"""
-
-
 
 	if key == EngineModule.Keys.K_2:
 		char = ragdoll.createHumanBodyParts(Engine,
@@ -214,6 +124,12 @@ def keyPressed(key):
 
 	if key == EngineModule.Keys.K_P:
 		Engine.physicPauseToggle()
+
+	if key == EngineModule.Keys.K_S:
+		saveload.save(Engine,EngineModule,"xmlscene/file1.xml")
+
+	if key == EngineModule.Keys.K_L:
+		saveload.load(Engine,EngineModule,"xmlscene/file1.xml")
 
 def keyReleased(key):
 	if hasattr(temp,"keyReleased"):
