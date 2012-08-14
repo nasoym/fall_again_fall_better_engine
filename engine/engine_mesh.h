@@ -92,6 +92,10 @@ class EngineMesh : public EngineGuiShape {
 		Quat			getBoneNameLocalOrientation(std::string);
 		Vec3			getMeshScale();
 
+		std::string		getBoneNameChildName(std::string boneName,int index);
+
+		Bone*			getRootBone(){return mRootBone;}
+		std::string		getRootBoneName(){return mRootBone->getName();}
 
 
 	private:

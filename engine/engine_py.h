@@ -181,6 +181,8 @@ BOOST_PYTHON_MODULE(EngineModule) {
 
 		.def("getBoneNameChildren",&EngineMesh::getBoneNameChildren)
 		.def("translateGlobalAnchorToLocal",&EngineMesh::translateGlobalAnchorToLocal)
+		.def("getBoneNameChildName",&EngineMesh::getBoneNameChildName)
+		.def("getRootBoneName",&EngineMesh::getRootBoneName)
 
 		;
 

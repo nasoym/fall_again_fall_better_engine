@@ -24,8 +24,8 @@ EngineMesh::EngineMesh(Engine* engine,const char* meshName) :
 
 	//TODO set size
     getNode()->attachObject(getEntity());
-	setSize(Vec3(1,1,1) * 1000);
-	setPosition(Vec3(0,150,0));
+	//setSize(Vec3(1,1,1) * 1000);
+	//setPosition(Vec3(0,150,0));
 
 	Logger::debug("setupAllBones");
 	setupAllBones();
@@ -552,6 +552,14 @@ int				EngineMesh::getBoneNameChildren(std::string boneName){
 		return bone->numChildren();
 	}
 	return 0;
+}
+
+std::string				EngineMesh::getBoneNameChildName(std::string boneName,int index){
+	Bone* bone = getBoneFromName(boneName);	
+	if (bone) {
+		return ((Ogre::Bone*)bone->getChild(index))->getName();
+	}
+	return std::string("");
 }
 
 
