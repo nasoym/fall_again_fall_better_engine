@@ -55,9 +55,9 @@ def createBones(Engine,EngineModule,mesh):
 
 			"""
 			bonePosition = parentPosition  
-			bonePosition -= parentOrientation * EngineModule.Vec3(parentBoneLength,0,0)
-			bonePosition += parentOrientation * scaledFlippedBoneLocalPosition
-			bonePosition += boneBody.getOrientation() * EngineModule.Vec3(boneLength,0,0) 
+			bonePosition -= (parentOrientation * EngineModule.Vec3(parentBoneLength,0,0))
+			bonePosition += (parentOrientation * scaledFlippedBoneLocalPosition)
+			bonePosition += (boneBody.getOrientation() * EngineModule.Vec3(boneLength,0,0) )
 			boneBody.setPosition(bonePosition)   
 			"""
 			boneBody.setPosition( parentPosition  
@@ -73,13 +73,6 @@ def createBones(Engine,EngineModule,mesh):
 
 			parentLocalAnchor = boneParentBody.getOrientation().inverse() * (globalAnchor - boneParentBody.getPosition())
 			bodyLocalAnchor = boneBody.getOrientation().inverse() * (globalAnchor - boneBody.getPosition())
-
-			"""
-			print("anchor1: " + str(parentLocalAnchor))
-			print("anchor1: " + str(mesh.translateGlobalAnchorToLocal(boneParentBody,globalAnchor)))
-			print("anchor2: " + str(bodyLocalAnchor))
-			print("anchor2: " + str(mesh.translateGlobalAnchorToLocal(boneBody,globalAnchor)))
-			"""
 
 			joint.setAnchor1(parentLocalAnchor)
 			joint.setAnchor2(bodyLocalAnchor)
