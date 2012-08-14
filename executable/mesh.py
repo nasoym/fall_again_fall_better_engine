@@ -1,10 +1,4 @@
-def createBody(Engine,EngineModule):
-	o = Engine.createPhysicBox()
-	return o
-
-def createStaticBody(Engine,EngineModule):
-	o = Engine.createPhysicStatic()
-	return o
+import createobjects as create
 
 def createBones(Engine,EngineModule,mesh,boneName=None):
 	if not boneName:
@@ -21,8 +15,9 @@ def createBoneBody(Engine,EngineModule,mesh,boneName):
 	boneLength = mesh.getBoneNameSize(boneName)
 	if boneLength == 0:
 		boneLength = defaultBoneLength
-	#boneBody = createStaticBody(Engine,EngineModule)
-	boneBody = createBody(Engine,EngineModule)
+	#boneBody = create.createPhysicStaticBoxFinal(Engine,EngineModule)
+	boneBody = create.createPhysicBoxStructure(Engine,EngineModule)
+
 	boneBody.setSize(EngineModule.Vec3(boneLength,boneWidth,boneWidth))
 	mesh.setBodyForBoneName(boneName,boneBody)
 	boneParentName = mesh.getBoneNameParentName(boneName)

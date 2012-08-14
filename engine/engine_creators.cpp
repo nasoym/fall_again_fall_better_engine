@@ -13,7 +13,6 @@
 #include "engine_mesh.h"
 #include "engine_box.h"
 
-
 EngineObject*	Engine::createLLBox(){
 	return new EngineBox(this);
 }
@@ -57,8 +56,6 @@ EngineObject*	Engine::createLLJoint(EngineObject* obj1,EngineObject* obj2){
 
 EngineObject*	Engine::createGuiBox(){
 	EngineBox* engineObject = new EngineBox(this);
-	engineObject->setSize(Vec3(10,10,10));
-	engineObject->setPosition(Vec3(0,5,0));
 	return engineObject;
 }
 
@@ -124,40 +121,18 @@ EngineObject*	Engine::createPhysicBox(){
 	engineObject->setPhysicBody(
 		new PhysicBox(getPhysicsEngine(),
 			Vec3(0,0,0), Vec3(1,1,1) ) );
-
-	EngineBox* shape = new EngineBox(this);
-	shape->setScaling1To1();
-	shape->setColour(0.8,1,0.8,0.6f);
-	engineObject->addShape(shape);
-
-	engineObject->setSize(Vec3(1,1,1));
-	engineObject->setPosition(Vec3(0,150,0));
 	return engineObject;
 }
 
 EngineObject*	Engine::createMesh(const char* meshName){
-	EngineMesh* engineObject = new EngineMesh(this,meshName);
-	return engineObject;
+	return new EngineMesh(this,meshName);
 }
 
 EngineObject*	Engine::createPhysicStatic(){
 	EngineStaticBody* engineObject = new EngineStaticBody(this);
 	engineObject->setPhysicBody(
-		new PhysicStatic(
-			getPhysicsEngine(),
-			Vec3(0,0,0),
-			Vec3(1,1,1)
-			)
-	);
-	//engineObject->setGuiUpdatesOff();
-
-	EngineBox* shape = new EngineBox(this);
-	shape->setScaling1To1();
-	shape->setColour(1,1,1,0.6f);
-	engineObject->addShape(shape);
-
-	engineObject->setSize(Vec3(1,1,1));
-	engineObject->setPosition(Vec3(0,150,0));
+		new PhysicStatic( getPhysicsEngine(),
+			Vec3(0,0,0), Vec3(1,1,1) ) );
 	return engineObject;
 }
 

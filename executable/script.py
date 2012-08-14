@@ -1,3 +1,4 @@
+import createobjects as create
 import temp
 import ragdoll
 import saveload
@@ -5,8 +6,6 @@ import navigate
 #import mesh
 
 objects = {}
-#objects["ground"] = Engine.createSpaceCage(EngineModule.Vec3(400,400,400))
-#objects["ground"] = Engine.createSpaceCage(EngineModule.Vec3(600,600,600))
 
 doll = None
 dolls = []
@@ -42,11 +41,13 @@ def keyPressed(key):
 		temp.keyPressed(Engine,EngineModule,objects,key)
 
 	if key == EngineModule.Keys.K_1:
-		createobjects.createBox()
+		o = create.createPhysicBoxFinal(Engine,EngineModule)
+		o.setPosition(EngineModule.Vec3(0,150,0))
+		o.setSize(EngineModule.Vec3(10,10,10))
 
 	if key == EngineModule.Keys.K_5:
-		a = createobjects.createBox()
-		b = createobjects.createBox()
+		a = create.createPhysicBoxFinal(Engine,EngineModule)
+		b = create.createPhysicBoxFinal(Engine,EngineModule)
 
 		j = Engine.createJoint(a,b)
 		j.setAnchor1Size( EngineModule.Vec3(1,0,0) )
@@ -120,13 +121,12 @@ def keyPressed(key):
 				ragdoll.driveJoints(d)
 
 	if key == EngineModule.Keys.K_4:
-		#o = Engine.createGuiBox()
-		objects["ground"] = Engine.createSpaceCage(EngineModule.Vec3(600,600,600))
+		create.createSpaceCage(Engine,EngineModule,EngineModule.Vec3(600,600,600))
 
 	if key == EngineModule.Keys.K_P:
 		Engine.physicPauseToggle()
 
-	if key == EngineModule.Keys.K_S:
+	if key == EngineModule.Keys.K_K:
 		saveload.save(Engine,EngineModule,"xmlscene/file1.xml")
 
 	if key == EngineModule.Keys.K_L:
