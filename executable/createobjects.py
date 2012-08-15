@@ -64,6 +64,7 @@ def createBox(Engine,EngineModule):
 
 def createSpaceCage(Engine,EngineModule,size):
 	o = Engine.createSpaceCage(size)
+	o.setUnselectable()
 
 	wall = 1.0;
 	ground_opacity = 1.0;

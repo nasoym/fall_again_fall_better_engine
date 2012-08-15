@@ -20,6 +20,32 @@ EngineGuiShape*		EngineGuiContainer::getShapeByIndex(int index){
 	return mShapes[index];
 }
 
+void				EngineGuiContainer::selectShow(){
+	std::vector<EngineGuiShape*>::iterator	iter;
+	for(iter=mShapes.begin();iter!=mShapes.end();++iter){
+		(*iter)->selectShow();
+	}
+}
+
+void				EngineGuiContainer::selectHide(){
+	std::vector<EngineGuiShape*>::iterator	iter;
+	for(iter=mShapes.begin();iter!=mShapes.end();++iter){
+		(*iter)->selectHide();
+	}
+}
+
+bool				EngineGuiContainer::hasShape(EngineGuiShape* shape){
+	bool hasShape = false;
+	std::vector<EngineGuiShape*>::iterator	iter;
+	for(iter=mShapes.begin();iter!=mShapes.end();++iter){
+		if ( (*iter) == shape ) {
+			hasShape = true;
+			break;
+		}
+	}
+	return hasShape;
+}
+
 EngineGuiShape*		EngineGuiContainer::getShapeByName(const char* name){
 	EngineGuiShape*	foundShape = 0;
 	std::vector<EngineGuiShape*>::iterator	iter;

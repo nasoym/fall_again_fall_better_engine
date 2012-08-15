@@ -26,6 +26,8 @@ class GraphicsEngine;
 #include "engine_object.h"
 //class EngineObject;
 
+#include <boost/python/list.hpp>
+
 class Engine : 
         public WindowEventListener,
 		public OIS::KeyListener,
@@ -144,6 +146,9 @@ class Engine :
 		//TODO set windows params
 		void 		setupStereo();
 		void 		closeStereo();
+		EngineGuiShape*			getGuiShapeOfMovable(MovableObject* movable);
+		boost::python::list		getMouseQuery();
+		EngineObject*			getObjectOfShape(EngineGuiShape* shape);
 
     private:
         void    setup();

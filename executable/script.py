@@ -34,10 +34,70 @@ def keyDown(key):
 	if hasattr(navigate,"keyDown"):
 		navigate.keyDown(Engine,EngineModule,objects,key)
 
+
+selectShapes = []
+selectContainers = []
+
+def selectShapeAdd(shape):
+	if not shape in selectShapes:
+		selectShapes.append(shape)
+		shape.selectShow()
+
+def selectShapeRemove(shape):
+	if shape in selectShapes:
+		selectShapes.remove(shape)
+		shape.selectHide()
+
+def selectShapeClear():
+	for shape in selectShapes:
+		shape.selectHide()
+	selectShapes = []
+
+def selectContainerAdd(container):
+	if not container in selectContainers:
+		selectContainers.append(container)
+		container.selectShow()
+
+def selectContainerRemove(container):
+	if container in selectContainers:
+		selectContainers.remove(container)
+		container.selectHide()
+
+def selectContainerClear():
+	for container in selectContainers:
+		container.selectHide()
+	selectContainers = []
+
 def keyPressed(key):
 	if hasattr(temp,"keyPressed"):
 		reload(temp)
 		temp.keyPressed(Engine,EngineModule,objects,key)
+
+	if key == EngineModule.Keys.K_R:
+		if len(selectContainers) > 0:
+			for o in selectContainers:
+				o.setSize( o.getSize() * 1.5)
+
+	if key == EngineModule.Keys.K_MRIGHT:
+		queryList = Engine.getMouseQuery()
+		#for q in queryList:
+		q = queryList[0]
+		shape = Engine.getFromUuid(q[1])
+		container = Engine.getObjectOfShape(Engine.getFromUuid(q[1]))
+		print("got shape: " + str(shape))
+		print("got container: " + str(container))
+		if shape.isSelectable() and container.isSelectable():
+			print("adding shape: " + str(shape))
+			print("adding container: " + str(container))
+			selectShapeAdd(shape)
+			selectContainerAdd(container)
+		#print(Engine.getFromUuid(q[1]))
+		#print(Engine.getObjectOfShape(Engine.getFromUuid(q[1])))
+		#print(queryList)
+
+
+
+
 
 	if key == EngineModule.Keys.K_1:
 		o = create.createPhysicBoxFinal(Engine,EngineModule)

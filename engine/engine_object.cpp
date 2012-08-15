@@ -3,7 +3,8 @@
 #include "engine.h"
 
 EngineObject::EngineObject(Engine* engine) :
-	mEngine(engine)
+	mEngine(engine),
+	mSelectable(true)
 	{
 	mEngine->addObject(this);
 }

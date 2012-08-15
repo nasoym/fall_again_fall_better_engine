@@ -57,9 +57,14 @@ class EngineObject {
 		virtual EngineMesh*				isMesh(){return 0;}
 		virtual EngineBox*				isBox(){return 0;}
 
+		void			setSelectable(){mSelectable=true;}
+		void			setUnselectable(){mSelectable=false;}
+		bool			isSelectable(){return mSelectable;}
+
 	private:
 		Engine*		mEngine;
 		std::string	mName;
 		Uuid		mUuid;
+		bool		mSelectable;
 };
 #endif

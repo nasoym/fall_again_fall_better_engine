@@ -98,6 +98,10 @@ BOOST_PYTHON_MODULE(EngineModule) {
 		.def("isJoint",&EngineObject::isJoint,return_value_policy<reference_existing_object>())
 		.def("isSpaceCage",&EngineObject::isSpaceCage,return_value_policy<reference_existing_object>())
 		.def("isMesh",&EngineObject::isMesh,return_value_policy<reference_existing_object>())
+
+		.def("setSelectable",&EngineObject::setSelectable)
+		.def("setUnselectable",&EngineObject::setUnselectable)
+		.def("isSelectable",&EngineObject::isSelectable)
 		;
 
     class_<EngineGuiShape, bases<EngineObject> >("EngineGuiShape", init<Engine*>())
@@ -127,6 +131,11 @@ BOOST_PYTHON_MODULE(EngineModule) {
 		.def("hasColour",&EngineGuiShape::hasColour)
 		.def("getAlpha",&EngineGuiShape::getAlpha)
 		.def("getColour",&EngineGuiShape::getColour)
+
+		.def("selectShow",&EngineGuiShape::selectShow)
+		.def("selectHide",&EngineGuiShape::selectHide)
+
+
 		;
 
     class_<EngineGuiContainer, bases<EngineObject> >("EngineGuiContainer", init<Engine*>())
@@ -143,6 +152,9 @@ BOOST_PYTHON_MODULE(EngineModule) {
 		.def("removeShape",&EngineGuiContainer::removeShape)
 		.def("howManyShapes",&EngineGuiContainer::howManyShapes)
 		.def("addDebugAxises",&EngineGuiContainer::addDebugAxises)
+
+		.def("selectShow",&EngineGuiContainer::selectShow)
+		.def("selectHide",&EngineGuiContainer::selectHide)
 
 		;
 
@@ -236,7 +248,8 @@ BOOST_PYTHON_MODULE(EngineModule) {
         .def("getObject",&Engine::getObject,return_value_policy<reference_existing_object>() )
         .def("getFromUuid",&Engine::getFromUuid,return_value_policy<reference_existing_object>() )
 
-
+        .def("getMouseQuery",&Engine::getMouseQuery)
+        .def("getObjectOfShape",&Engine::getObjectOfShape,return_value_policy<reference_existing_object>() )
         ;
 
     class_<Vec3>("Vec3",init<>())

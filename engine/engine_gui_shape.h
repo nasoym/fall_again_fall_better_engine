@@ -69,6 +69,9 @@ class EngineGuiShape : public EngineObject {
 		Vec3 				getColour();
 		std::string			getMaterialName(){return mMaterialName;}
 
+		void				selectShow();
+		void				selectHide();
+
 	private:
         Entity*     		mEntity; 
         SceneNode*  		mNode;

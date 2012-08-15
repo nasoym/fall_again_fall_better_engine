@@ -25,6 +25,14 @@ EngineGuiShape::~EngineGuiShape(){
 	}
 }
 
+void	EngineGuiShape::selectShow(){
+	getNode()->showBoundingBox(true);
+}
+
+void	EngineGuiShape::selectHide(){
+	getNode()->showBoundingBox(false);
+}
+
 void	EngineGuiShape::setContainer(EngineGuiContainer* container){
 	mContainer = container;
 }

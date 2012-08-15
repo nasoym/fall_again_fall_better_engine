@@ -27,6 +27,7 @@ class EngineGuiContainer : public EngineObject {
 		EngineGuiShape*		getShapeByName(const char*);
 		void				addShape(EngineGuiShape*);
 		void				removeShape(EngineGuiShape*);
+		bool				hasShape(EngineGuiShape*);
 
 		int     			howManyShapes();
 
@@ -35,6 +36,9 @@ class EngineGuiContainer : public EngineObject {
 
 		virtual EngineGuiContainer*		isGuiContainer(){return this;}
 		virtual ObjectType		getType(){ return GUICONTAINER;}
+
+		void				selectShow();
+		void				selectHide();
 
 	private:
 		std::vector<EngineGuiShape*>	mShapes;
