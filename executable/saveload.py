@@ -150,6 +150,7 @@ def save(Engine,EngineModule,fileName):
 		node = libxml2.newNode(str(o.getType()))
 		node.setProp("uuid",str(o.readUuid()))
 		node.setProp("name",str(o.getName()))
+		node.setProp("selectable",str(o.isSelectable()))
 
 		if o.getType()==EngineModule.ObjectType.GUISHAPE:
 			pass
@@ -304,4 +305,15 @@ def loadEngineObject(node,Engine,EngineModule,engineObject):
 	if node.hasProp("name"):
 		name = node.prop("name")
 		#TODO ? engineObject.setName(name)
+	if node.hasProp("selectable"):
+		selectable = loadBool(node,"selectable")
+		if selectable:
+			engineObject.setSelectable()
+		else:
+			engineObject.setUnselectable()
+
+def loadBool(node,attributeName):
+	if node.hasProp(attributeName):
+		return node.prop(attributeName).lower() in ["true","yes","1"]
+	return False
 

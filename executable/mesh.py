@@ -89,6 +89,12 @@ def createBoneBody(Engine,EngineModule,mesh,boneName):
 		joint.setAnchor2(bodyLocalAnchor)
 		joint.setAnchor1Orientation(rotatedLocalOrientation)
 		joint.setLimits(10,10)
+	
+		b = Engine.createGuiBox()
+		b.setColour(0,0,1,0.5)
+		b.setSize(EngineModule.Vec3(2,2,2))
+		b.setScalingFixed()
+		joint.addShape(b)
 
 		joint.addDebugAxises(1,0.2)
 		mesh.setJointForBoneName(boneName,joint)
