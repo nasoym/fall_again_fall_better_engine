@@ -3,7 +3,10 @@
 #include "engine.h"
 
 #include <map>
+#include <vector>
 #include "boost/assign.hpp"
+
+#include "engine_gui_shape.h"
 
 //OIS::MouseButtonID
 //std::map<int,Keys> keyList = 
@@ -117,8 +120,65 @@ bool	Engine::mousePressed(const OIS::MouseEvent& evt, OIS::MouseButtonID id){
 		pyFunctionKeyPressed(K_MMIDDLE);
 	}
 	const OIS::MouseState &ms = mMouse->getMouseState();
-	if( ms.buttonDown( OIS::MB_Left ) ) {
-		Logger::debug(format("x: %1% y: %2%") % ms.X.abs % ms.Y.abs);
+	if( ms.buttonDown( OIS::MB_Right ) ) {
+		//Logger::debug(format("x: %1% y: %2%") % ms.X.abs % ms.Y.abs);
+
+		Ray mouseRay = mCamera->getCameraToViewportRay(
+			float(ms.X.abs) / float(ms.width), 
+			float(ms.Y.abs) / float(ms.height)
+			);
+		mRaySceneQuery->setRay(mouseRay);
+		mRaySceneQuery->setSortByDistance(true);
+		RaySceneQueryResult &result = mRaySceneQuery->execute();
+	 
+		Ogre::MovableObject *closestObject = NULL;
+		Real closestDistance = 100000;
+	 
+		//std::vector< Ogre::RaySceneQueryResultEntry >::iterator rayIterator;
+		//RaySceneQueryResultEntry::iterator rayIterator;
+		RaySceneQueryResult::iterator rayIterator;
+	 
+		for(rayIterator = result.begin(); rayIterator != result.end(); rayIterator++ ) {
+			RaySceneQueryResultEntry& curEntry = *rayIterator;
+			//Logger::debug(format("movable: %1% ") % curEntry.movable);
+		    if ( 
+				curEntry.movable !=NULL 
+				&& closestDistance > curEntry.distance 
+				) {
+				closestObject = curEntry.movable;
+				closestDistance = curEntry.distance;
+			}
+		}
+
+		Logger::debug(format("closestObject: %1% ") % closestObject);
+
+		if (closestObject != NULL ) {
+
+			EngineObject*	engineObject;
+			EngineGuiShape*	engineGuiShape;
+			std::vector<EngineObject*>::iterator  mIterator;
+			for (mIterator = mObjects.begin(); 
+				mIterator != mObjects.end(); ++mIterator) {
+
+				engineObject = (*mIterator);
+				if (engineObject->isGuiShape()){
+					engineGuiShape = engineObject->isGuiShape();
+					Logger::debug(format("%1%") % engineGuiShape->getEntity() );
+					if (engineGuiShape->getEntity() == closestObject) {
+						Logger::debug("found closest object");
+
+						engineGuiShape->getNode()->showBoundingBox(true);
+
+						break;
+					}
+				}
+			}
+
+		}
+
+
+		mRaySceneQuery->clearResults();
+
 	}
 	return true;
 }

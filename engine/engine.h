@@ -176,6 +176,7 @@ class Engine :
 
 		bool			mPhysicPaused;
 		bool			mUseFirstRenderer;
+		RaySceneQuery*  mRaySceneQuery;
 
 		//StereoManager	mStereoManager;
 

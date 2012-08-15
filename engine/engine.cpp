@@ -278,10 +278,12 @@ void Engine::setup(){
     mSceneMgr->getRootSceneNode()->createChildSceneNode()->attachObject(ent);
 	*/
 
+	mRaySceneQuery = mSceneMgr->createRayQuery(Ray());
 
 }
 
 void Engine::close(){
+	mSceneMgr->destroyQuery(mRaySceneQuery);
 	OGRE_DELETE mRoot;
 }
 
