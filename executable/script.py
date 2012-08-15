@@ -39,33 +39,45 @@ selectShapes = []
 selectContainers = []
 
 def selectShapeAdd(shape):
+	global selectShapes
 	if not shape in selectShapes:
 		selectShapes.append(shape)
 		shape.selectShow()
+		#Engine.getFromUuid(shape).selectShow()
 
 def selectShapeRemove(shape):
+	global selectShapes
 	if shape in selectShapes:
 		selectShapes.remove(shape)
 		shape.selectHide()
+		#Engine.getFromUuid(shape).selectHide()
 
 def selectShapeClear():
+	global selectShapes
 	for shape in selectShapes:
 		shape.selectHide()
+		#Engine.getFromUuid(shape).selectHide()
 	selectShapes = []
 
 def selectContainerAdd(container):
+	global selectContainers
 	if not container in selectContainers:
 		selectContainers.append(container)
 		container.selectShow()
+		#Engine.getFromUuid(container).selectShow()
 
 def selectContainerRemove(container):
+	global selectContainers
 	if container in selectContainers:
 		selectContainers.remove(container)
 		container.selectHide()
+		#Engine.getFromUuid(container).selectHide()
 
 def selectContainerClear():
+	global selectContainers
 	for container in selectContainers:
 		container.selectHide()
+		#Engine.getFromUuid(container).selectHide()
 	selectContainers = []
 
 def keyPressed(key):
@@ -79,21 +91,22 @@ def keyPressed(key):
 				o.setSize( o.getSize() * 1.5)
 
 	if key == EngineModule.Keys.K_MRIGHT:
+		if Engine.isKeyDown(EngineModule.Keys.K_LSHIFT):
+			pass
+		else:
+			selectShapeClear()
+			selectContainerClear()
+
 		queryList = Engine.getMouseQuery()
 		#for q in queryList:
 		q = queryList[0]
 		shape = Engine.getFromUuid(q[1])
 		container = Engine.getObjectOfShape(Engine.getFromUuid(q[1]))
-		print("got shape: " + str(shape))
-		print("got container: " + str(container))
 		if shape.isSelectable() and container.isSelectable():
-			print("adding shape: " + str(shape))
-			print("adding container: " + str(container))
+			#selectShapeAdd(shape.readUuid())
+			#selectContainerAdd(container.readUuid())
 			selectShapeAdd(shape)
 			selectContainerAdd(container)
-		#print(Engine.getFromUuid(q[1]))
-		#print(Engine.getObjectOfShape(Engine.getFromUuid(q[1])))
-		#print(queryList)
 
 
 

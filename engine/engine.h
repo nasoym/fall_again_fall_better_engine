@@ -83,6 +83,8 @@ class Engine :
 		Keys	keyEventToKeys(const OIS::KeyEvent & evt);
 
 		void updateKeysDown();
+		bool isKeyDown(Keys key);
+		OIS::KeyCode	keysToKeyCode(Keys key);
 
 		void			setCameraPosition(Vec3&);
 		void			setCameraOrientation(Quat&);

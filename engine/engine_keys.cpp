@@ -59,6 +59,18 @@ Keys	Engine::keyEventToKeys(const OIS::KeyEvent & evt) {
 	return K_NOP;
 }
 
+OIS::KeyCode	Engine::keysToKeyCode(Keys key){
+	std::map<OIS::KeyCode,Keys>::iterator keyListIterator;
+	for(keyListIterator=keyList.begin();keyListIterator!=keyList.end();++keyListIterator){
+		if ( (*keyListIterator).second == key) {
+			Logger::debug(format("found key:%1%") % key );
+			return (*keyListIterator).first;
+		}
+	}
+	Logger::debug(format("could not find key:%1%") % key );
+	return OIS::KC_0;
+}
+
 void Engine::updateKeysDown() {
 	std::vector<Keys>::iterator  pressedKeysIterator;
 	for (pressedKeysIterator = mPressedKeys.begin(); 
@@ -67,9 +79,17 @@ void Engine::updateKeysDown() {
 	}
 }
 
-
-
-
+bool Engine::isKeyDown(Keys key){
+	//return mKeyboard->isKeyDown(keysToKeyCode(key));
+	std::vector<Keys>::iterator  pressedKeysIterator;
+	for (pressedKeysIterator = mPressedKeys.begin(); 
+		pressedKeysIterator != mPressedKeys.end(); ++pressedKeysIterator) {
+		if ( (*pressedKeysIterator) == key) {
+			return true;
+		}
+	}
+	return false;
+}
 
 bool Engine::keyPressed(const OIS::KeyEvent& evt){
 	if (evt.key == OIS::KC_ESCAPE) {

@@ -250,6 +250,7 @@ BOOST_PYTHON_MODULE(EngineModule) {
 
         .def("getMouseQuery",&Engine::getMouseQuery)
         .def("getObjectOfShape",&Engine::getObjectOfShape,return_value_policy<reference_existing_object>() )
+        .def("isKeyDown",&Engine::isKeyDown)
         ;
 
     class_<Vec3>("Vec3",init<>())
