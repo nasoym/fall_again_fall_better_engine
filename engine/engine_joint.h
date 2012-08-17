@@ -30,6 +30,9 @@ class EngineJoint : public EngineGuiContainer {
 
         Vec3        getAnchor1(){return mJoint->getAnchor1();}
         Vec3        getAnchor2(){return mJoint->getAnchor2();}
+
+        Vec3        getAnchor1Size();
+        Vec3        getAnchor2Size();
         
         Quat        getAnchor1Orientation(){return mJoint->getAnchor1Orientation();}
         Quat        getAnchor2Orientation(){return mJoint->getAnchor2Orientation();}

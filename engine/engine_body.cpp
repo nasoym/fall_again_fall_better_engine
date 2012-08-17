@@ -2,7 +2,7 @@
 
 #include "engine_body.h"
 #include "engine.h"
-
+#include "engine_joint.h"
 #include "physic_body.h"
 #include "physic_box.h"
 
@@ -47,5 +47,38 @@ Quat EngineBody::getOrientation(){
 
 Vec3    EngineBody::getSize(){
 	return getPhysicBody()->getSize();
+}
+
+void    EngineBody::deleteAllJoints() {
+	std::vector<EngineJoint*>::iterator  mJointsIterator;
+	for (mJointsIterator = mJoints.begin(); 
+		mJointsIterator != mJoints.end(); ++mJointsIterator) {
+		delete (*mJointsIterator);
+	}
+	mJoints.clear();
+}
+
+void    EngineBody::deleteJoint(EngineJoint* joint) {
+	std::vector<EngineJoint*>::iterator  mJointsIterator;
+	for (mJointsIterator = mJoints.begin(); 
+		mJointsIterator != mJoints.end(); ++mJointsIterator) {
+		if ( (*mJointsIterator) == joint ){
+			delete (*mJointsIterator);
+			mJoints.erase( mJointsIterator);
+			break;
+		}
+	}
+}
+
+int     EngineBody::howManyJoints() {
+	return mJoints.size();
+}
+
+void    EngineBody::addJoint(EngineJoint* joint){
+	mJoints.push_back(joint);
+}
+
+EngineJoint*  EngineBody::getJoint(int index) {
+	return mJoints[index];
 }
 

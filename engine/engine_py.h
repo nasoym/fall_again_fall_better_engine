@@ -165,6 +165,8 @@ BOOST_PYTHON_MODULE(EngineModule) {
 		;
 
 	class_<EngineBody,bases<EngineGuiContainer> >("EngineBody", init<Engine*>())
+		.def("howManyJoints",&EngineBody::howManyJoints)
+		.def("getJoint",&EngineBody::getJoint,return_value_policy<reference_existing_object>())
 		;
 
 	class_<EngineStaticBody,bases<EngineBody> >("EngineStaticBody", init<Engine*>())
@@ -205,6 +207,8 @@ BOOST_PYTHON_MODULE(EngineModule) {
 		.def("setAnchor2Orientation",&EngineJoint::setAnchor2Orientation)
 		.def("getAnchor1",&EngineJoint::getAnchor1)
 		.def("getAnchor2",&EngineJoint::getAnchor2)
+		.def("getAnchor1Size",&EngineJoint::getAnchor1Size)
+		.def("getAnchor2Size",&EngineJoint::getAnchor2Size)
 		.def("getAnchor1Orientation",&EngineJoint::getAnchor1Orientation)
 		.def("getAnchor2Orientation",&EngineJoint::getAnchor2Orientation)
 		.def("setLimits",&EngineJoint::setLimits)

@@ -2,9 +2,11 @@
 #define _ENGINE_BODY_H
 
 #include "engine_gui_container.h"
+#include <vector>
 
 class Engine;
 class PhysicBody;
+class EngineJoint;
 
 class EngineBody : public EngineGuiContainer {
 
@@ -29,7 +31,16 @@ class EngineBody : public EngineGuiContainer {
 
 		void				setGuiUpdatesOff(){mDoGuiUpdates=false;}
 		void				setGuiUpdatesOn(){mDoGuiUpdates=true;}
+
+		virtual void    	deleteAllJoints();
+		virtual void    	deleteJoint(EngineJoint* joint);
+		virtual int     	howManyJoints();
+		virtual void    	addJoint(EngineJoint* joint);
+		virtual EngineJoint*  getJoint(int index);
+
+
 	private:
+		std::vector<EngineJoint*>    mJoints;
 
 		PhysicBody*		mPhysicBody;
 		bool			mDoGuiUpdates;

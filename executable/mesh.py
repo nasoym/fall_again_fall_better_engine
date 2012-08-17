@@ -92,11 +92,12 @@ def createBoneBody(Engine,EngineModule,mesh,boneName):
 	
 		b = Engine.createGuiBox()
 		b.setColour(0,0,1,0.5)
-		b.setSize(EngineModule.Vec3(2,2,2))
+		#b.setSize(EngineModule.Vec3(2,4,4))
+		b.setSize(EngineModule.Vec3(boneWidth*0.5,boneWidth*2,boneWidth*2))
 		b.setScalingFixed()
 		joint.addShape(b)
 
-		joint.addDebugAxises(1,0.2)
+		#joint.addDebugAxises(1,0.2)
 		mesh.setJointForBoneName(boneName,joint)
 
 		parentChildren = mesh.getBoneNameChildren(boneParentName)

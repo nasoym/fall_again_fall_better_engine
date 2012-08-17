@@ -3,6 +3,7 @@ import temp
 import ragdoll
 import saveload
 import navigate
+import bonescale
 
 objects = {}
 
@@ -18,6 +19,9 @@ def createMainRagdoll():
 	ragdoll.createLimitsHuman(Engine,EngineModule,doll)
 	dolls.append(doll)
 
+selectShapes = []
+selectContainers = []
+
 def init():
 	if hasattr(temp,"init"):
 		reload(temp)
@@ -25,6 +29,9 @@ def init():
 
 	if hasattr(navigate,"init"):
 		navigate.init(Engine,EngineModule,objects)
+
+	if hasattr(bonescale,"init"):
+		bonescale.init(Engine,EngineModule)
 
 def keyDown(key):
 	if hasattr(temp,"keyDown"):
@@ -34,9 +41,9 @@ def keyDown(key):
 	if hasattr(navigate,"keyDown"):
 		navigate.keyDown(Engine,EngineModule,objects,key)
 
-
-selectShapes = []
-selectContainers = []
+	if hasattr(bonescale,"keyDown"):
+		reload(bonescale)
+		bonescale.keyDown(Engine,EngineModule,key,selectContainers)
 
 def selectShapeAdd(shape):
 	global selectShapes
@@ -85,10 +92,14 @@ def keyPressed(key):
 		reload(temp)
 		temp.keyPressed(Engine,EngineModule,objects,key)
 
+	if hasattr(bonescale,"keyPressed"):
+		reload(bonescale)
+		bonescale.keyPressed(Engine,EngineModule,key,selectContainers)
+
 	if key == EngineModule.Keys.K_R:
 		if len(selectContainers) > 0:
 			for o in selectContainers:
-				o.setSize( o.getSize() * 1.5)
+				o.setSize( o.getSize() * 1.1)
 
 	if key == EngineModule.Keys.K_MRIGHT:
 		if Engine.isKeyDown(EngineModule.Keys.K_LSHIFT):
@@ -98,18 +109,16 @@ def keyPressed(key):
 			selectContainerClear()
 
 		queryList = Engine.getMouseQuery()
-		#for q in queryList:
-		q = queryList[0]
-		shape = Engine.getFromUuid(q[1])
-		container = Engine.getObjectOfShape(Engine.getFromUuid(q[1]))
-		if shape.isSelectable() and container.isSelectable():
-			#selectShapeAdd(shape.readUuid())
-			#selectContainerAdd(container.readUuid())
-			selectShapeAdd(shape)
-			selectContainerAdd(container)
-
-
-
+		#q = queryList[0]
+		for q in queryList:
+			shape = Engine.getFromUuid(q[1])
+			container = Engine.getObjectOfShape(Engine.getFromUuid(q[1]))
+			if shape.isSelectable() and container.isSelectable():
+				#selectShapeAdd(shape.readUuid())
+				#selectContainerAdd(container.readUuid())
+				selectShapeAdd(shape)
+				selectContainerAdd(container)
+				break
 
 
 	if key == EngineModule.Keys.K_1:
@@ -208,6 +217,10 @@ def keyReleased(key):
 	if hasattr(temp,"keyReleased"):
 		reload(temp)
 		temp.keyReleased(Engine,EngineModule,objects,key)
+
+	if hasattr(bonescale,"keyReleased"):
+		reload(bonescale)
+		bonescale.keyReleased(Engine,EngineModule,key,selectContainers)
 
 def guiUpdate():
 	pass

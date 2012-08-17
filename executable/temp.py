@@ -22,6 +22,7 @@ def keyPressed(Engine,EngineModule,objects,key):
 		#o.setSize(EngineModule.Vec3(1,1,1)*200)
 		o.setPosition(EngineModule.Vec3(0,150,0))
 		mesh.createBones(Engine,EngineModule,o)
+		o.setUnselectable()
 		o.calcLocalPosOfRootBone()
 		#Engine.simulatePhysics(1.0/60.0)
 		#Engine.physicPauseToggle()

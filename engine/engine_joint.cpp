@@ -16,6 +16,8 @@ EngineJoint::EngineJoint(Engine* engine,EngineBody* body1, EngineBody* body2) :
 		body1->getPhysicBody(),
 		body2->getPhysicBody()
 	);
+	body1->addJoint(this);
+	body2->addJoint(this);
 }
 
 EngineBody*		EngineJoint::getBody1(){
@@ -31,6 +33,15 @@ void        EngineJoint::setAnchor1Size(Vec3& vec3){
 
 void        EngineJoint::setAnchor2Size(Vec3& vec3){
 	setAnchor2(vec3 * mBody2->getSize() );
+}
+
+
+Vec3        EngineJoint::getAnchor1Size(){
+	return mJoint->getAnchor1() / mBody1->getSize();
+}
+
+Vec3        EngineJoint::getAnchor2Size(){
+	return mJoint->getAnchor2() / mBody2->getSize();
 }
 
 void	EngineJoint::guiUpdate(){
