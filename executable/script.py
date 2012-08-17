@@ -1,15 +1,25 @@
 import scripts.createobjects as create
-import scripts.temp as temp
 import scripts.ragdoll as ragdoll
 import scripts.saveload as saveload
+
+import scripts.temp as temp
 import scripts.navigate as navigate
 import scripts.bonescale as bonescale
+import scripts.select as select
 
 objects = {}
 
 doll = None
 dolls = []
 dollsPowered = False
+
+selectContainers = []
+
+modules = []
+modules.append(select)
+modules.append(navigate)
+modules.append(bonescale)
+modules.append(temp)
 
 def createMainRagdoll():
 	global dolls
@@ -19,106 +29,29 @@ def createMainRagdoll():
 	ragdoll.createLimitsHuman(Engine,EngineModule,doll)
 	dolls.append(doll)
 
-selectShapes = []
-selectContainers = []
 
 def init():
-	if hasattr(temp,"init"):
-		reload(temp)
-		temp.init(Engine,EngineModule,objects)
-
-	if hasattr(navigate,"init"):
-		navigate.init(Engine,EngineModule,objects)
-
-	if hasattr(bonescale,"init"):
-		bonescale.init(Engine,EngineModule)
+	for m in modules:
+		if hasattr(m,"init"):
+			m.init(Engine,EngineModule)
 
 def keyDown(key):
-	if hasattr(temp,"keyDown"):
-		reload(temp)
-		temp.keyDown(Engine,EngineModule,objects,key)
+	for m in modules:
+		if hasattr(m,"keyDown"):
+			reload(m)
+			m.keyDown(Engine,EngineModule,key,selectContainers)
 
-	if hasattr(navigate,"keyDown"):
-		navigate.keyDown(Engine,EngineModule,objects,key)
-
-	if hasattr(bonescale,"keyDown"):
-		reload(bonescale)
-		bonescale.keyDown(Engine,EngineModule,key,selectContainers)
-
-def selectShapeAdd(shape):
-	global selectShapes
-	if not shape in selectShapes:
-		selectShapes.append(shape)
-		shape.selectShow()
-		#Engine.getFromUuid(shape).selectShow()
-
-def selectShapeRemove(shape):
-	global selectShapes
-	if shape in selectShapes:
-		selectShapes.remove(shape)
-		shape.selectHide()
-		#Engine.getFromUuid(shape).selectHide()
-
-def selectShapeClear():
-	global selectShapes
-	for shape in selectShapes:
-		shape.selectHide()
-		#Engine.getFromUuid(shape).selectHide()
-	selectShapes = []
-
-def selectContainerAdd(container):
-	global selectContainers
-	if not container in selectContainers:
-		selectContainers.append(container)
-		container.selectShow()
-		#Engine.getFromUuid(container).selectShow()
-
-def selectContainerRemove(container):
-	global selectContainers
-	if container in selectContainers:
-		selectContainers.remove(container)
-		container.selectHide()
-		#Engine.getFromUuid(container).selectHide()
-
-def selectContainerClear():
-	global selectContainers
-	for container in selectContainers:
-		container.selectHide()
-		#Engine.getFromUuid(container).selectHide()
-	selectContainers = []
 
 def keyPressed(key):
-	if hasattr(temp,"keyPressed"):
-		reload(temp)
-		temp.keyPressed(Engine,EngineModule,objects,key)
-
-	if hasattr(bonescale,"keyPressed"):
-		reload(bonescale)
-		bonescale.keyPressed(Engine,EngineModule,key,selectContainers)
+	for m in modules:
+		if hasattr(m,"keyPressed"):
+			reload(m)
+			m.keyPressed(Engine,EngineModule,key,selectContainers)
 
 	if key == EngineModule.Keys.K_R:
 		if len(selectContainers) > 0:
 			for o in selectContainers:
 				o.setSize( o.getSize() * 1.1)
-
-	if key == EngineModule.Keys.K_MRIGHT:
-		if Engine.isKeyDown(EngineModule.Keys.K_LSHIFT):
-			pass
-		else:
-			selectShapeClear()
-			selectContainerClear()
-
-		queryList = Engine.getMouseQuery()
-		#q = queryList[0]
-		for q in queryList:
-			shape = Engine.getFromUuid(q[1])
-			container = Engine.getObjectOfShape(Engine.getFromUuid(q[1]))
-			if shape.isSelectable() and container.isSelectable():
-				#selectShapeAdd(shape.readUuid())
-				#selectContainerAdd(container.readUuid())
-				selectShapeAdd(shape)
-				selectContainerAdd(container)
-				break
 
 
 	if key == EngineModule.Keys.K_1:
@@ -214,13 +147,10 @@ def keyPressed(key):
 		saveload.load(Engine,EngineModule,"xmlscene/file1.xml")
 
 def keyReleased(key):
-	if hasattr(temp,"keyReleased"):
-		reload(temp)
-		temp.keyReleased(Engine,EngineModule,objects,key)
-
-	if hasattr(bonescale,"keyReleased"):
-		reload(bonescale)
-		bonescale.keyReleased(Engine,EngineModule,key,selectContainers)
+	for m in modules:
+		if hasattr(m,"keyReleased"):
+			reload(m)
+			m.keyReleased(Engine,EngineModule,key,selectContainers)
 
 def guiUpdate():
 	pass
