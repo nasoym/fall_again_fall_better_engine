@@ -1,9 +1,9 @@
-import createobjects as create
-import temp
-import ragdoll
-import saveload
-import navigate
-import bonescale
+import scripts.createobjects as create
+import scripts.temp as temp
+import scripts.ragdoll as ragdoll
+import scripts.saveload as saveload
+import scripts.navigate as navigate
+import scripts.bonescale as bonescale
 
 objects = {}
 
