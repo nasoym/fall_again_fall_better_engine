@@ -1,13 +1,17 @@
+"""
+temp:
+	t: create mesh
+"""
 import libxml2
 import mesh
 
-def init(Engine,EngineModule):
+def init(Engine,EngineModule,objects):
 	pass
 
-def keyDown(Engine,EngineModule,key,selection):
+def keyDown(Engine,EngineModule,key,selection,objects):
 	pass
 
-def keyPressed(Engine,EngineModule,key,selection):
+def keyPressed(Engine,EngineModule,key,selection,objects):
 	if key == EngineModule.Keys.K_T:
 		#Engine.setTimingFactor(0.0001)
 		#print("timingfactor: " +str(Engine.getTimingFactor()))
@@ -28,6 +32,6 @@ def keyPressed(Engine,EngineModule,key,selection):
 		#Engine.physicPauseToggle()
 
 
-def keyReleased(Engine,EngineModule,key,selection):
+def keyReleased(Engine,EngineModule,key,selection,objects):
 	pass
 

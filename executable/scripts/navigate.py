@@ -1,15 +1,28 @@
+"""
+navigate:
+	w: forward
+	s: backward
+	a: left
+	d: right
+	q: down
+	e: up
+"""
 
 transformFactor = 0.7
 
 def moveCamera(Engine,EngineModule,direction):
-	localDir = direction * transformFactor
+	factor = transformFactor
+	if Engine.isKeyDown(EngineModule.Keys.K_1):
+		factor *= 5
+
+	localDir = direction * factor
 	globalDir = Engine.getCameraOrientation() * localDir
 	Engine.setCameraPosition( Engine.getCameraPosition() + globalDir)
 
-def init(Engine,EngineModule):
+def init(Engine,EngineModule,objects):
 	Engine.setCameraPosition(EngineModule.Vec3(0,100,300))
 
-def keyDown(Engine,EngineModule,key,selection):
+def keyDown(Engine,EngineModule,key,selection,objects):
 	pass
 	if (key == EngineModule.Keys.K_W or
 		key == EngineModule.Keys.K_UP):
@@ -30,10 +43,10 @@ def keyDown(Engine,EngineModule,key,selection):
 		key == EngineModule.Keys.K_PGUP):
 		moveCamera(Engine,EngineModule,EngineModule.Vec3(0,1,0))
 
-def keyPressed(Engine,EngineModule,key,selection):
+def keyPressed(Engine,EngineModule,key,selection,objects):
 	pass
 
-def keyReleased(Engine,EngineModule,key,selection):
+def keyReleased(Engine,EngineModule,key,selection,objects):
 	pass
 
 

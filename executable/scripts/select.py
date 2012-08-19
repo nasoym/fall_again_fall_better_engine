@@ -1,44 +1,35 @@
+"""
+select:
+	mouseRight: create new selection
+	lshift: add to selection
+"""
 
-def selectContainerAdd(container,selection):
-	if not container in selection:
-		selection.append(container)
-		container.selectShow()
-
-def selectContainerRemove(container,selection):
-	if container in selection:
-		selection.remove(container)
-		container.selectHide()
-
-def selectContainerClear(selection):
-	for container in selection:
-		container.selectHide()
-	selection = []
-
-def init(Engine,EngineModule):
+def init(Engine,EngineModule,objects):
 	pass
 
-def keyDown(Engine,EngineModule,key,selection):
+def keyDown(Engine,EngineModule,key,selection,objects):
 	pass
 
-def keyPressed(Engine,EngineModule,key,selection):
+def keyPressed(Engine,EngineModule,key,selection,objects):
 	pass
 
 	if key == EngineModule.Keys.K_MRIGHT:
 		if Engine.isKeyDown(EngineModule.Keys.K_LSHIFT):
 			pass
 		else:
-			selectContainerClear(selection)
+			selection.clear()
 
 		queryList = Engine.getMouseQuery()
-		#q = queryList[0]
 		for q in queryList:
 			shape = Engine.getFromUuid(q[1])
 			container = Engine.getObjectOfShape(Engine.getFromUuid(q[1]))
 			if shape.isSelectable() and container.isSelectable():
-				selectContainerAdd(container,selection)
+				selection.add(container)
 				break
 
-def keyReleased(Engine,EngineModule,key,selection):
+	#TODO override unselectable by key
+
+def keyReleased(Engine,EngineModule,key,selection,objects):
 	pass
 
 
