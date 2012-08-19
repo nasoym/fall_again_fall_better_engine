@@ -152,6 +152,8 @@ class Engine :
 		boost::python::list		getMouseQuery();
 		EngineObject*			getObjectOfShape(EngineGuiShape* shape);
 
+		std::string				createUuid();
+
     private:
         void    setup();
         void    close();

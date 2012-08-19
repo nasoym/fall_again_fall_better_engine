@@ -6,6 +6,7 @@ def load(Engine,EngineModule,fileName):
 	doc = libxml2.parseFile(fileName)
 	xctxt = doc.xpathNewContext()
 	res = xctxt.xpathEval("/scene/*")
+
 	while(len(res)>0):
 		for node in res[:]:
 
@@ -110,6 +111,17 @@ def load(Engine,EngineModule,fileName):
 					o.setMaterialName(materialName)
 				res.remove(node)
 
+				if node.hasProp("scaling"):
+					scalingType = node.prop("scaling")
+					if scalingType == "None":
+						o.setScalingNone()
+					elif scalingType == "Fixed":
+						o.setScalingFixed()
+					elif scalingType == "1To1":
+						o.setScaling1To1()
+					elif scalingType == "Scaling":
+						o.setScalingScaling()
+
 			elif node.name==str(EngineModule.ObjectType.STATICBODY):
 				if isGuiContainerFullfilled(node,Engine,EngineModule):
 					o = Engine.createPhysicStatic()
@@ -200,7 +212,18 @@ def save(Engine,EngineModule,fileName):
 			node.setProp("size",str(o.getSize()))
 			node.setProp("orientation",str(o.getOrientation()))
 			#TODO localPos,Orien,Size
-			#TODO scaling type
+
+			scalingType = "1To1"
+			if o.isScalingFixed():
+				scalingType = "Fixed"
+			elif o.isScalingNone():
+				scalingType = "None"
+			elif o.isScaling1To1():
+				scalingType = "1To1"
+			elif o.isScalingScaling():
+				scalingType = "Scaling"
+			node.setProp("scaling",str(scalingType))
+
 			if o.hasColour():
 				node.setProp("colour",str(o.getColour()))
 				node.setProp("alpha",str(o.getAlpha()))

@@ -120,6 +120,11 @@ BOOST_PYTHON_MODULE(EngineModule) {
 		.def("setScalingScaling",&EngineGuiShape::setScalingScaling)
 		.def("setScalingFixed",&EngineGuiShape::setScalingFixed)
 
+		.def("isScalingFixed",&EngineGuiShape::isScalingFixed)
+		.def("isScalingNone",&EngineGuiShape::isScalingNone)
+		.def("isScaling1To1",&EngineGuiShape::isScaling1To1)
+		.def("isScalingScaling",&EngineGuiShape::isScalingScaling)
+
 		.def("setLocalPosition",&EngineGuiShape::setLocalPosition)
 		.def("getLocalPosition",&EngineGuiShape::getLocalPosition)
 		.def("setLocalOrientation",&EngineGuiShape::setLocalOrientation)
@@ -255,6 +260,8 @@ BOOST_PYTHON_MODULE(EngineModule) {
         .def("getMouseQuery",&Engine::getMouseQuery)
         .def("getObjectOfShape",&Engine::getObjectOfShape,return_value_policy<reference_existing_object>() )
         .def("isKeyDown",&Engine::isKeyDown)
+
+        .def("createUuid",&Engine::createUuid)
         ;
 
     class_<Vec3>("Vec3",init<>())

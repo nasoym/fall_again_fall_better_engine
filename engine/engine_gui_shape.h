@@ -64,6 +64,12 @@ class EngineGuiShape : public EngineObject {
 		void			setScaling1To1(){mScalingType=ONE_TO_ONE;}
 		void			setScalingScaling(){mScalingType=SCALING;}
 
+
+		bool			isScalingFixed(){if (mScalingType==FIX) return true; return false;}
+		bool			isScalingNone(){if (mScalingType==NONE) return true; return false;}
+		bool			isScaling1To1(){if (mScalingType==ONE_TO_ONE) return true; return false;}
+		bool			isScalingScaling(){if (mScalingType==SCALING) return true; return false;}
+
 		bool				hasColour();
 		float 				getAlpha();
 		Vec3 				getColour();

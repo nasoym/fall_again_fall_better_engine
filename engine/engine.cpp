@@ -5,6 +5,10 @@
 
 #include "OgreRTShaderSystem.h"
 
+#include <boost/lexical_cast.hpp>
+#include <boost/uuid/uuid.hpp>
+#include <boost/uuid/uuid_generators.hpp>
+
 Engine::Engine() :
 	mLoopRendering(true),
 	mPythonInitialized(false),
@@ -452,3 +456,8 @@ void Engine::windowFocusChange(RenderWindow* rw) {
     //Logger::debug("windowFocusChange");
 }
 
+std::string		Engine::createUuid(){
+	return boost::lexical_cast<std::string>(
+		boost::uuids::random_generator()()
+		);
+}
