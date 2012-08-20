@@ -2,10 +2,24 @@ import libxml2
 
 #TODO save and load camera position
 
+
+def addToUuidTable(Engine,uuidTable,uuid):
+	if not uuid in uuidTable:
+		uuidTable[uuid] = Engine.createUuid()
+
+def getFromUuidTable(Engine,uuidTable,uuid):
+	if uuid in uuidTable:
+		return uuidTable[uuid]
+	else:
+		addToUuidTable(Engine,uuidTable,uuid)
+		return uuidTable[uuid]
+
 def load(Engine,EngineModule,fileName):
 	doc = libxml2.parseFile(fileName)
 	xctxt = doc.xpathNewContext()
 	res = xctxt.xpathEval("/scene/*")
+
+	uuidTable = {}
 
 	while(len(res)>0):
 		for node in res[:]:
@@ -14,9 +28,13 @@ def load(Engine,EngineModule,fileName):
 				if node.hasProp("body1") and node.hasProp("body2"):
 					body1 = node.prop("body1")
 					body2 = node.prop("body2")
-					if (isGuiContainerFullfilled(node,Engine,EngineModule) and Engine.getFromUuid(body1) and Engine.getFromUuid(body2)):
+
+					body1 = getFromUuidTable(Engine,uuidTable,body1)
+					body2 = getFromUuidTable(Engine,uuidTable,body2)
+
+					if (isGuiContainerFullfilled(node,Engine,EngineModule,uuidTable) and Engine.getFromUuid(body1) and Engine.getFromUuid(body2)):
 						o = Engine.createJoint(Engine.getFromUuid(body1),Engine.getFromUuid(body2))
-						loadGuiContainer(node,Engine,EngineModule,o)
+						loadGuiContainer(node,Engine,EngineModule,o,uuidTable)
 						if node.hasProp("anchor1"):
 							a = (node.prop("anchor1").split(","))
 							anchor1 = EngineModule.Vec3( float(a[0]),float(a[1]),float(a[2]))
@@ -40,6 +58,11 @@ def load(Engine,EngineModule,fileName):
 						o.setAnchor1Orientation(anchor1orientation)
 						o.setAnchor2Orientation(anchor2orientation)
 						o.setLimits(float(ylimit),float(zlimit))
+						if node.hasProp("uuid"):
+							uuid = node.prop("uuid")
+							uuid = getFromUuidTable(Engine,uuidTable,uuid)
+							print("creating joint: " + str(uuid))
+							o.setUuid(uuid)
 						loadEngineObject(node,Engine,EngineModule,o)
 						res.remove(node)
 				else:
@@ -57,17 +80,25 @@ def load(Engine,EngineModule,fileName):
 				for boneData in bonesList:
 					bonename = boneData[0]
 					bodyUuid = boneData[1]
+					bodyUuid = getFromUuidTable(Engine,uuidTable,bodyUuid)
 					jointUuid = boneData[2]
+					jointUuid = getFromUuidTable(Engine,uuidTable,jointUuid)
 					if ( (not bodyUuid == "0") and (not Engine.getFromUuid(bodyUuid)) ):
 						allObjectsExist = False
+						print("missing bodies for mesh")
 						break
 					if ( (not jointUuid == "0") and (not Engine.getFromUuid(jointUuid)) ):
 						allObjectsExist = False
+						print("missing joints for mesh: " + str(jointUuid))
 						break
 				if allObjectsExist:
 					if node.hasProp("mesh_file"):
 						meshFile = node.prop("mesh_file")
 						o = Engine.createMesh(meshFile)
+						if node.hasProp("uuid"):
+							uuid = node.prop("uuid")
+							uuid = getFromUuidTable(Engine,uuidTable,uuid)
+							o.setUuid(uuid)
 						loadEngineObject(node,Engine,EngineModule,o)
 						loadSize(node,Engine,EngineModule,o)
 						loadPosition(node,Engine,EngineModule,o)
@@ -75,7 +106,9 @@ def load(Engine,EngineModule,fileName):
 						for boneData in bonesList:
 							boneName = boneData[0]
 							bodyUuid = boneData[1]
+							bodyUuid = getFromUuidTable(Engine,uuidTable,bodyUuid)
 							jointUuid = boneData[2]
+							jointUuid = getFromUuidTable(Engine,uuidTable,jointUuid)
 							if not bodyUuid == "0":
 								o.setBodyForBoneName(
 									boneName,
@@ -97,6 +130,10 @@ def load(Engine,EngineModule,fileName):
 
 			elif node.name==str(EngineModule.ObjectType.BOX):
 				o = Engine.createGuiBox()
+				if node.hasProp("uuid"):
+					uuid = node.prop("uuid")
+					uuid = getFromUuidTable(Engine,uuidTable,uuid)
+					o.setUuid(uuid)
 				loadEngineObject(node,Engine,EngineModule,o)
 				loadSize(node,Engine,EngineModule,o)
 				loadPosition(node,Engine,EngineModule,o)
@@ -123,9 +160,13 @@ def load(Engine,EngineModule,fileName):
 						o.setScalingScaling()
 
 			elif node.name==str(EngineModule.ObjectType.STATICBODY):
-				if isGuiContainerFullfilled(node,Engine,EngineModule):
+				if isGuiContainerFullfilled(node,Engine,EngineModule,uuidTable):
 					o = Engine.createPhysicStatic()
-					loadGuiContainer(node,Engine,EngineModule,o)
+					loadGuiContainer(node,Engine,EngineModule,o,uuidTable)
+					if node.hasProp("uuid"):
+						uuid = node.prop("uuid")
+						uuid = getFromUuidTable(Engine,uuidTable,uuid)
+						o.setUuid(uuid)
 					loadEngineObject(node,Engine,EngineModule,o)
 					loadSize(node,Engine,EngineModule,o)
 					loadPosition(node,Engine,EngineModule,o)
@@ -133,9 +174,13 @@ def load(Engine,EngineModule,fileName):
 					res.remove(node)
 
 			elif node.name==str(EngineModule.ObjectType.BODY):
-				if isGuiContainerFullfilled(node,Engine,EngineModule):
+				if isGuiContainerFullfilled(node,Engine,EngineModule,uuidTable):
 					o = Engine.createPhysicBox()
-					loadGuiContainer(node,Engine,EngineModule,o)
+					loadGuiContainer(node,Engine,EngineModule,o,uuidTable)
+					if node.hasProp("uuid"):
+						uuid = node.prop("uuid")
+						uuid = getFromUuidTable(Engine,uuidTable,uuid)
+						o.setUuid(uuid)
 					loadEngineObject(node,Engine,EngineModule,o)
 					loadSize(node,Engine,EngineModule,o)
 					loadPosition(node,Engine,EngineModule,o)
@@ -143,12 +188,16 @@ def load(Engine,EngineModule,fileName):
 					res.remove(node)
 
 			elif node.name==str(EngineModule.ObjectType.SPACECAGE):
-				if isGuiContainerFullfilled(node,Engine,EngineModule):
+				if isGuiContainerFullfilled(node,Engine,EngineModule,uuidTable):
 					if node.hasProp("size"):
 						a = (node.prop("size").split(","))
 						size = EngineModule.Vec3( float(a[0]),float(a[1]),float(a[2]))
 						o = Engine.createSpaceCage(size)
-						loadGuiContainer(node,Engine,EngineModule,o)
+						loadGuiContainer(node,Engine,EngineModule,o,uuidTable)
+						if node.hasProp("uuid"):
+							uuid = node.prop("uuid")
+							uuid = getFromUuidTable(Engine,uuidTable,uuid)
+							o.setUuid(uuid)
 						loadEngineObject(node,Engine,EngineModule,o)
 					res.remove(node)
 
@@ -280,18 +329,20 @@ def loadTupleArray(node,attributeName):
 		finalArray.append( elementArray )
 	return finalArray
 
-def isGuiContainerFullfilled(node,Engine,EngineModule):
+def isGuiContainerFullfilled(node,Engine,EngineModule,uuidTable):
 	shapes = loadStringArray(node,"shapes")
 	allShapesExist = True
 	for shape in shapes:
+		shape = getFromUuidTable(Engine,uuidTable,shape)
 		if not Engine.getFromUuid(shape):
 			allShapesExist = False
 			break
 	return allShapesExist
 
-def loadGuiContainer(node,Engine,EngineModule,engineObject):
+def loadGuiContainer(node,Engine,EngineModule,engineObject,uuidTable):
 	shapes = loadStringArray(node,"shapes")
 	for shape in shapes:
+		shape = getFromUuidTable(Engine,uuidTable,shape)
 		if Engine.getFromUuid(shape):
 			engineObject.addShape(Engine.getFromUuid(shape))
 
@@ -322,9 +373,9 @@ def loadOrientation(node,Engine,EngineModule,engineObject):
 		engineObject.setOrientation(orientation)
 
 def loadEngineObject(node,Engine,EngineModule,engineObject):
-	if node.hasProp("uuid"):
-		uuid = node.prop("uuid")
-		engineObject.setUuid(uuid)
+	#if node.hasProp("uuid"):
+	#	uuid = node.prop("uuid")
+	#	engineObject.setUuid(uuid)
 	if node.hasProp("name"):
 		name = node.prop("name")
 		#TODO ? engineObject.setName(name)
