@@ -1,4 +1,13 @@
 
+def createJoint(Engine,EngineModule,body1,body2):
+	o = Engine.createJoint(body1,body2)
+	b = Engine.createGuiBox()
+	b.setColour(0,0,1,0.5)
+	b.setSize(EngineModule.Vec3(2,7,7))
+	b.setScalingFixed()
+	o.addShape(b)
+	return o
+
 def createPhysicBoxFinal(Engine,EngineModule):
 	o = Engine.createPhysicBox()
 	b = Engine.createGuiBox()

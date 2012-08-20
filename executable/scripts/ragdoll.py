@@ -79,65 +79,65 @@ def createHumanBodyParts(Engine,EngineModule,size=1,pos=None,base=True):
 
 def createHumanJoints(Engine,EngineModule,ragdoll):
 	if ragdoll.parts.has_key("base"):
-		ragdoll.joints["j_rfoot"] = Engine.createJoint(ragdoll.parts["base"], ragdoll.parts["rlleg"] )
+		ragdoll.joints["j_rfoot"] = create.createJoint(Engine,EngineModule,ragdoll.parts["base"], ragdoll.parts["rlleg"] )
 		ragdoll.joints["j_rfoot"].setAnchor1Size( EngineModule.Vec3(0,1,0.35) )
 		ragdoll.joints["j_rfoot"].setAnchor2Size( EngineModule.Vec3(-1,0,0) )
 		ragdoll.joints["j_rfoot"].setAnchor1Orientation( EngineModule.Quat().fromAngles(0,1,90) )
 
-		ragdoll.joints["j_lfoot"] = Engine.createJoint(ragdoll.parts["base"], ragdoll.parts["llleg"] )
+		ragdoll.joints["j_lfoot"] = create.createJoint(Engine,EngineModule,ragdoll.parts["base"], ragdoll.parts["llleg"] )
 		ragdoll.joints["j_lfoot"].setAnchor1Size( EngineModule.Vec3(0,1,-0.35) )
 		ragdoll.joints["j_lfoot"].setAnchor2Size( EngineModule.Vec3(-1,0,0) )
 		ragdoll.joints["j_lfoot"].setAnchor1Orientation( EngineModule.Quat().fromAngles(0,1,90) )
 
-	ragdoll.joints["j_rknee"] = Engine.createJoint(ragdoll.parts["rlleg"], ragdoll.parts["ruleg"] )
+	ragdoll.joints["j_rknee"] = create.createJoint(Engine,EngineModule,ragdoll.parts["rlleg"], ragdoll.parts["ruleg"] )
 	ragdoll.joints["j_rknee"].setAnchor1Size( EngineModule.Vec3(1,0,0) )
 	ragdoll.joints["j_rknee"].setAnchor2Size( EngineModule.Vec3(-1,0,0) )
 
-	ragdoll.joints["j_lknee"] = Engine.createJoint(ragdoll.parts["llleg"], ragdoll.parts["luleg"] )
+	ragdoll.joints["j_lknee"] = create.createJoint(Engine,EngineModule,ragdoll.parts["llleg"], ragdoll.parts["luleg"] )
 	ragdoll.joints["j_lknee"].setAnchor1Size( EngineModule.Vec3(1,0,0) )
 	ragdoll.joints["j_lknee"].setAnchor2Size( EngineModule.Vec3(-1,0,0) )
 
-	ragdoll.joints["j_rhip"] = Engine.createJoint(ragdoll.parts["ruleg"], ragdoll.parts["hip"] )
+	ragdoll.joints["j_rhip"] = create.createJoint(Engine,EngineModule,ragdoll.parts["ruleg"], ragdoll.parts["hip"] )
 	ragdoll.joints["j_rhip"].setAnchor1Size( EngineModule.Vec3(1,0,0) )
 	ragdoll.joints["j_rhip"].setAnchor2Size( EngineModule.Vec3(-1.1,0,0.8) )
 
-	ragdoll.joints["j_lhip"] = Engine.createJoint(ragdoll.parts["luleg"], ragdoll.parts["hip"] )
+	ragdoll.joints["j_lhip"] = create.createJoint(Engine,EngineModule,ragdoll.parts["luleg"], ragdoll.parts["hip"] )
 	ragdoll.joints["j_lhip"].setAnchor1Size( EngineModule.Vec3(1,0,0) )
 	ragdoll.joints["j_lhip"].setAnchor2Size( EngineModule.Vec3(-1.1,0,-0.8) )
 
-	ragdoll.joints["j_belly"] = Engine.createJoint(ragdoll.parts["belly"], ragdoll.parts["hip"] )
+	ragdoll.joints["j_belly"] = create.createJoint(Engine,EngineModule,ragdoll.parts["belly"], ragdoll.parts["hip"] )
 	ragdoll.joints["j_belly"].setAnchor1Size( EngineModule.Vec3(-1,0,0) )
 	ragdoll.joints["j_belly"].setAnchor2Size( EngineModule.Vec3(1,0,0) )
 
-	ragdoll.joints["j_breast"] = Engine.createJoint(ragdoll.parts["breast"], ragdoll.parts["belly"] )
+	ragdoll.joints["j_breast"] = create.createJoint(Engine,EngineModule,ragdoll.parts["breast"], ragdoll.parts["belly"] )
 	ragdoll.joints["j_breast"].setAnchor1Size( EngineModule.Vec3(-1,0,0) )
 	ragdoll.joints["j_breast"].setAnchor2Size( EngineModule.Vec3(1,0,0) )
 
-	ragdoll.joints["j_shoulder"] = Engine.createJoint(ragdoll.parts["shoulder"], ragdoll.parts["breast"] )
+	ragdoll.joints["j_shoulder"] = create.createJoint(Engine,EngineModule,ragdoll.parts["shoulder"], ragdoll.parts["breast"] )
 	ragdoll.joints["j_shoulder"].setAnchor1Size( EngineModule.Vec3(-1,0,0) )
 	ragdoll.joints["j_shoulder"].setAnchor2Size( EngineModule.Vec3(1,0,0) )
 
-	ragdoll.joints["j_neck"] = Engine.createJoint(ragdoll.parts["neck"], ragdoll.parts["shoulder"] )
+	ragdoll.joints["j_neck"] = create.createJoint(Engine,EngineModule,ragdoll.parts["neck"], ragdoll.parts["shoulder"] )
 	ragdoll.joints["j_neck"].setAnchor1Size( EngineModule.Vec3(-1,0,0) )
 	ragdoll.joints["j_neck"].setAnchor2Size( EngineModule.Vec3(1,0,0) )
 
-	ragdoll.joints["j_head"] = Engine.createJoint(ragdoll.parts["head"], ragdoll.parts["neck"] )
+	ragdoll.joints["j_head"] = create.createJoint(Engine,EngineModule,ragdoll.parts["head"], ragdoll.parts["neck"] )
 	ragdoll.joints["j_head"].setAnchor1Size( EngineModule.Vec3(-1,0,0) )
 	ragdoll.joints["j_head"].setAnchor2Size( EngineModule.Vec3(1,0,0) )
 
-	ragdoll.joints["j_rshoulder"] = Engine.createJoint(ragdoll.parts["ruarm"], ragdoll.parts["shoulder"] )
+	ragdoll.joints["j_rshoulder"] = create.createJoint(Engine,EngineModule,ragdoll.parts["ruarm"], ragdoll.parts["shoulder"] )
 	ragdoll.joints["j_rshoulder"].setAnchor1Size( EngineModule.Vec3(1,0,0) )
 	ragdoll.joints["j_rshoulder"].setAnchor2Size( EngineModule.Vec3(-1.1,0,0.7) )
 
-	ragdoll.joints["j_lshoulder"] = Engine.createJoint(ragdoll.parts["luarm"], ragdoll.parts["shoulder"] )
+	ragdoll.joints["j_lshoulder"] = create.createJoint(Engine,EngineModule,ragdoll.parts["luarm"], ragdoll.parts["shoulder"] )
 	ragdoll.joints["j_lshoulder"].setAnchor1Size( EngineModule.Vec3(1,0,0) )
 	ragdoll.joints["j_lshoulder"].setAnchor2Size( EngineModule.Vec3(-1.1,0,-0.7) )
 
-	ragdoll.joints["j_relbow"] = Engine.createJoint(ragdoll.parts["rlarm"], ragdoll.parts["ruarm"] )
+	ragdoll.joints["j_relbow"] = create.createJoint(Engine,EngineModule,ragdoll.parts["rlarm"], ragdoll.parts["ruarm"] )
 	ragdoll.joints["j_relbow"].setAnchor1Size( EngineModule.Vec3(1,0,0) )
 	ragdoll.joints["j_relbow"].setAnchor2Size( EngineModule.Vec3(-1,0,0) )
 
-	ragdoll.joints["j_lelbow"] = Engine.createJoint(ragdoll.parts["llarm"], ragdoll.parts["luarm"] )
+	ragdoll.joints["j_lelbow"] = create.createJoint(Engine,EngineModule,ragdoll.parts["llarm"], ragdoll.parts["luarm"] )
 	ragdoll.joints["j_lelbow"].setAnchor1Size( EngineModule.Vec3(1,0,0) )
 	ragdoll.joints["j_lelbow"].setAnchor2Size( EngineModule.Vec3(-1,0,0) )
 

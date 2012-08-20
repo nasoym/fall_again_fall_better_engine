@@ -21,7 +21,14 @@ def load(Engine,EngineModule,fileName):
 
 	uuidTable = {}
 
+	lastResultLength = 0
+
 	while(len(res)>0):
+
+		if len(res) == lastResultLength:
+			print("could not resolve dependencies")
+			break
+		lastResultLength = len(res)
 		for node in res[:]:
 
 			if node.name==str(EngineModule.ObjectType.JOINT):
@@ -61,7 +68,6 @@ def load(Engine,EngineModule,fileName):
 						if node.hasProp("uuid"):
 							uuid = node.prop("uuid")
 							uuid = getFromUuidTable(Engine,uuidTable,uuid)
-							print("creating joint: " + str(uuid))
 							o.setUuid(uuid)
 						loadEngineObject(node,Engine,EngineModule,o)
 						res.remove(node)
@@ -80,17 +86,17 @@ def load(Engine,EngineModule,fileName):
 				for boneData in bonesList:
 					bonename = boneData[0]
 					bodyUuid = boneData[1]
-					bodyUuid = getFromUuidTable(Engine,uuidTable,bodyUuid)
 					jointUuid = boneData[2]
-					jointUuid = getFromUuidTable(Engine,uuidTable,jointUuid)
-					if ( (not bodyUuid == "0") and (not Engine.getFromUuid(bodyUuid)) ):
-						allObjectsExist = False
-						print("missing bodies for mesh")
-						break
-					if ( (not jointUuid == "0") and (not Engine.getFromUuid(jointUuid)) ):
-						allObjectsExist = False
-						print("missing joints for mesh: " + str(jointUuid))
-						break
+					if not bodyUuid == "0":
+						bodyUuid = getFromUuidTable(Engine,uuidTable,bodyUuid)
+						if not Engine.getFromUuid(bodyUuid):
+							allObjectsExist = False
+							break
+					if not jointUuid == "0": 
+						jointUuid = getFromUuidTable(Engine,uuidTable,jointUuid)
+						if not Engine.getFromUuid(jointUuid):
+							allObjectsExist = False
+							break
 				if allObjectsExist:
 					if node.hasProp("mesh_file"):
 						meshFile = node.prop("mesh_file")
@@ -106,14 +112,14 @@ def load(Engine,EngineModule,fileName):
 						for boneData in bonesList:
 							boneName = boneData[0]
 							bodyUuid = boneData[1]
-							bodyUuid = getFromUuidTable(Engine,uuidTable,bodyUuid)
 							jointUuid = boneData[2]
-							jointUuid = getFromUuidTable(Engine,uuidTable,jointUuid)
 							if not bodyUuid == "0":
+								bodyUuid = getFromUuidTable(Engine,uuidTable,bodyUuid)
 								o.setBodyForBoneName(
 									boneName,
 									Engine.getFromUuid(bodyUuid))
 							if not jointUuid == "0":
+								jointUuid = getFromUuidTable(Engine,uuidTable,jointUuid)
 								o.setJointForBoneName(
 									boneName,
 									Engine.getFromUuid(jointUuid))
