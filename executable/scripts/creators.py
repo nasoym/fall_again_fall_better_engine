@@ -5,6 +5,7 @@ creators:
 		2: box
 		3: two jointed boxes
 		4: ragdoll
+		5: mesh character
 """
 
 import createobjects as create

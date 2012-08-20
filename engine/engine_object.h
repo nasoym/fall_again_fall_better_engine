@@ -34,8 +34,8 @@ class EngineObject {
         virtual ~EngineObject();
 
 		std::string 	getName(){return mName;}
-		void 			setName(std::string& name){mName = name;}
-		//void 			setName(char * chr_ptr){mName = name;}
+		void 			setName(std::string name){mName = name;}
+		//void 			setName(char * chr_ptr){mName = std::string(chr_ptr);}
 
 		std::string		readUuid(){ return mUuid.toString(); }
 		void			setUuid(std::string name){mUuid.fromString(name);}

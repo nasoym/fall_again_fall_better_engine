@@ -17,10 +17,12 @@ def createBoneBody(Engine,EngineModule,mesh,boneName):
 		boneLength = defaultBoneLength
 	#boneBody = create.createPhysicStaticBoxFinal(Engine,EngineModule)
 	boneBody = create.createPhysicBoxStructure(Engine,EngineModule)
+	boneBody.setName(str(boneName))
 
 	boneBody.setSize(EngineModule.Vec3(boneLength,boneWidth,boneWidth))
 	mesh.setBodyForBoneName(boneName,boneBody)
 	boneParentName = mesh.getBoneNameParentName(boneName)
+
 
 	print("bone: " + str(boneName) + " parent: " + str(boneParentName))
 	if boneParentName == "":

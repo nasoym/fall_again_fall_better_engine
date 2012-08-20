@@ -50,6 +50,12 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 			#TODO why is object deletion not working
 			#Engine.deleteObject(o)
 
+	if key == EngineModule.Keys.K_I:
+		for o in selection.get():
+			print("object: " + str(o))
+			print("name: " + str(o.getName()))
+			print("uuid: " + str(o.readUuid()))
+
 def keyReleased(Engine,EngineModule,key,selection,objects):
 	pass
 

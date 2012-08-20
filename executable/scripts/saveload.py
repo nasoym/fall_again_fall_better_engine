@@ -412,7 +412,7 @@ def loadEngineObject(node,Engine,EngineModule,engineObject):
 	#	engineObject.setUuid(uuid)
 	if node.hasProp("name"):
 		name = node.prop("name")
-		#TODO ? engineObject.setName(name) why crashing
+		engineObject.setName(name)
 	if node.hasProp("selectable"):
 		selectable = loadBool(node,"selectable")
 		if selectable:

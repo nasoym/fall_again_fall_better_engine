@@ -8,6 +8,7 @@ def keyDown(Engine,EngineModule,key,selection,objects):
 
 def keyPressed(Engine,EngineModule,key,selection,objects):
 	if key == EngineModule.Keys.K_T:
+		pass
 		#Engine.setTimingFactor(0.0001)
 		#print("timingfactor: " +str(Engine.getTimingFactor()))
 		#Engine.simulatePhysics(1.0/60.0)
