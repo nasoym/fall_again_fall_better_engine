@@ -50,6 +50,11 @@ def createBox(Engine,EngineModule):
 	o.setPosition(EngineModule.Vec3(0,150,0))
 
 	b = Engine.createGuiBox()
+	b.setColour(0,1,0,0.5)
+	b.setScaling1To1()
+	o.addShape(b)
+
+	b = Engine.createGuiBox()
 	b.setLocalPosition(EngineModule.Vec3(10,0,0))
 	b.setLocalSize(EngineModule.Vec3(10,0.5,0.5))
 	b.setColour(1,0,0,0.8)

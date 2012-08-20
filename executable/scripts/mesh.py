@@ -65,6 +65,7 @@ def createBoneBody(Engine,EngineModule,mesh,boneName):
 		boneBody.setOrientation(parentOrientation * rotatedLocalOrientation)
 
 		"""
+		#TODO why is this calculation working
 		bonePosition = parentPosition  
 		bonePosition -= (parentOrientation * EngineModule.Vec3(parentBoneLength,0,0))
 		bonePosition += (parentOrientation * scaledFlippedBoneLocalPosition)

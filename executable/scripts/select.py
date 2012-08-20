@@ -3,6 +3,7 @@ select:
 	mouseRight: create new selection
 	lshift: add to selection
 	lctrl: remove from selection
+	lalt: select unselectable
 """
 
 def init(Engine,EngineModule,objects):
@@ -20,9 +21,13 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 		for q in queryList:
 			shape = Engine.getFromUuid(q[1])
 			container = Engine.getObjectOfShape(Engine.getFromUuid(q[1]))
-			if shape.isSelectable() and container.isSelectable():
+			if Engine.isKeyDown(EngineModule.Keys.K_LMENU):
 				selectedContainer = container
 				break
+			else:
+				if shape.isSelectable() and container.isSelectable():
+					selectedContainer = container
+					break
 
 		if selectedContainer:
 			if Engine.isKeyDown(EngineModule.Keys.K_LSHIFT):
@@ -42,10 +47,8 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 	if key == EngineModule.Keys.K_BACK:
 		for o in selection.get()[:]:
 			selection.remove(o)
-			#TODO not working
+			#TODO why is object deletion not working
 			#Engine.deleteObject(o)
-
-	#TODO override unselectable by key
 
 def keyReleased(Engine,EngineModule,key,selection,objects):
 	pass

@@ -1,8 +1,5 @@
 import libxml2
 
-#TODO save and load camera position
-
-
 def addToUuidTable(Engine,uuidTable,uuid):
 	if not uuid in uuidTable:
 		uuidTable[uuid] = Engine.createUuid()
@@ -152,6 +149,20 @@ def load(Engine,EngineModule,fileName):
 				else:
 					materialName = node.prop("material")
 					o.setMaterialName(materialName)
+
+				#if node.hasProp("local_size"):
+				#	a = (node.prop("local_size").split(","))
+				#	size = EngineModule.Vec3( float(a[0]),float(a[1]),float(a[2]))
+				#	o.setLocalSize(size)
+				if node.hasProp("local_position"):
+					a = (node.prop("local_position").split(","))
+					pos = EngineModule.Vec3( float(a[0]),float(a[1]),float(a[2]))
+					o.setLocalPosition(pos)
+				if node.hasProp("local_orientation"):
+					a = (node.prop("local_orientation").split(","))
+					orientation = EngineModule.Quat( float(a[0]),float(a[1]),float(a[2]),float(a[3]))
+					o.setLocalOrientation(orientation)
+
 				res.remove(node)
 
 				if node.hasProp("scaling"):
@@ -206,6 +217,16 @@ def load(Engine,EngineModule,fileName):
 							o.setUuid(uuid)
 						loadEngineObject(node,Engine,EngineModule,o)
 					res.remove(node)
+
+			elif node.name=="CAMERA":
+				if node.hasProp("position"):
+					a = (node.prop("position").split(","))
+					pos = EngineModule.Vec3( float(a[0]),float(a[1]),float(a[2]))
+					Engine.setCameraPosition(pos)
+				if node.hasProp("orientation"):
+					a = (node.prop("orientation").split(","))
+					orientation = EngineModule.Quat( float(a[0]),float(a[1]),float(a[2]),float(a[3]))
+					Engine.setCameraOrientation(orientation)
 
 def save(Engine,EngineModule,fileName):
 	doc = libxml2.newDoc("1.0")
@@ -266,7 +287,9 @@ def save(Engine,EngineModule,fileName):
 			node.setProp("position",str(o.getPosition()))
 			node.setProp("size",str(o.getSize()))
 			node.setProp("orientation",str(o.getOrientation()))
-			#TODO localPos,Orien,Size
+			node.setProp("local_position",str(o.getLocalPosition()))
+			node.setProp("local_size",str(o.getLocalSize()))
+			node.setProp("local_orientation",str(o.getLocalOrientation()))
 
 			scalingType = "1To1"
 			if o.isScalingFixed():
@@ -301,6 +324,11 @@ def save(Engine,EngineModule,fileName):
 			node.setProp("size",str(o.getSize()))
 
 		doc.getRootElement().addChild(node)
+
+	node = libxml2.newNode("CAMERA")
+	node.setProp("position",str(Engine.getCameraPosition()))
+	node.setProp("orientation",str(Engine.getCameraOrientation()))
+	doc.getRootElement().addChild(node)
 
 	doc.saveFormatFile(fileName,1)
 
@@ -384,7 +412,7 @@ def loadEngineObject(node,Engine,EngineModule,engineObject):
 	#	engineObject.setUuid(uuid)
 	if node.hasProp("name"):
 		name = node.prop("name")
-		#TODO ? engineObject.setName(name)
+		#TODO ? engineObject.setName(name) why crashing
 	if node.hasProp("selectable"):
 		selectable = loadBool(node,"selectable")
 		if selectable:
