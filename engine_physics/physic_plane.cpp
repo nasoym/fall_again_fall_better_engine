@@ -5,7 +5,7 @@
 PhysicPlane::PhysicPlane(PhysicsEngine* engine, PxVec3 position, PxQuat orientation):
     mEngine(engine)  
 {
-    Logger::debug(format("creating PhysicPlane: %1% ") % this);
+    //Logger::debug(format("creating PhysicPlane: %1% ") % this);
 	mBody = (mEngine->getPhysics())->createRigidStatic(
         PxTransform(position, orientation)
         );

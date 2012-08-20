@@ -2,6 +2,7 @@
 select:
 	mouseRight: create new selection
 	lshift: add to selection
+	lctrl: remove from selection
 """
 
 def init(Engine,EngineModule,objects):
@@ -28,15 +29,21 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 				selection.add(selectedContainer)
 
 			elif Engine.isKeyDown(EngineModule.Keys.K_LCONTROL):
-				#TODO not working
 				selection.remove(selectedContainer)
 				pass
+
 			else:
 				selection.clear()
 				selection.add(selectedContainer)
 		else:
 			pass
-			#selection.clear()
+			selection.clear()
+
+	if key == EngineModule.Keys.K_BACK:
+		for o in selection.get()[:]:
+			selection.remove(o)
+			#TODO not working
+			#Engine.deleteObject(o)
 
 	#TODO override unselectable by key
 

@@ -44,7 +44,7 @@ void		EngineMesh::setupAllBones(){
 		bonePtr = boneIter.getNext();
 		bonePtr->setManuallyControlled(true);
 		mBoneBodies.push_back(BoneBody(bonePtr));
-		Logger::debug(format("found bone: %1% ") % bonePtr->getName());
+		//Logger::debug(format("found bone: %1% ") % bonePtr->getName());
 	}
 }
 

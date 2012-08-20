@@ -262,6 +262,7 @@ BOOST_PYTHON_MODULE(EngineModule) {
         .def("isKeyDown",&Engine::isKeyDown)
 
         .def("createUuid",&Engine::createUuid)
+        .def("deleteObject",&Engine::deleteObject)
         ;
 
     class_<Vec3>("Vec3",init<>())

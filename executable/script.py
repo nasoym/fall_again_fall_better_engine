@@ -17,13 +17,25 @@ class Selection(object):
 		self.selected = []
 
 	def add(self,container):
-		if not container in self.selected:
+		alreadyInSelection = False
+		for i in range(0,len(self.selected)):
+			if self.selected[i].readUuid() == container.readUuid():
+				alreadyInSelection = True
+				break
+		if not alreadyInSelection:
 			self.selected.append(container)
 			container.selectShow()
 
 	def remove(self,container):
-		if container in self.selected:
-			self.selected.remove(container)
+		alreadyInSelection = False
+		index = None
+		for i in range(0,len(self.selected)):
+			if self.selected[i].readUuid() == container.readUuid():
+				alreadyInSelection = True
+				index = i
+				break
+		if alreadyInSelection:
+			self.selected.remove(self.selected[i])
 			container.selectHide()
 
 	def clear(self):
@@ -37,7 +49,6 @@ class Selection(object):
 
 
 objects = {}
-#selectContainers = []
 selectContainers = Selection() 
 
 modules = []
