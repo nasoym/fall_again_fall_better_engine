@@ -43,10 +43,6 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 		saveload.load(Engine,EngineModule,"xmlscene/file1.xml")
 
 
-	if key == EngineModule.Keys.K_O:
-		if len(selection.get()) == 1:
-			o = selection.get()[0]
-			o.setPosition(o.getPosition() * EngineModule.Vec3(1,0.9,1))
 
 	if key == EngineModule.Keys.K_Y:
 		if len(selection.get()) == 1:
