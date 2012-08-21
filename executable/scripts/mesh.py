@@ -93,8 +93,10 @@ def createBoneBody(Engine,EngineModule,mesh,boneName):
 		joint.setAnchor1(parentLocalAnchor)
 		joint.setAnchor2(bodyLocalAnchor)
 		joint.setAnchor1Orientation(rotatedLocalOrientation)
+		#joint.setLimits(1,1)
+		joint.setLimits(0,0)
 		#joint.setLimits(10,10)
-		joint.setLimits(50,50)
+		#joint.setLimits(50,50)
 	
 		b = Engine.createGuiBox()
 		b.setColour(0,0,1,0.5)

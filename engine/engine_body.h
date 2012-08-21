@@ -39,6 +39,11 @@ class EngineBody : public EngineGuiContainer {
 		virtual EngineJoint*  getJoint(int index);
 
 
+		virtual void		addForce(Vec3);	
+
+
+
+
 	private:
 		std::vector<EngineJoint*>    mJoints;
 

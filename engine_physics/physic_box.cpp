@@ -39,3 +39,10 @@ void    PhysicBox::setSize(Vec3 vec3) {
     wakeUp();
 }
 
+void		PhysicBox::addForce(Vec3 force){
+	mBody->addForce(
+		force.toPhysx(),
+		PxForceMode::eIMPULSE
+		);
+}
+

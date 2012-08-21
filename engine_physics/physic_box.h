@@ -25,5 +25,7 @@ class PhysicBox : public PhysicBody {
 
 		virtual Vec3				getSize();
 		virtual void				setSize(Vec3);
+
+		virtual void				addForce(Vec3);
 };
 #endif

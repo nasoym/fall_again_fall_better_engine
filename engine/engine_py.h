@@ -170,6 +170,7 @@ BOOST_PYTHON_MODULE(EngineModule) {
 		;
 
 	class_<EngineBody,bases<EngineGuiContainer> >("EngineBody", init<Engine*>())
+		.def("addForce",&EngineBody::addForce)
 		.def("howManyJoints",&EngineBody::howManyJoints)
 		.def("getJoint",&EngineBody::getJoint,return_value_policy<reference_existing_object>())
 		;

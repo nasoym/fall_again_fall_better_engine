@@ -78,3 +78,7 @@ BaseJoint*  PhysicBody::getJoint(int index) {
 	return mJoints[index];
 }
 
+void		PhysicBody::addForce(Vec3 force){
+
+}
+

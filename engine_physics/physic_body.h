@@ -33,5 +33,7 @@ class PhysicBody {
 		virtual void    	addJoint(BaseJoint* joint);
 		virtual BaseJoint*  getJoint(int index);
 
+		virtual void		addForce(Vec3);
+
 };
 #endif

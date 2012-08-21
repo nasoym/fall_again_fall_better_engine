@@ -53,8 +53,15 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 	if key == EngineModule.Keys.K_I:
 		for o in selection.get():
 			print("object: " + str(o))
-			print("name: " + str(o.getName()))
-			print("uuid: " + str(o.readUuid()))
+			print("    name: " + str(o.getName()))
+			print("    uuid: " + str(o.readUuid()))
+			if o.isJoint():
+				print("    yLimit: " + str(o.isJoint().getYLimit()))
+				print("    zLimit: " + str(o.isJoint().getZLimit()))
+				print("    anchor 1: " + str(o.isJoint().getAnchor1()))
+				print("    anchor 2: " + str(o.isJoint().getAnchor2()))
+				print("    anchor 1 orien: " + str(o.isJoint().getAnchor1Orientation().toAngles()))
+				print("    anchor 2 orien: " + str(o.isJoint().getAnchor2Orientation().toAngles()))
 
 def keyReleased(Engine,EngineModule,key,selection,objects):
 	pass

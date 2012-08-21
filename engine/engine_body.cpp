@@ -82,3 +82,7 @@ EngineJoint*  EngineBody::getJoint(int index) {
 	return mJoints[index];
 }
 
+void		EngineBody::addForce(Vec3 force){
+	getPhysicBody()->addForce(force);
+}
+
