@@ -291,6 +291,10 @@ BOOST_PYTHON_MODULE(EngineModule) {
 		.def("cross",&Vec3::cross)
 		.def("dot",&Vec3::dot)
 
+		.def_readwrite("x", &Vec3::x)
+		.def_readwrite("y", &Vec3::y)
+		.def_readwrite("z", &Vec3::z)
+
 		.def("X",&Vec3::X)
 		.def("Y",&Vec3::Y)
 		.def("Z",&Vec3::Z)
@@ -320,6 +324,10 @@ BOOST_PYTHON_MODULE(EngineModule) {
 		.def("toAngles",&Quat::toAngles)
 		.def("fromAngles",&Quat::fromAngles)
 
+		.def_readwrite("x", &Quat::x)
+		.def_readwrite("y", &Quat::y)
+		.def_readwrite("z", &Quat::z)
+		.def_readwrite("w", &Quat::w)
 
 		.def("W",&Quat::W)
 		.def("X",&Quat::X)

@@ -24,9 +24,9 @@ def createBoneBody(Engine,EngineModule,mesh,boneName):
 	boneParentName = mesh.getBoneNameParentName(boneName)
 
 
-	print("bone: " + str(boneName) + " parent: " + str(boneParentName))
+	#print("bone: " + str(boneName) + " parent: " + str(boneParentName))
 	if boneParentName == "":
-		print("create bone: " + str(boneName) )
+		#print("create bone: " + str(boneName) )
 		boneBody.setOrientation(
 			mesh.getBoneNameOrientation(boneName,False)
 			* EngineModule.Quat().fromAngles(0,0,90)
@@ -36,13 +36,15 @@ def createBoneBody(Engine,EngineModule,mesh,boneName):
 			+ (boneBody.getOrientation() * EngineModule.Vec3(boneLength,0,0) )
 		)
 	else:
-		print("create bone: " + str(boneName) + " as child of: " + str(boneParentName) )
+		#print("create bone: " + str(boneName) + " as child of: " + str(boneParentName) )
 		boneParentBody = mesh.getBodyOfBoneName(boneParentName)
-		print("parent body: " + str(boneParentBody))
+		#print("parent body: " + str(boneParentBody))
 		if boneParentBody:
-			print("parent has body")
+			#print("parent has body")
+			pass
 		else:
-			print("parent has NO body")
+			#print("parent has NO body")
+			pass
 		if not boneParentBody == 0:
 			pass
 
@@ -91,7 +93,8 @@ def createBoneBody(Engine,EngineModule,mesh,boneName):
 		joint.setAnchor1(parentLocalAnchor)
 		joint.setAnchor2(bodyLocalAnchor)
 		joint.setAnchor1Orientation(rotatedLocalOrientation)
-		joint.setLimits(10,10)
+		#joint.setLimits(10,10)
+		joint.setLimits(50,50)
 	
 		b = Engine.createGuiBox()
 		b.setColour(0,0,1,0.5)
