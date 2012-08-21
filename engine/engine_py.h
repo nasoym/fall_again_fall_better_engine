@@ -139,7 +139,7 @@ BOOST_PYTHON_MODULE(EngineModule) {
 
 		.def("selectShow",&EngineGuiShape::selectShow)
 		.def("selectHide",&EngineGuiShape::selectHide)
-
+		.def("setCustomMaterial",&EngineGuiShape::setCustomMaterial)
 
 		;
 

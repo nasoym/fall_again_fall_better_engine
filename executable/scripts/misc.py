@@ -5,6 +5,7 @@ misc:
 	f: add force (1,2,3, 4,5,6, 7,8)
 	y: rotate joint (1,2,3,4,5,6, 7) in steps of 10 degree
 	u: set joint limits y:1,2 z:3,4 5 ,7 in steps of 5 units
+	z: switch material (1,2)
 """
 import saveload
 
@@ -103,6 +104,24 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 					zLimit = 0
 
 				j.setLimits(yLimit,zLimit)
+
+	if key == EngineModule.Keys.K_Z:
+		if len(selection.get()) == 1:
+			o = selection.get()[0]
+			if o and o.isGuiContainer():
+				shapesNumber = o.howManyShapes()
+				shapesList = []
+				for i in range(0,shapesNumber):
+					shape = o.getShapeByIndex(i)
+					if Engine.isKeyDown(EngineModule.Keys.K_1):
+						shape.setCustomMaterial()
+					elif Engine.isKeyDown(EngineModule.Keys.K_2):
+						shape.setMaterialName("Body")
+			elif o and o.isGuiShape():
+				if Engine.isKeyDown(EngineModule.Keys.K_1):
+					o.setCustomMaterial()
+				elif Engine.isKeyDown(EngineModule.Keys.K_2):
+					o.setMaterialName("Body")
 
 
 def keyReleased(Engine,EngineModule,key,selection,objects):

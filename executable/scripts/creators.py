@@ -90,7 +90,7 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 				halfpos = pos14 - pos13
 				halfpos = halfpos * EngineModule.Vec3(0.5,0.5,0.5)
 				finalPos = pos13 + halfpos
-				finalPos.y -= 5
+				finalPos.y -= 2
 
 				xySize = (halfpos.x + halfpos.y ) * 5
 

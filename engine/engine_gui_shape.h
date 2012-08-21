@@ -75,6 +75,8 @@ class EngineGuiShape : public EngineObject {
 		Vec3 				getColour();
 		std::string			getMaterialName(){return mMaterialName;}
 
+		void 				setCustomMaterial();
+
 		void				selectShow();
 		void				selectHide();
 

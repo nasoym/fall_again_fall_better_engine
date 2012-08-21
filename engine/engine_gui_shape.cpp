@@ -133,6 +133,14 @@ void	EngineGuiShape::setColour(float red,float green,float blue,float alpha) {
 		)); 
 }
 
+void 	EngineGuiShape::setCustomMaterial(){
+	if(mMaterial.isNull()){
+		setupCustomMaterial();
+	} else {
+		getEntity()->setMaterial(mMaterial);
+	}
+}
+
 void	EngineGuiShape::setupCustomMaterial(){
 	mMaterial = Ogre::MaterialManager::getSingleton().create(
 		readUuid(),
