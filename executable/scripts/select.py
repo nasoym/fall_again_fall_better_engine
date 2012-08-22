@@ -58,23 +58,23 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 			#Engine.deleteObject(o)
 
 	if key == EngineModule.Keys.K_I:
+		for o in selection.get():
+			print("object: " + str(o))
+			print("    name: " + str(o.getName()))
+			print("    uuid: " + str(o.readUuid()))
+			if o.isJoint():
+				print("    yLimit: " + str(o.isJoint().getYLimit()))
+				print("    zLimit: " + str(o.isJoint().getZLimit()))
+				print("    anchor 1: " + str(o.isJoint().getAnchor1()))
+				print("    anchor 2: " + str(o.isJoint().getAnchor2()))
+				print("    anchor 1 orien: " + str(o.isJoint().getAnchor1Orientation().toAngles()))
+				print("    anchor 2 orien: " + str(o.isJoint().getAnchor2Orientation().toAngles()))
+
 		body,joint = bodyjoint.getBodyJoint(selection.get())
 		if ((body and joint) and bodyjoint.isBodyJointConnected(body,joint)):
 			pass
 			jointPos = bodyjoint.getBodyJointAnchorSizePos(body,joint)
-			print("body joint pos: " + str(jointPos))
-		else:
-			for o in selection.get():
-				print("object: " + str(o))
-				print("    name: " + str(o.getName()))
-				print("    uuid: " + str(o.readUuid()))
-				if o.isJoint():
-					print("    yLimit: " + str(o.isJoint().getYLimit()))
-					print("    zLimit: " + str(o.isJoint().getZLimit()))
-					print("    anchor 1: " + str(o.isJoint().getAnchor1()))
-					print("    anchor 2: " + str(o.isJoint().getAnchor2()))
-					print("    anchor 1 orien: " + str(o.isJoint().getAnchor1Orientation().toAngles()))
-					print("    anchor 2 orien: " + str(o.isJoint().getAnchor2Orientation().toAngles()))
+			print("body joint size pos: " + str(jointPos))
 
 def keyReleased(Engine,EngineModule,key,selection,objects):
 	pass
