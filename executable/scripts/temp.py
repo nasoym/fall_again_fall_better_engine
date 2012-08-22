@@ -40,8 +40,10 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 		#if Engine.isKeyDown(EngineModule.Keys.K_7):
 
 
-		#saveload.save(Engine,EngineModule,"xmlscene/ragdoll_01.xml")
-		saveload.load(Engine,EngineModule,"xmlscene/ragdoll_01.xml")
+		if Engine.isKeyDown(EngineModule.Keys.K_1):
+			saveload.load(Engine,EngineModule,"xmlscene/ragdoll_01.xml")
+		else:
+			saveload.save(Engine,EngineModule,"xmlscene/ragdoll_01.xml")
 						
 
 def keyReleased(Engine,EngineModule,key,selection,objects):

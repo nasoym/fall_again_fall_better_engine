@@ -99,9 +99,9 @@ def createBoneBody(Engine,EngineModule,mesh,boneName):
 		#joint.setLimits(50,50)
 	
 		b = Engine.createGuiBox()
-		b.setColour(0,0,1,0.5)
+		b.setColour(0,0,1,0.2)
 		#b.setSize(EngineModule.Vec3(2,4,4))
-		b.setSize(EngineModule.Vec3(boneWidth*0.5,boneWidth*2,boneWidth*2))
+		b.setSize(EngineModule.Vec3(boneWidth*0.25,boneWidth*2,boneWidth*2))
 		b.setScalingFixed()
 		joint.addShape(b)
 
