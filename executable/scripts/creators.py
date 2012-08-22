@@ -25,8 +25,8 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 		if Engine.isKeyDown(EngineModule.Keys.K_1):
 			create.createSpaceCage(Engine,EngineModule,EngineModule.Vec3(600,600,600))
 		elif Engine.isKeyDown(EngineModule.Keys.K_2):
-			#o = create.createPhysicBoxFinal(Engine,EngineModule)
-			o = create.createBox(Engine,EngineModule)
+			o = create.createPhysicBoxFinal(Engine,EngineModule)
+			#o = create.createBox(Engine,EngineModule)
 			o.setPosition(EngineModule.Vec3(0,150,0))
 			o.setSize(EngineModule.Vec3(10,10,10))
 		elif Engine.isKeyDown(EngineModule.Keys.K_3):

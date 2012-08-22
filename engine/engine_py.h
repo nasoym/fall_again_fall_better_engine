@@ -148,6 +148,8 @@ BOOST_PYTHON_MODULE(EngineModule) {
 		.def("hide",&EngineGuiShape::hide)
 		.def("show",&EngineGuiShape::show)
 
+		.def("turnOffShadows",&EngineGuiShape::turnOffShadows)
+
 		;
 
     class_<EngineGuiContainer, bases<EngineObject> >("EngineGuiContainer", init<Engine*>())

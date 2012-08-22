@@ -241,6 +241,21 @@ void Engine::setup(){
     mSceneMgr = mRoot->createSceneManager(ST_GENERIC, "ExampleSMInstance");
     mSceneMgr->setAmbientLight(ColourValue(0.2,0.2,0.2));
 
+	mSceneMgr->setShadowTechnique(
+		//Ogre::SHADOWTYPE_STENCIL_ADDITIVE
+		Ogre::SHADOWTYPE_TEXTURE_MODULATIVE
+		);
+	//mSceneMgr->setShadowTextureSettings( 1024, 3, Ogre::PF_FLOAT32_R );
+	//mSceneMgr->setShadowTextureSettings( 512, 2);
+	//mSceneMgr->setShadowTextureSettings( 1024, 4);
+	mSceneMgr->setShadowTextureSettings( 2048, 4);
+	//FocusedShadowCameraSetup *camSetup = new FocusedShadowCameraSetup();
+	LiSPSMShadowCameraSetup *camSetup = new LiSPSMShadowCameraSetup();
+	//PSSMShadowCameraSetup *camSetup = new PSSMShadowCameraSetup();
+	mSceneMgr->setShadowCameraSetup(ShadowCameraSetupPtr(camSetup));
+	//mSceneMgr->setShadowTextureSelfShadow(true);
+    mSceneMgr->setShadowColour(ColourValue(0.5,0.5,0.5));
+
     mRootSceneNode = mSceneMgr->getRootSceneNode();
     mDebugSceneNode = mRootSceneNode->createChildSceneNode();
     mFinalSceneNode = mRootSceneNode->createChildSceneNode();
@@ -263,6 +278,7 @@ void Engine::setup(){
     // Alter the camera aspect ratio to match the viewport
     mCamera->setAspectRatio( Real(mViewport->getActualWidth()) / Real(mViewport->getActualHeight()));
 
+	/*
     Light * light = mSceneMgr->createLight("MainLight");
 	light->setType(Light::LT_POINT);
     light->setPosition(200,200,200);
@@ -274,6 +290,14 @@ void Engine::setup(){
     light2->setPosition(-200,200,-200);
 	light2->setDiffuseColour(0.2,0.2,0.2);
 	light2->setSpecularColour(0.5,0.5,0.5);
+	*/
+
+    Light * light3 = mSceneMgr->createLight("MainLight3");
+	light3->setType(Light::LT_DIRECTIONAL);
+    //light3->setPosition(-200,200,-200);
+	light3->setDiffuseColour(0.2,0.2,0.2);
+	light3->setSpecularColour(0.5,0.5,0.5);
+	light3->setDirection(Vector3(0,-1,1));
 
 	/*
     //Entity *ent = mSceneMgr->createEntity("head","cube.mesh");

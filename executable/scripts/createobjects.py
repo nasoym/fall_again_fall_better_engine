@@ -11,7 +11,7 @@ def createJoint(Engine,EngineModule,body1,body2):
 def createPhysicBoxFinal(Engine,EngineModule):
 	o = Engine.createPhysicBox()
 	b = Engine.createGuiBox()
-	b.setMaterialName("Body")
+	#b.setMaterialName("Body")
 	b.setScaling1To1()
 	o.addShape(b)
 	o.setPosition(EngineModule.Vec3(0,150,0))
@@ -92,6 +92,7 @@ def createSpaceCage(Engine,EngineModule,size):
 	shape.setScalingNone()
 	#shape.setColour(red,green,blue,ground_opacity)
 	shape.setMaterialName("Body")
+	shape.turnOffShadows()
 	shape.setFinalShape()
 	shape.setSize(EngineModule.Vec3(size.X(),wall,size.Z()))
 	shape.setPosition(EngineModule.Vec3(0,-wall,0))

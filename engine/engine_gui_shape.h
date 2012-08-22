@@ -87,6 +87,10 @@ class EngineGuiShape : public EngineObject {
 		void				hide(){mNode->setVisible(false);}
 		void				show(){mNode->setVisible(true);}
 
+		void				turnOffShadows(){
+								mEntity->setCastShadows(false);
+								}
+
 	private:
         Entity*     		mEntity; 
         SceneNode*  		mNode;
