@@ -1,15 +1,38 @@
 """
 temp:
 	t: run temp
+	o: move object
+	x: ..
 """
 import mesh
 import createobjects as create
 import saveload
 
+import bodyjoint
+
 def keyDown(Engine,EngineModule,key,selection,objects):
 	pass
 
 def keyPressed(Engine,EngineModule,key,selection,objects):
+
+	if key == EngineModule.Keys.K_X:
+		body,joint = bodyjoint.getBodyJoint(selection.get())
+		if ((body and joint) and bodyjoint.isBodyJointConnected(body,joint)):
+			jointPos = bodyjoint.getBodyJointAnchorSizePos(body,joint)
+			bodySize = body.getSize()
+			print("body joint pos: " + str(jointPos))
+			print("body size: " + str(bodySize))
+
+			#jointPos = EngineModule.Vec3(-2,-0.5,0.3) 
+			#bodySize = EngineModule.Vec3(3.3,2,2) 
+
+			bodyjoint.bodyJointScaleJointPos(body,joint, jointPos)
+			bodyjoint.bodyJointScaleBody(body,joint, bodySize )
+
+			jointPos = bodyjoint.getBodyJointAnchorSizePos(body,joint)
+			bodySize = body.getSize()
+			print("body joint pos: " + str(jointPos))
+			print("body size: " + str(bodySize))
 
 	if key == EngineModule.Keys.K_O:
 		if len(selection.get()) == 1:
@@ -41,9 +64,11 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 
 
 		if Engine.isKeyDown(EngineModule.Keys.K_1):
-			saveload.load(Engine,EngineModule,"xmlscene/ragdoll_01.xml")
+			print("loading")
+			saveload.load(Engine,EngineModule,"xmlscene/ragdoll_02.xml")
 		else:
-			saveload.save(Engine,EngineModule,"xmlscene/ragdoll_01.xml")
+			print("saving")
+			saveload.save(Engine,EngineModule,"xmlscene/ragdoll_02.xml")
 						
 
 def keyReleased(Engine,EngineModule,key,selection,objects):
