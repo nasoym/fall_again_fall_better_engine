@@ -20,7 +20,7 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 		if ((body and joint) and bodyjoint.isBodyJointConnected(body,joint)):
 			jointPos = bodyjoint.getBodyJointAnchorSizePos(body,joint)
 			bodySize = body.getSize()
-			print("body joint pos: " + str(jointPos))
+			print("body joint size pos: " + str(jointPos))
 			print("body size: " + str(bodySize))
 
 			#jointPos = EngineModule.Vec3(-2,-0.5,0.3) 
@@ -30,6 +30,23 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 			bodyjoint.bodyJointScaleBody(body,joint, bodySize )
 
 			jointPos = bodyjoint.getBodyJointAnchorSizePos(body,joint)
+			bodySize = body.getSize()
+			print("body joint pos: " + str(jointPos))
+			print("body size: " + str(bodySize))
+
+	if key == EngineModule.Keys.K_B:
+		body,joint = bodyjoint.getBodyJoint(selection.get())
+		if ((body and joint) and bodyjoint.isBodyJointConnected(body,joint)):
+			jointPos = bodyjoint.getBodyJointAnchorPos(body,joint)
+			bodySize = body.getSize()
+			print("body joint pos: " + str(jointPos))
+			print("body size: " + str(bodySize))
+
+			jointPos.x *= 1.1
+			bodyjoint.setBodyJointAnchorPos(body,joint,jointPos)
+			body.setSize(bodySize)
+
+			jointPos = bodyjoint.getBodyJointAnchorPos(body,joint)
 			bodySize = body.getSize()
 			print("body joint pos: " + str(jointPos))
 			print("body size: " + str(bodySize))
