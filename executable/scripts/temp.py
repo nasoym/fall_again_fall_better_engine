@@ -56,6 +56,7 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 			print("body size: " + str(bodySize))
 
 			#jointPos.x *= 1.1
+			bodySize = EngineModule.Vec3(15,1,15)
 
 			bodyjoint.setBodyJointAnchorPos(body,joint,jointPos)
 			body.setSize(bodySize)
