@@ -90,8 +90,9 @@ def createSpaceCage(Engine,EngineModule,size):
 
 	shape = Engine.createGuiBox()
 	shape.setScalingNone()
-	shape.setColour(red,green,blue,ground_opacity)
-	#shape.setMaterialName("Body")
+	#shape.setColour(red,green,blue,ground_opacity)
+	shape.setMaterialName("Body")
+	shape.setFinalShape()
 	shape.setSize(EngineModule.Vec3(size.X(),wall,size.Z()))
 	shape.setPosition(EngineModule.Vec3(0,-wall,0))
 	o.addShape(shape)

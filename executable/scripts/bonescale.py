@@ -1,7 +1,7 @@
 """
 bonescale:
-	h: scale body
-	g: scale joint pos
+	g: scale joint pos (x+:1, y+:2, z+:3, x-:4, y-:5, z-:6)
+	h: scale body (x+:1, y+:2, z+:3, x-:4, y-:5, z-:6)
 	j: select next bone of body
 """
 

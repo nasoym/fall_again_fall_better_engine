@@ -6,6 +6,7 @@ navigate:
 	d: right
 	q: down
 	e: up
+		1: speed * 5
 """
 
 transformFactor = 0.7

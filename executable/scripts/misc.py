@@ -1,11 +1,17 @@
 """
 misc:
 	k: save
-	l: load
-	f: add force (1,2,3, 4,5,6, 7,8)
-	y: rotate joint (1,2,3,4,5,6, 7) in steps of 10 degree
-	u: set joint limits y:1,2 z:3,4 5 ,7 in steps of 5 units
-	z: switch material (1,2)
+	l: load 
+	f: add force default y+ (x+:1, y+:2, z+:3, x-:4, y-:5, z-:6 , spped*10:7, speed*0.5:8)
+	y: rotate joint in 10 degree steps (x+:1, y+:2, z+:3, x-:4, y-:5, z-:6, degree step * 0.5:7)
+	u: set joint limits in 5 unit steps y+:1, y-:2 z+:3, z-:4, reset:5, step size*0.5:7
+	z: switch material 
+		1: set custom material
+		2: set material "body"
+		3: set final shape
+		4: set non final shape
+		5: hide non final shapes
+		6: show all shapes
 """
 import saveload
 import bodyjoint
@@ -119,8 +125,8 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 		#	o = selection.get()[0]
 		if (Engine.isKeyDown(EngineModule.Keys.K_1) or 
 			Engine.isKeyDown(EngineModule.Keys.K_2) or
-			Engine.isKeyDown(EngineModule.Keys.K_5) or
-			Engine.isKeyDown(EngineModule.Keys.K_6)):
+			Engine.isKeyDown(EngineModule.Keys.K_3) or
+			Engine.isKeyDown(EngineModule.Keys.K_4)):
 			for o in selection.get():
 				if o and o.isGuiContainer():
 					shapesNumber = o.howManyShapes()
@@ -131,29 +137,29 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 							shape.setCustomMaterial()
 						elif Engine.isKeyDown(EngineModule.Keys.K_2):
 							shape.setMaterialName("Body")
-						elif Engine.isKeyDown(EngineModule.Keys.K_5):
+						elif Engine.isKeyDown(EngineModule.Keys.K_3):
 							shape.setFinalShape()
-						elif Engine.isKeyDown(EngineModule.Keys.K_6):
+						elif Engine.isKeyDown(EngineModule.Keys.K_4):
 							shape.setNonFinalShape()
 				elif o and o.isGuiShape():
 					if Engine.isKeyDown(EngineModule.Keys.K_1):
 						o.setCustomMaterial()
 					elif Engine.isKeyDown(EngineModule.Keys.K_2):
 						o.setMaterialName("Body")
-					elif Engine.isKeyDown(EngineModule.Keys.K_5):
+					elif Engine.isKeyDown(EngineModule.Keys.K_3):
 						o.setFinalShape()
-					elif Engine.isKeyDown(EngineModule.Keys.K_6):
+					elif Engine.isKeyDown(EngineModule.Keys.K_4):
 						o.setNonFinalShape()
 
-		if Engine.isKeyDown(EngineModule.Keys.K_3) or Engine.isKeyDown(EngineModule.Keys.K_4):
-			if Engine.isKeyDown(EngineModule.Keys.K_3):
+		if Engine.isKeyDown(EngineModule.Keys.K_5) or Engine.isKeyDown(EngineModule.Keys.K_6):
+			if Engine.isKeyDown(EngineModule.Keys.K_5):
 				objectsNumber = Engine.howManyObjects()
 				for i in range(0,objectsNumber):
 					o = Engine.getObject(i)
 					if o.isGuiShape():
 						if not o.isFinalShape():
 							o.hide()
-			elif Engine.isKeyDown(EngineModule.Keys.K_4):
+			elif Engine.isKeyDown(EngineModule.Keys.K_6):
 				objectsNumber = Engine.howManyObjects()
 				for i in range(0,objectsNumber):
 					o = Engine.getObject(i)

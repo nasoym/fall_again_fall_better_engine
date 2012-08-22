@@ -4,6 +4,7 @@ select:
 	lshift: add to selection
 	lctrl: remove from selection
 	lalt: select unselectable
+	ralt: select only guiShape
 	i: show object info
 """
 

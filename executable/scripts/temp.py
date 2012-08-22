@@ -1,8 +1,14 @@
 """
 temp:
 	t: run temp
-	o: move object
-	x: ..
+		1:load
+		2:save
+	o: move object by step size 20 (x+:1, y+:2, z+:3, x-:4, y-:5, z-:6) 
+		7: y*0.9
+		8: step size:1
+	x: work on body,joint: sizepos with all joints
+	b: work on body,joint: singual anchor pos 
+	n: set timingfactor 1:*0.9 2:*1.1
 """
 import mesh
 import createobjects as create
@@ -50,6 +56,7 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 			print("body size: " + str(bodySize))
 
 			jointPos.x *= 1.1
+
 			bodyjoint.setBodyJointAnchorPos(body,joint,jointPos)
 			body.setSize(bodySize)
 
@@ -61,20 +68,22 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 	if key == EngineModule.Keys.K_O:
 		if len(selection.get()) == 1:
 			o = selection.get()[0]
+			step = 20
+			if Engine.isKeyDown(EngineModule.Keys.K_8):
+				step = 1
 			if Engine.isKeyDown(EngineModule.Keys.K_1):
-				o.setPosition(o.getPosition() + EngineModule.Vec3(20,0,0))
+				o.setPosition(o.getPosition() + EngineModule.Vec3(step,0,0))
 			if Engine.isKeyDown(EngineModule.Keys.K_2):
-				o.setPosition(o.getPosition() + EngineModule.Vec3(0,20,0))
+				o.setPosition(o.getPosition() + EngineModule.Vec3(0,step,0))
 			if Engine.isKeyDown(EngineModule.Keys.K_3):
-				o.setPosition(o.getPosition() + EngineModule.Vec3(0,0,20))
+				o.setPosition(o.getPosition() + EngineModule.Vec3(0,0,step))
 			if Engine.isKeyDown(EngineModule.Keys.K_4):
-				o.setPosition(o.getPosition() + EngineModule.Vec3(-20,0,0))
+				o.setPosition(o.getPosition() + EngineModule.Vec3(-step,0,0))
 			if Engine.isKeyDown(EngineModule.Keys.K_5):
-				o.setPosition(o.getPosition() + EngineModule.Vec3(0,-20,0))
+				o.setPosition(o.getPosition() + EngineModule.Vec3(0,-step,0))
 			if Engine.isKeyDown(EngineModule.Keys.K_6):
-				o.setPosition(o.getPosition() + EngineModule.Vec3(0,0,-20))
-
-			else:
+				o.setPosition(o.getPosition() + EngineModule.Vec3(0,0,-step))
+			if Engine.isKeyDown(EngineModule.Keys.K_7):
 				o.setPosition(o.getPosition() * EngineModule.Vec3(1,0.9,1))
 
 	if key == EngineModule.Keys.K_T:
@@ -95,7 +104,6 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 			saveload.save(Engine,EngineModule,"xmlscene/ragdoll_02.xml")
 		else:
 			pass
-						
 
 def keyReleased(Engine,EngineModule,key,selection,objects):
 	pass
