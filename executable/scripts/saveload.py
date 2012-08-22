@@ -125,7 +125,7 @@ def load(Engine,EngineModule,fileName):
 							a = (node.prop("colour").split(","))
 							colour = EngineModule.Vec3( float(a[0]),float(a[1]),float(a[2]))
 							o.setColour(colour.X(),colour.Y(),colour.Z(),alpha)
-						else:
+						if node.hasProp("material"):
 							materialName = node.prop("material")
 							o.setMaterialName(materialName)
 
@@ -268,7 +268,8 @@ def save(Engine,EngineModule,fileName):
 			if o.hasColour():
 				node.setProp("colour",str(o.getColour()))
 				node.setProp("alpha",str(o.getAlpha()))
-			else:
+			#else:
+			if o.getMaterialName() != "":
 				node.setProp("material",str(o.getMaterialName()))
 
 		elif o.getType()==EngineModule.ObjectType.STATICBODY:
