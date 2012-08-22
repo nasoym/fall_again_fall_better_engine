@@ -117,22 +117,48 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 	if key == EngineModule.Keys.K_Z:
 		#if len(selection.get()) == 1:
 		#	o = selection.get()[0]
-		for o in selection.get():
-			if o and o.isGuiContainer():
-				shapesNumber = o.howManyShapes()
-				shapesList = []
-				for i in range(0,shapesNumber):
-					shape = o.getShapeByIndex(i)
+		if (Engine.isKeyDown(EngineModule.Keys.K_1) or 
+			Engine.isKeyDown(EngineModule.Keys.K_2) or
+			Engine.isKeyDown(EngineModule.Keys.K_5) or
+			Engine.isKeyDown(EngineModule.Keys.K_6)):
+			for o in selection.get():
+				if o and o.isGuiContainer():
+					shapesNumber = o.howManyShapes()
+					shapesList = []
+					for i in range(0,shapesNumber):
+						shape = o.getShapeByIndex(i)
+						if Engine.isKeyDown(EngineModule.Keys.K_1):
+							shape.setCustomMaterial()
+						elif Engine.isKeyDown(EngineModule.Keys.K_2):
+							shape.setMaterialName("Body")
+						elif Engine.isKeyDown(EngineModule.Keys.K_5):
+							shape.setFinalShape()
+						elif Engine.isKeyDown(EngineModule.Keys.K_6):
+							shape.setNonFinalShape()
+				elif o and o.isGuiShape():
 					if Engine.isKeyDown(EngineModule.Keys.K_1):
-						shape.setCustomMaterial()
+						o.setCustomMaterial()
 					elif Engine.isKeyDown(EngineModule.Keys.K_2):
-						shape.setMaterialName("Body")
-			elif o and o.isGuiShape():
-				if Engine.isKeyDown(EngineModule.Keys.K_1):
-					o.setCustomMaterial()
-				elif Engine.isKeyDown(EngineModule.Keys.K_2):
-					o.setMaterialName("Body")
+						o.setMaterialName("Body")
+					elif Engine.isKeyDown(EngineModule.Keys.K_5):
+						o.setFinalShape()
+					elif Engine.isKeyDown(EngineModule.Keys.K_6):
+						o.setNonFinalShape()
 
+		if Engine.isKeyDown(EngineModule.Keys.K_3) or Engine.isKeyDown(EngineModule.Keys.K_4):
+			if Engine.isKeyDown(EngineModule.Keys.K_3):
+				objectsNumber = Engine.howManyObjects()
+				for i in range(0,objectsNumber):
+					o = Engine.getObject(i)
+					if o.isGuiShape():
+						if not o.isFinalShape():
+							o.hide()
+			elif Engine.isKeyDown(EngineModule.Keys.K_4):
+				objectsNumber = Engine.howManyObjects()
+				for i in range(0,objectsNumber):
+					o = Engine.getObject(i)
+					if o.isGuiShape():
+						o.show()
 
 def keyReleased(Engine,EngineModule,key,selection,objects):
 	pass

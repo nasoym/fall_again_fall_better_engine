@@ -9,7 +9,8 @@ EngineGuiShape::EngineGuiShape(Engine* engine) :
 	mLocalPosition(Vec3()),
 	mLocalOrientation(Quat()),
 	mLocalSize(Vec3(1,1,1)),
-	mContainer(0)
+	mContainer(0),
+	mFinalShape(false)
 	{
     mNode = getEngine()->getDebugNode()->createChildSceneNode();
 }

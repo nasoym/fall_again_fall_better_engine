@@ -141,6 +141,13 @@ BOOST_PYTHON_MODULE(EngineModule) {
 		.def("selectHide",&EngineGuiShape::selectHide)
 		.def("setCustomMaterial",&EngineGuiShape::setCustomMaterial)
 
+		.def("isFinalShape",&EngineGuiShape::isFinalShape)
+		.def("setFinalShape",&EngineGuiShape::setFinalShape)
+		.def("setNonFinalShape",&EngineGuiShape::setNonFinalShape)
+
+		.def("hide",&EngineGuiShape::hide)
+		.def("show",&EngineGuiShape::show)
+
 		;
 
     class_<EngineGuiContainer, bases<EngineObject> >("EngineGuiContainer", init<Engine*>())

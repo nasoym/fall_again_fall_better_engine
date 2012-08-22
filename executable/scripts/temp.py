@@ -14,6 +14,13 @@ def keyDown(Engine,EngineModule,key,selection,objects):
 	pass
 
 def keyPressed(Engine,EngineModule,key,selection,objects):
+	if key == EngineModule.Keys.K_N:
+		if Engine.isKeyDown(EngineModule.Keys.K_1):
+			Engine.setTimingFactor(Engine.getTimingFactor() * 0.9)
+			print("timingfactor: " +str(Engine.getTimingFactor()))
+		if Engine.isKeyDown(EngineModule.Keys.K_2):
+			Engine.setTimingFactor(Engine.getTimingFactor() * 1.1)
+			print("timingfactor: " +str(Engine.getTimingFactor()))
 
 	if key == EngineModule.Keys.K_X:
 		body,joint = bodyjoint.getBodyJoint(selection.get())

@@ -18,12 +18,15 @@ def load(Engine,EngineModule,fileName):
 
 	uuidTable = {}
 
+	lastUnresolved=""
 	lastResultLength = 0
 
 	while(len(res)>0):
 
 		if len(res) == lastResultLength:
-			print("could not resolve dependencies")
+			print("could not resolve dependencies:" + str(lastResultLength))
+			print(str(res))
+			print(lastUnresolved)
 			break
 		lastResultLength = len(res)
 		for node in res[:]:
@@ -68,6 +71,8 @@ def load(Engine,EngineModule,fileName):
 							o.setUuid(uuid)
 						loadEngineObject(node,Engine,EngineModule,o)
 						res.remove(node)
+					else:
+						lastUnresolved = "joint: "
 				else:
 					res.remove(node)
 
@@ -88,11 +93,13 @@ def load(Engine,EngineModule,fileName):
 						bodyUuid = getFromUuidTable(Engine,uuidTable,bodyUuid)
 						if not Engine.getFromUuid(bodyUuid):
 							allObjectsExist = False
+							lastUnresolved = "mesh:  missing: body: " + str(bodyUuid)
 							break
 					if not jointUuid == "0": 
 						jointUuid = getFromUuidTable(Engine,uuidTable,jointUuid)
 						if not Engine.getFromUuid(jointUuid):
 							allObjectsExist = False
+							lastUnresolved = "mesh:  missing: joint: " + str(jointUuid)
 							break
 				if allObjectsExist:
 					if node.hasProp("mesh_file"):
@@ -120,6 +127,7 @@ def load(Engine,EngineModule,fileName):
 								o.setJointForBoneName(
 									boneName,
 									Engine.getFromUuid(jointUuid))
+
 						if node.hasProp("colour") and node.hasProp("alpha"):
 							alpha = float(node.prop("alpha"))
 							a = (node.prop("colour").split(","))
@@ -128,6 +136,12 @@ def load(Engine,EngineModule,fileName):
 						if node.hasProp("material"):
 							materialName = node.prop("material")
 							o.setMaterialName(materialName)
+
+						finalShape = loadBool(node,"final_shape")
+						if finalShape:
+							o.setFinalShape()
+						else:
+							o.setNonFinalShape()
 
 					res.remove(node)
 
@@ -163,7 +177,6 @@ def load(Engine,EngineModule,fileName):
 					orientation = EngineModule.Quat( float(a[0]),float(a[1]),float(a[2]),float(a[3]))
 					o.setLocalOrientation(orientation)
 
-				res.remove(node)
 
 				if node.hasProp("scaling"):
 					scalingType = node.prop("scaling")
@@ -175,6 +188,14 @@ def load(Engine,EngineModule,fileName):
 						o.setScaling1To1()
 					elif scalingType == "Scaling":
 						o.setScalingScaling()
+
+				finalShape = loadBool(node,"final_shape")
+				if finalShape:
+					o.setFinalShape()
+				else:
+					o.setNonFinalShape()
+
+				res.remove(node)
 
 			elif node.name==str(EngineModule.ObjectType.STATICBODY):
 				if isGuiContainerFullfilled(node,Engine,EngineModule,uuidTable):
@@ -189,6 +210,8 @@ def load(Engine,EngineModule,fileName):
 					loadPosition(node,Engine,EngineModule,o)
 					loadOrientation(node,Engine,EngineModule,o)
 					res.remove(node)
+				else:
+					lastUnresolved = "staticbody: gui container failed"
 
 			elif node.name==str(EngineModule.ObjectType.BODY):
 				if isGuiContainerFullfilled(node,Engine,EngineModule,uuidTable):
@@ -203,6 +226,8 @@ def load(Engine,EngineModule,fileName):
 					loadPosition(node,Engine,EngineModule,o)
 					loadOrientation(node,Engine,EngineModule,o)
 					res.remove(node)
+				else:
+					lastUnresolved = "body: gui container failed"
 
 			elif node.name==str(EngineModule.ObjectType.SPACECAGE):
 				if isGuiContainerFullfilled(node,Engine,EngineModule,uuidTable):
@@ -217,6 +242,8 @@ def load(Engine,EngineModule,fileName):
 							o.setUuid(uuid)
 						loadEngineObject(node,Engine,EngineModule,o)
 					res.remove(node)
+				else:
+					lastUnresolved = "spacecage: gui container failed"
 
 			elif node.name=="CAMERA":
 				if node.hasProp("position"):
@@ -227,6 +254,7 @@ def load(Engine,EngineModule,fileName):
 					a = (node.prop("orientation").split(","))
 					orientation = EngineModule.Quat( float(a[0]),float(a[1]),float(a[2]),float(a[3]))
 					Engine.setCameraOrientation(orientation)
+				res.remove(node)
 
 def save(Engine,EngineModule,fileName):
 	doc = libxml2.newDoc("1.0")
@@ -272,6 +300,8 @@ def save(Engine,EngineModule,fileName):
 			if o.getMaterialName() != "":
 				node.setProp("material",str(o.getMaterialName()))
 
+			node.setProp("final_shape",str(o.isFinalShape()))
+
 		elif o.getType()==EngineModule.ObjectType.STATICBODY:
 			saveGuiContainer(node,Engine,EngineModule,o)
 			node.setProp("position",str(o.getPosition()))
@@ -302,6 +332,8 @@ def save(Engine,EngineModule,fileName):
 			elif o.isScalingScaling():
 				scalingType = "Scaling"
 			node.setProp("scaling",str(scalingType))
+
+			node.setProp("final_shape",str(o.isFinalShape()))
 
 			if o.hasColour():
 				node.setProp("colour",str(o.getColour()))

@@ -80,6 +80,13 @@ class EngineGuiShape : public EngineObject {
 		void				selectShow();
 		void				selectHide();
 
+		bool				isFinalShape(){return mFinalShape;}
+		void				setFinalShape(){mFinalShape = true;}
+		void				setNonFinalShape(){mFinalShape = false;}
+
+		void				hide(){mNode->setVisible(false);}
+		void				show(){mNode->setVisible(true);}
+
 	private:
         Entity*     		mEntity; 
         SceneNode*  		mNode;
@@ -93,6 +100,8 @@ class EngineGuiShape : public EngineObject {
 		GuiScaling			mScalingType;
 
 		std::string			mMaterialName;
+
+		bool				mFinalShape;
 
 };
 

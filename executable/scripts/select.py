@@ -27,6 +27,9 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 			if Engine.isKeyDown(EngineModule.Keys.K_LMENU):
 				selectedContainer = container
 				break
+			elif Engine.isKeyDown(EngineModule.Keys.K_RMENU):
+				selectedContainer = shape
+				break
 			else:
 				if shape.isSelectable() and container.isSelectable():
 					selectedContainer = container

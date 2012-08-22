@@ -18,6 +18,7 @@ EngineMesh::EngineMesh(Engine* engine,const char* meshName) :
     getNode()->attachObject(getEntity());
 	setupAllBones();
 	mRootBone = findRootBone();
+	setFinalShape();
 }
 
 int				EngineMesh::getNumberOfBones(){
