@@ -67,8 +67,9 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 			print("body size: " + str(bodySize))
 
 	if key == EngineModule.Keys.K_O:
-		if len(selection.get()) == 1:
-			o = selection.get()[0]
+		#if len(selection.get()) == 1:
+		#	o = selection.get()[0]
+		for o in selection.get():
 			step = 20
 			if Engine.isKeyDown(EngineModule.Keys.K_8):
 				step = 1
