@@ -93,7 +93,7 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 					j = body.getJoint(0)
 					selection.add(j)
 		elif len(selection.get()) == 2:
-			body,joint = getBodyJoint(selection.get())
+			body,joint = bodyjoint.getBodyJoint(selection.get())
 			if ((body and joint) and bodyjoint.isBodyJointConnected(body,joint)):
 				if body.howManyJoints() > 0:
 					selection.remove(joint)

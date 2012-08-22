@@ -46,13 +46,16 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 
 
 	if key == EngineModule.Keys.K_Y:
+		j = None
 		body,joint = bodyjoint.getBodyJoint(selection.get())
 		if ((body and joint) and bodyjoint.isBodyJointConnected(body,joint)):
 			j = joint
-		#if len(selection.get()) == 1:
-		#	o = selection.get()[0]
-		#	if o and o.isJoint():
-			#j = o.isJoint()
+		if not j:
+			if len(selection.get()) == 1:
+				o = selection.get()[0]
+				if o and o.isJoint():
+					j = o.isJoint()
+		if j:
 			angleStep = 10
 			angle = EngineModule.Quat().fromAngles(0,0,0)
 			if Engine.isKeyDown(EngineModule.Keys.K_7):
@@ -73,13 +76,16 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 			j.setAnchor1Orientation(newOri)
 
 	if key == EngineModule.Keys.K_U:
+		j = None
 		body,joint = bodyjoint.getBodyJoint(selection.get())
 		if ((body and joint) and bodyjoint.isBodyJointConnected(body,joint)):
 			j = joint
-		#if len(selection.get()) == 1:
-		#	o = selection.get()[0]
-		#	if o and o.isJoint():
-			#j = o.isJoint()
+		if not j:
+			if len(selection.get()) == 1:
+				o = selection.get()[0]
+				if o and o.isJoint():
+					j = o.isJoint()
+		if j:
 			yLimit = j.getYLimit()
 			zLimit = j.getZLimit()
 
