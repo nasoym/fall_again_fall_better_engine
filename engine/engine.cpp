@@ -2,6 +2,7 @@
 #include "engine.h"
 #include "physic_engine.h"
 #include "engine_object.h"
+#include "engine_keys.h"
 
 #include "OgreRTShaderSystem.h"
 
@@ -440,6 +441,7 @@ void Engine::windowResized(RenderWindow* rw) {
 
 void Engine::windowMoved(RenderWindow* rw) {
     //Logger::debug("windowMoved");
+	releaseMouseKeys();
 }
 
 bool windowClosing(RenderWindow* rw) {
@@ -454,6 +456,22 @@ void Engine::windowClosed(RenderWindow* rw) {
 
 void Engine::windowFocusChange(RenderWindow* rw) {
     //Logger::debug("windowFocusChange");
+	releaseMouseKeys();
+}
+
+void	Engine::releaseMouseKeys(){
+	if (isKeyDown(K_MLEFT)){
+		removePressedKey(K_MLEFT);
+		pyFunctionKeyReleased(K_MLEFT);
+	}
+	if (isKeyDown(K_MRIGHT)){
+		removePressedKey(K_MRIGHT);
+		pyFunctionKeyReleased(K_MRIGHT);
+	}
+	if (isKeyDown(K_MMIDDLE)){
+		removePressedKey(K_MMIDDLE);
+		pyFunctionKeyReleased(K_MMIDDLE);
+	}
 }
 
 std::string		Engine::createUuid(){

@@ -66,9 +66,11 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 		if Engine.isKeyDown(EngineModule.Keys.K_1):
 			print("loading")
 			saveload.load(Engine,EngineModule,"xmlscene/ragdoll_02.xml")
-		else:
+		elif Engine.isKeyDown(EngineModule.Keys.K_2):
 			print("saving")
 			saveload.save(Engine,EngineModule,"xmlscene/ragdoll_02.xml")
+		else:
+			pass
 						
 
 def keyReleased(Engine,EngineModule,key,selection,objects):

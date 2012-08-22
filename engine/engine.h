@@ -85,6 +85,9 @@ class Engine :
 		void updateKeysDown();
 		bool isKeyDown(Keys key);
 		OIS::KeyCode	keysToKeyCode(Keys key);
+		void	storePressedKey(Keys key);
+		void	removePressedKey(Keys key);
+		void	releaseMouseKeys();
 
 		void			setCameraPosition(Vec3&);
 		void			setCameraOrientation(Quat&);
