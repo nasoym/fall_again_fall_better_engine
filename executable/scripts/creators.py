@@ -1,5 +1,4 @@
-"""
-creators:
+"""creators:
 	c: create
 		1: space cage
 		2: box
@@ -23,13 +22,16 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 	pass
 	if key == EngineModule.Keys.K_C:
 		if Engine.isKeyDown(EngineModule.Keys.K_1):
+			print("create spacecage")
 			create.createSpaceCage(Engine,EngineModule,EngineModule.Vec3(600,600,600))
 		elif Engine.isKeyDown(EngineModule.Keys.K_2):
+			print("create physic box")
 			o = create.createPhysicBoxFinal(Engine,EngineModule)
 			#o = create.createBox(Engine,EngineModule)
 			o.setPosition(EngineModule.Vec3(0,150,0))
 			o.setSize(EngineModule.Vec3(10,10,10))
 		elif Engine.isKeyDown(EngineModule.Keys.K_3):
+			print("create two connected physic boxes")
 			a = create.createPhysicBoxFinal(Engine,EngineModule)
 			b = create.createPhysicBoxFinal(Engine,EngineModule)
 
@@ -41,6 +43,7 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 				EngineModule.Quat().fromAngles(0,0,45) )
 
 		elif Engine.isKeyDown(EngineModule.Keys.K_4):
+			print("create ragdoll")
 			char = ragdoll.createHumanBodyParts(Engine,
 				EngineModule,size=5,
 				pos=EngineModule.Vec3(0,150,0),
@@ -50,6 +53,7 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 			ragdoll.createLimitsHuman(Engine,EngineModule,char)
 
 		elif Engine.isKeyDown(EngineModule.Keys.K_5):
+			print("create character mesh")
 			o = Engine.createMesh("Character.mesh")
 			o.setColour(1,0,0,0.2)
 			#o.setColour(1,0,0,0.9)
@@ -61,6 +65,7 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 			o.calcLocalPosOfRootBone()
 
 		elif Engine.isKeyDown(EngineModule.Keys.K_6):
+			print("create character mesh with ground")
 			o = Engine.createMesh("Character.mesh")
 			o.setColour(1,0,0,0.2)
 			#o.setColour(1,0,0,0.9)

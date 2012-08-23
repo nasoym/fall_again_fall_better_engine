@@ -1,10 +1,14 @@
-"""
-misc:
+"""misc:
 	k: save
 	l: load 
-	f: add force default y+ (x+:1, y+:2, z+:3, x-:4, y-:5, z-:6 , spped*10:7, speed*0.5:8)
-	y: rotate joint in 10 degree steps (x+:1, y+:2, z+:3, x-:4, y-:5, z-:6, degree step * 0.5:7)
-	u: set joint limits in 5 unit steps y+:1, y-:2 z+:3, z-:4, reset:5, step size*0.5:7
+	f: add force default y+ 
+		(x+:1, y+:2, z+:3, x-:4, y-:5, z-:6 , 
+		speed*10:7, speed*0.5:8)
+	y: rotate joint in 10 degree steps 
+		(x+:1, y+:2, z+:3, x-:4, y-:5, z-:6, 
+		degree step * 0.5:7)
+	u: set joint limits in 5 unit steps 
+		y+:1, y-:2 z+:3, z-:4, reset:5, step size*0.5:7
 	z: switch material 
 		1: set custom material
 		2: set material "body"
@@ -44,14 +48,81 @@ def keyDown(Engine,EngineModule,key,selection,objects):
 def keyPressed(Engine,EngineModule,key,selection,objects):
 	pass
 	if key == EngineModule.Keys.K_K:
+		print("save scene")
 		saveload.save(Engine,EngineModule,"xmlscene/file2.xml")
 
 	if key == EngineModule.Keys.K_L:
+		print("load scene")
 		saveload.load(Engine,EngineModule,"xmlscene/file2.xml")
 
+	if key == EngineModule.Keys.K_R:
+		print("change joint motor target orientation")
+		j = None
+		body,joint = bodyjoint.getBodyJoint(selection.get())
+		if ((body and joint) and bodyjoint.isBodyJointConnected(body,joint)):
+			j = joint
+		if not j:
+			if len(selection.get()) == 1:
+				o = selection.get()[0]
+				if o and o.isJoint():
+					j = o.isJoint()
+		if j:
+			angleStep = 10
+			#angle = EngineModule.Quat().fromAngles(0,0,0)
+			angle = None
+			if Engine.isKeyDown(EngineModule.Keys.K_7):
+				angleStep *= 0.5
+			if Engine.isKeyDown(EngineModule.Keys.K_1):
+				angle = EngineModule.Quat().fromAngles(angleStep,0,0)
+			if Engine.isKeyDown(EngineModule.Keys.K_2):
+				angle = EngineModule.Quat().fromAngles(0,angleStep,0)
+			if Engine.isKeyDown(EngineModule.Keys.K_3):
+				angle = EngineModule.Quat().fromAngles(0,0,angleStep)
+			if Engine.isKeyDown(EngineModule.Keys.K_4):
+				angle = EngineModule.Quat().fromAngles(-angleStep,0,0)
+			if Engine.isKeyDown(EngineModule.Keys.K_5):
+				angle = EngineModule.Quat().fromAngles(0,-angleStep,0)
+			if Engine.isKeyDown(EngineModule.Keys.K_6):
+				angle = EngineModule.Quat().fromAngles(0,0,-angleStep)
+				
+			if angle:
+				motorTarget = j.getMotorTarget() * angle
+				j.setMotorTarget(motorTarget)
+				if j.isMotorOn():
+					j.setMotorOn()
 
+			if Engine.isKeyDown(EngineModule.Keys.K_MINUS):
+				print("reset motor target")
+				j.setMotorTarget(EngineModule.Quat())
+
+			if Engine.isKeyDown(EngineModule.Keys.K_8):
+				print("set motor target on")
+				j.setMotorOn()
+
+			if Engine.isKeyDown(EngineModule.Keys.K_9):
+				print("set motor target off")
+				j.setMotorOff()
+
+		if Engine.isKeyDown(EngineModule.Keys.K_8):
+			if Engine.isKeyDown(EngineModule.Keys.K_0):
+				print("set all motor target on")
+				objectsNumber = Engine.howManyObjects()
+				for i in range(0,objectsNumber):
+					o = Engine.getObject(i)
+					if o.isJoint():
+						o.isJoint().setMotorOn()
+
+		if Engine.isKeyDown(EngineModule.Keys.K_9):
+			if Engine.isKeyDown(EngineModule.Keys.K_0):
+				print("set all motor target off")
+				objectsNumber = Engine.howManyObjects()
+				for i in range(0,objectsNumber):
+					o = Engine.getObject(i)
+					if o.isJoint():
+						o.isJoint().setMotorOff()
 
 	if key == EngineModule.Keys.K_Y:
+		print("change joint orientation")
 		j = None
 		body,joint = bodyjoint.getBodyJoint(selection.get())
 		if ((body and joint) and bodyjoint.isBodyJointConnected(body,joint)):
@@ -82,6 +153,7 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 			j.setAnchor1Orientation(newOri)
 
 	if key == EngineModule.Keys.K_U:
+		print("change joint limits")
 		j = None
 		body,joint = bodyjoint.getBodyJoint(selection.get())
 		if ((body and joint) and bodyjoint.isBodyJointConnected(body,joint)):
@@ -121,6 +193,7 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 			j.setLimits(yLimit,zLimit)
 
 	if key == EngineModule.Keys.K_Z:
+		print("change material and visibilty")
 		#if len(selection.get()) == 1:
 		#	o = selection.get()[0]
 		if (Engine.isKeyDown(EngineModule.Keys.K_1) or 

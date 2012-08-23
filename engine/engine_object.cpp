@@ -10,6 +10,7 @@ EngineObject::EngineObject(Engine* engine) :
 }
 
 EngineObject::~EngineObject(){
+	Logger::debug("engine object delete");
 	mEngine->deleteObject(this);
 }
 

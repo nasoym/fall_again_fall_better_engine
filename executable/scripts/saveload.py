@@ -45,26 +45,38 @@ def load(Engine,EngineModule,fileName):
 						if node.hasProp("anchor1"):
 							a = (node.prop("anchor1").split(","))
 							anchor1 = EngineModule.Vec3( float(a[0]),float(a[1]),float(a[2]))
+							o.setAnchor1(anchor1)
 						if node.hasProp("anchor2"):
 							a = (node.prop("anchor2").split(","))
 							anchor2 = EngineModule.Vec3( float(a[0]),float(a[1]),float(a[2]))
+							o.setAnchor2(anchor2)
 						if node.hasProp("anchor1orientation"):
 							a = (node.prop("anchor1orientation").split(","))
 							anchor1orientation = EngineModule.Quat( float(a[0]),float(a[1]),float(a[2]),float(a[3]))
+							o.setAnchor1Orientation(anchor1orientation)
 						if node.hasProp("anchor2orientation"):
 							a = (node.prop("anchor2orientation").split(","))
 							anchor2orientation = EngineModule.Quat( float(a[0]),float(a[1]),float(a[2]),float(a[3]))
+							o.setAnchor2Orientation(anchor2orientation)
 						ylimit=0
 						zlimit=0
 						if node.hasProp("ylimit"):
 							ylimit = node.prop("ylimit")
 						if node.hasProp("zlimit"):
 							zlimit = node.prop("zlimit")
-						o.setAnchor1(anchor1)
-						o.setAnchor2(anchor2)
-						o.setAnchor1Orientation(anchor1orientation)
-						o.setAnchor2Orientation(anchor2orientation)
 						o.setLimits(float(ylimit),float(zlimit))
+
+						if node.hasProp("motor_target"):
+							a = (node.prop("motor_target").split(","))
+							motorTarget = EngineModule.Quat( float(a[0]),float(a[1]),float(a[2]),float(a[3]))
+							o.setMotorTarget(motorTarget)
+						if node.hasProp("motor_on"):
+							motorOn = loadBool(node,"motor_on")
+							if motorOn:
+								o.setMotorOn()
+							else:
+								o.setMotorOff()
+
 						if node.hasProp("uuid"):
 							uuid = node.prop("uuid")
 							uuid = getFromUuidTable(Engine,uuidTable,uuid)
@@ -128,15 +140,14 @@ def load(Engine,EngineModule,fileName):
 									boneName,
 									Engine.getFromUuid(jointUuid))
 
-						if node.hasProp("material"):
-							materialName = node.prop("material")
-							o.setMaterialName(materialName)
-						#if node.hasProp("colour") and node.hasProp("alpha"):
-						else:
+						if node.hasProp("colour") and node.hasProp("alpha"):
 							alpha = float(node.prop("alpha"))
 							a = (node.prop("colour").split(","))
 							colour = EngineModule.Vec3( float(a[0]),float(a[1]),float(a[2]))
 							o.setColour(colour.X(),colour.Y(),colour.Z(),alpha)
+						if node.hasProp("material"):
+							materialName = node.prop("material")
+							o.setMaterialName(materialName)
 
 						finalShape = loadBool(node,"final_shape")
 						if finalShape:
@@ -157,15 +168,14 @@ def load(Engine,EngineModule,fileName):
 				loadPosition(node,Engine,EngineModule,o)
 				loadOrientation(node,Engine,EngineModule,o)
 
-				if node.hasProp("material"):
-					materialName = node.prop("material")
-					o.setMaterialName(materialName)
-				else:
-				#if node.hasProp("colour") and node.hasProp("alpha"):
+				if node.hasProp("colour") and node.hasProp("alpha"):
 					alpha = float(node.prop("alpha"))
 					a = (node.prop("colour").split(","))
 					colour = EngineModule.Vec3( float(a[0]),float(a[1]),float(a[2]))
 					o.setColour(colour.X(),colour.Y(),colour.Z(),alpha)
+				if node.hasProp("material"):
+					materialName = node.prop("material")
+					o.setMaterialName(materialName)
 
 				#if node.hasProp("local_size"):
 				#	a = (node.prop("local_size").split(","))
@@ -361,6 +371,8 @@ def save(Engine,EngineModule,fileName):
 			node.setProp("anchor2orientation",str(o.getAnchor2Orientation()))
 			node.setProp("ylimit",str(o.getYLimit()))
 			node.setProp("zlimit",str(o.getZLimit()))
+			node.setProp("motor_target",str(o.getMotorTarget()))
+			node.setProp("motor_on",str(o.isMotorOn()))
 
 		elif o.getType()==EngineModule.ObjectType.SPACECAGE:
 			saveGuiContainer(node,Engine,EngineModule,o)

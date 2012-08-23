@@ -12,7 +12,7 @@ class PhysicPlane;
 class EngineSpaceCage : public EngineGuiContainer {
     public:
         EngineSpaceCage(Engine*,Vec3&);
-        ~EngineSpaceCage();
+        virtual ~EngineSpaceCage();
 		virtual EngineSpaceCage*	 	isSpaceCage(){return this;}
 		virtual ObjectType		getType(){ return SPACECAGE;}
 

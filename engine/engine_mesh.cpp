@@ -98,7 +98,6 @@ void 	EngineMesh::calcLocalPosOfRootBone() {
 	}
 }
 
-
 void	EngineMesh::createAllDebugObjects(){
 	EngineGuiContainer* container;
 	std::vector<BoneBody>::iterator	iter;

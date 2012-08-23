@@ -1,5 +1,4 @@
-"""
-select:
+"""select:
 	mouseRight: create new selection
 	lshift: add to selection
 	lctrl: remove from selection
@@ -38,24 +37,28 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 
 		if selectedContainer:
 			if Engine.isKeyDown(EngineModule.Keys.K_LSHIFT):
+				print("add to selection")
 				selection.add(selectedContainer)
 
 			elif Engine.isKeyDown(EngineModule.Keys.K_LCONTROL):
+				print("remove from selection")
 				selection.remove(selectedContainer)
 				pass
 
 			else:
+				print("set selection")
 				selection.clear()
 				selection.add(selectedContainer)
 		else:
 			pass
+			print("clear selection")
 			selection.clear()
 
 	if key == EngineModule.Keys.K_BACK:
 		for o in selection.get()[:]:
 			selection.remove(o)
 			#TODO why is object deletion not working
-			#Engine.deleteObject(o)
+			Engine.deleteObject(o)
 
 	if key == EngineModule.Keys.K_I:
 		for o in selection.get():
@@ -69,6 +72,9 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 				print("    anchor 2: " + str(o.isJoint().getAnchor2()))
 				print("    anchor 1 orien: " + str(o.isJoint().getAnchor1Orientation().toAngles()))
 				print("    anchor 2 orien: " + str(o.isJoint().getAnchor2Orientation().toAngles()))
+				print("    motorOn: " + str(o.isJoint().isMotorOn()))
+				print("    motor target: " + str(o.isJoint().getMotorTarget().toAngles()))
+
 
 		body,joint = bodyjoint.getBodyJoint(selection.get())
 		if ((body and joint) and bodyjoint.isBodyJointConnected(body,joint)):

@@ -1,7 +1,8 @@
-"""
-bonescale:
-	g: scale joint pos (x+:1, y+:2, z+:3, x-:4, y-:5, z-:6)
-	h: scale body (x+:1, y+:2, z+:3, x-:4, y-:5, z-:6)
+"""bonescale:
+	g: scale joint pos 
+		(x+:1, y+:2, z+:3, x-:4, y-:5, z-:6)
+	h: scale body 
+		(x+:1, y+:2, z+:3, x-:4, y-:5, z-:6)
 	j: select next bone of body
 """
 
@@ -17,24 +18,9 @@ def keyDown(Engine,EngineModule,key,selection,objects):
 	pass
 
 def keyPressed(Engine,EngineModule,key,selection,objects):
-	pass
-
 
 	if key == EngineModule.Keys.K_G:
-		factor = EngineModule.Vec3(1,1,1)
-		if Engine.isKeyDown(EngineModule.Keys.K_1):
-			factor = EngineModule.Vec3(1.1,1,1)
-		elif Engine.isKeyDown(EngineModule.Keys.K_2):
-			factor = EngineModule.Vec3(1,1.1,1)
-		elif Engine.isKeyDown(EngineModule.Keys.K_3):
-			factor = EngineModule.Vec3(1,1,1.1)
-		elif Engine.isKeyDown(EngineModule.Keys.K_4):
-			factor = EngineModule.Vec3(0.9,1,1)
-		elif Engine.isKeyDown(EngineModule.Keys.K_5):
-			factor = EngineModule.Vec3(1,0.9,1)
-		elif Engine.isKeyDown(EngineModule.Keys.K_6):
-			factor = EngineModule.Vec3(1,1,0.9)
-
+		print("joint scale")
 
 		factor = EngineModule.Vec3(0,0,0)
 		if Engine.isKeyDown(EngineModule.Keys.K_1):
@@ -50,19 +36,18 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 		elif Engine.isKeyDown(EngineModule.Keys.K_6):
 			factor = EngineModule.Vec3(0,0,-0.1)
 
-
-
 		if len(selection.get()) == 2:
 			body,joint = bodyjoint.getBodyJoint(selection.get())
 			if ((body and joint) and bodyjoint.isBodyJointConnected(body,joint)):
 				currentJointPos = bodyjoint.getBodyJointAnchorSizePos(body,joint)
 				bodyjoint.bodyJointScaleJointPos(body,joint, 
-					currentJointPos + factor
+					currentJointPos + (currentJointPos * factor)
 					)
 
 	if key == EngineModule.Keys.K_H:
-		factor = EngineModule.Vec3(1,1,1)
+		print("body joint scale")
 
+		factor = EngineModule.Vec3(1,1,1)
 		if Engine.isKeyDown(EngineModule.Keys.K_1):
 			factor = EngineModule.Vec3(1.1,1,1)
 		elif Engine.isKeyDown(EngineModule.Keys.K_2):
@@ -84,6 +69,7 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 					)
 
 	if key == EngineModule.Keys.K_J:
+		print("select next joint")
 		if len(selection.get()) == 1:
 			body = None
 			if selection.get()[0].isBody():

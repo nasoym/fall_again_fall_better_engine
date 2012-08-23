@@ -11,6 +11,7 @@ import scripts.select as select
 import scripts.powered_doll as powered_doll
 import scripts.misc as misc
 import scripts.creators as creators
+import scripts.main as main
 
 class Selection(object):
 	def __init__(self):
@@ -59,6 +60,7 @@ modules.append(temp)
 modules.append(powered_doll)
 modules.append(misc)
 modules.append(creators)
+modules.append(main)
 
 def init():
 	for m in modules:

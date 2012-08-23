@@ -16,6 +16,7 @@ EngineGuiShape::EngineGuiShape(Engine* engine) :
 }
 
 EngineGuiShape::~EngineGuiShape(){
+	Logger::debug("guiShape delete");
     SceneNode*  parentNode = mNode->getParentSceneNode();
     mNode->removeAndDestroyAllChildren();
     parentNode->removeChild(mNode);

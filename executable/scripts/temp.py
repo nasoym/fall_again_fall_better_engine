@@ -1,19 +1,20 @@
-"""
-temp:
+"""temp:
 	t: run temp
 		1:load
 		2:save
-	o: move object by step size 20 (x+:1, y+:2, z+:3, x-:4, y-:5, z-:6) 
+	o: move object by step size 20 
+		(x+:1, y+:2, z+:3, x-:4, y-:5, z-:6) 
 		7: y*0.9
 		8: step size:1
 	x: work on body,joint: sizepos with all joints
 	b: work on body,joint: singual anchor pos 
 	n: set timingfactor 1:*0.9 2:*1.1
+	r:
+	m:
 """
 import mesh
 import createobjects as create
 import saveload
-
 import bodyjoint
 
 def keyDown(Engine,EngineModule,key,selection,objects):
@@ -21,6 +22,7 @@ def keyDown(Engine,EngineModule,key,selection,objects):
 
 def keyPressed(Engine,EngineModule,key,selection,objects):
 	if key == EngineModule.Keys.K_N:
+		print("set timing factor")
 		if Engine.isKeyDown(EngineModule.Keys.K_1):
 			Engine.setTimingFactor(Engine.getTimingFactor() * 0.9)
 			print("timingfactor: " +str(Engine.getTimingFactor()))
@@ -29,6 +31,7 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 			print("timingfactor: " +str(Engine.getTimingFactor()))
 
 	if key == EngineModule.Keys.K_X:
+		print("edit body joint pos,size")
 		body,joint = bodyjoint.getBodyJoint(selection.get())
 		if ((body and joint) and bodyjoint.isBodyJointConnected(body,joint)):
 			jointPos = bodyjoint.getBodyJointAnchorSizePos(body,joint)
@@ -36,7 +39,7 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 			print("body joint size pos: " + str(jointPos))
 			print("body size: " + str(bodySize))
 
-			#jointPos = EngineModule.Vec3(-1,-0.2,0.6) 
+			jointPos = EngineModule.Vec3(-153,3,90) 
 			#bodySize = EngineModule.Vec3(5,2.9,1.6) 
 
 			bodyjoint.bodyJointScaleJointPos(body,joint, jointPos)
@@ -48,6 +51,7 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 			print("body size: " + str(bodySize))
 
 	if key == EngineModule.Keys.K_B:
+		print("edit body joint pos")
 		body,joint = bodyjoint.getBodyJoint(selection.get())
 		if ((body and joint) and bodyjoint.isBodyJointConnected(body,joint)):
 			jointPos = bodyjoint.getBodyJointAnchorPos(body,joint)
@@ -55,8 +59,10 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 			print("body joint pos: " + str(jointPos))
 			print("body size: " + str(bodySize))
 
+			jointPos = EngineModule.Vec3(-153,3,90) 
 			#jointPos.x *= 1.1
-			bodySize = EngineModule.Vec3(15,1,15)
+			#bodySize = EngineModule.Vec3(15,1,15)
+			#jointPos.y *= 0.9
 
 			bodyjoint.setBodyJointAnchorPos(body,joint,jointPos)
 			body.setSize(bodySize)
@@ -67,6 +73,7 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 			print("body size: " + str(bodySize))
 
 	if key == EngineModule.Keys.K_O:
+		print("move selection")
 		#if len(selection.get()) == 1:
 		#	o = selection.get()[0]
 		for o in selection.get():
