@@ -149,6 +149,8 @@ BOOST_PYTHON_MODULE(EngineModule) {
 		.def("show",&EngineGuiShape::show)
 
 		.def("turnOffShadows",&EngineGuiShape::turnOffShadows)
+		.def("turnOnShadows",&EngineGuiShape::turnOnShadows)
+		.def("getCastShadows",&EngineGuiShape::getCastShadows)
 
 		;
 

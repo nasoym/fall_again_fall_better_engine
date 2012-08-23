@@ -44,10 +44,10 @@ def keyDown(Engine,EngineModule,key,selection,objects):
 def keyPressed(Engine,EngineModule,key,selection,objects):
 	pass
 	if key == EngineModule.Keys.K_K:
-		saveload.save(Engine,EngineModule,"xmlscene/file1.xml")
+		saveload.save(Engine,EngineModule,"xmlscene/file2.xml")
 
 	if key == EngineModule.Keys.K_L:
-		saveload.load(Engine,EngineModule,"xmlscene/file1.xml")
+		saveload.load(Engine,EngineModule,"xmlscene/file2.xml")
 
 
 

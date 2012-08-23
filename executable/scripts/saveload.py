@@ -128,14 +128,15 @@ def load(Engine,EngineModule,fileName):
 									boneName,
 									Engine.getFromUuid(jointUuid))
 
-						if node.hasProp("colour") and node.hasProp("alpha"):
+						if node.hasProp("material"):
+							materialName = node.prop("material")
+							o.setMaterialName(materialName)
+						#if node.hasProp("colour") and node.hasProp("alpha"):
+						else:
 							alpha = float(node.prop("alpha"))
 							a = (node.prop("colour").split(","))
 							colour = EngineModule.Vec3( float(a[0]),float(a[1]),float(a[2]))
 							o.setColour(colour.X(),colour.Y(),colour.Z(),alpha)
-						if node.hasProp("material"):
-							materialName = node.prop("material")
-							o.setMaterialName(materialName)
 
 						finalShape = loadBool(node,"final_shape")
 						if finalShape:
@@ -155,15 +156,16 @@ def load(Engine,EngineModule,fileName):
 				loadSize(node,Engine,EngineModule,o)
 				loadPosition(node,Engine,EngineModule,o)
 				loadOrientation(node,Engine,EngineModule,o)
-				if node.hasProp("colour") and node.hasProp("alpha"):
-					alpha = float(node.prop("alpha"))
-					a = (node.prop("colour").split(","))
-					colour = EngineModule.Vec3( float(a[0]),float(a[1]),float(a[2]))
-					o.setColour(colour.X(),colour.Y(),colour.Z(),alpha)
 
 				if node.hasProp("material"):
 					materialName = node.prop("material")
 					o.setMaterialName(materialName)
+				else:
+				#if node.hasProp("colour") and node.hasProp("alpha"):
+					alpha = float(node.prop("alpha"))
+					a = (node.prop("colour").split(","))
+					colour = EngineModule.Vec3( float(a[0]),float(a[1]),float(a[2]))
+					o.setColour(colour.X(),colour.Y(),colour.Z(),alpha)
 
 				#if node.hasProp("local_size"):
 				#	a = (node.prop("local_size").split(","))
@@ -189,6 +191,11 @@ def load(Engine,EngineModule,fileName):
 						o.setScaling1To1()
 					elif scalingType == "Scaling":
 						o.setScalingScaling()
+				castShadows = loadBool(node,"cast_shadows")
+				if castShadows:
+					o.turnOnShadows()
+				else:
+					o.turnOffShadows()
 
 				finalShape = loadBool(node,"final_shape")
 				if finalShape:
@@ -335,6 +342,7 @@ def save(Engine,EngineModule,fileName):
 			node.setProp("scaling",str(scalingType))
 
 			node.setProp("final_shape",str(o.isFinalShape()))
+			node.setProp("cast_shadows",str(o.getCastShadows()))
 
 			if o.hasColour():
 				node.setProp("colour",str(o.getColour()))

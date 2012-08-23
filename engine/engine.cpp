@@ -274,7 +274,8 @@ void Engine::setup(){
 
     // Create one viewport, entire window
     mViewport = mWindow->addViewport(mCamera);
-    mViewport->setBackgroundColour(ColourValue(0.5,0.3,0.2));
+    //mViewport->setBackgroundColour(ColourValue(0.5,0.3,0.2));
+    mViewport->setBackgroundColour(ColourValue(0,0,0));
     // Alter the camera aspect ratio to match the viewport
     mCamera->setAspectRatio( Real(mViewport->getActualWidth()) / Real(mViewport->getActualHeight()));
 

@@ -90,6 +90,10 @@ class EngineGuiShape : public EngineObject {
 		void				turnOffShadows(){
 								mEntity->setCastShadows(false);
 								}
+		void				turnOnShadows(){
+								mEntity->setCastShadows(true);
+								}
+		bool				getCastShadows(){return mEntity->getCastShadows();}
 
 	private:
         Entity*     		mEntity; 
