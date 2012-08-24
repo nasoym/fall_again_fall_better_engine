@@ -39,6 +39,7 @@ void PhysicsEngine::setup(){
 
     PxSceneDesc sceneDesc(mPhysics->getTolerancesScale());
     sceneDesc.gravity = PxVec3(0.0f,-9.81f,0.0f);
+    //sceneDesc.gravity = PxVec3(0.0f,-19.81f,0.0f);
 
 	if(!sceneDesc.cpuDispatcher) {
 		int cpusToUse = boost::thread::hardware_concurrency() - 1;

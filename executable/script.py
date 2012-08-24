@@ -53,13 +53,15 @@ objects = {}
 selectContainers = Selection() 
 
 modules = []
-modules.append(select)
 modules.append(navigate)
+"""
+modules.append(select)
 modules.append(bonescale)
 modules.append(temp)
 modules.append(powered_doll)
 modules.append(misc)
 modules.append(creators)
+"""
 modules.append(main)
 
 def init():
