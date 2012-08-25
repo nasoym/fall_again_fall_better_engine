@@ -53,6 +53,12 @@ class EngineJoint : public EngineGuiContainer {
 		EngineBody*		getBody1();
 		EngineBody*		getBody2();
 
+		//debug
+        void        dsetMotorSpring(float);
+        void        dsetMotorDamping(float);
+        void        dsetMotorAccel(bool);
+        void        dsetContactDistance(float);
+
 	private:
 		PhysicJoint*	mJoint;
 		EngineBody*		mBody1;

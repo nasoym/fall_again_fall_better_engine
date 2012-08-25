@@ -238,6 +238,13 @@ BOOST_PYTHON_MODULE(EngineModule) {
 		.def("getMotorTarget",&EngineJoint::getMotorTarget)
 		.def("getBody1",&EngineJoint::getBody1,return_value_policy<reference_existing_object>() )
 		.def("getBody2",&EngineJoint::getBody2,return_value_policy<reference_existing_object>() )
+
+
+		.def("dsetMotorSpring",&EngineJoint::dsetMotorSpring)
+		.def("dsetMotorDamping",&EngineJoint::dsetMotorDamping)
+		.def("dsetMotorAccel",&EngineJoint::dsetMotorAccel)
+		.def("dsetContactDistance",&EngineJoint::dsetContactDistance)
+
 		;
 
 

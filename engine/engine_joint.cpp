@@ -62,4 +62,20 @@ Quat EngineJoint::getOrientation(){
 	return jointOrientation;
 }
 
+void  EngineJoint::dsetMotorSpring(float value){
+	mJoint->dsetMotorSpring(value);
+}
+
+void  EngineJoint::dsetMotorDamping(float value){
+	mJoint->dsetMotorDamping(value);
+}
+
+void  EngineJoint::dsetMotorAccel(bool value){
+	mJoint->dsetMotorAccel(value);
+}
+
+void  EngineJoint::dsetContactDistance(float value){
+	mJoint->dsetContactDistance(value);
+}
+
 
