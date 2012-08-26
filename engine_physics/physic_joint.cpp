@@ -200,14 +200,23 @@ float PhysicJoint::getYLimit() {
 
 void PhysicJoint::dsetMotorSpring(float spring) {
     mDMotorSpring = spring;
+	if (isMotorOn()){
+		setMotorOn();
+	}
 }
 
 void PhysicJoint::dsetMotorDamping(float damping) {
     mDMotorDamping = damping;
+	if (isMotorOn()){
+		setMotorOn();
+	}
 }
 
 void PhysicJoint::dsetMotorAccel(bool accel) {
     mDMotorAccel = accel;
+	if (isMotorOn()){
+		setMotorOn();
+	}
 }
 
 void PhysicJoint::dsetContactDistance(float value) {

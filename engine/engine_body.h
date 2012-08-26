@@ -42,6 +42,9 @@ class EngineBody : public EngineGuiContainer {
 		virtual void		addForce(Vec3);	
 
 
+		void	dsetSolverIterations(int i1,int i2);
+		void	setMass(float mass);
+		float	getMass();
 
 
 	private:

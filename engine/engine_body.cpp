@@ -86,3 +86,16 @@ void		EngineBody::addForce(Vec3 force){
 	getPhysicBody()->addForce(force);
 }
 
+void	EngineBody::dsetSolverIterations(int i1,int i2){
+	getPhysicBody()->dsetSolverIterations(i1,i2);
+}
+
+void	EngineBody::setMass(float mass){
+	getPhysicBody()->setMass(mass);
+}
+
+float	EngineBody::getMass(){
+	return getPhysicBody()->getMass();
+}
+
+

@@ -11,7 +11,7 @@ def getFromUuidTable(Engine,uuidTable,uuid):
 		addToUuidTable(Engine,uuidTable,uuid)
 		return uuidTable[uuid]
 
-def load(Engine,EngineModule,fileName):
+def load(Engine,EngineModule,fileName,objects):
 	doc = libxml2.parseFile(fileName)
 	xctxt = doc.xpathNewContext()
 	res = xctxt.xpathEval("/scene/*")
@@ -274,7 +274,70 @@ def load(Engine,EngineModule,fileName):
 					Engine.setCameraOrientation(orientation)
 				res.remove(node)
 
-def save(Engine,EngineModule,fileName):
+			elif node.name=="OBJECTS":
+				if node.hasProp("name"):
+					name = node.prop("name")
+					if node.hasProp("content"):
+						contentString = node.prop("content")
+						contentList = contentString.split(":",1)
+						contentType = contentList[0]
+						contentValue = contentList[1]
+						content = translateType(Engine,EngineModule,contentType,contentValue,uuidTable)
+						print("name: " + name)
+						print("content: " + str(content))
+						if content:
+							if ( (name in objects) and (type(content) == list)):
+							#if ( (name in objects) and (contentType == "list")):
+								for e in content:
+									objects[name].append(e)
+							else:
+								objects[name] = content
+							res.remove(node)
+						else:
+							print("not found")
+				else:
+					res.remove(node)
+
+
+def translateType(Engine,EngineModule,typeString,valueString,uuidTable):
+	if typeString == "str":
+		return str(valueString)
+	elif typeString == "int":
+		return int(valueString)
+	elif typeString == "float":
+		return float(valueString)
+	elif typeString == "engineobject":
+		objectUuid = getFromUuidTable(Engine,uuidTable,valueString)
+		if Engine.getFromUuid(objectUuid):
+			return Engine.getFromUuid(objectUuid)
+		else:
+			objectsNumber = Engine.howManyObjects()
+			for i in range(0,objectsNumber):
+				o = Engine.getObject(i)
+			return None
+
+	elif typeString == "list":
+		content = []
+		stringArray = (valueString
+			.replace("[","")
+			.replace("]","")
+			.replace("'","")
+			.replace(" ","")
+			.split(","))
+		if (len(stringArray)==1 and stringArray[0]==''):
+			stringArray = []
+		for e in stringArray:
+			contentList = e.split(":",1)
+			contentType = contentList[0]
+			contentValue = contentList[1]
+			element = translateType(Engine,EngineModule,contentType,contentValue,uuidTable)
+			if not element:
+				content = None
+				break
+			content.append(element)
+		return content
+
+def save(Engine,EngineModule,fileName,objects):
 	doc = libxml2.newDoc("1.0")
 	rootNode = libxml2.newNode("scene")
 	doc.addChild(rootNode)
@@ -385,7 +448,28 @@ def save(Engine,EngineModule,fileName):
 	node.setProp("orientation",str(Engine.getCameraOrientation()))
 	doc.getRootElement().addChild(node)
 
+	for k,v in objects.items():
+		node = libxml2.newNode("OBJECTS")
+		node.setProp("name",str(k))
+		node.setProp("content",str(typeToString(Engine,EngineModule,v)))
+		doc.getRootElement().addChild(node)
+
 	doc.saveFormatFile(fileName,1)
+
+def typeToString(Engine,EngineModule,value):
+	if type(value) == list:
+		stringList = []
+		for e in value:
+			stringList.append( typeToString(Engine,EngineModule,e))
+		return "list:" + str(stringList)
+	elif type(value) == str:
+		return "str:"+str(value)
+	elif type(value) == int:
+		return "int:"+str(value)
+	elif type(value) == float:
+		return "float:"+str(value)
+	if issubclass(value.__class__,EngineModule.EngineObject):
+		return "engineobject:" + str(value.readUuid())
 
 def loadStringArray(node,attributeName):
 	if node.hasProp(attributeName):

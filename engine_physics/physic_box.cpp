@@ -46,3 +46,18 @@ void		PhysicBox::addForce(Vec3 force){
 		);
 }
 
+void PhysicBox::dsetSolverIterations(int i1,int i2){
+	mBody->setSolverIterationCounts(i1,i2);
+    wakeUp();
+}
+
+void PhysicBox::setMass(float mass){
+	mBody->setMass(mass);
+    PxRigidBodyExt::updateMassAndInertia(*mBody, 1.0f);
+    wakeUp();
+}
+
+float PhysicBox::getMass(){
+	return mBody->getMass();
+}
+

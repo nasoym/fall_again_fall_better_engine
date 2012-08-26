@@ -49,11 +49,11 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 	pass
 	if key == EngineModule.Keys.K_K:
 		print("save scene")
-		saveload.save(Engine,EngineModule,"xmlscene/file2.xml")
+		saveload.save(Engine,EngineModule,"xmlscene/file2.xml",objects)
 
 	if key == EngineModule.Keys.K_L:
 		print("load scene")
-		saveload.load(Engine,EngineModule,"xmlscene/file2.xml")
+		saveload.load(Engine,EngineModule,"xmlscene/file2.xml",objects)
 
 	if key == EngineModule.Keys.K_R:
 		print("change joint motor target orientation")

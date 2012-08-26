@@ -184,6 +184,11 @@ BOOST_PYTHON_MODULE(EngineModule) {
 		.def("addForce",&EngineBody::addForce)
 		.def("howManyJoints",&EngineBody::howManyJoints)
 		.def("getJoint",&EngineBody::getJoint,return_value_policy<reference_existing_object>())
+
+		.def("dsetSolverIterations",&EngineBody::dsetSolverIterations)
+		.def("setMass",&EngineBody::setMass)
+		.def("getMass",&EngineBody::getMass)
+
 		;
 
 	class_<EngineStaticBody,bases<EngineBody> >("EngineStaticBody", init<Engine*>())

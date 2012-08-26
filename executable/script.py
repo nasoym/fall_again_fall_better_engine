@@ -67,6 +67,8 @@ def init():
 		if hasattr(m,"init"):
 			m.init(Engine,EngineModule,objects)
 
+	print("------------------------------------------------------------------ready")
+
 def keyDown(key):
 	for m in modules:
 		if hasattr(m,"keyDown"):
