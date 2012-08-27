@@ -286,7 +286,7 @@ def load(Engine,EngineModule,fileName,objects):
 						print("name: " + name)
 						print("content: " + str(content))
 						if content:
-							objects.append(name,e)
+							objects.append(name,content)
 							res.remove(node)
 						else:
 							print("not found")

@@ -22,12 +22,34 @@ def keyDown(Engine,EngineModule,key,selection,objects):
 
 def keyPressed(Engine,EngineModule,key,selection,objects):
 
+	"""
+	if key == EngineModule.Keys.K_COMMA:
+	if key == EngineModule.Keys.K_PERIOD:
+	if key == EngineModule.Keys.K_SLASH:
+
+	if key == EngineModule.Keys.K_SEMICOLON:
+	if key == EngineModule.Keys.K_APOSTROPHE:
+	if key == EngineModule.Keys.K_BACKSLASH:
+
+	if key == EngineModule.Keys.K_LBRACKET:
+	if key == EngineModule.Keys.K_RBRACKET:
+
+	if key == EngineModule.Keys.K_MINUS:
+	if key == EngineModule.Keys.K_EQUALS:
+	"""
+	if key == EngineModule.Keys.K_SEMICOLON:
+		parts = ["feet","lleg","uleg","hip","root","belly",
+			"breast","shoulder","neck","uarm","larm","head","hand"]
+
+		for p in parts:
+			bodyList = objects.get()[p]
+			print(str(p) + " : " + str(bodyList))
+
 	if key == EngineModule.Keys.K_RETURN:
-		objects.append('eins',
-			[ e for e in selection.get()] )
+		objects.append('base', [e for e in selection.get()])
 
 	if key == EngineModule.Keys.K_SPACE:
-		print(objects.get())
+		print(objects)
 
 	if key == EngineModule.Keys.K_M:
 		"""
@@ -39,12 +61,6 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 		objectsNumber = Engine.howManyObjects()
 		for i in range(0,objectsNumber):
 			o = Engine.getObject(i)
-
-			print(type(o))
-			print(o.__class__)
-			print(o.__class__.__name__)
-			print(EngineModule.EngineObject)
-			print(issubclass(o.__class__,EngineModule.EngineObject))
 
 			if o.isJoint():
 				j = o.isJoint()

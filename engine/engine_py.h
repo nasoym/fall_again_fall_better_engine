@@ -56,21 +56,21 @@ BOOST_PYTHON_MODULE(EngineModule) {
 
 	.value("K_TAB",K_TAB)
 	.value("K_BACK",K_BACK)
-	.value("K_BACKSLASH",K_BACKSLASH)
 	.value("K_DELETE",K_DELETE)
 
 	.value("K_COMMA",K_COMMA)
 	.value("K_PERIOD",K_PERIOD)
 	.value("K_SLASH",K_SLASH)
 
-	.value("K_MINUS",K_MINUS)
-	.value("K_EQUALS",K_EQUALS)
-
 	.value("K_SEMICOLON",K_SEMICOLON)
 	.value("K_APOSTROPHE",K_APOSTROPHE)
+	.value("K_BACKSLASH",K_BACKSLASH)
 
 	.value("K_LBRACKET",K_LBRACKET)
 	.value("K_RBRACKET",K_RBRACKET)
+
+	.value("K_MINUS",K_MINUS)
+	.value("K_EQUALS",K_EQUALS)
 
 	.value("K_SPACE",K_SPACE)
 	.value("K_RETURN",K_RETURN)

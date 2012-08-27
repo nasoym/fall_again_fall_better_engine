@@ -52,22 +52,23 @@ class Objects(object):
 	def __init__(self):
 		self.objects = {}
 
+	def __str__(self):
+		text = ""
+		for k,v in self.objects.items():
+			text += str(k) + " : " + str(v)
+			text += "\n"
+		return text
+
 	def append(self,key,value):
-		print("key: " + str(key) + " value: " + str(value))
 		if key in self.objects:
 			if not type(self.objects[key]) == list:
-				print("old value was not list")
 				self.objects[key] = [self.objects[key]]
 			if type(value) == list:
-				print("value is list")
 				for e in value[:]:
-					print("add element: " + str(value))
 					self.objects[key].append(e)
 			else:
-				print("add value: " + str(value))
 				self.objects[key].append(value)
 		else:
-			print("key not in objects")
 			self.objects[key] = value
 
 	def get(self):
