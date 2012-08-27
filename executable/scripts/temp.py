@@ -23,18 +23,11 @@ def keyDown(Engine,EngineModule,key,selection,objects):
 def keyPressed(Engine,EngineModule,key,selection,objects):
 
 	if key == EngineModule.Keys.K_RETURN:
-		if (('eins' in objects) and (type(objects['eins'] == list)) ):
-			print("will try to add all selection to eins")
-			print("sel: " + str(selection.get()))
-			for o in selection.get()[:]:
-				print("got element: " +str(o))
-				objects['eins'].append(o)
-				#objects['eins'].append(4)
-		else:
-			objects['eins'] = selection.get()
+		objects.append('eins',
+			[ e for e in selection.get()] )
 
 	if key == EngineModule.Keys.K_SPACE:
-		print(objects)
+		print(objects.get())
 
 	if key == EngineModule.Keys.K_M:
 		"""

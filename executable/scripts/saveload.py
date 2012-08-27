@@ -286,12 +286,7 @@ def load(Engine,EngineModule,fileName,objects):
 						print("name: " + name)
 						print("content: " + str(content))
 						if content:
-							if ( (name in objects) and (type(content) == list)):
-							#if ( (name in objects) and (contentType == "list")):
-								for e in content:
-									objects[name].append(e)
-							else:
-								objects[name] = content
+							objects.append(name,e)
 							res.remove(node)
 						else:
 							print("not found")
@@ -448,7 +443,7 @@ def save(Engine,EngineModule,fileName,objects):
 	node.setProp("orientation",str(Engine.getCameraOrientation()))
 	doc.getRootElement().addChild(node)
 
-	for k,v in objects.items():
+	for k,v in objects.get().items():
 		node = libxml2.newNode("OBJECTS")
 		node.setProp("name",str(k))
 		node.setProp("content",str(typeToString(Engine,EngineModule,v)))

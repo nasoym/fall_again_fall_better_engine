@@ -48,8 +48,32 @@ class Selection(object):
 	def get(self):
 		return self.selected
 
+class Objects(object):
+	def __init__(self):
+		self.objects = {}
 
-objects = {}
+	def append(self,key,value):
+		print("key: " + str(key) + " value: " + str(value))
+		if key in self.objects:
+			if not type(self.objects[key]) == list:
+				print("old value was not list")
+				self.objects[key] = [self.objects[key]]
+			if type(value) == list:
+				print("value is list")
+				for e in value[:]:
+					print("add element: " + str(value))
+					self.objects[key].append(e)
+			else:
+				print("add value: " + str(value))
+				self.objects[key].append(value)
+		else:
+			print("key not in objects")
+			self.objects[key] = value
+
+	def get(self):
+		return self.objects
+
+objects = Objects()
 selectContainers = Selection() 
 
 modules = []

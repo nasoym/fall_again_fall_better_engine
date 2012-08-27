@@ -14,7 +14,8 @@ def createMainRagdoll(Engine,EngineModule):
 	return doll
 
 def init(Engine,EngineModule,objects):
-	objects["powered_dolls"] = []
+	objects.append("powered_dolls",[])
+	pass
 
 def keyDown(Engine,EngineModule,key,selection,objects):
 	pass
@@ -23,7 +24,7 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 	pass
 	if key == EngineModule.Keys.K_V:
 		print("key3 powered dolls")
-		dolls = objects["powered_dolls"]
+		dolls = objects.get()["powered_dolls"]
 		for d in dolls:
 			for k in d.parts.keys():
 				if k != "base":
@@ -63,7 +64,7 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 			dolls.append(doll)
 
 	if key == EngineModule.Keys.K_SPACE:
-		dolls = objects["powered_dolls"]
+		dolls = objects.get()["powered_dolls"]
 		for doll in dolls:
 			if doll.powered:
 				Engine.setTimingFactor(0.55)
