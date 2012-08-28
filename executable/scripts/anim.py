@@ -64,6 +64,13 @@ def init(Engine,EngineModule,objects):
 	objects.get()["animtime"] = 0
 	objects.get()["animindex"] = 0
 	objects.get()["animname"] = ""
+	objects.get()["anims"] = 0
+
+	objects.setUnsavable("anims")
+	objects.setUnsavable("animstate")
+	objects.setUnsavable("animtime")
+	objects.setUnsavable("animindex")
+	objects.setUnsavable("animname")
 
 def guiUpdate(Engine,EngineModule,selection,objects):
 	if type(objects.get()["animstate"]) == list:

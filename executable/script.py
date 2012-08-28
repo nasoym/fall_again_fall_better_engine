@@ -1,8 +1,3 @@
-#import inspect
-
-#import scripts.createobjects as create
-#import scripts.ragdoll as ragdoll
-#import scripts.saveload as saveload
 
 import scripts.temp as temp
 import scripts.navigate as navigate
@@ -52,6 +47,7 @@ class Selection(object):
 class Objects(object):
 	def __init__(self):
 		self.objects = {}
+		self.unsavable = []
 
 	def __str__(self):
 		text = ""
@@ -72,6 +68,15 @@ class Objects(object):
 		else:
 			self.objects[key] = value
 
+	def setUnsavable(self,key):
+		if not key in self.unsavable:
+			self.unsavable.append(key)
+
+	def	isSavable(self,key):
+		if key in self.unsavable:
+			return False
+		return True
+
 	def get(self):
 		return self.objects
 
@@ -83,7 +88,7 @@ modules.append(navigate)
 modules.append(select)
 modules.append(bonescale)
 modules.append(temp)
-modules.append(powered_doll)
+#modules.append(powered_doll)
 modules.append(misc)
 modules.append(creators)
 modules.append(anim)
@@ -99,9 +104,7 @@ def init():
 	for m in modules:
 		if hasattr(m,"guiUpdate"):
 			#guiUpdates.append(m.guiUpdate)
-			guiUpdates.append(
-				getattr(m,"guiUpdate"))
-
+			guiUpdates.append(getattr(m,"guiUpdate"))
 	print("------------------------------------------------------------------ready")
 
 def keyDown(key):

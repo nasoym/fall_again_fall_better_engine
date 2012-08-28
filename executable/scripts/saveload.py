@@ -287,10 +287,10 @@ def load(Engine,EngineModule,fileName,objects):
 						#print("content: " + str(content))
 						if content:
 							objects.append(name,content)
-							res.remove(node)
 						else:
 							pass
 							#print("not found")
+						res.remove(node)
 				else:
 					res.remove(node)
 
@@ -445,10 +445,11 @@ def save(Engine,EngineModule,fileName,objects):
 	doc.getRootElement().addChild(node)
 
 	for k,v in objects.get().items():
-		node = libxml2.newNode("OBJECTS")
-		node.setProp("name",str(k))
-		node.setProp("content",str(typeToString(Engine,EngineModule,v)))
-		doc.getRootElement().addChild(node)
+		if objects.isSavable(k):
+			node = libxml2.newNode("OBJECTS")
+			node.setProp("name",str(k))
+			node.setProp("content",str(typeToString(Engine,EngineModule,v)))
+			doc.getRootElement().addChild(node)
 
 	doc.saveFormatFile(fileName,1)
 
