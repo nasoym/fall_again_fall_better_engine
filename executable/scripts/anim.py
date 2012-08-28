@@ -165,14 +165,18 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 			objects.get()["animtime"] = Engine.getTime()
 			objects.get()["animname"] = "falling"
 
+
 	if key == EngineModule.Keys.K_SEMICOLON:
 		parts = ["feet","lleg","uleg","hip","root","belly",
 			"breast","shoulder","neck","uarm","larm","head","hand"]
 		i = len(parts)
-		print("resetting all masses")
+		print("resetting body masses")
 		for p in parts:
 			bodyList = objects.get()[p]
 			for b in bodyList:
+				#newMass = i * 50 + 100
+				#newMass = i * 5 + 0
+				#newMass = 5
 				b.resetMass()
 				newMass = b.getMass() * 0.1
 				print(str(i) + " old: " + str(b.getMass()) + " new: " + str(newMass))
