@@ -245,6 +245,18 @@ void PhysicJoint::setMotorOn() {
     mActor2->wakeUp();
 }
 
+void PhysicJoint::setMotorValues(float spring,float damping,bool accel) {
+    mMotorOn = true;
+    mJoint->setDrive(PxD6Drive::eSWING,PxD6JointDrive(
+        spring,
+        damping,
+        PX_MAX_F32,
+        accel
+        ));
+    mActor1->wakeUp();
+    mActor2->wakeUp();
+}
+
 void PhysicJoint::setMotorOff() {
     mMotorOn = false;
     mJoint->setDrive(PxD6Drive::eSWING,PxD6JointDrive(

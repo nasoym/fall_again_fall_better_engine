@@ -47,6 +47,8 @@ class EngineJoint : public EngineGuiContainer {
         void        setMotorTarget(Quat& quat){mJoint->setMotorTarget(quat);}
         Quat        getMotorTarget(){return mJoint->getMotorTarget();}
 
+		void 		setMotorValues(float spring,float damping,bool accel);
+
 		virtual EngineJoint*			isJoint(){return this;}
 		virtual ObjectType		getType(){ return JOINT;}
 

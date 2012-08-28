@@ -98,7 +98,6 @@ def init():
 
 	for m in modules:
 		if hasattr(m,"guiUpdate"):
-			print("found guiUpdate in: " + str(m))
 			#guiUpdates.append(m.guiUpdate)
 			guiUpdates.append(
 				getattr(m,"guiUpdate"))

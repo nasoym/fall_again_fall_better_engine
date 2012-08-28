@@ -74,6 +74,8 @@ class PhysicJoint : public BaseJoint {
         float       getYLimit();
         float       getZLimit();
 
+		void 		setMotorValues(float spring,float damping,bool accel);
+
         void        setMotorOn();
         void        setMotorOff();
         bool        isMotorOn();

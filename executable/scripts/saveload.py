@@ -283,13 +283,14 @@ def load(Engine,EngineModule,fileName,objects):
 						contentType = contentList[0]
 						contentValue = contentList[1]
 						content = translateType(Engine,EngineModule,contentType,contentValue,uuidTable)
-						print("name: " + name)
-						print("content: " + str(content))
+						#print("name: " + name)
+						#print("content: " + str(content))
 						if content:
 							objects.append(name,content)
 							res.remove(node)
 						else:
-							print("not found")
+							pass
+							#print("not found")
 				else:
 					res.remove(node)
 

@@ -78,4 +78,8 @@ void  EngineJoint::dsetContactDistance(float value){
 	mJoint->dsetContactDistance(value);
 }
 
+void 		EngineJoint::setMotorValues(float spring,float damping,bool accel){
+	mJoint->setMotorValues(spring,damping,accel);
+}
+
 
