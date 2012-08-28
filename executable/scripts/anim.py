@@ -1,7 +1,7 @@
 
 
 
-FallingAnimTime = 1000
+FallingAnimTime = 500
 FallingAnim = [
 	{'groups':["uarm-joint","larm-joint","head-joint","hand-joint"],
 		'time':FallingAnimTime,
@@ -52,14 +52,14 @@ RisingAnim = [
 			groupPart.setMotorValues(RisingSpring,RisingDamping,True))]
 		},
 	{'groups':["breast-joint","shoulder-joint","neck-joint"],
-		'time':RisingAnimTime,
+		'time':RisingAnimTime * 0.7,
 		'start':[(lambda Engine,EngineModule,objects,groupPart:
 			groupPart.setMotorValues(RisingSpring,RisingDamping,True))],
 		'end':[(lambda Engine,EngineModule,objects,groupPart:
 			groupPart.setMotorValues(RisingSpring,RisingDamping,True))]
 		},
 	{'groups':["uarm-joint","larm-joint","head-joint","hand-joint"],
-		'time':RisingAnimTime,
+		'time':RisingAnimTime * 0.4,
 		'start':[(lambda Engine,EngineModule,objects,groupPart:
 			groupPart.setMotorValues(RisingSpring,RisingDamping,True))],
 		'end':[(lambda Engine,EngineModule,objects,groupPart:
@@ -75,7 +75,7 @@ animLists["rising"] = RisingAnim
 def runMethods(Engine,EngineModule,objects,animList,index,methodName):
 	for groupName in animList[index]['groups']:
 		partsList = objects.get()[groupName]
-		print("group: " + str(groupName))
+		#print("group: " + str(groupName))
 		for part in partsList:
 			methods = animList[index][methodName]
 			for method in methods:
@@ -86,33 +86,29 @@ def playAnimation(Engine,EngineModule,objects,animData):
 	if animName in animLists:
 		startTime = animData["starttime"]
 		animIndex = animData["index"]
-		
 		animList = animLists[animName]
 		animListSize = len(animList)
 		currentTime = Engine.getTime()
-
 		if animIndex < animListSize:
 			endTime = startTime + animList[animIndex]['time']
 			if ((currentTime > startTime) and
 				(currentTime < endTime)):
 				if animIndex != 0:
-					print("run anim end: " + str(animName) + " index : " + str(animIndex-1))
+					#print("run anim end: " + str(animName) + " index : " + str(animIndex-1))
 					runMethods(Engine,EngineModule,
 						objects,animList,animIndex-1,"end")
-
-				print("run anim start: " + str(animName) + " index : " + str(animIndex))
+				#print("run anim start: " + str(animName) + " index : " + str(animIndex))
 				runMethods(Engine,EngineModule,
 					objects,animList,animIndex,"start")
-
 				animData["index"] = animIndex + 1
 				animData["starttime"] = endTime
 		elif animIndex == animListSize:
 			if currentTime > startTime:
-				print("run anim end: " + str(animName) + " index : " + str(animIndex-1))
+				#print("run anim end: " + str(animName) + " index : " + str(animIndex-1))
 				runMethods(Engine,EngineModule,
 					objects,animList,animIndex-1,"end")
 				animData["index"] = animIndex + 1
-				print("done")
+				#print("done")
 
 def init(Engine,EngineModule,objects):
 	objects.get()["anims"] = {}
