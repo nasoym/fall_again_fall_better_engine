@@ -1,49 +1,51 @@
 
 
 
+FallingAnimTime = 1000
 FallingAnim = [
 	{'groups':["foot-joint","lleg-joint","uleg-joint"],
-		'time':2500,
+		'time':FallingAnimTime,
 		'start':[(lambda Engine,EngineModule,objects,groupPart:groupPart.setMotorValues(0,0,True))],
 		'end':[(lambda Engine,EngineModule,objects,groupPart:groupPart.setMotorValues(0,0,True))]
 		},
 	{'groups':["hip-joint","root-joint","belly-joint"],
-		'time':2500,
+		'time':FallingAnimTime,
 		'start':[(lambda Engine,EngineModule,objects,groupPart:groupPart.setMotorValues(0,0,True))],
 		'end':[(lambda Engine,EngineModule,objects,groupPart:groupPart.setMotorValues(0,0,True))]
 		},
 	{'groups':["breast-joint","shoulder-joint","neck-joint"],
-		'time':2500,
+		'time':FallingAnimTime,
 		'start':[(lambda Engine,EngineModule,objects,groupPart:groupPart.setMotorValues(0,0,True))],
 		'end':[(lambda Engine,EngineModule,objects,groupPart:groupPart.setMotorValues(0,0,True))]
 		},
 	{'groups':["uarm-joint","larm-joint","head-joint","hand-joint"],
-		'time':2500,
+		'time':FallingAnimTime,
 		'start':[(lambda Engine,EngineModule,objects,groupPart:groupPart.setMotorValues(0,0,True))],
 		'end':[(lambda Engine,EngineModule,objects,groupPart:groupPart.setMotorValues(0,0,True))]
 		}
 	]
 
+RisingAnimTime = 500
 RisingSpring=(10 ** 38) * 1.4
 RisingDamping=(10 ** 38) * 1
 RisingAnim = [
 	{'groups':["foot-joint","lleg-joint","uleg-joint"],
-		'time':2500,
+		'time':RisingAnimTime,
 		'start':[(lambda Engine,EngineModule,objects,groupPart:groupPart.setMotorValues(RisingSpring,RisingDamping,True))],
 		'end':[(lambda Engine,EngineModule,objects,groupPart:groupPart.setMotorValues(RisingSpring,RisingDamping,True))]
 		},
 	{'groups':["hip-joint","root-joint","belly-joint"],
-		'time':2500,
+		'time':RisingAnimTime,
 		'start':[(lambda Engine,EngineModule,objects,groupPart:groupPart.setMotorValues(RisingSpring,RisingDamping,True))],
 		'end':[(lambda Engine,EngineModule,objects,groupPart:groupPart.setMotorValues(RisingSpring,RisingDamping,True))]
 		},
 	{'groups':["breast-joint","shoulder-joint","neck-joint"],
-		'time':2500,
+		'time':RisingAnimTime,
 		'start':[(lambda Engine,EngineModule,objects,groupPart:groupPart.setMotorValues(RisingSpring,RisingDamping,True))],
 		'end':[(lambda Engine,EngineModule,objects,groupPart:groupPart.setMotorValues(RisingSpring,RisingDamping,True))]
 		},
 	{'groups':["uarm-joint","larm-joint","head-joint","hand-joint"],
-		'time':2500,
+		'time':RisingAnimTime,
 		'start':[(lambda Engine,EngineModule,objects,groupPart:groupPart.setMotorValues(RisingSpring,RisingDamping,True))],
 		'end':[(lambda Engine,EngineModule,objects,groupPart:groupPart.setMotorValues(RisingSpring,RisingDamping,True))]
 		}
@@ -145,9 +147,6 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 	if key == EngineModule.Keys.K_APOSTROPHE:
 
 		animstate = objects.get()["animstate"]
-		print("animstate: " + str(animstate))
-		print("time: " + str(Engine.getTime()))
-
 		if animstate == AnimStateIdle:
 			objects.get()["animstate"] = AnimStateFalling
 			objects.get()["animindex"] = 0
@@ -166,29 +165,24 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 			objects.get()["animtime"] = Engine.getTime()
 			objects.get()["animname"] = "falling"
 
-
 	if key == EngineModule.Keys.K_SEMICOLON:
 		parts = ["feet","lleg","uleg","hip","root","belly",
 			"breast","shoulder","neck","uarm","larm","head","hand"]
-		#i = 1
 		i = len(parts)
+		print("resetting all masses")
 		for p in parts:
 			bodyList = objects.get()[p]
-			#print(str(p) + " : " + str(bodyList))
-
 			for b in bodyList:
-				#newMass = i * 50 + 100
-				newMass = i * 5 + 0
-				newMass = 5
+				b.resetMass()
 				newMass = b.getMass() * 0.1
-				print(str(i) + " - " + str(b.getMass()) + " : " + str(newMass))
+				print(str(i) + " old: " + str(b.getMass()) + " new: " + str(newMass))
 				b.setMass(newMass)
-				
 			i -= 1
 
 	if key == EngineModule.Keys.K_RETURN:
+		pass
 		#objects.append('hand-joint', [e for e in selection.get()])
-		objects.get()["belly-joint"] = [e for e in selection.get()]
+		#objects.get()["belly-joint"] = [e for e in selection.get()]
 
 	if key == EngineModule.Keys.K_SPACE:
 		print(objects)

@@ -38,6 +38,7 @@ class PhysicBody {
 		virtual void 		dsetSolverIterations(int i1,int i2){}
 		virtual void 		setMass(float mass){}
 		virtual float		getMass(){return 0;}
+		virtual void		resetMass(){}
 
 };
 #endif

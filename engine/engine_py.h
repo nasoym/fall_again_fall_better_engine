@@ -187,6 +187,7 @@ BOOST_PYTHON_MODULE(EngineModule) {
 
 		.def("dsetSolverIterations",&EngineBody::dsetSolverIterations)
 		.def("setMass",&EngineBody::setMass)
+		.def("resetMass",&EngineBody::resetMass)
 		.def("getMass",&EngineBody::getMass)
 
 		;

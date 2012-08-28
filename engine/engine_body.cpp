@@ -94,6 +94,10 @@ void	EngineBody::setMass(float mass){
 	getPhysicBody()->setMass(mass);
 }
 
+void	EngineBody::resetMass(){
+	getPhysicBody()->resetMass();
+}
+
 float	EngineBody::getMass(){
 	return getPhysicBody()->getMass();
 }

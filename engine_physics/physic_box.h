@@ -33,6 +33,7 @@ class PhysicBox : public PhysicBody {
 		virtual void 			setMass(float mass);
 
 		virtual float			getMass();
+		virtual void			resetMass();
 
 
 };

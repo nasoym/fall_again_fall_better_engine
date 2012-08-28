@@ -44,6 +44,7 @@ class EngineBody : public EngineGuiContainer {
 
 		void	dsetSolverIterations(int i1,int i2);
 		void	setMass(float mass);
+		void	resetMass();
 		float	getMass();
 
 
