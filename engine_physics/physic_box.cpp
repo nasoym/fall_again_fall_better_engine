@@ -53,7 +53,7 @@ void PhysicBox::dsetSolverIterations(int i1,int i2){
 
 void PhysicBox::setMass(float mass){
 	mBody->setMass(mass);
-    PxRigidBodyExt::updateMassAndInertia(*mBody, 1.0f);
+    //PxRigidBodyExt::updateMassAndInertia(*mBody, 1.0f);
     wakeUp();
 }
 

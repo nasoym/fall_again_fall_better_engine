@@ -12,6 +12,7 @@ import scripts.powered_doll as powered_doll
 import scripts.misc as misc
 import scripts.creators as creators
 import scripts.main as main
+import scripts.anim as anim
 
 class Selection(object):
 	def __init__(self):
@@ -85,12 +86,22 @@ modules.append(temp)
 modules.append(powered_doll)
 modules.append(misc)
 modules.append(creators)
+modules.append(anim)
 #modules.append(main)
+
+guiUpdates=[]
 
 def init():
 	for m in modules:
 		if hasattr(m,"init"):
 			m.init(Engine,EngineModule,objects)
+
+	for m in modules:
+		if hasattr(m,"guiUpdate"):
+			print("found guiUpdate in: " + str(m))
+			#guiUpdates.append(m.guiUpdate)
+			guiUpdates.append(
+				getattr(m,"guiUpdate"))
 
 	print("------------------------------------------------------------------ready")
 
@@ -129,6 +140,8 @@ def keyReleased(key):
 			m.keyReleased(Engine,EngineModule,key,selectContainers,objects)
 
 def guiUpdate():
+	for method in guiUpdates:
+		method(Engine,EngineModule,selectContainers,objects)
 	pass
 
 def physicUpdate():

@@ -156,6 +156,8 @@ class Engine :
 		EngineObject*			getObjectOfShape(EngineGuiShape* shape);
 
 		std::string				createUuid();
+		unsigned long			getTime(){return mCurrentTime;}
+		unsigned long			getTimeDifference(){return mTimeDifference;}
 
     private:
         void    setup();
@@ -176,6 +178,7 @@ class Engine :
 		Timer			mTimer;
 		unsigned long mCurrentTime;
 		unsigned long mLastTime;
+		unsigned long mTimeDifference;
 
         SceneNode*      mRootSceneNode;
         SceneNode*      mDebugSceneNode;

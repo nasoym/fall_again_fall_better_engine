@@ -37,67 +37,6 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 	if key == EngineModule.Keys.K_MINUS:
 	if key == EngineModule.Keys.K_EQUALS:
 	"""
-	if key == EngineModule.Keys.K_SEMICOLON:
-		parts = ["feet","lleg","uleg","hip","root","belly",
-			"breast","shoulder","neck","uarm","larm","head","hand"]
-
-		for p in parts:
-			bodyList = objects.get()[p]
-			print(str(p) + " : " + str(bodyList))
-
-	if key == EngineModule.Keys.K_RETURN:
-		objects.append('base', [e for e in selection.get()])
-
-	if key == EngineModule.Keys.K_SPACE:
-		print(objects)
-
-	if key == EngineModule.Keys.K_M:
-		"""
-        void        dsetMotorSpring(float);
-        void        dsetMotorDamping(float);
-        void        dsetMotorAccel(bool);
-        void        dsetContactDistance(float);
-		"""
-		objectsNumber = Engine.howManyObjects()
-		for i in range(0,objectsNumber):
-			o = Engine.getObject(i)
-
-			if o.isJoint():
-				j = o.isJoint()
-
-				if Engine.isKeyDown(EngineModule.Keys.K_1):
-					j.setMotorOn()
-
-				if Engine.isKeyDown(EngineModule.Keys.K_2):
-					j.setMotorOff()
-
-				if Engine.isKeyDown(EngineModule.Keys.K_3):
-					spring = (10 ** 9) * 3
-					damping = (10 ** 8) * 1
-					#spring = (10 ** 10) * 1
-					#damping = (10 ** 8) * 1
-
-					j.dsetMotorSpring(spring)
-					j.dsetMotorDamping(damping)
-					j.dsetMotorAccel(True)
-				if Engine.isKeyDown(EngineModule.Keys.K_4):
-					spring = (10 ** 1) * 1
-					damping = (10 ** 1) * 4
-					j.dsetMotorSpring(spring)
-					j.dsetMotorDamping(damping)
-					j.dsetMotorAccel(True)
-
-				if Engine.isKeyDown(EngineModule.Keys.K_5):
-					spring = (10 ** 15) * 1
-					damping = (10 ** 14) * 1
-					damping = (10 ** 13) * 1
-					j.dsetMotorSpring(spring)
-					j.dsetMotorDamping(damping)
-					j.dsetMotorAccel(False)
-
-
-
-
 
 	if key == EngineModule.Keys.K_N:
 		print("set timing factor")

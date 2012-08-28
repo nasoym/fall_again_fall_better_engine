@@ -19,6 +19,7 @@ Engine::Engine() :
     mInputManager(0),
 	mCurrentTime(0),
 	mLastTime(0),
+	mTimeDifference(0),
 	mPhysicPaused(false),
 	mUseFirstRenderer(true)
 	{
@@ -371,13 +372,11 @@ Quat			Engine::getCameraOrientation(){
 }
 
 unsigned long Engine::getElapsedTime() {
-	unsigned long timeDifference = 0;
-
 	mCurrentTime = mTimer.getMilliseconds();
-	timeDifference = mCurrentTime - mLastTime;
+	mTimeDifference = mCurrentTime - mLastTime;
 	mLastTime = mCurrentTime;
     //Logger::debug(format("%1% %2%") % mCurrentTime % timeDifference);
-	return timeDifference;
+	return mTimeDifference;
 }
 
 void Engine::setupOIS() {

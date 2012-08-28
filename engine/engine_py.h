@@ -287,6 +287,9 @@ BOOST_PYTHON_MODULE(EngineModule) {
 
         .def("createUuid",&Engine::createUuid)
         .def("deleteObject",&Engine::deleteObject)
+
+        .def("getTime",&Engine::getTime)
+        .def("getTimeDifference",&Engine::getTimeDifference)
         ;
 
     class_<Vec3>("Vec3",init<>())
