@@ -4,25 +4,53 @@ AnimStateIdle = 0
 AnimStateFalling = 1
 AnimStateRising = 2
 
+PartsList = [
+	["feet-joint","lleg-joint","uleg-joint"],
+	["hip-joint","root-joint","belly-joint"],
+	["breast-joint","shoulder-joint","neck-joint"],
+	["uarm-joint","larm-joint","head-joint","hand-joint"]
+	]
+PartsAnimTime = 1000
+
 def init(Engine,EngineModule,objects):
 	pass
 	objects.get()["animstate"] = AnimStateIdle
 	objects.get()["animtime"] = 0
+	objects.get()["animindex"] = 0
+
 
 def guiUpdate(Engine,EngineModule,selection,objects):
 	pass
 
 	animstate = objects.get()["animstate"]
-	currentTime = Engine.getTime()
 	startTime = objects.get()["animtime"]
+	animIndex = objects.get()["animindex"]
+
+	currentTime = Engine.getTime()
 	elapsedTime = currentTime - startTime
+
+	partsListCount = len(PartsList)
+	animIndexEndTime = (animIndex + 1) * PartsAnimTime
+	animIndexStartTime = animIndex * PartsAnimTime
 
 	if animstate == AnimStateIdle:
 		pass
 	
 	elif animstate == AnimStateFalling:
-		print(str(elapsedTime))
-		pass
+		if ((elapsedTime > animIndexStartTime) and
+			(elapsedTime < animIndexEndTime)):
+			if animIndex < partsListCount:
+				print("anim current index: " + str(animIndex))
+				objects.get()["animindex"] = animIndex + 1
+				for groupName in PartsList[animIndex]:
+					bodyList = objects.get()[groupName]
+					print(str(groupName))
+					for b in bodyList:
+						print(str(b))
+						pass
+			elif animIndex == partsListCount:
+				print("done")
+				objects.get()["animindex"] = animIndex + 1
 
 	elif animstate == AnimStateRising:
 		pass
@@ -50,16 +78,21 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 		animstate = objects.get()["animstate"]
 		print("animstate: " + str(animstate))
 		print("time: " + str(Engine.getTime()))
-		objects.get()["animtime"] = Engine.getTime()
 
 		if animstate == AnimStateIdle:
 			objects.get()["animstate"] = AnimStateFalling
+			objects.get()["animindex"] = 0
+			objects.get()["animtime"] = Engine.getTime()
 		
 		elif animstate == AnimStateFalling:
 			objects.get()["animstate"] = AnimStateRising
+			objects.get()["animindex"] = 0
+			objects.get()["animtime"] = Engine.getTime()
 
 		elif animstate == AnimStateRising:
 			objects.get()["animstate"] = AnimStateFalling
+			objects.get()["animindex"] = 0
+			objects.get()["animtime"] = Engine.getTime()
 
 
 	if key == EngineModule.Keys.K_SEMICOLON:
@@ -82,7 +115,7 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 			i -= 1
 
 	if key == EngineModule.Keys.K_RETURN:
-		objects.append('base', [e for e in selection.get()])
+		objects.append('hand-joint', [e for e in selection.get()])
 
 	if key == EngineModule.Keys.K_SPACE:
 		print(objects)
