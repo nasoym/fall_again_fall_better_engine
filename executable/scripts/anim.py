@@ -3,25 +3,33 @@
 
 FallingAnimTime = 1000
 FallingAnim = [
-	{'groups':["foot-joint","lleg-joint","uleg-joint"],
+	{'groups':["uarm-joint","larm-joint","head-joint","hand-joint"],
 		'time':FallingAnimTime,
-		'start':[(lambda Engine,EngineModule,objects,groupPart:groupPart.setMotorValues(0,0,True))],
-		'end':[(lambda Engine,EngineModule,objects,groupPart:groupPart.setMotorValues(0,0,True))]
-		},
-	{'groups':["hip-joint","root-joint","belly-joint"],
-		'time':FallingAnimTime,
-		'start':[(lambda Engine,EngineModule,objects,groupPart:groupPart.setMotorValues(0,0,True))],
-		'end':[(lambda Engine,EngineModule,objects,groupPart:groupPart.setMotorValues(0,0,True))]
+		'start':[(lambda Engine,EngineModule,objects,groupPart:
+			groupPart.setMotorValues(0,0,True))],
+		'end':[(lambda Engine,EngineModule,objects,groupPart:
+			groupPart.setMotorValues(0,0,True))]
 		},
 	{'groups':["breast-joint","shoulder-joint","neck-joint"],
 		'time':FallingAnimTime,
-		'start':[(lambda Engine,EngineModule,objects,groupPart:groupPart.setMotorValues(0,0,True))],
-		'end':[(lambda Engine,EngineModule,objects,groupPart:groupPart.setMotorValues(0,0,True))]
+		'start':[(lambda Engine,EngineModule,objects,groupPart:
+			groupPart.setMotorValues(0,0,True))],
+		'end':[(lambda Engine,EngineModule,objects,groupPart:
+			groupPart.setMotorValues(0,0,True))]
 		},
-	{'groups':["uarm-joint","larm-joint","head-joint","hand-joint"],
+	{'groups':["hip-joint","root-joint","belly-joint"],
 		'time':FallingAnimTime,
-		'start':[(lambda Engine,EngineModule,objects,groupPart:groupPart.setMotorValues(0,0,True))],
-		'end':[(lambda Engine,EngineModule,objects,groupPart:groupPart.setMotorValues(0,0,True))]
+		'start':[(lambda Engine,EngineModule,objects,groupPart:
+			groupPart.setMotorValues(0,0,True))],
+		'end':[(lambda Engine,EngineModule,objects,groupPart:
+			groupPart.setMotorValues(0,0,True))]
+		},
+	{'groups':["foot-joint","lleg-joint","uleg-joint"],
+		'time':FallingAnimTime,
+		'start':[(lambda Engine,EngineModule,objects,groupPart:
+			groupPart.setMotorValues(0,0,True))],
+		'end':[(lambda Engine,EngineModule,objects,groupPart:
+			groupPart.setMotorValues(0,0,True))]
 		}
 	]
 
@@ -31,23 +39,31 @@ RisingDamping=(10 ** 38) * 1
 RisingAnim = [
 	{'groups':["foot-joint","lleg-joint","uleg-joint"],
 		'time':RisingAnimTime,
-		'start':[(lambda Engine,EngineModule,objects,groupPart:groupPart.setMotorValues(RisingSpring,RisingDamping,True))],
-		'end':[(lambda Engine,EngineModule,objects,groupPart:groupPart.setMotorValues(RisingSpring,RisingDamping,True))]
+		'start':[(lambda Engine,EngineModule,objects,groupPart:
+			groupPart.setMotorValues(RisingSpring,RisingDamping,True))],
+		'end':[(lambda Engine,EngineModule,objects,groupPart:
+			groupPart.setMotorValues(RisingSpring,RisingDamping,True))]
 		},
 	{'groups':["hip-joint","root-joint","belly-joint"],
 		'time':RisingAnimTime,
-		'start':[(lambda Engine,EngineModule,objects,groupPart:groupPart.setMotorValues(RisingSpring,RisingDamping,True))],
-		'end':[(lambda Engine,EngineModule,objects,groupPart:groupPart.setMotorValues(RisingSpring,RisingDamping,True))]
+		'start':[(lambda Engine,EngineModule,objects,groupPart:
+			groupPart.setMotorValues(RisingSpring,RisingDamping,True))],
+		'end':[(lambda Engine,EngineModule,objects,groupPart:
+			groupPart.setMotorValues(RisingSpring,RisingDamping,True))]
 		},
 	{'groups':["breast-joint","shoulder-joint","neck-joint"],
 		'time':RisingAnimTime,
-		'start':[(lambda Engine,EngineModule,objects,groupPart:groupPart.setMotorValues(RisingSpring,RisingDamping,True))],
-		'end':[(lambda Engine,EngineModule,objects,groupPart:groupPart.setMotorValues(RisingSpring,RisingDamping,True))]
+		'start':[(lambda Engine,EngineModule,objects,groupPart:
+			groupPart.setMotorValues(RisingSpring,RisingDamping,True))],
+		'end':[(lambda Engine,EngineModule,objects,groupPart:
+			groupPart.setMotorValues(RisingSpring,RisingDamping,True))]
 		},
 	{'groups':["uarm-joint","larm-joint","head-joint","hand-joint"],
 		'time':RisingAnimTime,
-		'start':[(lambda Engine,EngineModule,objects,groupPart:groupPart.setMotorValues(RisingSpring,RisingDamping,True))],
-		'end':[(lambda Engine,EngineModule,objects,groupPart:groupPart.setMotorValues(RisingSpring,RisingDamping,True))]
+		'start':[(lambda Engine,EngineModule,objects,groupPart:
+			groupPart.setMotorValues(RisingSpring,RisingDamping,True))],
+		'end':[(lambda Engine,EngineModule,objects,groupPart:
+			groupPart.setMotorValues(RisingSpring,RisingDamping,True))]
 		}
 	]
 
@@ -55,38 +71,21 @@ animLists={}
 animLists["falling"] = FallingAnim
 animLists["rising"] = RisingAnim
 
-AnimStateIdle = 0
-AnimStateFalling = 1
-AnimStateRising = 2
 
-def init(Engine,EngineModule,objects):
-	objects.get()["animstate"] = AnimStateIdle
-	objects.get()["animtime"] = 0
-	objects.get()["animindex"] = 0
-	objects.get()["animname"] = ""
-	objects.get()["anims"] = 0
+def runMethods(Engine,EngineModule,objects,animList,index,methodName):
+	for groupName in animList[index]['groups']:
+		partsList = objects.get()[groupName]
+		print("group: " + str(groupName))
+		for part in partsList:
+			methods = animList[index][methodName]
+			for method in methods:
+				method(Engine,EngineModule,objects,part)
 
-	objects.setUnsavable("anims")
-	objects.setUnsavable("animstate")
-	objects.setUnsavable("animtime")
-	objects.setUnsavable("animindex")
-	objects.setUnsavable("animname")
-
-def guiUpdate(Engine,EngineModule,selection,objects):
-	if type(objects.get()["animstate"]) == list:
-		objects.get()["animstate"] = AnimStateIdle
-	if type(objects.get()["animtime"]) == list:
-		objects.get()["animtime"] = 0
-	if type(objects.get()["animindex"]) == list:
-		objects.get()["animindex"] = 0
-	if type(objects.get()["animname"]) == list:
-		objects.get()["animname"] = ""
-
-	animName = objects.get()["animname"]
-
+def playAnimation(Engine,EngineModule,objects,animData):
+	animName = animData["name"]
 	if animName in animLists:
-		startTime = objects.get()["animtime"]
-		animIndex = objects.get()["animindex"]
+		startTime = animData["starttime"]
+		animIndex = animData["index"]
 		
 		animList = animLists[animName]
 		animListSize = len(animList)
@@ -98,39 +97,30 @@ def guiUpdate(Engine,EngineModule,selection,objects):
 				(currentTime < endTime)):
 				if animIndex != 0:
 					print("run anim end: " + str(animName) + " index : " + str(animIndex-1))
-					for groupName in animList[animIndex-1]['groups']:
-						partsList = objects.get()[groupName]
-						print("group: " + str(groupName))
-						for part in partsList:
-							methods = animList[animIndex-1]['end']
-							for method in methods:
-								method(Engine,EngineModule,objects,part)
-					pass
+					runMethods(Engine,EngineModule,
+						objects,animList,animIndex-1,"end")
 
 				print("run anim start: " + str(animName) + " index : " + str(animIndex))
-				for groupName in animList[animIndex]['groups']:
-					partsList = objects.get()[groupName]
-					print("group: " + str(groupName))
-					for part in partsList:
-						methods = animList[animIndex]['start']
-						for method in methods:
-							method(Engine,EngineModule,objects,part)
+				runMethods(Engine,EngineModule,
+					objects,animList,animIndex,"start")
 
-				objects.get()["animindex"] = animIndex + 1
-				objects.get()["animtime"] = endTime
+				animData["index"] = animIndex + 1
+				animData["starttime"] = endTime
 		elif animIndex == animListSize:
 			if currentTime > startTime:
 				print("run anim end: " + str(animName) + " index : " + str(animIndex-1))
-				for groupName in animList[animIndex-1]['groups']:
-					partsList = objects.get()[groupName]
-					print("group: " + str(groupName))
-					for part in partsList:
-						methods = animList[animIndex-1]['end']
-						for method in methods:
-							method(Engine,EngineModule,objects,part)
-				objects.get()["animindex"] = animIndex + 1
+				runMethods(Engine,EngineModule,
+					objects,animList,animIndex-1,"end")
+				animData["index"] = animIndex + 1
 				print("done")
 
+def init(Engine,EngineModule,objects):
+	objects.get()["anims"] = {}
+	objects.setUnsavable("anims")
+
+def guiUpdate(Engine,EngineModule,selection,objects):
+	for k,v in objects.get()["anims"].items():
+		playAnimation(Engine,EngineModule,objects,v)
 
 def keyPressed(Engine,EngineModule,key,selection,objects):
 	pass
@@ -150,27 +140,18 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 	if key == EngineModule.Keys.K_EQUALS:
 	"""
 
-
 	if key == EngineModule.Keys.K_APOSTROPHE:
 
-		animstate = objects.get()["animstate"]
-		if animstate == AnimStateIdle:
-			objects.get()["animstate"] = AnimStateFalling
-			objects.get()["animindex"] = 0
-			objects.get()["animtime"] = Engine.getTime()
-			objects.get()["animname"] = "falling"
-		
-		elif animstate == AnimStateFalling:
-			objects.get()["animstate"] = AnimStateRising
-			objects.get()["animindex"] = 0
-			objects.get()["animtime"] = Engine.getTime()
-			objects.get()["animname"] = "rising"
-
-		elif animstate == AnimStateRising:
-			objects.get()["animstate"] = AnimStateFalling
-			objects.get()["animindex"] = 0
-			objects.get()["animtime"] = Engine.getTime()
-			objects.get()["animname"] = "falling"
+		if not "stand" in objects.get()["anims"]:
+			objects.get()["anims"]["stand"] = {
+				"name":"falling","index":0,"starttime":Engine.getTime()}
+		else:
+			if objects.get()["anims"]["stand"]["name"] == "falling":
+				objects.get()["anims"]["stand"] = {
+					"name":"rising","index":0,"starttime":Engine.getTime()}
+			elif objects.get()["anims"]["stand"]["name"] == "rising":
+				objects.get()["anims"]["stand"] = {
+					"name":"falling","index":0,"starttime":Engine.getTime()}
 
 
 	if key == EngineModule.Keys.K_SEMICOLON:
