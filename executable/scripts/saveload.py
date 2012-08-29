@@ -243,6 +243,9 @@ def load(Engine,EngineModule,fileName,objects):
 					loadSize(node,Engine,EngineModule,o)
 					loadPosition(node,Engine,EngineModule,o)
 					loadOrientation(node,Engine,EngineModule,o)
+					if node.hasProp("mass"):
+						mass = float(node.prop("mass"))
+						o.setMass(mass)
 					res.remove(node)
 				else:
 					lastUnresolved = "body: gui container failed"
@@ -390,6 +393,7 @@ def save(Engine,EngineModule,fileName,objects):
 			node.setProp("position",str(o.getPosition()))
 			node.setProp("size",str(o.getSize()))
 			node.setProp("orientation",str(o.getOrientation()))
+			node.setProp("mass",str(o.getMass()))
 
 		elif o.getType()==EngineModule.ObjectType.BOX:
 			node.setProp("position",str(o.getPosition()))

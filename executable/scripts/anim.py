@@ -158,13 +158,19 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 		for p in parts:
 			bodyList = objects.get()[p]
 			for b in bodyList:
-				#newMass = i * 50 + 100
-				#newMass = i * 5 + 0
-				#newMass = 5
-				b.resetMass()
-				newMass = b.getMass() * 0.1
-				print(str(i) + " old: " + str(b.getMass()) + " new: " + str(newMass))
-				b.setMass(newMass)
+				if Engine.isKeyDown(EngineModule.Keys.K_1):
+					#newMass = i * 50 + 100
+					#newMass = i * 5 + 0
+					#newMass = 5
+					b.resetMass()
+					#newMass = b.getMass() * 0.1
+					newMass = b.getMass() * 0.02
+					print(str(i) + " old: " + str(b.getMass()) + " new: " + str(newMass))
+					b.setMass(newMass)
+				elif Engine.isKeyDown(EngineModule.Keys.K_2):
+					pass
+				else:
+					print(str(i) + "mass: " + str(b.getMass()))
 			i -= 1
 
 	if key == EngineModule.Keys.K_RETURN:
