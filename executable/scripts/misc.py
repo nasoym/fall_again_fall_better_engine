@@ -16,6 +16,12 @@
 		4: set non final shape
 		5: hide non final shapes
 		6: show all shapes
+	r: change joint motor target by 10 degree steps
+		(x+:1, y+:2, z+:3, x-:4, y-:5, z-:6 , 
+		half stepsize:7)
+		-: reset target
+		8: motor on
+		9: motor off
 """
 import saveload
 import bodyjoint
@@ -102,24 +108,6 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 			if Engine.isKeyDown(EngineModule.Keys.K_9):
 				print("set motor target off")
 				j.setMotorOff()
-
-		if Engine.isKeyDown(EngineModule.Keys.K_8):
-			if Engine.isKeyDown(EngineModule.Keys.K_0):
-				print("set all motor target on")
-				objectsNumber = Engine.howManyObjects()
-				for i in range(0,objectsNumber):
-					o = Engine.getObject(i)
-					if o.isJoint():
-						o.isJoint().setMotorOn()
-
-		if Engine.isKeyDown(EngineModule.Keys.K_9):
-			if Engine.isKeyDown(EngineModule.Keys.K_0):
-				print("set all motor target off")
-				objectsNumber = Engine.howManyObjects()
-				for i in range(0,objectsNumber):
-					o = Engine.getObject(i)
-					if o.isJoint():
-						o.isJoint().setMotorOff()
 
 	if key == EngineModule.Keys.K_Y:
 		print("change joint orientation")

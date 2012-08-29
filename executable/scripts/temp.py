@@ -56,7 +56,7 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 			print("body joint size pos: " + str(jointPos))
 			print("body size: " + str(bodySize))
 
-			jointPos = EngineModule.Vec3(-153,3,90) 
+			#jointPos = EngineModule.Vec3(-153,3,90) 
 			#bodySize = EngineModule.Vec3(5,2.9,1.6) 
 
 			bodyjoint.bodyJointScaleJointPos(body,joint, jointPos)
@@ -76,7 +76,7 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 			print("body joint pos: " + str(jointPos))
 			print("body size: " + str(bodySize))
 
-			jointPos = EngineModule.Vec3(-153,3,90) 
+			#jointPos = EngineModule.Vec3(-153,3,90) 
 			#jointPos.x *= 1.1
 			#bodySize = EngineModule.Vec3(15,1,15)
 			#jointPos.y *= 0.9

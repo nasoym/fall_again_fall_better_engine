@@ -58,10 +58,10 @@ FallingAnim = [
 	]
 
 RisingAnimTime = 150
-RisingSpring=(10 ** 38) * 1.6
-RisingDamping=(10 ** 38) * 1
+RisingSpring=(10 ** 38) * 2.6
+RisingDamping=(10 ** 38) * 1.0
 
-RisingStandSpring=(10 ** 38) * 1.8
+RisingStandSpring=(10 ** 38) * 2.6
 RisingStandDamping=(10 ** 38) * 1.0
 
 RisingAnim = [
