@@ -5,7 +5,28 @@ FallingAnimTime = 50
 
 FallingSpring = 0.1
 FallingDamping = 0.5
+
+FallingSpring = 0
+FallingDamping = 0
+
+FallingSpring = 50
+FallingDamping = 100
+
 FallingAnim = [
+	{'groups':["foot-joint"],
+		'time':FallingAnimTime,
+		'start':[(lambda Engine,EngineModule,objects,groupPart:
+			groupPart.setMotorValues(0,0,True))],
+		'end':[(lambda Engine,EngineModule,objects,groupPart:
+			groupPart.setMotorValues(0,0,True))],
+		},
+	{'groups':["lleg-joint"],
+		'time':FallingAnimTime,
+		'start':[(lambda Engine,EngineModule,objects,groupPart:
+			groupPart.setMotorValues(0,0,True))],
+		'end':[(lambda Engine,EngineModule,objects,groupPart:
+			groupPart.setMotorValues(0,0,True))],
+		},
 	{'groups':["uarm-joint","larm-joint","head-joint","hand-joint"],
 		'time':FallingAnimTime,
 		'start':[(lambda Engine,EngineModule,objects,groupPart:
@@ -27,7 +48,7 @@ FallingAnim = [
 		'end':[(lambda Engine,EngineModule,objects,groupPart:
 			groupPart.setMotorValues(FallingSpring,FallingDamping,True))]
 		},
-	{'groups':["foot-joint","lleg-joint","uleg-joint"],
+	{'groups':["uleg-joint"],
 		'time':FallingAnimTime,
 		'start':[(lambda Engine,EngineModule,objects,groupPart:
 			groupPart.setMotorValues(FallingSpring,FallingDamping,True))],
@@ -167,6 +188,18 @@ def guiUpdate(Engine,EngineModule,selection,objects):
 	for k,v in objects.get()["anims"].items():
 		playAnimation(Engine,EngineModule,objects,v)
 
+
+
+def setMasses(Engine,EngineModule,selection,objects,factor):
+	parts = ["feet","lleg","uleg","hip","root","belly",
+		"breast","shoulder","neck","uarm","larm","head","hand"]
+	for p in parts:
+		bodyList = objects.get()[p]
+		for b in bodyList:
+			b.resetMass()
+			newMass = b.getMass() * factor
+			b.setMass(newMass)
+
 def keyPressed(Engine,EngineModule,key,selection,objects):
 	pass
 	"""
@@ -188,13 +221,16 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 	if key == EngineModule.Keys.K_APOSTROPHE:
 
 		if not "stand" in objects.get()["anims"]:
+			setMasses(Engine,EngineModule,selection,objects,0.5)
 			objects.get()["anims"]["stand"] = {
 				"name":"falling","index":0,"starttime":Engine.getTime()}
 		else:
 			if objects.get()["anims"]["stand"]["name"] == "falling":
+				setMasses(Engine,EngineModule,selection,objects,0.02)
 				objects.get()["anims"]["stand"] = {
 					"name":"rising","index":0,"starttime":Engine.getTime()}
 			elif objects.get()["anims"]["stand"]["name"] == "rising":
+				setMasses(Engine,EngineModule,selection,objects,1.0)
 				objects.get()["anims"]["stand"] = {
 					"name":"falling","index":0,"starttime":Engine.getTime()}
 
