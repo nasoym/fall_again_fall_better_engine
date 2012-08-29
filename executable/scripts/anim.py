@@ -1,71 +1,119 @@
 
 
 
-FallingAnimTime = 500
+FallingAnimTime = 50
+
+FallingSpring = 0.1
+FallingDamping = 0.5
 FallingAnim = [
 	{'groups':["uarm-joint","larm-joint","head-joint","hand-joint"],
 		'time':FallingAnimTime,
 		'start':[(lambda Engine,EngineModule,objects,groupPart:
-			groupPart.setMotorValues(0,0,True))],
+			groupPart.setMotorValues(FallingSpring,FallingDamping,True))],
 		'end':[(lambda Engine,EngineModule,objects,groupPart:
-			groupPart.setMotorValues(0,0,True))]
+			groupPart.setMotorValues(FallingSpring,FallingDamping,True))]
 		},
 	{'groups':["breast-joint","shoulder-joint","neck-joint"],
 		'time':FallingAnimTime,
 		'start':[(lambda Engine,EngineModule,objects,groupPart:
-			groupPart.setMotorValues(0,0,True))],
+			groupPart.setMotorValues(FallingSpring,FallingDamping,True))],
 		'end':[(lambda Engine,EngineModule,objects,groupPart:
-			groupPart.setMotorValues(0,0,True))]
+			groupPart.setMotorValues(FallingSpring,FallingDamping,True))]
 		},
 	{'groups':["hip-joint","root-joint","belly-joint"],
 		'time':FallingAnimTime,
 		'start':[(lambda Engine,EngineModule,objects,groupPart:
-			groupPart.setMotorValues(0,0,True))],
+			groupPart.setMotorValues(FallingSpring,FallingDamping,True))],
 		'end':[(lambda Engine,EngineModule,objects,groupPart:
-			groupPart.setMotorValues(0,0,True))]
+			groupPart.setMotorValues(FallingSpring,FallingDamping,True))]
 		},
 	{'groups':["foot-joint","lleg-joint","uleg-joint"],
 		'time':FallingAnimTime,
 		'start':[(lambda Engine,EngineModule,objects,groupPart:
-			groupPart.setMotorValues(0,0,True))],
+			groupPart.setMotorValues(FallingSpring,FallingDamping,True))],
 		'end':[(lambda Engine,EngineModule,objects,groupPart:
-			groupPart.setMotorValues(0,0,True))]
+			groupPart.setMotorValues(FallingSpring,FallingDamping,True))],
 		}
 	]
 
-RisingAnimTime = 500
-RisingSpring=(10 ** 38) * 1.4
+RisingAnimTime = 150
+RisingSpring=(10 ** 38) * 1.6
 RisingDamping=(10 ** 38) * 1
+
+RisingStandSpring=(10 ** 38) * 1.8
+RisingStandDamping=(10 ** 38) * 1.0
+
 RisingAnim = [
-	{'groups':["foot-joint","lleg-joint","uleg-joint"],
+	{'groups':["foot-joint"],
 		'time':RisingAnimTime,
 		'start':[(lambda Engine,EngineModule,objects,groupPart:
 			groupPart.setMotorValues(RisingSpring,RisingDamping,True))],
 		'end':[(lambda Engine,EngineModule,objects,groupPart:
-			groupPart.setMotorValues(RisingSpring,RisingDamping,True))]
+			groupPart.setMotorValues(RisingStandSpring,RisingStandDamping,True))]
 		},
-	{'groups':["hip-joint","root-joint","belly-joint"],
+	{'groups':["lleg-joint"],
 		'time':RisingAnimTime,
 		'start':[(lambda Engine,EngineModule,objects,groupPart:
 			groupPart.setMotorValues(RisingSpring,RisingDamping,True))],
 		'end':[(lambda Engine,EngineModule,objects,groupPart:
-			groupPart.setMotorValues(RisingSpring,RisingDamping,True))]
+			groupPart.setMotorValues(RisingStandSpring,RisingStandDamping,True))]
 		},
-	{'groups':["breast-joint","shoulder-joint","neck-joint"],
+	{'groups':["uleg-joint"],
+		'time':RisingAnimTime,
+		'start':[(lambda Engine,EngineModule,objects,groupPart:
+			groupPart.setMotorValues(RisingSpring,RisingDamping,True))],
+		'end':[(lambda Engine,EngineModule,objects,groupPart:
+			groupPart.setMotorValues(RisingStandSpring,RisingStandDamping,True))]
+		},
+
+	{'groups':["hip-joint","root-joint"],
+		'time':RisingAnimTime,
+		'start':[(lambda Engine,EngineModule,objects,groupPart:
+			groupPart.setMotorValues(RisingSpring,RisingDamping,True))],
+		'end':[(lambda Engine,EngineModule,objects,groupPart:
+			groupPart.setMotorValues(RisingStandSpring,RisingStandDamping,True))]
+		},
+	{'groups':["belly-joint"],
+		'time':RisingAnimTime,
+		'start':[(lambda Engine,EngineModule,objects,groupPart:
+			groupPart.setMotorValues(RisingSpring,RisingDamping,True))],
+		'end':[(lambda Engine,EngineModule,objects,groupPart:
+			groupPart.setMotorValues(RisingStandSpring,RisingStandDamping,True))]
+		},
+
+	{'groups':["breast-joint"],
+		'time':RisingAnimTime,
+		'start':[(lambda Engine,EngineModule,objects,groupPart:
+			groupPart.setMotorValues(RisingSpring,RisingDamping,True))],
+		'end':[(lambda Engine,EngineModule,objects,groupPart:
+			groupPart.setMotorValues(RisingStandSpring,RisingStandDamping,True))]
+		},
+
+	{'groups':["shoulder-joint","neck-joint","head-joint"],
 		'time':RisingAnimTime * 0.7,
 		'start':[(lambda Engine,EngineModule,objects,groupPart:
 			groupPart.setMotorValues(RisingSpring,RisingDamping,True))],
 		'end':[(lambda Engine,EngineModule,objects,groupPart:
-			groupPart.setMotorValues(RisingSpring,RisingDamping,True))]
+			groupPart.setMotorValues(RisingStandSpring,RisingStandDamping,True))]
 		},
-	{'groups':["uarm-joint","larm-joint","head-joint","hand-joint"],
+	{'groups':["uarm-joint","larm-joint","hand-joint"],
 		'time':RisingAnimTime * 0.4,
 		'start':[(lambda Engine,EngineModule,objects,groupPart:
 			groupPart.setMotorValues(RisingSpring,RisingDamping,True))],
 		'end':[(lambda Engine,EngineModule,objects,groupPart:
-			groupPart.setMotorValues(RisingSpring,RisingDamping,True))]
+			groupPart.setMotorValues(RisingStandSpring,RisingStandDamping,True))]
 		}
 	]
+"""
+		,
+	{'groups':["uarm-joint","larm-joint","hand-joint"],
+		'time':RisingAnimTime * 0.4,
+		'start':[(lambda Engine,EngineModule,objects,groupPart:
+			groupPart.setMotorValues(RisingSpring,RisingDamping,True))],
+		'end':[(lambda Engine,EngineModule,objects,groupPart:
+			groupPart.setMotorValues(RisingStandSpring,RisingStandDamping,True))]
+		}
+		"""
 
 animLists={}
 animLists["falling"] = FallingAnim
@@ -113,6 +161,7 @@ def playAnimation(Engine,EngineModule,objects,animData):
 def init(Engine,EngineModule,objects):
 	objects.get()["anims"] = {}
 	objects.setUnsavable("anims")
+	Engine.setTimingFactor(5.0)
 
 def guiUpdate(Engine,EngineModule,selection,objects):
 	for k,v in objects.get()["anims"].items():
@@ -168,7 +217,13 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 					print(str(i) + " old: " + str(b.getMass()) + " new: " + str(newMass))
 					b.setMass(newMass)
 				elif Engine.isKeyDown(EngineModule.Keys.K_2):
-					pass
+					newMass = b.getMass() * 2
+					print(str(i) + " old: " + str(b.getMass()) + " new: " + str(newMass))
+					b.setMass(newMass)
+				elif Engine.isKeyDown(EngineModule.Keys.K_3):
+					newMass = b.getMass() * 0.5
+					print(str(i) + " old: " + str(b.getMass()) + " new: " + str(newMass))
+					b.setMass(newMass)
 				else:
 					print(str(i) + "mass: " + str(b.getMass()))
 			i -= 1
