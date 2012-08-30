@@ -1,7 +1,10 @@
+"""
+anim:
+
+"""
 
 
-
-FallingAnimTime = 50
+FallingAnimTime = 450
 
 FallingSpring = 0.1
 FallingDamping = 0.5
@@ -12,15 +15,31 @@ FallingDamping = 0
 FallingSpring = 50
 FallingDamping = 100
 
+FallingSpring = 5
+FallingDamping = 10
+
 FallingAnim = [
-	{'groups':["foot-joint"],
-		'time':FallingAnimTime,
+	{'groups':[
+		"lleg-joint",
+		"uleg-joint",
+		"hip-joint",
+		"root-joint",
+		"belly-joint",
+		"breast-joint",
+		"shoulder-joint",
+		"neck-joint",
+		"head-joint",
+		"uarm-joint",
+		"larm-joint",
+		"hand-joint"
+		],
+		'time':6000,
 		'start':[(lambda Engine,EngineModule,objects,groupPart:
-			groupPart.setMotorValues(0,0,True))],
+			groupPart.setMotorValues(FallingSpring,FallingDamping,True))],
 		'end':[(lambda Engine,EngineModule,objects,groupPart:
-			groupPart.setMotorValues(0,0,True))],
+			groupPart.setMotorValues(FallingSpring,FallingDamping,True))],
 		},
-	{'groups':["lleg-joint"],
+	{'groups':["foot-joint"],
 		'time':FallingAnimTime,
 		'start':[(lambda Engine,EngineModule,objects,groupPart:
 			groupPart.setMotorValues(0,0,True))],
@@ -57,12 +76,13 @@ FallingAnim = [
 		}
 	]
 
-RisingAnimTime = 150
-RisingSpring=(10 ** 38) * 2.6
-RisingDamping=(10 ** 38) * 1.0
+RisingAnimTime = 300
+exp=38
+RisingSpring=(10 ** exp) * 1.2
+RisingDamping=(10 ** exp) * 1.0
 
-RisingStandSpring=(10 ** 38) * 2.6
-RisingStandDamping=(10 ** 38) * 1.0
+RisingStandSpring=(10 ** exp) * 1.2
+RisingStandDamping=(10 ** exp) * 1.0
 
 RisingAnim = [
 	{'groups':["foot-joint"],
@@ -218,15 +238,16 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 	if key == EngineModule.Keys.K_EQUALS:
 	"""
 
-	if key == EngineModule.Keys.K_APOSTROPHE:
+	#if key == EngineModule.Keys.K_APOSTROPHE:
+	if key == EngineModule.Keys.K_SPACE:
 
 		if not "stand" in objects.get()["anims"]:
-			setMasses(Engine,EngineModule,selection,objects,0.5)
+			setMasses(Engine,EngineModule,selection,objects,1.0)
 			objects.get()["anims"]["stand"] = {
 				"name":"falling","index":0,"starttime":Engine.getTime()}
 		else:
 			if objects.get()["anims"]["stand"]["name"] == "falling":
-				setMasses(Engine,EngineModule,selection,objects,0.02)
+				setMasses(Engine,EngineModule,selection,objects,0.01)
 				objects.get()["anims"]["stand"] = {
 					"name":"rising","index":0,"starttime":Engine.getTime()}
 			elif objects.get()["anims"]["stand"]["name"] == "rising":
@@ -264,12 +285,16 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 					print(str(i) + "mass: " + str(b.getMass()))
 			i -= 1
 
-	if key == EngineModule.Keys.K_RETURN:
+	if key == EngineModule.Keys.K_RBRACKET:
 		pass
 		#objects.append('hand-joint', [e for e in selection.get()])
-		#objects.get()["belly-joint"] = [e for e in selection.get()]
+		#objects.get()["hip-joint"] = [e for e in selection.get()]
 
-	if key == EngineModule.Keys.K_SPACE:
+		selection.clear()
+		for o in objects.get()["belly-joint"]:
+			selection.add(o)
+
+	if key == EngineModule.Keys.K_LBRACKET:
 		print(objects)
 
 	if key == EngineModule.Keys.K_M:
