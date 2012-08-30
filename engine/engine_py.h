@@ -219,6 +219,11 @@ BOOST_PYTHON_MODULE(EngineModule) {
 		.def("getRootBoneName",&EngineMesh::getRootBoneName)
 		.def("calcLocalPosOfRootBone",&EngineMesh::calcLocalPosOfRootBone)
 
+
+		.def("setLocalPos",&EngineMesh::setLocalPos)
+		.def("setLocalQuat",&EngineMesh::setLocalQuat) 
+
+
 		;
 
 	class_<EngineJoint,bases<EngineGuiContainer> >("EngineJoint", init<Engine*,EngineBody*,EngineBody*>())

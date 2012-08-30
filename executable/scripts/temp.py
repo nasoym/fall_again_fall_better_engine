@@ -22,6 +22,12 @@ def keyDown(Engine,EngineModule,key,selection,objects):
 
 def keyPressed(Engine,EngineModule,key,selection,objects):
 
+	if key == EngineModule.Keys.K_COMMA:
+		if len(selection.get()) == 1:
+			o = selection.get()[0]
+			o.setLocalPos(EngineModule.Vec3(-7.13362,0,60))
+			o.setLocalQuat(EngineModule.Quat(0.5,0.5,-0.5,-0.5))
+
 	"""
 	if key == EngineModule.Keys.K_COMMA:
 	if key == EngineModule.Keys.K_PERIOD:
@@ -125,9 +131,11 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 		if Engine.isKeyDown(EngineModule.Keys.K_1):
 			print("loading")
 			saveload.load(Engine,EngineModule,"xmlscene/ragdoll.xml",objects)
+			#saveload.load(Engine,EngineModule,"xmlscene/test.xml",objects)
 		elif Engine.isKeyDown(EngineModule.Keys.K_2):
 			print("saving")
 			saveload.save(Engine,EngineModule,"xmlscene/ragdoll.xml",objects)
+			#saveload.save(Engine,EngineModule,"xmlscene/test.xml",objects)
 		else:
 			pass
 

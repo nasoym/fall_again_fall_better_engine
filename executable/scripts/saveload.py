@@ -154,6 +154,7 @@ def load(Engine,EngineModule,fileName,objects):
 							o.setFinalShape()
 						else:
 							o.setNonFinalShape()
+						o.calcLocalPosOfRootBone()
 
 					res.remove(node)
 

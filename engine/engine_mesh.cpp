@@ -6,12 +6,14 @@
 #include "engine_body.h"
 #include "engine_joint.h"
 #include "engine_gui_shape.h"
+#include "engine_gui_container.h"
 
 EngineMesh::EngineMesh(Engine* engine,const char* meshName) :
 	EngineGuiShape(engine),
 	mRootBone(0),
 	mLocalPos(Vec3()),
 	mLocalQuat(Quat()),
+	mRootShape(0),
 	mMeshFileName(std::string(meshName))
 	{
     setEntity(getEngine()->getSceneManager()->createEntity(meshName));
@@ -19,6 +21,11 @@ EngineMesh::EngineMesh(Engine* engine,const char* meshName) :
 	setupAllBones();
 	mRootBone = findRootBone();
 	setFinalShape();
+
+	//mRootShape = new EngineGuiContainer(getEngine());
+	//mRootShape->addDebugAxises(15,1);
+	//mRootShape->setPosition(getPosition());
+	//mRootShape->setOrientation(getOrientation());
 }
 
 int				EngineMesh::getNumberOfBones(){
@@ -58,6 +65,11 @@ void	EngineMesh::guiUpdate(){
 		setPosition(rootBodyPos - (rootBodyQuat*mLocalPos));
 		setOrientation(rootBodyQuat * mLocalQuat);
 	}
+	if (mRootShape) {
+	//if (false) {
+		mRootShape->setPosition(getPosition());
+		mRootShape->setOrientation(getOrientation());
+	}
 	updateBone(mRootBone);
 }
 
@@ -90,11 +102,17 @@ void	EngineMesh::updateBone(Bone* bone){
 void 	EngineMesh::calcLocalPosOfRootBone() {
 	EngineBody* rootBody = getBodyOfBone(mRootBone);
 	if (rootBody) {
+		Logger::debug("calc local pos of root bone");
 		Vec3	rootBodyPos = rootBody->getPosition();
 		Quat	rootBodyQuat = rootBody->getOrientation();
 		mLocalPos = rootBodyPos - getPosition();
 		mLocalPos = rootBodyQuat.inverse() * mLocalPos;
 		mLocalQuat = getOrientation() * rootBodyQuat.inverse();
+
+		Logger::debug(format("mesh pos: %1% ") % getPosition());
+		Logger::debug(format("mesh ori: %1% ") % getOrientation());
+		Logger::debug(format("local pos: %1% ") % mLocalPos);
+		Logger::debug(format("local ori: %1% ") % mLocalQuat);
 	}
 }
 
