@@ -3,6 +3,8 @@ anim:
 
 """
 
+import random
+
 
 FallingAnimTime = 450
 
@@ -15,8 +17,14 @@ FallingDamping = 0
 FallingSpring = 50
 FallingDamping = 100
 
+FallingSpring = 25
+FallingDamping = 50
+
 FallingSpring = 5
-FallingDamping = 10
+FallingDamping = 50
+
+FallingSpring = 0
+FallingDamping = 30
 
 FallingAnim = [
 	{'groups':[
@@ -33,7 +41,7 @@ FallingAnim = [
 		"larm-joint",
 		"hand-joint"
 		],
-		'time':6000,
+		'time':FallingAnimTime,
 		'start':[(lambda Engine,EngineModule,objects,groupPart:
 			groupPart.setMotorValues(FallingSpring,FallingDamping,True))],
 		'end':[(lambda Engine,EngineModule,objects,groupPart:
@@ -45,38 +53,10 @@ FallingAnim = [
 			groupPart.setMotorValues(0,0,True))],
 		'end':[(lambda Engine,EngineModule,objects,groupPart:
 			groupPart.setMotorValues(0,0,True))],
-		},
-	{'groups':["uarm-joint","larm-joint","head-joint","hand-joint"],
-		'time':FallingAnimTime,
-		'start':[(lambda Engine,EngineModule,objects,groupPart:
-			groupPart.setMotorValues(FallingSpring,FallingDamping,True))],
-		'end':[(lambda Engine,EngineModule,objects,groupPart:
-			groupPart.setMotorValues(FallingSpring,FallingDamping,True))]
-		},
-	{'groups':["breast-joint","shoulder-joint","neck-joint"],
-		'time':FallingAnimTime,
-		'start':[(lambda Engine,EngineModule,objects,groupPart:
-			groupPart.setMotorValues(FallingSpring,FallingDamping,True))],
-		'end':[(lambda Engine,EngineModule,objects,groupPart:
-			groupPart.setMotorValues(FallingSpring,FallingDamping,True))]
-		},
-	{'groups':["hip-joint","root-joint","belly-joint"],
-		'time':FallingAnimTime,
-		'start':[(lambda Engine,EngineModule,objects,groupPart:
-			groupPart.setMotorValues(FallingSpring,FallingDamping,True))],
-		'end':[(lambda Engine,EngineModule,objects,groupPart:
-			groupPart.setMotorValues(FallingSpring,FallingDamping,True))]
-		},
-	{'groups':["uleg-joint"],
-		'time':FallingAnimTime,
-		'start':[(lambda Engine,EngineModule,objects,groupPart:
-			groupPart.setMotorValues(FallingSpring,FallingDamping,True))],
-		'end':[(lambda Engine,EngineModule,objects,groupPart:
-			groupPart.setMotorValues(FallingSpring,FallingDamping,True))],
 		}
 	]
 
-RisingAnimTime = 300
+RisingAnimTime = 200
 exp=38
 RisingSpring=(10 ** exp) * 1.2
 RisingDamping=(10 ** exp) * 1.0
@@ -130,31 +110,14 @@ RisingAnim = [
 			groupPart.setMotorValues(RisingStandSpring,RisingStandDamping,True))]
 		},
 
-	{'groups':["shoulder-joint","neck-joint","head-joint"],
-		'time':RisingAnimTime * 0.7,
-		'start':[(lambda Engine,EngineModule,objects,groupPart:
-			groupPart.setMotorValues(RisingSpring,RisingDamping,True))],
-		'end':[(lambda Engine,EngineModule,objects,groupPart:
-			groupPart.setMotorValues(RisingStandSpring,RisingStandDamping,True))]
-		},
-	{'groups':["uarm-joint","larm-joint","hand-joint"],
-		'time':RisingAnimTime * 0.4,
+	{'groups':["shoulder-joint","neck-joint","head-joint","uarm-joint","larm-joint","hand-joint"],
+		'time':RisingAnimTime,
 		'start':[(lambda Engine,EngineModule,objects,groupPart:
 			groupPart.setMotorValues(RisingSpring,RisingDamping,True))],
 		'end':[(lambda Engine,EngineModule,objects,groupPart:
 			groupPart.setMotorValues(RisingStandSpring,RisingStandDamping,True))]
 		}
 	]
-"""
-		,
-	{'groups':["uarm-joint","larm-joint","hand-joint"],
-		'time':RisingAnimTime * 0.4,
-		'start':[(lambda Engine,EngineModule,objects,groupPart:
-			groupPart.setMotorValues(RisingSpring,RisingDamping,True))],
-		'end':[(lambda Engine,EngineModule,objects,groupPart:
-			groupPart.setMotorValues(RisingStandSpring,RisingStandDamping,True))]
-		}
-		"""
 
 animLists={}
 animLists["falling"] = FallingAnim
@@ -219,6 +182,15 @@ def setMasses(Engine,EngineModule,selection,objects,factor):
 			b.resetMass()
 			newMass = b.getMass() * factor
 			b.setMass(newMass)
+"""
+RANDOM MODULE:
+import random
+random.random() = 0.0 -> 1.0
+random.uniform(0.5,20.4)
+random.randint(44,8994)
+random.randrange(0,5,2) = 0,2,4
+random.choice([1,4,5,645])
+"""
 
 def keyPressed(Engine,EngineModule,key,selection,objects):
 	pass
@@ -238,24 +210,54 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 	if key == EngineModule.Keys.K_EQUALS:
 	"""
 
-	#if key == EngineModule.Keys.K_APOSTROPHE:
 	if key == EngineModule.Keys.K_SPACE:
 
+		fallingMass = 1.0
+		risingMass = 0.01
 		if not "stand" in objects.get()["anims"]:
-			setMasses(Engine,EngineModule,selection,objects,1.0)
+			setMasses(Engine,EngineModule,selection,objects,fallingMass)
 			objects.get()["anims"]["stand"] = {
 				"name":"falling","index":0,"starttime":Engine.getTime()}
 		else:
 			if objects.get()["anims"]["stand"]["name"] == "falling":
-				setMasses(Engine,EngineModule,selection,objects,0.01)
+
+
+				setMasses(Engine,EngineModule,selection,objects,risingMass)
 				objects.get()["anims"]["stand"] = {
 					"name":"rising","index":0,"starttime":Engine.getTime()}
 			elif objects.get()["anims"]["stand"]["name"] == "rising":
-				setMasses(Engine,EngineModule,selection,objects,1.0)
+
+
+				randRange = 100
+				force = EngineModule.Vec3(
+					random.uniform(-randRange,randRange),
+					0,
+					random.uniform(-randRange,randRange))
+				for o in selection.get():
+					if o.isBody():
+						o.isBody().addForce(force)
+				partsList = objects.get()["head"]
+				for part in partsList:
+					part.addForce(force)
+
+				force = EngineModule.Vec3(
+					random.uniform(-randRange,randRange),
+					0,
+					random.uniform(-randRange,randRange))
+				for o in selection.get():
+					if o.isBody():
+						o.isBody().addForce(force)
+				partsList = objects.get()["breast"]
+				for part in partsList:
+					part.addForce(force)
+
+
+				setMasses(Engine,EngineModule,selection,objects,fallingMass)
 				objects.get()["anims"]["stand"] = {
 					"name":"falling","index":0,"starttime":Engine.getTime()}
 
 
+	"""
 	if key == EngineModule.Keys.K_SEMICOLON:
 		parts = ["feet","lleg","uleg","hip","root","belly",
 			"breast","shoulder","neck","uarm","larm","head","hand"]
@@ -298,12 +300,7 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 		print(objects)
 
 	if key == EngineModule.Keys.K_M:
-		"""
-        void        dsetMotorSpring(float);
-        void        dsetMotorDamping(float);
-        void        dsetMotorAccel(bool);
-        void        dsetContactDistance(float);
-		"""
+        #void        dsetContactDistance(float);
 		objectsNumber = Engine.howManyObjects()
 		for i in range(0,objectsNumber):
 			o = Engine.getObject(i)
@@ -343,4 +340,4 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 					j.dsetMotorSpring(spring)
 					j.dsetMotorDamping(damping)
 					j.dsetMotorAccel(False)
-
+		"""

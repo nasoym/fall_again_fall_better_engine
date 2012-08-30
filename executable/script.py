@@ -84,15 +84,18 @@ objects = Objects()
 selectContainers = Selection() 
 
 modules = []
+#modules.append(powered_doll)
+
 modules.append(navigate)
+"""
 modules.append(select)
 modules.append(bonescale)
 modules.append(temp)
-#modules.append(powered_doll)
-modules.append(misc)
 modules.append(creators)
+"""
+modules.append(misc)
 modules.append(anim)
-#modules.append(main)
+modules.append(main)
 
 guiUpdates=[]
 

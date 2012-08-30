@@ -1,7 +1,7 @@
 import saveload
 
 def init(Engine,EngineModule,objects):
-	saveload.load(Engine,EngineModule,"xmlscene/file2.xml",objects)
+	saveload.load(Engine,EngineModule,"xmlscene/scene.xml",objects)
 	#saveload.load(Engine,EngineModule,"xmlscene/ragdoll_02.xml",objects)
 	objectsNumber = Engine.howManyObjects()
 	for i in range(0,objectsNumber):
@@ -10,23 +10,5 @@ def init(Engine,EngineModule,objects):
 			if not o.isFinalShape():
 				o.hide()
 
-	Engine.setTimingFactor(2.7)
-
-def keyPressed(Engine,EngineModule,key,selection,objects):
-	pass
-	if key == EngineModule.Keys.K_1:
-		print("set all motor target on")
-		objectsNumber = Engine.howManyObjects()
-		for i in range(0,objectsNumber):
-			o = Engine.getObject(i)
-			if o.isJoint():
-				o.isJoint().setMotorOn()
-
-	if key == EngineModule.Keys.K_2:
-		print("set all motor target off")
-		objectsNumber = Engine.howManyObjects()
-		for i in range(0,objectsNumber):
-			o = Engine.getObject(i)
-			if o.isJoint():
-				o.isJoint().setMotorOff()
+	#Engine.setTimingFactor(2.7)
 
