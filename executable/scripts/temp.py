@@ -22,12 +22,6 @@ def keyDown(Engine,EngineModule,key,selection,objects):
 
 def keyPressed(Engine,EngineModule,key,selection,objects):
 
-	if key == EngineModule.Keys.K_COMMA:
-		if len(selection.get()) == 1:
-			o = selection.get()[0]
-			o.setLocalPos(EngineModule.Vec3(-7.13362,0,60))
-			o.setLocalQuat(EngineModule.Quat(0.5,0.5,-0.5,-0.5))
-
 	"""
 	if key == EngineModule.Keys.K_COMMA:
 	if key == EngineModule.Keys.K_PERIOD:

@@ -88,6 +88,9 @@ class EngineMesh : public EngineGuiShape {
 		void			setLocalPos(Vec3 vec){mLocalPos = vec;}
 		void			setLocalQuat(Quat quat){mLocalQuat = quat;}
 
+		Vec3			getLocalPos(){ return mLocalPos;}
+		Quat			getLocalQuat(){ return mLocalQuat;}
+
 	private:
 		std::vector<BoneBody> 	mBoneBodies;
 		Bone*					mRootBone;

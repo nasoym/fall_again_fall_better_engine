@@ -223,6 +223,8 @@ BOOST_PYTHON_MODULE(EngineModule) {
 		.def("setLocalPos",&EngineMesh::setLocalPos)
 		.def("setLocalQuat",&EngineMesh::setLocalQuat) 
 
+		.def("getLocalPos",&EngineMesh::getLocalPos)
+		.def("getLocalQuat",&EngineMesh::getLocalQuat) 
 
 		;
 

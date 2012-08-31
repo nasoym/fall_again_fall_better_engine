@@ -154,7 +154,16 @@ def load(Engine,EngineModule,fileName,objects):
 							o.setFinalShape()
 						else:
 							o.setNonFinalShape()
-						o.calcLocalPosOfRootBone()
+
+						if node.hasProp("local_pos"):
+							a = (node.prop("local_pos").split(","))
+							pos = EngineModule.Vec3( float(a[0]),float(a[1]),float(a[2]))
+							o.setLocalPos(pos)
+
+						if node.hasProp("local_quat"):
+							a = (node.prop("local_quat").split(","))
+							quat = EngineModule.Quat( float(a[0]),float(a[1]),float(a[2]),float(a[3]))
+							o.setLocalQuat(quat)
 
 					res.remove(node)
 
@@ -374,6 +383,8 @@ def save(Engine,EngineModule,fileName,objects):
 			node.setProp("position",str(o.getPosition()))
 			node.setProp("size",str(o.getSize()))
 			node.setProp("orientation",str(o.getOrientation()))
+			node.setProp("local_pos",str(o.getLocalPos()))
+			node.setProp("local_quat",str(o.getLocalQuat()))
 			if o.hasColour():
 				node.setProp("colour",str(o.getColour()))
 				node.setProp("alpha",str(o.getAlpha()))
