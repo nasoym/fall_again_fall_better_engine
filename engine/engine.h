@@ -195,5 +195,14 @@ class Engine :
 
 		//StereoManager	mStereoManager;
 
+	private: //python
+		void setUniform(Ogre::String compositor, Ogre::String material, Ogre::String uniform, float value, bool setVisible, int position);
+		void testsetup();
+
+		String mCurrentCompositor;
+		String mCurrentPost;
+
+
+
 };
 #endif

@@ -12,6 +12,7 @@ def createPhysicBoxFinal(Engine,EngineModule):
 	o = Engine.createPhysicBox()
 	b = Engine.createGuiBox()
 	#b.setMaterialName("Body")
+	b.setMaterialName("SSAO/GBuffer")
 	b.setScaling1To1()
 	o.addShape(b)
 	o.setPosition(EngineModule.Vec3(0,150,0))
@@ -31,7 +32,8 @@ def createPhysicBoxStructure(Engine,EngineModule):
 def createPhysicStaticBoxFinal(Engine,EngineModule):
 	o = Engine.createPhysicStatic()
 	b = Engine.createGuiBox()
-	b.setMaterialName("Body")
+	#b.setMaterialName("Body")
+	b.setMaterialName("SSAO/GBuffer")
 	b.setScaling1To1()
 	o.addShape(b)
 	return o
@@ -91,7 +93,8 @@ def createSpaceCage(Engine,EngineModule,size):
 	shape = Engine.createGuiBox()
 	shape.setScalingNone()
 	#shape.setColour(red,green,blue,ground_opacity)
-	shape.setMaterialName("Body")
+	#shape.setMaterialName("Body")
+	shape.setMaterialName("SSAO/GBuffer")
 	shape.turnOffShadows()
 	shape.setFinalShape()
 	shape.setSize(EngineModule.Vec3(size.X(),wall,size.Z()))

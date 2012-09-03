@@ -4,11 +4,14 @@
 #include "engine_object.h"
 #include "engine_keys.h"
 
-#include "OgreRTShaderSystem.h"
+//#include "OgreRTShaderSystem.h"
 
 #include <boost/lexical_cast.hpp>
 #include <boost/uuid/uuid.hpp>
 #include <boost/uuid/uuid_generators.hpp>
+
+#include <vector>
+#include <string>
 
 Engine::Engine() :
 	mLoopRendering(true),
@@ -27,7 +30,7 @@ Engine::Engine() :
     setupPhysics();
     setup();
 	setupStereo();
-	//setupSSAO();
+	setupSSAO();
     setupOIS();
     setupWindowEventListener();
 }
@@ -44,51 +47,134 @@ Engine::~Engine(){
     closePhysics();
 }
 
+    void Engine::setUniform(Ogre::String compositor, Ogre::String material, Ogre::String uniform, float value, bool setVisible, int position = -1)
+    {
+		Logger::debug("setUniform");
+        // remove compositor first???
+        CompositorManager::getSingleton().removeCompositor(mViewport, compositor);
+        
+        (static_cast<MaterialPtr>(MaterialManager::getSingleton().getByName(material)))->getTechnique(0)->
+        getPass(0)->getFragmentProgramParameters()->setNamedConstant(uniform, value);
+        
+        // adding again
+        CompositorManager::getSingleton().addCompositor(mViewport, compositor, position);
+        CompositorManager::getSingleton().setCompositorEnabled(mViewport, compositor, setVisible);
+    }
+
+
+	
+    void Engine::testsetup()
+    {
+		Logger::debug("testsetup");
+		setUniform("SSAO/CreaseShading", "SSAO/CreaseShading", "cMinimumCrease", 0.2f, false, 1);
+		setUniform("SSAO/CreaseShading", "SSAO/CreaseShading", "cBias", 1.0f, false, 1);
+		setUniform("SSAO/CreaseShading", "SSAO/CreaseShading", "cAverager", 24, false, 1);
+		setUniform("SSAO/CreaseShading", "SSAO/CreaseShading", "cRange", 1.0f, false, 1);
+		setUniform("SSAO/CreaseShading", "SSAO/CreaseShading", "cKernelSize", 3.0f, false, 1);
+        
+
+            setUniform("SSAO/Crytek", "SSAO/Crytek", "cSampleInScreenspace", false, false, 1);
+            setUniform("SSAO/HorizonBased", "SSAO/HorizonBased", "cSampleInScreenspace", false, false, 1);
+            setUniform("SSAO/HemisphereMC", "SSAO/HemisphereMC", "cSampleInScreenspace", false, false, 1);
+            setUniform("SSAO/Volumetric", "SSAO/Volumetric", "cSampleInScreenspace", false, false, 1);
+            CompositorManager::getSingleton().setCompositorEnabled(mViewport, mCurrentCompositor, true);
+
+		setUniform("SSAO/Crytek", "SSAO/Crytek", "cSampleLengthScreenSpace", 6.0f/100.0f, false, 1);
+		setUniform("SSAO/HorizonBased", "SSAO/HorizonBased", "cSampleLengthScreenSpace", 6.0f/100.0f, false, 1);
+		setUniform("SSAO/HemisphereMC", "SSAO/HemisphereMC", "cSampleLengthScreenSpace", 6.0f/100.0f, false, 1);
+		setUniform("SSAO/Volumetric", "SSAO/Volumetric", "cSampleLengthScreenSpace", 6.0f/100.0f, false, 1);
+
+		setUniform("SSAO/Crytek", "SSAO/Crytek", "cSampleLengthWorldSpace", 2.0f, false, 1);
+		setUniform("SSAO/HorizonBased", "SSAO/HorizonBased", "cSampleLengthWorldSpace", 2.0f, false, 1);
+		setUniform("SSAO/HemisphereMC", "SSAO/HemisphereMC", "cSampleLengthWorldSpace", 2.0f, false, 1);
+		setUniform("SSAO/Volumetric", "SSAO/Volumetric", "cSampleLengthWorldSpace", 2.0f, false, 1);
+        
+		setUniform("SSAO/HorizonBased", "SSAO/HorizonBased", "cAngleBias", 0.2f, false, 1);
+        
+		setUniform("SSAO/Crytek", "SSAO/Crytek", "cOffsetScale", 1.0f/100, false, 1);
+        
+		setUniform("SSAO/Crytek", "SSAO/Crytek", "cEdgeHighlight", 2.0f - 0.0f, false, 1);
+        
+		setUniform("SSAO/Crytek", "SSAO/Crytek", "cDefaultAccessibility", 0.5f, false, 1);
+        
+		setUniform("SSAO/UnsharpMask", "SSAO/UnsharpMask/GaussianBlurY", "cKernelWidthBias", 1.0f, false, 1);
+		setUniform("SSAO/UnsharpMask", "SSAO/UnsharpMask/GaussianBlurX", "cKernelWidthBias", 1.0f, false, 1);
+        
+		setUniform("SSAO/UnsharpMask", "SSAO/UnsharpMask", "cLambda", 25.0f, false, 1);
+        
+		setUniform("SSAO/Post/CrossBilateralFilter", "SSAO/HorizonBased/CrossBilateralFilter/X", "cPhotometricExponent", 10.0f, false);
+		setUniform("SSAO/Post/CrossBilateralFilter", "SSAO/HorizonBased/CrossBilateralFilter/Y", "cPhotometricExponent", 10.0f, false);
+        
+		setUniform("SSAO/HemisphereMC", "SSAO/HemisphereMC", "cSampleLengthExponent", 1.0f, false, 1);
+        
+        CompositorManager::getSingleton().setCompositorEnabled(mViewport, mCurrentCompositor, true);
+        CompositorManager::getSingleton().setCompositorEnabled(mViewport, mCurrentPost, true);
+    }
+
+
 void	Engine::setupSSAO(){
-		/*
-        mCompositorNames.push_back("SSAO/HemisphereMC");
-        mCompositorNames.push_back("SSAO/Volumetric");
-        mCompositorNames.push_back("SSAO/HorizonBased");
-        mCompositorNames.push_back("SSAO/Crytek");
-        mCompositorNames.push_back("SSAO/CreaseShading");
-        mCompositorNames.push_back("SSAO/UnsharpMask");
-        mCompositorNames.push_back("SSAO/ShowDepth");
-        mCompositorNames.push_back("SSAO/ShowNormals");
-        mCompositorNames.push_back("SSAO/ShowViewPos");
-        
-        mPostNames.push_back("SSAO/Post/NoFilter");
-        mPostNames.push_back("SSAO/Post/CrossBilateralFilter");
-        mPostNames.push_back("SSAO/Post/SmartBoxFilter");
-        mPostNames.push_back("SSAO/Post/BoxFilter");
-		*/
+	Logger::debug("setupSSAO");
+	std::vector<String> mCompositorNames;
+	mCurrentCompositor;
+	
+	std::vector<String> mPostNames;
+	mCurrentPost;
+
+	mCompositorNames.push_back("SSAO/HemisphereMC");
+	mCompositorNames.push_back("SSAO/Volumetric");
+	mCompositorNames.push_back("SSAO/HorizonBased");
+	mCompositorNames.push_back("SSAO/Crytek");
+	mCompositorNames.push_back("SSAO/CreaseShading");
+	mCompositorNames.push_back("SSAO/UnsharpMask");
+	mCompositorNames.push_back("SSAO/ShowDepth");
+	mCompositorNames.push_back("SSAO/ShowNormals");
+	mCompositorNames.push_back("SSAO/ShowViewPos");
+	
+	mPostNames.push_back("SSAO/Post/NoFilter");
+	mPostNames.push_back("SSAO/Post/CrossBilateralFilter");
+	mPostNames.push_back("SSAO/Post/SmartBoxFilter");
+	mPostNames.push_back("SSAO/Post/BoxFilter");
+	
+
+	mCurrentCompositor = mCompositorNames[0];
+	mCurrentPost = mPostNames[0];
+	
+	if (CompositorManager::getSingleton().addCompositor(mViewport, "SSAO/GBuffer"))
+		CompositorManager::getSingleton().setCompositorEnabled(mViewport, "SSAO/GBuffer", true);
+	else
+		Logger::debug("Sample_SSAO: Failed to add GBuffer compositor\n");
+	
+	for (unsigned int i = 0; i < mCompositorNames.size(); i++)
+	{
+		if (CompositorManager::getSingleton().addCompositor(mViewport, mCompositorNames[i]))
+			CompositorManager::getSingleton().setCompositorEnabled(mViewport, mCompositorNames[i], false);
+		else
+			Logger::debug("Sample_SSAO: Failed to add compositor: " + mCompositorNames[i] + "\n");
+	}
+	
+	for (unsigned int i = 0; i < mPostNames.size(); i++)
+	{
 		
-        if (CompositorManager::getSingleton().addCompositor(mViewport, "SSAO/GBuffer")) {
-            CompositorManager::getSingleton().setCompositorEnabled(mViewport, "SSAO/GBuffer", true);
-        } else {
-            Logger::debug("Sample_SSAO: Failed to add GBuffer compositor");
-        } 
+		if (CompositorManager::getSingleton().addCompositor(mViewport, mPostNames[i]))
+			CompositorManager::getSingleton().setCompositorEnabled(mViewport, mPostNames[i], false);
+		else
+			;
+			//Logger::debug("Sample_SSAO: Failed to add " + mPostNames[i] + " compositor\n");
+	}
+	
+	CompositorManager::getSingleton().setCompositorEnabled(mViewport, mCurrentCompositor, true);
+	CompositorManager::getSingleton().setCompositorEnabled(mViewport, mCurrentPost, true);
 
-		if (CompositorManager::getSingleton().addCompositor(mViewport, "SSAO/HemisphereMC")) {
-			CompositorManager::getSingleton().setCompositorEnabled(mViewport, "SSAO/HemisphereMC", true);
-		} else {
-			Logger::debug("Sample_SSAO: Failed to add compositor: ");
-		}
-        
-		if (CompositorManager::getSingleton().addCompositor(mViewport, "SSAO/Post/NoFilter")) {
-			CompositorManager::getSingleton().setCompositorEnabled(mViewport, "SSAO/Post/NoFilter", false);
-		} else {
-			Logger::debug("Sample_SSAO: Failed to add Post");
-		}
+    testsetup();
 
-		/*
-		Ogre::Viewport* mainVP = mCamera->getViewport();
-		//const Ogre::String& curMaterialScheme = mainVP->getMaterialScheme();
-		if(mRoot->getRenderSystem()->getCapabilities()->hasCapability(Ogre::RSC_FIXED_FUNCTION) == false)
-		{
-			mainVP->setMaterialScheme(Ogre::RTShader::ShaderGenerator::DEFAULT_SCHEME_NAME);
-		}
-		*/
+
+
+
+
 }
+
+
+
 
 void Engine::setupPhysics(){
     mPhysicsEngine = new PhysicsEngine();
