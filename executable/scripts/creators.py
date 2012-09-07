@@ -67,9 +67,9 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 		elif Engine.isKeyDown(EngineModule.Keys.K_6):
 			print("create character mesh with ground")
 			o = Engine.createMesh("Character.mesh")
-			o.setColour(1,0,0,0.2)
+			#o.setColour(1,0,0,0.2)
 			#o.setColour(1,0,0,0.9)
-			#o.setMaterialName("Body")
+			o.setMaterialName("SSAO/GBuffer")
 			o.setSize(EngineModule.Vec3(1,1,1)*1000)
 			o.setPosition(EngineModule.Vec3(0,150,0))
 			mesh.createBones(Engine,EngineModule,o)

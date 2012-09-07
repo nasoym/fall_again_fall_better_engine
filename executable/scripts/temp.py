@@ -37,6 +37,9 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 	if key == EngineModule.Keys.K_MINUS:
 	if key == EngineModule.Keys.K_EQUALS:
 	"""
+	if key == EngineModule.Keys.K_SLASH:
+		for o in selection.get():
+			o.setMaterialName("SSAO/GBuffer")
 
 	if key == EngineModule.Keys.K_N:
 		print("set timing factor")

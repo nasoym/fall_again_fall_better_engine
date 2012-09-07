@@ -84,17 +84,16 @@ Engine::~Engine(){
 		setUniform("SSAO/HemisphereMC", "SSAO/HemisphereMC", "cSampleLengthScreenSpace", 6.0f/100.0f, false, 1);
 		setUniform("SSAO/Volumetric", "SSAO/Volumetric", "cSampleLengthScreenSpace", 6.0f/100.0f, false, 1);
 
-		setUniform("SSAO/Crytek", "SSAO/Crytek", "cSampleLengthWorldSpace", 2.0f, false, 1);
-		setUniform("SSAO/HorizonBased", "SSAO/HorizonBased", "cSampleLengthWorldSpace", 2.0f, false, 1);
-		setUniform("SSAO/HemisphereMC", "SSAO/HemisphereMC", "cSampleLengthWorldSpace", 2.0f, false, 1);
-		setUniform("SSAO/Volumetric", "SSAO/Volumetric", "cSampleLengthWorldSpace", 2.0f, false, 1);
+		float size = 15.0f;
+		setUniform("SSAO/Crytek", "SSAO/Crytek", "cSampleLengthWorldSpace", size, false, 1);
+		setUniform("SSAO/HorizonBased", "SSAO/HorizonBased", "cSampleLengthWorldSpace", size, false, 1);
+		setUniform("SSAO/HemisphereMC", "SSAO/HemisphereMC", "cSampleLengthWorldSpace", size, false, 1);
+		setUniform("SSAO/Volumetric", "SSAO/Volumetric", "cSampleLengthWorldSpace", size, false, 1);
         
 		setUniform("SSAO/HorizonBased", "SSAO/HorizonBased", "cAngleBias", 0.2f, false, 1);
         
-		setUniform("SSAO/Crytek", "SSAO/Crytek", "cOffsetScale", 1.0f/100, false, 1);
-        
-		setUniform("SSAO/Crytek", "SSAO/Crytek", "cEdgeHighlight", 2.0f - 0.0f, false, 1);
-        
+		setUniform("SSAO/Crytek", "SSAO/Crytek", "cOffsetScale", 95.0f/100, false, 1);
+		setUniform("SSAO/Crytek", "SSAO/Crytek", "cEdgeHighlight", 0.75f, false, 1);
 		setUniform("SSAO/Crytek", "SSAO/Crytek", "cDefaultAccessibility", 0.5f, false, 1);
         
 		setUniform("SSAO/UnsharpMask", "SSAO/UnsharpMask/GaussianBlurY", "cKernelWidthBias", 1.0f, false, 1);
@@ -102,10 +101,10 @@ Engine::~Engine(){
         
 		setUniform("SSAO/UnsharpMask", "SSAO/UnsharpMask", "cLambda", 25.0f, false, 1);
         
-		setUniform("SSAO/Post/CrossBilateralFilter", "SSAO/HorizonBased/CrossBilateralFilter/X", "cPhotometricExponent", 10.0f, false);
-		setUniform("SSAO/Post/CrossBilateralFilter", "SSAO/HorizonBased/CrossBilateralFilter/Y", "cPhotometricExponent", 10.0f, false);
+		setUniform("SSAO/Post/CrossBilateralFilter", "SSAO/HorizonBased/CrossBilateralFilter/X", "cPhotometricExponent", 5.0f, false);
+		setUniform("SSAO/Post/CrossBilateralFilter", "SSAO/HorizonBased/CrossBilateralFilter/Y", "cPhotometricExponent", 5.0f, false);
         
-		setUniform("SSAO/HemisphereMC", "SSAO/HemisphereMC", "cSampleLengthExponent", 1.0f, false, 1);
+		setUniform("SSAO/HemisphereMC", "SSAO/HemisphereMC", "cSampleLengthExponent", 2.0f, false, 1);
         
         CompositorManager::getSingleton().setCompositorEnabled(mViewport, mCurrentCompositor, true);
         CompositorManager::getSingleton().setCompositorEnabled(mViewport, mCurrentPost, true);
@@ -136,8 +135,8 @@ void	Engine::setupSSAO(){
 	mPostNames.push_back("SSAO/Post/BoxFilter");
 	
 
-	mCurrentCompositor = mCompositorNames[0];
-	mCurrentPost = mPostNames[0];
+	mCurrentCompositor = mCompositorNames[3];
+	mCurrentPost = mPostNames[1];
 	
 	if (CompositorManager::getSingleton().addCompositor(mViewport, "SSAO/GBuffer"))
 		CompositorManager::getSingleton().setCompositorEnabled(mViewport, "SSAO/GBuffer", true);
