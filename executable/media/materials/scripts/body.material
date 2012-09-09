@@ -29,6 +29,7 @@ material Body
             scene_blend_op add
             //shading gouraud
             shading phong
+            //shading flat
             transparent_sorting on
         }
     }

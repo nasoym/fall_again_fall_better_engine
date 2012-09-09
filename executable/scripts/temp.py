@@ -58,6 +58,7 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 		objectsNumber = Engine.howManyObjects()
 		for i in range(0,objectsNumber):
 			o = Engine.getObject(i)
+			"""
 			if o.isBody():
 				b = o.isBody()
 				b.dsetSolverIterations(4,1)
@@ -65,6 +66,9 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 				#b.dsetSolverIterations(32,8)
 				#b.dsetSolverIterations(4,8)
 				#b.dsetSolverIterations(16,1)
+				"""
+			if o.isGuiShape():
+				o.setMaterialName("SSAO/GBuffer")
 
 	if key == EngineModule.Keys.K_N:
 		if Engine.isKeyDown(EngineModule.Keys.K_1):
