@@ -34,10 +34,37 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 
 	if key == EngineModule.Keys.K_MINUS:
 	if key == EngineModule.Keys.K_EQUALS:
+
 	"""
+
+
+
+
+	if key == EngineModule.Keys.K_COMMA:
+		if not Engine.getTimeDifference() == 0:
+			print("fps: " + str(float(1000.0 / Engine.getTimeDifference())))
+		else:
+			print("fps: 0")
+
+	if key == EngineModule.Keys.K_PERIOD:
+		Engine.test()
+
 	if key == EngineModule.Keys.K_SLASH:
-		for o in selection.get():
-			o.setMaterialName("SSAO/GBuffer")
+		#for o in selection.get():
+		#	o.setMaterialName("SSAO/GBuffer")
+
+		print("set Solver Iterations")
+		#for o in selection.get():
+		objectsNumber = Engine.howManyObjects()
+		for i in range(0,objectsNumber):
+			o = Engine.getObject(i)
+			if o.isBody():
+				b = o.isBody()
+				b.dsetSolverIterations(4,1)
+				#b.dsetSolverIterations(4,4)
+				#b.dsetSolverIterations(32,8)
+				#b.dsetSolverIterations(4,8)
+				#b.dsetSolverIterations(16,1)
 
 	if key == EngineModule.Keys.K_N:
 		if Engine.isKeyDown(EngineModule.Keys.K_1):

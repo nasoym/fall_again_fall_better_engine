@@ -300,6 +300,8 @@ BOOST_PYTHON_MODULE(EngineModule) {
 
         .def("getTime",&Engine::getTime)
         .def("getTimeDifference",&Engine::getTimeDifference)
+
+        .def("test",&Engine::test)
         ;
 
     class_<Vec3>("Vec3",init<>())

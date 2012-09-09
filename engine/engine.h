@@ -101,6 +101,9 @@ class Engine :
 		void			setNotUseFirstRenderer(){mUseFirstRenderer=false;}
 
 
+		void			test();
+
+
     private:
         void    setupPhysics();
         void    closePhysics();

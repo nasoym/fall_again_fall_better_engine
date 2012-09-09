@@ -98,6 +98,7 @@ def createSpaceCage(Engine,EngineModule,size):
 	shape.turnOffShadows()
 	shape.setFinalShape()
 	shape.setSize(EngineModule.Vec3(size.X(),wall,size.Z()))
+	#shape.setSize(EngineModule.Vec3(size.X() * 10000,wall,size.Z() * 10000))
 	shape.setPosition(EngineModule.Vec3(0,-wall,0))
 	o.addShape(shape)
 

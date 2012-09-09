@@ -32,7 +32,7 @@ FallingDamping = 50
 FallingSpring = 5
 FallingDamping = 50
 
-FallingSpring = 0
+FallingSpring = 5
 FallingDamping = 30
 
 FallingAnim = [

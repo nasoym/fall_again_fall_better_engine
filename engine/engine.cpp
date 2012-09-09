@@ -586,3 +586,8 @@ std::string		Engine::createUuid(){
 		boost::uuids::random_generator()()
 		);
 }
+
+
+void		Engine::test(){
+    Logger::debug(format("%1% %2%") % mTimer.getMilliseconds() % mTimer.getMicroseconds());
+}
