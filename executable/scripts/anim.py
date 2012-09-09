@@ -1,5 +1,14 @@
 """
 anim:
+	m: joint motor
+		1:on 2:off 3,4,5: set different values
+	[: select set of objects
+	]: print all objects
+	;: set masses of body parts
+		1:set by fixed factor (0.02)
+		2:double 3:half
+		else:print masses
+	space: toggle animation
 
 """
 
@@ -57,6 +66,7 @@ FallingAnim = [
 	]
 
 RisingAnimTime = 200
+RisingAnimTime = 150
 exp=38
 RisingSpring=(10 ** exp) * 1.2
 RisingDamping=(10 ** exp) * 1.0
@@ -182,15 +192,7 @@ def setMasses(Engine,EngineModule,selection,objects,factor):
 			b.resetMass()
 			newMass = b.getMass() * factor
 			b.setMass(newMass)
-"""
-RANDOM MODULE:
-import random
-random.random() = 0.0 -> 1.0
-random.uniform(0.5,20.4)
-random.randint(44,8994)
-random.randrange(0,5,2) = 0,2,4
-random.choice([1,4,5,645])
-"""
+
 
 def keyPressed(Engine,EngineModule,key,selection,objects):
 	pass
@@ -227,37 +229,28 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 					"name":"rising","index":0,"starttime":Engine.getTime()}
 			elif objects.get()["anims"]["stand"]["name"] == "rising":
 
+				randRange = 150
+				randStep = 20
 
-				randRange = 100
-				force = EngineModule.Vec3(
-					random.uniform(-randRange,randRange),
-					0,
-					random.uniform(-randRange,randRange))
-				for o in selection.get():
-					if o.isBody():
-						o.isBody().addForce(force)
+				#getRandVal = lambda : random.choice([ -randRange, randRange, -randRange * 0.5, randRange * 0.5, 0])
+				getRandVal = lambda : random.choice([-randRange,randRange,0])
+				#getRandVal = lambda : random.uniform(-randRange,randRange),
+				#getRandVal = lambda : random.randragne(-randRange,randRange,randStep))
 				partsList = objects.get()["head"]
 				for part in partsList:
+					force = EngineModule.Vec3(getRandVal(),0,getRandVal())
 					part.addForce(force)
 
-				force = EngineModule.Vec3(
-					random.uniform(-randRange,randRange),
-					0,
-					random.uniform(-randRange,randRange))
-				for o in selection.get():
-					if o.isBody():
-						o.isBody().addForce(force)
 				partsList = objects.get()["breast"]
 				for part in partsList:
+					force = EngineModule.Vec3(getRandVal(),0,getRandVal())
 					part.addForce(force)
-
 
 				setMasses(Engine,EngineModule,selection,objects,fallingMass)
 				objects.get()["anims"]["stand"] = {
 					"name":"falling","index":0,"starttime":Engine.getTime()}
 
 
-	"""
 	if key == EngineModule.Keys.K_SEMICOLON:
 		parts = ["feet","lleg","uleg","hip","root","belly",
 			"breast","shoulder","neck","uarm","larm","head","hand"]
@@ -340,4 +333,3 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 					j.dsetMotorSpring(spring)
 					j.dsetMotorDamping(damping)
 					j.dsetMotorAccel(False)
-		"""

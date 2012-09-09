@@ -4,8 +4,6 @@
 #include "engine_object.h"
 #include "engine_keys.h"
 
-//#include "OgreRTShaderSystem.h"
-
 #include <boost/lexical_cast.hpp>
 #include <boost/uuid/uuid.hpp>
 #include <boost/uuid/uuid_generators.hpp>
@@ -30,7 +28,7 @@ Engine::Engine() :
     setupPhysics();
     setup();
 	setupStereo();
-	setupSSAO();
+	//setupSSAO();
     setupOIS();
     setupWindowEventListener();
 }

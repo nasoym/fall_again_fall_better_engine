@@ -5,12 +5,10 @@
 	o: move object by step size 20 
 		(x+:1, y+:2, z+:3, x-:4, y-:5, z-:6) 
 		7: y*0.9
-		8: step size:1
+		8: step size=1
 	x: work on body,joint: sizepos with all joints
 	b: work on body,joint: singual anchor pos 
 	n: set timingfactor 1:*0.9 2:*1.1
-	r:
-	m:
 """
 import mesh
 import createobjects as create
@@ -42,13 +40,12 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 			o.setMaterialName("SSAO/GBuffer")
 
 	if key == EngineModule.Keys.K_N:
-		print("set timing factor")
 		if Engine.isKeyDown(EngineModule.Keys.K_1):
 			Engine.setTimingFactor(Engine.getTimingFactor() * 0.9)
-			print("timingfactor: " +str(Engine.getTimingFactor()))
+			print("set timingfactor: " +str(Engine.getTimingFactor()))
 		if Engine.isKeyDown(EngineModule.Keys.K_2):
 			Engine.setTimingFactor(Engine.getTimingFactor() * 1.1)
-			print("timingfactor: " +str(Engine.getTimingFactor()))
+			print("set timingfactor: " +str(Engine.getTimingFactor()))
 
 	if key == EngineModule.Keys.K_X:
 		print("edit body joint pos,size")
@@ -94,8 +91,6 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 
 	if key == EngineModule.Keys.K_O:
 		print("move selection")
-		#if len(selection.get()) == 1:
-		#	o = selection.get()[0]
 		for o in selection.get():
 			step = 20
 			if Engine.isKeyDown(EngineModule.Keys.K_8):
@@ -115,6 +110,11 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 			if Engine.isKeyDown(EngineModule.Keys.K_7):
 				o.setPosition(o.getPosition() * EngineModule.Vec3(1,0.9,1))
 
+			if Engine.isKeyDown(EngineModule.Keys.K_9):
+				o.setOrientation(o.getOrientation() * EngineModule.Quat().fromAngles(0,5,0))
+			if Engine.isKeyDown(EngineModule.Keys.K_0):
+				o.setOrientation(o.getOrientation() * EngineModule.Quat().fromAngles(0,-5,0))
+
 	if key == EngineModule.Keys.K_T:
 		pass
 		#Engine.setTimingFactor(0.0001)
@@ -126,11 +126,11 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 
 
 		if Engine.isKeyDown(EngineModule.Keys.K_1):
-			print("loading")
+			print("temp loading")
 			saveload.load(Engine,EngineModule,"xmlscene/ragdoll.xml",objects)
 			#saveload.load(Engine,EngineModule,"xmlscene/test.xml",objects)
 		elif Engine.isKeyDown(EngineModule.Keys.K_2):
-			print("saving")
+			print("temp saving")
 			saveload.save(Engine,EngineModule,"xmlscene/ragdoll.xml",objects)
 			#saveload.save(Engine,EngineModule,"xmlscene/test.xml",objects)
 		else:

@@ -6,7 +6,7 @@
 		speed*10:7, speed*0.5:8)
 	y: rotate joint in 10 degree steps 
 		(x+:1, y+:2, z+:3, x-:4, y-:5, z-:6, 
-		degree step * 0.5:7)
+		degree step*0.5:7)
 	u: set joint limits in 5 unit steps 
 		y+:1, y-:2 z+:3, z-:4, reset:5, step size*0.5:7
 	z: switch material 
