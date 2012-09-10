@@ -37,7 +37,7 @@ void PhysicShape::createGuiCapsule(float height,float radius) {
 	capsule.setNumSegHeight(1); //1
 	//capsule.setEnableNormals(false); //true
 	capsule.setOrientation(Quat().fromAngles(0,0,90).toOgre());
-	mMeshPtr = capsule.realizeMesh();
+	MeshPtr mMeshPtr = capsule.realizeMesh();
 
     setEntity(getEngine()->getSceneManager()->createEntity(mMeshPtr));
     getEntity()->setMaterialName("Body");
@@ -47,9 +47,14 @@ void PhysicShape::createGuiCapsule(float height,float radius) {
 void PhysicShape::updateGuiCapsule(float height,float radius) {
 
 	if (!mMeshPtr.isNull()){
+		Logger::debug(format("child: %1%") % getNode()->numAttachedObjects() );
+		getNode()->detachObject(getEntity());
+		Logger::debug(format("child: %1%") % getNode()->numAttachedObjects() );
 		OGRE_DELETE getEntity();
-		OGRE_DELETE mMeshPtr.get();
-		mMeshPtr.setNull();
+		setEntity(0);
+
+		//OGRE_DELETE mMeshPtr.get();
+		//mMeshPtr.setNull();
 	}
 
 	Procedural::CapsuleGenerator capsule = Procedural::CapsuleGenerator();
@@ -61,11 +66,12 @@ void PhysicShape::updateGuiCapsule(float height,float radius) {
 	capsule.setNumSegHeight(1); //1
 	//capsule.setEnableNormals(false); //true
 	capsule.setOrientation(Quat().fromAngles(0,0,90).toOgre());
-	mMeshPtr = capsule.realizeMesh();
+	MeshPtr mMeshPtr = capsule.realizeMesh();
 
     setEntity(getEngine()->getSceneManager()->createEntity(mMeshPtr));
     getEntity()->setMaterialName("Body");
     getNode()->attachObject(getEntity());
+	Logger::debug(format("child: %1%") % getNode()->numAttachedObjects() );
 }
 
 void        PhysicShape::setLocalPosition(Vec3& vec3){

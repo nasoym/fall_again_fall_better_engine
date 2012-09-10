@@ -20,8 +20,6 @@ void		Engine::test(){
 	//boxShape = box->addBox();
 	//boxShape = box->addSphere();
 	boxShape->setLocalSize(Vec3(60,30,30));
-	//boxShape->createGuiCapsule(80,40);
-	//boxShape->updateGuiCapsule(40,40);
 
 	/*
 	boxShape = box->addBox();
