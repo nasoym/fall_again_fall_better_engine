@@ -16,17 +16,19 @@ PhysicShape::~PhysicShape() {
 
 }
 
-void PhysicShape::createGuiBox() {
+void PhysicShape::createGuiBox(Vec3& vec3) {
     setEntity(getEngine()->getSceneManager()->createEntity("Prefab_Cube"));
     getNode()->attachObject(getEntity());
+	setLocalSize(vec3);
 }
 
-void PhysicShape::createGuiSphere() {
+void PhysicShape::createGuiSphere(Vec3& vec3) {
     setEntity(getEngine()->getSceneManager()->createEntity("Prefab_Sphere"));
     getNode()->attachObject(getEntity());
+	setLocalSize(vec3);
 }
 
-void PhysicShape::createGuiCapsule(float height,float radius) {
+void PhysicShape::createGuiCapsule(Vec3& vec3) {
 	if (mMesh != 0 ) {
 		getNode()->detachObject(getEntity());
 		getEngine()->getSceneManager()->destroyEntity(getEntity());
@@ -36,8 +38,8 @@ void PhysicShape::createGuiCapsule(float height,float radius) {
 	}
 
 	Procedural::CapsuleGenerator capsule = Procedural::CapsuleGenerator();
-	capsule.setHeight(height);
-	capsule.setRadius(radius);
+	capsule.setHeight(vec3.x);
+	capsule.setRadius(vec3.y);
 
 	capsule.setNumRings(3); //8
 	capsule.setNumSegments(8); //16
@@ -51,8 +53,8 @@ void PhysicShape::createGuiCapsule(float height,float radius) {
 	mMesh = meshPtr.get();
 }
 
-void PhysicShape::updateGuiCapsule(float height,float radius) {
-	createGuiCapsule(height,radius);
+void PhysicShape::updateGuiCapsule(Vec3& vec3) {
+	createGuiCapsule(vec3);
 }
 
 void        PhysicShape::setLocalPosition(Vec3& vec3){
@@ -62,6 +64,8 @@ void        PhysicShape::setLocalPosition(Vec3& vec3){
     t.p.z = vec3.Z();
     mShape->setLocalPose(t);
 	EngineGuiShape::setLocalPosition(vec3);
+	mActor->resetMass();
+	mActor->wakeUp();
 }
 
 Vec3    	PhysicShape::getLocalPosition(){
@@ -77,6 +81,8 @@ void        PhysicShape::setLocalOrientation(Quat& quat){
     t.q.w = quat.W();
     mShape->setLocalPose(t);
 	EngineGuiShape::setLocalOrientation(quat);
+	mActor->resetMass();
+	mActor->wakeUp();
 }
 
 Quat 		PhysicShape::getLocalOrientation(){
@@ -95,12 +101,14 @@ void        PhysicShape::setLocalSize(Vec3& vec3){
 			EngineGuiShape::setLocalSize(vec3);
 			break;
 		case PxGeometryType::eCAPSULE:
-			mShape->setGeometry(PxCapsuleGeometry(vec3.y,vec3.x));
-			updateGuiCapsule(vec3.x*2,vec3.y);
+			mShape->setGeometry(PxCapsuleGeometry(vec3.y,vec3.x*0.5f));
+			//updateGuiCapsule(vec3.x*2,vec3.y);
+			updateGuiCapsule(vec3);
 			mLocalSize = vec3;
 			break;
 	}
 	mActor->resetMass();
+	mActor->wakeUp();
 }
 
 Vec3    	PhysicShape::getLocalSize(){

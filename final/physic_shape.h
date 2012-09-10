@@ -25,10 +25,10 @@ class PhysicShape : public EngineGuiShape {
 		virtual ObjectType					getType(){ return PHYSIC_SHAPE;}
 
 	public:
-		void 	createGuiBox();
-		void 	createGuiSphere();
-		void 	createGuiCapsule(float,float);
-		void 	updateGuiCapsule(float,float);
+		void 	createGuiBox(Vec3&);
+		void 	createGuiSphere(Vec3&);
+		void 	createGuiCapsule(Vec3&);
+		void 	updateGuiCapsule(Vec3&);
 
 		//virtual void        setPosition(Vec3& vec3);
 

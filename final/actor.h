@@ -25,12 +25,12 @@ class Actor : public EngineGuiContainer {
 		virtual Quat 		getOrientation();
 
 
-		virtual Actor*				isActor(){return this;}
-		virtual ObjectType		getType(){ return ACTOR;}
+		virtual Actor*		isActor(){return this;}
+		virtual ObjectType	getType(){return ACTOR;}
 
-		PhysicShape*		addBox();
-		PhysicShape*		addSphere();
-		PhysicShape*		addCapsule();
+		PhysicShape*		addBox(Vec3&);
+		PhysicShape*		addSphere(Vec3&);
+		PhysicShape*		addCapsule(Vec3&);
 
 		void				setGuiUpdatesOff(){mDoGuiUpdates=false;}
 		void				setGuiUpdatesOn(){mDoGuiUpdates=true;}
@@ -40,7 +40,9 @@ class Actor : public EngineGuiContainer {
 
 		virtual void        setSize(Vec3& vec3){}
 		virtual Vec3    	getSize(){return Vec3();}
+
 		virtual void		addForce(Vec3){}	
+
 		virtual void		setMass(float mass){}
 		virtual void		resetMass(){}
 		virtual float		getMass(){return 0;}

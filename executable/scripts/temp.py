@@ -47,7 +47,14 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 			print("fps: 0")
 
 	if key == EngineModule.Keys.K_PERIOD:
-		Engine.test()
+		if len(selection.get()) > 0:
+			for o in selection.get():
+				if o.isActor():
+					print("adding Box")
+					o.isActor().addCapsule(EngineModule.Vec3(20,40,20))
+		else:
+			Engine.test()
+				
 
 	if key == EngineModule.Keys.K_SLASH:
 		#for o in selection.get():
@@ -124,20 +131,28 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 		print("move selection")
 		for o in selection.get():
 			step = 20
+			changeVec = None
 			if Engine.isKeyDown(EngineModule.Keys.K_8):
 				step = 1
 			if Engine.isKeyDown(EngineModule.Keys.K_1):
-				o.setPosition(o.getPosition() + EngineModule.Vec3(step,0,0))
+				changeVec = EngineModule.Vec3(step,0,0)
 			if Engine.isKeyDown(EngineModule.Keys.K_2):
-				o.setPosition(o.getPosition() + EngineModule.Vec3(0,step,0))
+				changeVec = EngineModule.Vec3(0,step,0)
 			if Engine.isKeyDown(EngineModule.Keys.K_3):
-				o.setPosition(o.getPosition() + EngineModule.Vec3(0,0,step))
+				changeVec = EngineModule.Vec3(0,0,step)
 			if Engine.isKeyDown(EngineModule.Keys.K_4):
-				o.setPosition(o.getPosition() + EngineModule.Vec3(-step,0,0))
+				changeVec = EngineModule.Vec3(-step,0,0)
 			if Engine.isKeyDown(EngineModule.Keys.K_5):
-				o.setPosition(o.getPosition() + EngineModule.Vec3(0,-step,0))
+				changeVec = EngineModule.Vec3(0,-step,0)
 			if Engine.isKeyDown(EngineModule.Keys.K_6):
-				o.setPosition(o.getPosition() + EngineModule.Vec3(0,0,-step))
+				changeVec = EngineModule.Vec3(0,0,-step)
+
+			if changeVec:
+				if o.isPhysicShape():
+					o.setLocalPosition(o.getLocalPosition() + changeVec)
+				if o.isActor():
+					o.setPosition(o.getPosition() + changeVec)
+
 			if Engine.isKeyDown(EngineModule.Keys.K_7):
 				o.setPosition(o.getPosition() * EngineModule.Vec3(1,0.9,1))
 

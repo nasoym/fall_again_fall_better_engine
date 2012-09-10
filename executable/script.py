@@ -22,13 +22,8 @@ class Selection(object):
 				break
 		if not alreadyInSelection:
 			self.selected.append(container)
-			if hasattr(container,"selectshow"):
-				print("container has selectshow");
-			else:
-				print("container has NOT selectshow");
-				print(": " + str(container))
-				print(": " + str(container.getType()))
-			container.selectShow()
+			if hasattr(container,"selectShow"):
+				container.selectShow()
 
 	def remove(self,container):
 		alreadyInSelection = False

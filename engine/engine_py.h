@@ -96,8 +96,10 @@ BOOST_PYTHON_MODULE(EngineModule) {
     class_<EngineObject>("EngineObject", init<Engine*>())
         .def("getName",&EngineObject::getName)
         .def("setName",&EngineObject::setName)
+
         .def("readUuid",&EngineObject::readUuid)
         .def("setUuid",&EngineObject::setUuid)
+
 		.def("getType",&EngineObject::getType)
 
 		.def("isGuiShape",&EngineObject::isGuiShape,return_value_policy<reference_existing_object>())
@@ -107,6 +109,9 @@ BOOST_PYTHON_MODULE(EngineModule) {
 		.def("isJoint",&EngineObject::isJoint,return_value_policy<reference_existing_object>())
 		.def("isSpaceCage",&EngineObject::isSpaceCage,return_value_policy<reference_existing_object>())
 		.def("isMesh",&EngineObject::isMesh,return_value_policy<reference_existing_object>())
+		.def("isActor",&EngineObject::isActor,return_value_policy<reference_existing_object>())
+		.def("isDynamicActor",&EngineObject::isDynamicActor,return_value_policy<reference_existing_object>())
+		.def("isPhysicShape",&EngineObject::isPhysicShape,return_value_policy<reference_existing_object>())
 
 		.def("setSelectable",&EngineObject::setSelectable)
 		.def("setUnselectable",&EngineObject::setUnselectable)
@@ -180,10 +185,21 @@ BOOST_PYTHON_MODULE(EngineModule) {
 
 		.def("selectShow",&EngineGuiContainer::selectShow)
 		.def("selectHide",&EngineGuiContainer::selectHide)
-
 		;
 
 	class_<Actor,bases<EngineGuiContainer> >("Actor", init<Engine*>())
+		//.def("x",&Actor::x,return_value_policy<reference_existing_object>())
+		//.def("x",&Actor::x)
+		.def("addBox",&Actor::addBox,return_value_policy<reference_existing_object>())
+		.def("addSphere",&Actor::addSphere,return_value_policy<reference_existing_object>())
+		.def("addCapsule",&Actor::addCapsule,return_value_policy<reference_existing_object>())
+
+		.def("addForce",&Actor::addForce)
+
+		.def("setMass",&Actor::setMass)
+		.def("resetMass",&Actor::resetMass)
+		.def("getMass",&Actor::getMass)
+
 		;
 	class_<DynamicActor,bases<Actor> >("DynamicActor", init<Engine*,Vec3&>())
 		;

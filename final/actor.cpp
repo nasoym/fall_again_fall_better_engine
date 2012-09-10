@@ -52,39 +52,44 @@ void    Actor::setOrientation(Quat& quat) {
 	EngineGuiContainer::setOrientation(quat);
 }
 
-PhysicShape*		Actor::addBox(){
+PhysicShape*		Actor::addBox(Vec3& vec3){
 	PxShape* shape = getActor()->createShape( 
-		PxBoxGeometry(Vec3(10,10,10).toPhysx() ), 
+		PxBoxGeometry(vec3.toPhysx() ), 
 		*(getEngine()->getPhysicsEngine()->getMaterial()) 
 		);
 	PhysicShape* physicShape = new PhysicShape(getEngine(),this,shape);
-	physicShape->createGuiBox();
+	physicShape->createGuiBox(vec3);
 	addShape(physicShape);
 	resetMass();
+	wakeUp();	
 	return physicShape;
 }
 
-PhysicShape*		Actor::addSphere(){
+PhysicShape*		Actor::addSphere(Vec3& vec3){
 	PxShape* shape = getActor()->createShape( 
-		PxSphereGeometry(10), 
+		PxSphereGeometry(vec3.x), 
 		*(getEngine()->getPhysicsEngine()->getMaterial()) 
 		);
 	PhysicShape* physicShape = new PhysicShape(getEngine(),this,shape);
-	physicShape->createGuiSphere();
+	physicShape->createGuiSphere(vec3);
 	addShape(physicShape);
 	resetMass();
+    wakeUp();
 	return physicShape;
 }
 
-PhysicShape*		Actor::addCapsule(){
+PhysicShape*		Actor::addCapsule(Vec3& vec3){
 	PxShape* shape = getActor()->createShape( 
-		PxCapsuleGeometry(5,30), 
+		PxCapsuleGeometry(vec3.y,vec3.x*0.5f), 
+		//PxCapsuleGeometry(5,30), 
 		*(getEngine()->getPhysicsEngine()->getMaterial()) 
 		);
 	PhysicShape* physicShape = new PhysicShape(getEngine(),this,shape);
-	physicShape->createGuiCapsule(60,5);
+	//physicShape->createGuiCapsule(60,5);
+	physicShape->createGuiCapsule(vec3);
 	addShape(physicShape);
 	resetMass();
+    wakeUp();
 	return physicShape;
 }
 
