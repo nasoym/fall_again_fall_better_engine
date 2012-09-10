@@ -28,6 +28,7 @@ class PhysicShape : public EngineGuiShape {
 		void 	createGuiBox();
 		void 	createGuiSphere();
 		void 	createGuiCapsule(float,float);
+		void 	updateGuiCapsule(float,float);
 
 		//virtual void        setPosition(Vec3& vec3);
 

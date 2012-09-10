@@ -8,6 +8,7 @@ import scripts.misc as misc
 import scripts.creators as creators
 import scripts.main as main
 import scripts.anim as anim
+import scripts.serialReader as serialReader
 
 class Selection(object):
 	def __init__(self):
@@ -93,6 +94,7 @@ modules.append(temp)
 modules.append(creators)
 modules.append(misc)
 modules.append(anim)
+modules.append(serialReader)
 #modules.append(main)
 
 guiUpdates=[]

@@ -28,11 +28,28 @@ void PhysicShape::createGuiSphere() {
 
 void PhysicShape::createGuiCapsule(float height,float radius) {
 
+	Procedural::CapsuleGenerator capsule = Procedural::CapsuleGenerator();
+	capsule.setHeight(height);
+	capsule.setRadius(radius);
+
+	capsule.setNumRings(3); //8
+	capsule.setNumSegments(8); //16
+	capsule.setNumSegHeight(1); //1
+	//capsule.setEnableNormals(false); //true
+	capsule.setOrientation(Quat().fromAngles(0,0,90).toOgre());
+	mMeshPtr = capsule.realizeMesh();
+
+    setEntity(getEngine()->getSceneManager()->createEntity(mMeshPtr));
+    getEntity()->setMaterialName("Body");
+    getNode()->attachObject(getEntity());
+}
+
+void PhysicShape::updateGuiCapsule(float height,float radius) {
+
 	if (!mMeshPtr.isNull()){
-		getNode()->removeAndDestroyAllChildren();
+		OGRE_DELETE getEntity();
 		OGRE_DELETE mMeshPtr.get();
 		mMeshPtr.setNull();
-		Logger::debug("deleted mesh ptr");
 	}
 
 	Procedural::CapsuleGenerator capsule = Procedural::CapsuleGenerator();
@@ -45,13 +62,10 @@ void PhysicShape::createGuiCapsule(float height,float radius) {
 	//capsule.setEnableNormals(false); //true
 	capsule.setOrientation(Quat().fromAngles(0,0,90).toOgre());
 	mMeshPtr = capsule.realizeMesh();
-	Logger::debug("created new Mesh ptr");
 
     setEntity(getEngine()->getSceneManager()->createEntity(mMeshPtr));
-	Logger::debug("created new entity");
     getEntity()->setMaterialName("Body");
     getNode()->attachObject(getEntity());
-	Logger::debug("attached new entity to node");
 }
 
 void        PhysicShape::setLocalPosition(Vec3& vec3){
@@ -97,16 +111,12 @@ void        PhysicShape::setLocalSize(Vec3& vec3){
 			break;
 		case PxGeometryType::eCAPSULE:
 			Logger::debug("set size capsule type");
-			mShape->setGeometry(PxCapsuleGeometry(vec3.x*2, vec3.y));
-			createGuiCapsule(vec3.x,vec3.y);
-			Logger::debug("created new gui capsule");
+			mShape->setGeometry(PxCapsuleGeometry(vec3.y,vec3.x));
+			updateGuiCapsule(vec3.x*2,vec3.y);
 			mLocalSize = vec3;
-			Logger::debug("set local size");
 			break;
 	}
 	mActor->resetMass();
-	Logger::debug("resetted mass");
-
 }
 
 Vec3    	PhysicShape::getLocalSize(){

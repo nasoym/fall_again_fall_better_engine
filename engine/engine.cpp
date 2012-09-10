@@ -11,7 +11,6 @@
 #include <vector>
 #include <string>
 
-#include "serial.h"
 
 Engine::Engine() :
 	mLoopRendering(true),
@@ -33,7 +32,6 @@ Engine::Engine() :
 	//setupSSAO();
     setupOIS();
     setupWindowEventListener();
-	initSerial();
 }
 
 Engine::~Engine(){
@@ -203,8 +201,6 @@ void Engine::physicPauseToggle() {
 }
 
 void	Engine::step() {
-	//int	i = readSerial();
-	//Logger::debug(format("serial %1%") % i);
 	processOIS();
 	if (inputExit()) {
 		quit();

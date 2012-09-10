@@ -4,17 +4,19 @@
 HANDLE hComm;
 
 void	initSerial(){
-	hComm = CreateFile("COM1", 
-		GENERIC_READ, 
+	hComm = CreateFile("COM11", 
+		GENERIC_READ | GENERIC_WRITE, 
 		0, 
-		0, 
+		NULL, 
 		OPEN_EXISTING, 
 		FILE_ATTRIBUTE_NORMAL, 
-		0);
+		NULL);
 
 	if (hComm == INVALID_HANDLE_VALUE){
 		Logger::debug("error opening port");
 		return;
+	} else {
+		Logger::debug("successfully opening port");
 	}
 
 	COMMTIMEOUTS timeouts={0};
