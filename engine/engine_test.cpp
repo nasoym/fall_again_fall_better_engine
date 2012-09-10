@@ -14,8 +14,8 @@ void		Engine::test(){
 	DynamicActor*	actor = new DynamicActor(this,Vec3(0,100,0));
 	PhysicShape*	shape;
 
-	//shape = actor->addCapsule();
-	shape = actor->addBox();
+	shape = actor->addCapsule();
+	//shape = actor->addBox();
 	//shape = actor->addSphere();
 	shape->setLocalSize(Vec3(60,30,30));
 

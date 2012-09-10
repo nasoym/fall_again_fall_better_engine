@@ -29,6 +29,12 @@ using namespace boost::python;
 #include "engine_joint.h"
 #include "engine_mesh.h"
 
+
+#include "actor.h"
+#include "dynamic_actor.h"
+#include "physic_shape.h"
+#include "articulation.h"
+
 BOOST_PYTHON_MODULE(EngineModule) {
 
 	enum_<ObjectType>("ObjectType")
@@ -41,6 +47,9 @@ BOOST_PYTHON_MODULE(EngineModule) {
 	.value("STATICBODY",STATICBODY)
 	.value("BOX",BOX)
 	.value("GUICONTAINER",GUICONTAINER)
+	.value("ACTOR",ACTOR)
+	.value("DYNAMIC_ACTOR",DYNAMIC_ACTOR)
+	.value("PHYSIC_SHAPE",PHYSIC_SHAPE)
 	;
 
 
@@ -173,6 +182,15 @@ BOOST_PYTHON_MODULE(EngineModule) {
 		.def("selectHide",&EngineGuiContainer::selectHide)
 
 		;
+
+	class_<Actor,bases<EngineGuiContainer> >("Actor", init<Engine*>())
+		;
+	class_<DynamicActor,bases<Actor> >("DynamicActor", init<Engine*,Vec3&>())
+		;
+	class_<PhysicShape,bases<EngineGuiShape> >("PhysicShape",no_init)
+		;
+
+
 
 	class_<EngineBox,bases<EngineGuiShape> >("EngineBox", init<Engine*>())
 		;

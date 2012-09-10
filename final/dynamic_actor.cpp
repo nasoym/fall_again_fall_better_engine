@@ -3,7 +3,7 @@
 #include "physic_engine.h"
 
 
-DynamicActor::DynamicActor(Engine* engine, Vec3& position) :
+DynamicActor::DynamicActor(Engine* engine, Vec3 & position) :
 	Actor(engine),
 	mBody(0)
 	{
