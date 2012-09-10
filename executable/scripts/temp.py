@@ -57,8 +57,6 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 				
 
 	if key == EngineModule.Keys.K_SLASH:
-		#for o in selection.get():
-		#	o.setMaterialName("SSAO/GBuffer")
 
 		print("set Solver Iterations")
 		#for o in selection.get():

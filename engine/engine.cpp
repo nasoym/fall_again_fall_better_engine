@@ -315,7 +315,10 @@ void Engine::setup(){
 		while (it !=rlist.end()) {
 			RenderSystem *rSys = *(it++);
 			rSys->setConfigOption("Full Screen", "No");
-			rSys->setConfigOption("Video Mode", "1024 x 768 @ 32-bit colour");
+			//rSys->setConfigOption("Full Screen", "Yes");
+			rSys->setConfigOption("Video Mode", "600 x 700 @ 32-bit colour");
+			//rSys->setConfigOption("Video Mode", "1024 x 768 @ 32-bit colour");
+			//rSys->setConfigOption("Video Mode", "1280 x 800 @ 32-bit colour");
 			mRoot->setRenderSystem(rSys);
 			break;
 		}

@@ -41,9 +41,11 @@ void PhysicShape::createGuiCapsule(Vec3& vec3) {
 	capsule.setHeight(vec3.x);
 	capsule.setRadius(vec3.y);
 
-	capsule.setNumRings(3); //8
-	capsule.setNumSegments(8); //16
+	//capsule.setNumRings(3); //8
+	//capsule.setNumSegments(8); //16
+
 	capsule.setNumSegHeight(1); //1
+
 	capsule.setOrientation(Quat().fromAngles(0,0,90).toOgre());
 	MeshPtr meshPtr = capsule.realizeMesh();
 
