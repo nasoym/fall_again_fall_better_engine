@@ -1,4 +1,10 @@
 
+VPATH=common:engine:final:engine_physics:stereoManager
+ALLPATHES=$(subst :, ,$(VPATH))
+
+OBJ=build/main.obj
+OBJ+=$(foreach dir,$(ALLPATHES), $(patsubst $(dir)/%.cpp,build/%.obj,$(wildcard $(dir)/*.cpp)) )
+
 LINK=/c/Procs/MicrosoftVisualStudio10.0/VC/bin/link.exe
 
 CFLAGS=
@@ -8,16 +14,14 @@ CFLAGS+=-I /c/Procs/MicrosoftPlatformSDK/Include
 CFLAGS+=-I /c/Users/Sinan/Downloads/ogre/OgreSDK_vc10_v1-8-0/include/
 CFLAGS+=-I /c/Users/Sinan/Downloads/ogre/OgreSDK_vc10_v1-8-0/include/OGRE/
 CFLAGS+=-I /c/Users/Sinan/Downloads/ogre/OgreSDK_vc10_v1-8-0/include/OGRE/RTShaderSystem
+CFLAGS+=-I /c/Users/Sinan/Downloads/ogre/OgreProceduralSDK_vs10_v0.2/include/OgreProcedural/
 CFLAGS+=-I /c/Users/Sinan/Downloads/physx/PhysX-3.1.2_PC_VC10_SDK_Core/SDKs/PhysXAPI
 CFLAGS+=-I /c/Users/Sinan/Downloads/physx/PhysX-3.1.2_PC_VC10_SDK_Core/SDKs/PhysXAPI/extensions
 CFLAGS+=-I /c/Users/Sinan/Downloads/physx/PhysX-3.1.2_PC_VC10_SDK_Core/SDKs/PxFoundation
 CFLAGS+=-I /c/Users/Sinan/Downloads/physx/PhysX-3.1.2_PC_VC10_SDK_Core/SDKs/PxTask/include
 CFLAGS+=-I /c/Python27/include
 CFLAGS+=-I /c/boost_1_47/
-CFLAGS+=-I ./common
-CFLAGS+=-I ./engine
-CFLAGS+=-I ./engine_physics
-CFLAGS+=-I ./stereoManager
+CFLAGS+=$(foreach dir,$(ALLPATHES),"-I" $(dir))
 CFLAGS+=-c -MD -EHsc -D "NDEBUG" -nologo
 
 CC=cl.exe
@@ -41,23 +45,19 @@ LIBLIST+=/c/Users/Sinan/Downloads/physx/PhysX-3.1.2_PC_VC10_SDK_Core/SDKs/lib/wi
 LIBLIST+=/c/Users/Sinan/Downloads/ogre/OgreSDK_vc10_v1-8-0/lib/release/OgreMain.lib
 LIBLIST+=/c/Users/Sinan/Downloads/ogre/OgreSDK_vc10_v1-8-0/lib/release/OgreRTShaderSystem.lib
 LIBLIST+=/c/Users/Sinan/Downloads/ogre/OgreSDK_vc10_v1-8-0/lib/release/OIS.lib
+LIBLIST+=/c/Users/Sinan/Downloads/ogre/OgreProceduralSDK_vs10_v0.2/lib/Release/OgreProcedural.lib
 
 LIBFLAGS=
 LIBFLAGS+=-NOLOGO
 LIBFLAGS+=-NODEFAULTLIB:LIBCMT
 
-VPATH=engine_physics:common:engine:stereoManager
-ALLPATHES=$(subst :, ,$(VPATH))
-
-OBJ=build/main.obj
-OBJ+=$(foreach dir,$(ALLPATHES), $(patsubst $(dir)/%.cpp,build/%.obj,$(wildcard $(dir)/*.cpp)) )
-
 .PHONY: clean test
+
+show:
+	echo $(CFLAGS)
 
 dll:
 	$(LINK) $(LIBFLAGS) -DLL -OUT:executable/EngineModule.pyd $(OBJ) $(LIBLIST)
-show:
-	echo $(OBJ)
 
 all: executable/main.exe
 	echo "main"

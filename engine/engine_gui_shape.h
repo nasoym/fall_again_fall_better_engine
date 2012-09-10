@@ -102,7 +102,6 @@ class EngineGuiShape : public EngineObject {
 
 		Vec3				mLocalPosition;
 		Quat				mLocalOrientation;
-		Vec3				mLocalSize;
 
 		EngineGuiContainer*	mContainer;
 		GuiScaling			mScalingType;
@@ -110,6 +109,8 @@ class EngineGuiShape : public EngineObject {
 		std::string			mMaterialName;
 
 		bool				mFinalShape;
+	protected:
+		Vec3				mLocalSize;
 
 };
 

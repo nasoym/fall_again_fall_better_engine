@@ -9,9 +9,12 @@ PhysicBox::PhysicBox(PhysicsEngine* engine, Vec3& position,Vec3& size) :
 	mShape(0)
 	{
     mBody = (mEngine->getPhysics())->createRigidDynamic( PxTransform(position.toPhysx()) );
+
+    (mEngine->getScene())->addActor(*mBody);
+
     mShape = mBody->createShape( PxBoxGeometry(size.toPhysx()), *(mEngine->getMaterial()) );
     PxRigidBodyExt::updateMassAndInertia(*mBody, 1.0f);
-    (mEngine->getScene())->addActor(*mBody);
+
 }
 
 PhysicBox::~PhysicBox( ){

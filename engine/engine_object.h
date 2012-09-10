@@ -15,6 +15,10 @@ class EngineJoint;
 class EngineSpaceCage;
 class EngineMesh;
 class EngineBox;
+class Actor;
+class PhysicShape;
+class DynamicActor;
+
 
 enum ObjectType {
 	OBJECT,
@@ -26,6 +30,10 @@ enum ObjectType {
 	STATICBODY,
 	GUICONTAINER,
 	BOX,
+	ACTOR,
+	DYNAMIC_ACTOR,
+	PHYSIC_SHAPE,
+
 };
 
 class EngineObject {
@@ -56,6 +64,9 @@ class EngineObject {
 		virtual EngineSpaceCage*	 	isSpaceCage(){return 0;}
 		virtual EngineMesh*				isMesh(){return 0;}
 		virtual EngineBox*				isBox(){return 0;}
+		virtual Actor*					isActor(){return 0;}
+		virtual DynamicActor*			isDynamicActor(){return 0;}
+		virtual PhysicShape*			isPhysicShape(){return 0;}
 
 		void			setSelectable(){mSelectable=true;}
 		void			setUnselectable(){mSelectable=false;}

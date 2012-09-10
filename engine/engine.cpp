@@ -11,6 +11,8 @@
 #include <vector>
 #include <string>
 
+#include "serial.h"
+
 Engine::Engine() :
 	mLoopRendering(true),
 	mPythonInitialized(false),
@@ -28,9 +30,10 @@ Engine::Engine() :
     setupPhysics();
     setup();
 	setupStereo();
-	setupSSAO();
+	//setupSSAO();
     setupOIS();
     setupWindowEventListener();
+	initSerial();
 }
 
 Engine::~Engine(){
@@ -200,6 +203,8 @@ void Engine::physicPauseToggle() {
 }
 
 void	Engine::step() {
+	//int	i = readSerial();
+	//Logger::debug(format("serial %1%") % i);
 	processOIS();
 	if (inputExit()) {
 		quit();
@@ -592,6 +597,3 @@ std::string		Engine::createUuid(){
 }
 
 
-void		Engine::test(){
-    Logger::debug(format("%1% %2%") % mTimer.getMilliseconds() % mTimer.getMicroseconds());
-}
