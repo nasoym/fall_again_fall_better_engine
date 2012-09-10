@@ -8,27 +8,31 @@
 #include "physic_shape.h"
 
 void		Engine::test(){
-    Logger::debug(format("%1% %2%") % mTimer.getMilliseconds() % mTimer.getMicroseconds());
+    //Logger::debug(format("%1% %2%") % mTimer.getMilliseconds() % mTimer.getMicroseconds());
 
 
-	DynamicActor*	box = new DynamicActor(this,Vec3(0,100,0));
-	Logger::debug("created: dynamic box");
+	DynamicActor*	actor = new DynamicActor(this,Vec3(0,100,0));
+	PhysicShape*	shape;
 
-	PhysicShape*	boxShape;
-
-	boxShape = box->addCapsule();
-	//boxShape = box->addBox();
-	//boxShape = box->addSphere();
-	boxShape->setLocalSize(Vec3(60,30,30));
+	//shape = actor->addCapsule();
+	shape = actor->addBox();
+	//shape = actor->addSphere();
+	shape->setLocalSize(Vec3(60,30,30));
 
 	/*
-	boxShape = box->addBox();
-	boxShape->setLocalPosition(Vec3(0,10,0));
-	boxShape->setLocalSize(Vec3(10,10,10));
+	shape = actor->addCapsule();
+	//shape = actor->addBox();
+	//shape = actor->addSphere();
+	shape->setLocalSize(Vec3(60,30,30));
+	shape->setLocalOrientation(Quat().fromAngles(0,45,0));
 
-	boxShape = box->addBox();
-	boxShape->setLocalPosition(Vec3(30,0,0));
-	boxShape->setLocalSize(Vec3(10,10,10));
+	shape = actor->addBox();
+	shape->setLocalPosition(Vec3(0,10,0));
+	shape->setLocalSize(Vec3(10,10,10));
+
+	shape = actor->addBox();
+	shape->setLocalPosition(Vec3(30,0,0));
+	shape->setLocalSize(Vec3(10,10,10));
 	*/
 
 }

@@ -205,7 +205,9 @@ class Engine :
 		String mCurrentCompositor;
 		String mCurrentPost;
 
-
+	public:	//profiling
+		
+		void	printUsedResources();
 
 };
 #endif

@@ -8,8 +8,6 @@ DynamicActor::DynamicActor(Engine* engine, Vec3& position) :
 	mBody(0)
 	{
     mBody = (getEngine()->getPhysicsEngine()->getPhysics())->createRigidDynamic( PxTransform(position.toPhysx()) );
-    //mShape = mBody->createShape( PxBoxGeometry(size.toPhysx()), *(mEngine->getMaterial()) );
-    //PxRigidBodyExt::updateMassAndInertia(*mBody, 1.0f);
     (getEngine()->getPhysicsEngine()->getScene())->addActor(*mBody);
 }
 

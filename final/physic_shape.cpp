@@ -7,9 +7,9 @@
 PhysicShape::PhysicShape(Engine* engine,Actor* actor,PxShape* shape) :
 	EngineGuiShape(engine),
 	mShape(shape),
-	mActor(actor)
+	mActor(actor),
+	mMesh(0)
 	{
-	mMeshPtr.setNull();
 }
 
 PhysicShape::~PhysicShape() {
@@ -27,34 +27,12 @@ void PhysicShape::createGuiSphere() {
 }
 
 void PhysicShape::createGuiCapsule(float height,float radius) {
-
-	Procedural::CapsuleGenerator capsule = Procedural::CapsuleGenerator();
-	capsule.setHeight(height);
-	capsule.setRadius(radius);
-
-	capsule.setNumRings(3); //8
-	capsule.setNumSegments(8); //16
-	capsule.setNumSegHeight(1); //1
-	//capsule.setEnableNormals(false); //true
-	capsule.setOrientation(Quat().fromAngles(0,0,90).toOgre());
-	MeshPtr mMeshPtr = capsule.realizeMesh();
-
-    setEntity(getEngine()->getSceneManager()->createEntity(mMeshPtr));
-    getEntity()->setMaterialName("Body");
-    getNode()->attachObject(getEntity());
-}
-
-void PhysicShape::updateGuiCapsule(float height,float radius) {
-
-	if (!mMeshPtr.isNull()){
-		Logger::debug(format("child: %1%") % getNode()->numAttachedObjects() );
+	if (mMesh != 0 ) {
 		getNode()->detachObject(getEntity());
-		Logger::debug(format("child: %1%") % getNode()->numAttachedObjects() );
-		OGRE_DELETE getEntity();
+		getEngine()->getSceneManager()->destroyEntity(getEntity());
 		setEntity(0);
-
-		//OGRE_DELETE mMeshPtr.get();
-		//mMeshPtr.setNull();
+		MeshManager::getSingleton().remove(mMesh->getHandle());
+		mMesh = 0;
 	}
 
 	Procedural::CapsuleGenerator capsule = Procedural::CapsuleGenerator();
@@ -64,14 +42,17 @@ void PhysicShape::updateGuiCapsule(float height,float radius) {
 	capsule.setNumRings(3); //8
 	capsule.setNumSegments(8); //16
 	capsule.setNumSegHeight(1); //1
-	//capsule.setEnableNormals(false); //true
 	capsule.setOrientation(Quat().fromAngles(0,0,90).toOgre());
-	MeshPtr mMeshPtr = capsule.realizeMesh();
+	MeshPtr meshPtr = capsule.realizeMesh();
 
-    setEntity(getEngine()->getSceneManager()->createEntity(mMeshPtr));
+    setEntity(getEngine()->getSceneManager()->createEntity(meshPtr));
     getEntity()->setMaterialName("Body");
     getNode()->attachObject(getEntity());
-	Logger::debug(format("child: %1%") % getNode()->numAttachedObjects() );
+	mMesh = meshPtr.get();
+}
+
+void PhysicShape::updateGuiCapsule(float height,float radius) {
+	createGuiCapsule(height,radius);
 }
 
 void        PhysicShape::setLocalPosition(Vec3& vec3){
@@ -106,17 +87,14 @@ Quat 		PhysicShape::getLocalOrientation(){
 void        PhysicShape::setLocalSize(Vec3& vec3){
 	switch(mShape->getGeometryType()){
 		case PxGeometryType::eBOX:
-			Logger::debug("set size box type");
 			mShape->setGeometry(PxBoxGeometry(vec3.toPhysx()));
 			EngineGuiShape::setLocalSize(vec3);
 			break;
 		case PxGeometryType::eSPHERE:
-			Logger::debug("set size sphere type");
 			mShape->setGeometry(PxSphereGeometry(vec3.x));
 			EngineGuiShape::setLocalSize(vec3);
 			break;
 		case PxGeometryType::eCAPSULE:
-			Logger::debug("set size capsule type");
 			mShape->setGeometry(PxCapsuleGeometry(vec3.y,vec3.x));
 			updateGuiCapsule(vec3.x*2,vec3.y);
 			mLocalSize = vec3;

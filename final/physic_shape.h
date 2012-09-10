@@ -44,7 +44,7 @@ class PhysicShape : public EngineGuiShape {
 	private:
         PxShape*            mShape;
 		Actor*				mActor;
-		Ogre::MeshPtr 		mMeshPtr;
+		Mesh*				mMesh;
 
 };
 #endif
