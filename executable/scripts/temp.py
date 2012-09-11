@@ -47,53 +47,6 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 			print("fps: 0")
 
 	if key == EngineModule.Keys.K_PERIOD:
-		partsList = objects.get()["head"]
-		pos = partsList[0].getPosition()
-		lowX = pos.x
-		highX = pos.x
-		lowY = pos.y
-		highY = pos.y
-		lowZ = pos.z
-		highZ = pos.z
-		for part in partsList:
-			pos = part.getPosition()
-			if pos.x < lowX:
-				lowX = pos.x
-			if pos.x > highX:
-				highX = pos.x
-
-			if pos.y < lowY:
-				lowY = pos.y
-			if pos.y > highY:
-				highY = pos.y
-
-			if pos.z < lowZ:
-				lowZ = pos.z
-			if pos.z > highZ:
-				highZ = pos.z
-
-		finalX = highX - ((highX-lowX) * 0.5)
-		finalY = highY - ((highY-lowY) * 0.5)
-		finalZ = highZ - ((highZ-lowZ) * 0.5)
-		middlePos = EngineModule.Vec3(finalX,finalY,finalZ)
-		debug = objects.get()["head-debug"]
-		debug.setPosition(middlePos)
-
-		for part in partsList:
-			#pos = part.getPosition()
-			relVec = middlePos - part.getPosition()
-			part.addForce(relVec * 100000)
-
-
-
-		"""
-		b = Engine.createGuiBox()
-		b.setColour(0,0,1,0.5)
-		b.setSize(EngineModule.Vec3(10,10,10))
-		b.setPosition(EngineModule.Vec3(0,200,0))
-		objects.get()["head-debug"] = b
-		"""
-
 		"""
 		if len(selection.get()) > 0:
 			for o in selection.get():
@@ -103,7 +56,8 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 		else:
 			Engine.test()
 			"""
-				
+			
+		Engine.callPythonKeyPressed(EngineModule.Keys.K_SPACE)
 
 	if key == EngineModule.Keys.K_SLASH:
 

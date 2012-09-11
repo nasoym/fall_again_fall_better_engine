@@ -73,6 +73,7 @@ class Engine :
 		void	callPythonKeyPressed(Keys);
 		void	callPythonKeyDown(Keys);
 		void	callPythonKeyReleased(Keys);
+
 		void	callPythonKeyPysicUpdate();
 		void	callPythonKeyGuiUpdate();
 

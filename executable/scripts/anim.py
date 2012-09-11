@@ -381,12 +381,27 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 		#objects.append('hand-joint', [e for e in selection.get()])
 		#objects.get()["hip-joint"] = [e for e in selection.get()]
 
+		b = Engine.createGuiBox()
+		b.setColour(0,0,1,0.5)
+		b.setSize(EngineModule.Vec3(10,10,10))
+		b.setPosition(EngineModule.Vec3(0,200,0))
+		objects.get()["head-debug"] = b
 
 		"""
-		for o in objects.get()["head-debug"]:
+		for o in objects.get()["shoulder"]:
 			print(str(o))
-			#selection.add(o)
+			selection.add(o)
 			"""
+
+		"""
+		if len(selection.get()) > 0:
+			for o in selection.get():
+				o.setPosition( o.getPosition() * EngineModule.Vec3(1,0,1))
+				o.setPosition( o.getPosition() + EngineModule.Vec3(0,-0.5,0))
+				print(str(o.getPosition()))
+				print(str(o.getSize()))
+				"""
+
 
 	if key == EngineModule.Keys.K_LBRACKET:
 		print(objects)

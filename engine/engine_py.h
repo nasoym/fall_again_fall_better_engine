@@ -336,6 +336,11 @@ BOOST_PYTHON_MODULE(EngineModule) {
         .def("getTimeDifference",&Engine::getTimeDifference)
 
         .def("test",&Engine::test)
+
+		.def("callPythonKeyPressed",&Engine::callPythonKeyPressed)
+		.def("callPythonKeyDown",&Engine::callPythonKeyDown)
+		.def("callPythonKeyReleased",&Engine::callPythonKeyReleased)
+
         ;
 
     class_<Vec3>("Vec3",init<>())

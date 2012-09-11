@@ -4,10 +4,10 @@ def init(Engine,EngineModule,objects):
 	objects.get()["serial"] = None
 	objects.setUnsavable("serial")
 
-	objects.get()["serial_state"] = 0
+	objects.get()["serial_state"] = "0"
 	objects.setUnsavable("serial_state")
 
-	s = serial.Serial("COM11",9600)
+	s = serial.Serial("COM3",9600)
 	objects.get()["serial"] = s
 
 def guiUpdate(Engine,EngineModule,selection,objects):
@@ -23,9 +23,5 @@ def guiUpdate(Engine,EngineModule,selection,objects):
 		if serial_state != old_state:
 			objects.get()["serial_state"] = serial_state
 			print("state: " + str(serial_state))
-			
-
-
-
-
+			Engine.callPythonKeyPressed(EngineModule.Keys.K_SPACE)
 
