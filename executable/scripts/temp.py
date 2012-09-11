@@ -119,7 +119,11 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 
 			
 		#Engine.callPythonKeyPressed(EngineModule.Keys.K_SPACE)
+		a = Engine.createStaticActor()
+		s = a.addCapsule(EngineModule.Vec3(60,20,20))
+		a.setPosition(EngineModule.Vec3(0,100,0))
 
+		"""
 		a = Engine.createDynamicActor()
 		s = a.addCapsule(EngineModule.Vec3(60,20,20))
 		#s = a.addBox(EngineModule.Vec3(60,20,20))
@@ -135,6 +139,7 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 		j.setAnchor1Size( EngineModule.Vec3(1,0,0) )
 		j.setAnchor2Size( EngineModule.Vec3(-1,0,0) )
 		j.setLimits(40,40)
+		"""
 
 	if key == EngineModule.Keys.K_SLASH:
 

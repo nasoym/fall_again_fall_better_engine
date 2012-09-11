@@ -40,5 +40,3 @@ void DynamicActor::setMass(float mass){
 float DynamicActor::getMass(){
 	return mBody->getMass();
 }
-
-

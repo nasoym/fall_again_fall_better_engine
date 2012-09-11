@@ -19,7 +19,7 @@ class Actor;
 class PhysicShape;
 class DynamicActor;
 class Articulation;
-
+class StaticActor;
 
 enum ObjectType {
 	OBJECT,
@@ -35,6 +35,7 @@ enum ObjectType {
 	DYNAMIC_ACTOR,
 	PHYSIC_SHAPE,
 	ARTICULATION,
+	STATIC_ACTOR,
 
 };
 
@@ -70,6 +71,7 @@ class EngineObject {
 		virtual DynamicActor*			isDynamicActor(){return 0;}
 		virtual PhysicShape*			isPhysicShape(){return 0;}
 		virtual Articulation*			isArticulation(){return 0;}
+		virtual StaticActor*			isStaticActor(){return 0;}
 
 		void			setSelectable(){mSelectable=true;}
 		void			setUnselectable(){mSelectable=false;}

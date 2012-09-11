@@ -15,6 +15,7 @@
 
 #include "articulation.h"
 #include "dynamic_actor.h"
+#include "static_actor.h"
 
 EngineObject*	Engine::createGuiBox(){
 	return new EngineBox(this);
@@ -26,6 +27,10 @@ Articulation*	Engine::createArticulation(){
 
 DynamicActor*	Engine::createDynamicActor(){
 	return new DynamicActor(this,Vec3(1,1,1));
+}
+
+StaticActor*	Engine::createStaticActor(){
+	return new StaticActor(this,Vec3(1,1,1));
 }
 
 EngineObject*	Engine::createSpaceCage(Vec3& size){

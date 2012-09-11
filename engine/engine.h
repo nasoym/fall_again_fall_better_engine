@@ -71,6 +71,7 @@ class Engine :
 		EngineObject*	createMesh(const char*);
 		Articulation*	createArticulation();
 		DynamicActor*	createDynamicActor();
+		StaticActor*	createStaticActor();
 
 		void	callPythonKeyPressed(Keys);
 		void	callPythonKeyDown(Keys);

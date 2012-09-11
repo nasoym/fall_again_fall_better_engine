@@ -32,6 +32,7 @@ using namespace boost::python;
 
 #include "actor.h"
 #include "dynamic_actor.h"
+#include "static_actor.h"
 #include "physic_shape.h"
 #include "articulation.h"
 
@@ -113,6 +114,7 @@ BOOST_PYTHON_MODULE(EngineModule) {
 		.def("isDynamicActor",&EngineObject::isDynamicActor,return_value_policy<reference_existing_object>())
 		.def("isPhysicShape",&EngineObject::isPhysicShape,return_value_policy<reference_existing_object>())
 		.def("isArticulation",&EngineObject::isArticulation,return_value_policy<reference_existing_object>())
+		.def("isStaticActor",&EngineObject::isStaticActor,return_value_policy<reference_existing_object>())
 
 		.def("setSelectable",&EngineObject::setSelectable)
 		.def("setUnselectable",&EngineObject::setUnselectable)
@@ -203,6 +205,9 @@ BOOST_PYTHON_MODULE(EngineModule) {
 
 		;
 	class_<DynamicActor,bases<Actor> >("DynamicActor", init<Engine*,Vec3&>())
+		;
+
+	class_<StaticActor,bases<Actor> >("StaticActor", init<Engine*,Vec3&>())
 		;
 
 	class_<Articulation,bases<Actor> >("Articulation", init<Engine*>())
@@ -343,6 +348,7 @@ BOOST_PYTHON_MODULE(EngineModule) {
 		.def("createMesh",&Engine::createMesh,return_value_policy<reference_existing_object>() )
 		.def("createArticulation",&Engine::createArticulation,return_value_policy<reference_existing_object>() )
 		.def("createDynamicActor",&Engine::createDynamicActor,return_value_policy<reference_existing_object>() )
+		.def("createStaticActor",&Engine::createStaticActor,return_value_policy<reference_existing_object>() )
 
         .def("step",&Engine::step)
         .def("quit",&Engine::quit)

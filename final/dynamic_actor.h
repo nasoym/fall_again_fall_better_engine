@@ -16,19 +16,20 @@ class DynamicActor : public Actor {
         DynamicActor(Engine*,Vec3&);
         ~DynamicActor();
 
-		virtual DynamicActor*				isDynamicActor(){return this;}
-		virtual ObjectType					getType(){ return DYNAMIC_ACTOR;}
+		virtual DynamicActor*	isDynamicActor(){return this;}
+		virtual ObjectType		getType(){return DYNAMIC_ACTOR;}
 
-		virtual void        wakeUp();
+        virtual PxRigidActor*  	getActor(){return mBody;}
 
-		virtual void		addForce(Vec3);	
-		virtual void		setMass(float mass);
-		virtual void		resetMass();
-		virtual float		getMass();
-        virtual PxRigidActor*     	getActor(){return mBody;}
+		virtual void        	wakeUp();
+
+		virtual void			addForce(Vec3);	
+
+		virtual void			setMass(float mass);
+		virtual void			resetMass();
+		virtual float			getMass();
 
 	private:
-        PxRigidDynamic*     mBody;
-
+        PxRigidDynamic*     	mBody;
 };
 #endif
