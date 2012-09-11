@@ -9,37 +9,12 @@ def createBones(Engine,EngineModule,mesh,boneName=None):
 		childBoneName = mesh.getBoneNameChildName(boneName,i)
 		createBones(Engine,EngineModule,mesh,childBoneName)
 
-"""
-a = Engine.createArticulation()
-a.setPosition(EngineModule.Vec3(0,200,0))
-a.addCapsule(EngineModule.Vec3(50,10,10))
-
-b = a.addArticulation()
-b.addCapsule(EngineModule.Vec3(50,5,5))
-b.setParentAnchor(EngineModule.Vec3(50,0,0))
-b.setChildAnchor(EngineModule.Vec3(-50,0,0))
-b.setSwingLimits(40,40)
-b.setTwistLimits(0.1,0.2)
-
-"""
-
 def createBoneBody(Engine,EngineModule,mesh,boneName):
 	boneWidth = 2.0
 	defaultBoneLength = 5
 	boneLength = mesh.getBoneNameSize(boneName)
 	if boneLength == 0:
 		boneLength = defaultBoneLength
-	#boneBody = create.createPhysicStaticBoxFinal(Engine,EngineModule)
-	#boneBody = create.createPhysicBoxStructure(Engine,EngineModule)
-	"""
-	boneBody = Engine.createDynamicActor()
-	s = boneBody.addCapsule(EngineModule.Vec3(60,20,20))
-	boneBody.setName(str(boneName))
-
-	#boneBody.setLocalSize(EngineModule.Vec3(boneLength,boneWidth,boneWidth))
-	s.setLocalSize(EngineModule.Vec3(boneLength,boneWidth,boneWidth))
-	mesh.setBodyForBoneName(boneName,boneBody)
-	"""
 	boneParentName = mesh.getBoneNameParentName(boneName)
 
 
@@ -48,10 +23,11 @@ def createBoneBody(Engine,EngineModule,mesh,boneName):
 		#print("create bone: " + str(boneName) )
 
 		boneBody = Engine.createArticulation()
-		s = boneBody.addCapsule(EngineModule.Vec3(60,20,20))
 		boneBody.setName(str(boneName))
 
 		#boneBody.setLocalSize(EngineModule.Vec3(boneLength,boneWidth,boneWidth))
+		s = boneBody.addCapsule(EngineModule.Vec3(1,1,1))
+		#s = boneBody.addBox(EngineModule.Vec3(1,1,1))
 		s.setLocalSize(EngineModule.Vec3(boneLength,boneWidth,boneWidth))
 		mesh.setBodyForBoneName(boneName,boneBody)
 
@@ -81,10 +57,11 @@ def createBoneBody(Engine,EngineModule,mesh,boneName):
 			return
 
 		boneBody = boneParentBody.isArticulation().addArticulation()
-		s = boneBody.addCapsule(EngineModule.Vec3(60,20,20))
 		boneBody.setName(str(boneName))
 
 		#boneBody.setLocalSize(EngineModule.Vec3(boneLength,boneWidth,boneWidth))
+		s = boneBody.addCapsule(EngineModule.Vec3(1,1,1))
+		#s = boneBody.addBox(EngineModule.Vec3(1,1,1))
 		s.setLocalSize(EngineModule.Vec3(boneLength,boneWidth,boneWidth))
 		mesh.setBodyForBoneName(boneName,boneBody)
 
@@ -134,7 +111,7 @@ def createBoneBody(Engine,EngineModule,mesh,boneName):
 		boneBody.setParentAnchor(parentLocalAnchor)
 		boneBody.setChildAnchor(bodyLocalAnchor)
 		boneBody.setParentAnchorOrientation(rotatedLocalOrientation)
-		boneBody.setSwingLimits(1,1)
+		boneBody.setSwingLimits(10,10)
 		boneBody.setTwistLimits(0.1,0.2)
 
 		"""

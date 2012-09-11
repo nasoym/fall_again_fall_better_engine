@@ -48,8 +48,8 @@ def keyDown(Engine,EngineModule,key,selection,objects):
 		if Engine.isKeyDown(EngineModule.Keys.K_6):
 			force = EngineModule.Vec3(0,0,-forceValue)
 		for o in selection.get():
-			if o.isBody():
-				o.isBody().addForce(force)
+			if o.isActor():
+				o.isActor().addForce(force)
 
 def keyPressed(Engine,EngineModule,key,selection,objects):
 	pass

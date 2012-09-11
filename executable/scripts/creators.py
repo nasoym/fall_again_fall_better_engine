@@ -63,7 +63,6 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 			o.setMaterialName("Body")
 			o.setSize(EngineModule.Vec3(1,1,1)*1000)
 			o.setPosition(EngineModule.Vec3(0,150,0))
-			#mesh.createBones(Engine,EngineModule,o)
 			art_mesh.createBones(Engine,EngineModule,o)
 			#dyn_mesh.createBones(Engine,EngineModule,o)
 			o.setUnselectable()

@@ -21,7 +21,8 @@ def createBoneBody(Engine,EngineModule,mesh,boneName):
 	boneBody.setName(str(boneName))
 
 	#boneBody.setSize(EngineModule.Vec3(boneLength,boneWidth,boneWidth))
-	s = boneBody.addCapsule(EngineModule.Vec3(1,1,1))
+	#s = boneBody.addCapsule(EngineModule.Vec3(1,1,1))
+	s = boneBody.addBox(EngineModule.Vec3(1,1,1))
 	s.setLocalSize(EngineModule.Vec3(boneLength,boneWidth,boneWidth))
 	mesh.setBodyForBoneName(boneName,boneBody)
 	boneParentName = mesh.getBoneNameParentName(boneName)
