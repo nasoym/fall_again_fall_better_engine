@@ -102,6 +102,7 @@ def createSpaceCage(Engine,EngineModule,size):
 	shape.setPosition(EngineModule.Vec3(0,-wall,0))
 	o.addShape(shape)
 
+	"""
 	shape = Engine.createGuiBox()
 	shape.setScalingNone()
 	shape.setColour(red,green,blue,ceiling_opacity)
@@ -136,5 +137,6 @@ def createSpaceCage(Engine,EngineModule,size):
 	shape.setSize(EngineModule.Vec3(wall,size.Y()*0.5,size.Z()))
 	shape.setPosition(EngineModule.Vec3(-size.X()-wall,size.Y()*0.5,0))
 	o.addShape(shape)
+	"""
 
 	return 0

@@ -311,7 +311,8 @@ void Engine::setup(){
 	mRoot = new Root();
     setupResources();
 
-	if (mUseFirstRenderer){ 
+	//if (mUseFirstRenderer){ 
+	if (false) {
 		RenderSystemList rlist = mRoot->getAvailableRenderers();
 		RenderSystemList::iterator it = rlist.begin();
 		while (it !=rlist.end()) {
@@ -337,16 +338,19 @@ void Engine::setup(){
 
 	mSceneMgr->setShadowTechnique(
 		//Ogre::SHADOWTYPE_STENCIL_ADDITIVE
+		//Ogre::SHADOWTYPE_STENCIL_MODULATIVE
 		Ogre::SHADOWTYPE_TEXTURE_MODULATIVE
 		);
 	//mSceneMgr->setShadowTextureSettings( 1024, 3, Ogre::PF_FLOAT32_R );
 	//mSceneMgr->setShadowTextureSettings( 512, 2);
 	//mSceneMgr->setShadowTextureSettings( 1024, 4);
 	mSceneMgr->setShadowTextureSettings( 2048, 4);
+
 	//FocusedShadowCameraSetup *camSetup = new FocusedShadowCameraSetup();
-	LiSPSMShadowCameraSetup *camSetup = new LiSPSMShadowCameraSetup();
-	//PSSMShadowCameraSetup *camSetup = new PSSMShadowCameraSetup();
+	//LiSPSMShadowCameraSetup *camSetup = new LiSPSMShadowCameraSetup();
+	PSSMShadowCameraSetup *camSetup = new PSSMShadowCameraSetup();
 	mSceneMgr->setShadowCameraSetup(ShadowCameraSetupPtr(camSetup));
+
 	//mSceneMgr->setShadowTextureSelfShadow(true);
     mSceneMgr->setShadowColour(ColourValue(0.5,0.5,0.5));
 
@@ -369,7 +373,8 @@ void Engine::setup(){
     // Create one viewport, entire window
     mViewport = mWindow->addViewport(mCamera);
     //mViewport->setBackgroundColour(ColourValue(0.5,0.3,0.2));
-    mViewport->setBackgroundColour(ColourValue(0,0,0));
+    //mViewport->setBackgroundColour(ColourValue(0,0,0));
+    mViewport->setBackgroundColour(ColourValue(0.395,0.395,0.395));
     // Alter the camera aspect ratio to match the viewport
     mCamera->setAspectRatio( Real(mViewport->getActualWidth()) / Real(mViewport->getActualHeight()));
 

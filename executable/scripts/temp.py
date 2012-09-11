@@ -47,7 +47,6 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 			print("fps: 0")
 
 	if key == EngineModule.Keys.K_PERIOD:
-		"""
 		if len(selection.get()) > 0:
 			for o in selection.get():
 				if o.isActor():
@@ -55,9 +54,8 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 					o.isActor().addCapsule(EngineModule.Vec3(20,40,20))
 		else:
 			Engine.test()
-			"""
 			
-		Engine.callPythonKeyPressed(EngineModule.Keys.K_SPACE)
+		#Engine.callPythonKeyPressed(EngineModule.Keys.K_SPACE)
 
 	if key == EngineModule.Keys.K_SLASH:
 
@@ -77,6 +75,7 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 				"""
 			if o.isGuiShape():
 				o.setMaterialName("SSAO/GBuffer")
+				#o.setMaterialName("Body")
 
 	if key == EngineModule.Keys.K_N:
 		if Engine.isKeyDown(EngineModule.Keys.K_1):
