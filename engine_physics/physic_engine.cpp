@@ -22,13 +22,16 @@ void PhysicsEngine::setForceFactor(float factor) {
 }
 
 void PhysicsEngine::setup(){
+    mFoundation = PxCreateFoundation(
+        PX_PHYSICS_VERSION, 
+        mDefaultAllocator, 
+        mDefaultErrorCallback
+        );
 
     mPhysics = PxCreatePhysics(
         PX_PHYSICS_VERSION,
-        mDefaultAllocator, 
-        mDefaultErrorCallback,
-        PxTolerancesScale(),
-        false
+        *mFoundation,
+        PxTolerancesScale()
         );
 
     if(!PxInitExtensions(*mPhysics)) {

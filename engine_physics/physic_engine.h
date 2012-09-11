@@ -52,6 +52,8 @@ class PhysicsEngine {
         //PxDefaultErrorCallback	    mDefaultErrorCallback;
         ErrorCallback	    mDefaultErrorCallback;
         Allocator                   mDefaultAllocator;
+		PxFoundation * 				mFoundation;
+		//PxSimulationFilterShader* gDefaultFilterShader;
 
         PxPhysics *                 mPhysics;
         PxMaterial *                mMaterial; 
