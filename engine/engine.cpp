@@ -72,13 +72,14 @@ Engine::~Engine(){
         
 
 		bool sampleInScreenSpace = true;
+		//bool sampleInScreenSpace = false;
 		setUniform("SSAO/Crytek", "SSAO/Crytek", "cSampleInScreenspace", sampleInScreenSpace, false, 1);
 		setUniform("SSAO/HorizonBased", "SSAO/HorizonBased", "cSampleInScreenspace", sampleInScreenSpace, false, 1);
 		setUniform("SSAO/HemisphereMC", "SSAO/HemisphereMC", "cSampleInScreenspace", sampleInScreenSpace, false, 1);
 		setUniform("SSAO/Volumetric", "SSAO/Volumetric", "cSampleInScreenspace", sampleInScreenSpace, false, 1);
 		CompositorManager::getSingleton().setCompositorEnabled(mViewport, mCurrentCompositor, true);
 
-		float sampleInScreenSpaceLengthPercentage = 15.0f/100.0f;
+		float sampleInScreenSpaceLengthPercentage = 20.0f/100.0f;
 		setUniform("SSAO/Crytek", "SSAO/Crytek", "cSampleLengthScreenSpace", sampleInScreenSpaceLengthPercentage, false, 1);
 		setUniform("SSAO/HorizonBased", "SSAO/HorizonBased", "cSampleLengthScreenSpace", sampleInScreenSpaceLengthPercentage, false, 1);
 		setUniform("SSAO/HemisphereMC", "SSAO/HemisphereMC", "cSampleLengthScreenSpace", sampleInScreenSpaceLengthPercentage, false, 1);
@@ -88,6 +89,7 @@ Engine::~Engine(){
 
 
 		float size = 15.0f;
+		//float size = 100.0f;
 		setUniform("SSAO/Crytek", "SSAO/Crytek", "cSampleLengthWorldSpace", size, false, 1);
 		setUniform("SSAO/HorizonBased", "SSAO/HorizonBased", "cSampleLengthWorldSpace", size, false, 1);
 		setUniform("SSAO/HemisphereMC", "SSAO/HemisphereMC", "cSampleLengthWorldSpace", size, false, 1);
@@ -99,7 +101,7 @@ Engine::~Engine(){
 
 		setUniform("SSAO/HorizonBased", "SSAO/HorizonBased", "cAngleBias", 0.2f, false, 1);
 
-		setUniform("SSAO/HemisphereMC", "SSAO/HemisphereMC", "cSampleLengthExponent", 5.0f, false, 1);
+		setUniform("SSAO/HemisphereMC", "SSAO/HemisphereMC", "cSampleLengthExponent", 8.0f, false, 1);
         
 		setUniform("SSAO/UnsharpMask", "SSAO/UnsharpMask/GaussianBlurY", "cKernelWidthBias", 1.0f, false, 1);
 		setUniform("SSAO/UnsharpMask", "SSAO/UnsharpMask/GaussianBlurX", "cKernelWidthBias", 1.0f, false, 1);
@@ -316,7 +318,7 @@ void Engine::setup(){
 			RenderSystem *rSys = *(it++);
 			rSys->setConfigOption("Full Screen", "No");
 			//rSys->setConfigOption("Full Screen", "Yes");
-			rSys->setConfigOption("Video Mode", "600 x 700 @ 32-bit colour");
+			rSys->setConfigOption("Video Mode", "700 x 850 @ 32-bit colour");
 			//rSys->setConfigOption("Video Mode", "1024 x 768 @ 32-bit colour");
 			//rSys->setConfigOption("Video Mode", "1280 x 800 @ 32-bit colour");
 			mRoot->setRenderSystem(rSys);

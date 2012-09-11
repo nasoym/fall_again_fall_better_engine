@@ -56,10 +56,12 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 	if key == EngineModule.Keys.K_K:
 		print("save scene")
 		saveload.save(Engine,EngineModule,"xmlscene/scene.xml",objects)
+		print("done")
 
 	if key == EngineModule.Keys.K_L:
 		print("load scene")
 		saveload.load(Engine,EngineModule,"xmlscene/scene.xml",objects)
+		print("done")
 
 	if key == EngineModule.Keys.K_R:
 		print("change joint motor target orientation")

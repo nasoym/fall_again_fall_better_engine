@@ -13,9 +13,13 @@ anim:
 """
 
 import random
+random.seed()
+#random.seed(12345)
+random.jumpahead(random.uniform(12345,9994949))
 
 
-FallingAnimTime = 450
+
+FallingAnimTime = 1000
 
 FallingSpring = 0.1
 FallingDamping = 0.5
@@ -37,11 +41,25 @@ FallingDamping = 30
 
 FallingAnim = [
 	{'groups':[
+		#"uleg-joint",
+		#"lleg-joint",
+		#"foot-joint",
+		"head-joint",
+		"neck-joint",
+		"breast-joint"
+		],
+		'time':FallingAnimTime,
+		'start':[(lambda Engine,EngineModule,objects,groupPart:
+			groupPart.setMotorValues(FallingSpring,FallingDamping,True))],
+		'end':[(lambda Engine,EngineModule,objects,groupPart:
+			groupPart.setMotorValues(FallingSpring,FallingDamping,True))],
+		},
+	{'groups':[
 		"lleg-joint",
 		"uleg-joint",
-		"hip-joint",
-		"root-joint",
-		"belly-joint",
+		#"hip-joint",
+		#"root-joint",
+		#"belly-joint",
 		"breast-joint",
 		"shoulder-joint",
 		"neck-joint",
@@ -49,6 +67,17 @@ FallingAnim = [
 		"uarm-joint",
 		"larm-joint",
 		"hand-joint"
+		],
+		'time':FallingAnimTime,
+		'start':[(lambda Engine,EngineModule,objects,groupPart:
+			groupPart.setMotorValues(FallingSpring,FallingDamping,True))],
+		'end':[(lambda Engine,EngineModule,objects,groupPart:
+			groupPart.setMotorValues(FallingSpring,FallingDamping,True))],
+		},
+	{'groups':[
+		"hip-joint",
+		"root-joint",
+		"belly-joint"
 		],
 		'time':FallingAnimTime,
 		'start':[(lambda Engine,EngineModule,objects,groupPart:
@@ -176,6 +205,7 @@ def init(Engine,EngineModule,objects):
 	objects.get()["anims"] = {}
 	objects.setUnsavable("anims")
 	Engine.setTimingFactor(5.0)
+	
 
 def guiUpdate(Engine,EngineModule,selection,objects):
 	for k,v in objects.get()["anims"].items():
@@ -229,13 +259,13 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 					"name":"rising","index":0,"starttime":Engine.getTime()}
 			elif objects.get()["anims"]["stand"]["name"] == "rising":
 
+				"""
 				randRange = 150
 				randStep = 20
-
 				#getRandVal = lambda : random.choice([ -randRange, randRange, -randRange * 0.5, randRange * 0.5, 0])
 				getRandVal = lambda : random.choice([-randRange,randRange,0])
 				#getRandVal = lambda : random.uniform(-randRange,randRange),
-				#getRandVal = lambda : random.randragne(-randRange,randRange,randStep))
+				#getRandVal = lambda : random.randrange(-randRange,randRange,randStep))
 				partsList = objects.get()["head"]
 				for part in partsList:
 					force = EngineModule.Vec3(getRandVal(),0,getRandVal())
@@ -245,8 +275,74 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 				for part in partsList:
 					force = EngineModule.Vec3(getRandVal(),0,getRandVal())
 					part.addForce(force)
+					"""
+
+
+
+				partsList = objects.get()["head"]
+				pos = partsList[0].getPosition()
+				lowX = pos.x
+				highX = pos.x
+				lowY = pos.y
+				highY = pos.y
+				lowZ = pos.z
+				highZ = pos.z
+				for part in partsList:
+					pos = part.getPosition()
+					if pos.x < lowX:
+						lowX = pos.x
+					if pos.x > highX:
+						highX = pos.x
+
+					if pos.y < lowY:
+						lowY = pos.y
+					if pos.y > highY:
+						highY = pos.y
+
+					if pos.z < lowZ:
+						lowZ = pos.z
+					if pos.z > highZ:
+						highZ = pos.z
+
+				finalX = highX - ((highX-lowX) * 0.5)
+				finalY = highY - ((highY-lowY) * 0.5)
+				finalZ = highZ - ((highZ-lowZ) * 0.5)
+				middlePos = EngineModule.Vec3(finalX,finalY,finalZ)
+				debug = objects.get()["head-debug"]
+				debug.setPosition(middlePos)
+
+				angleRand = 70
+				maxMult = 5
+				minMult = 1.0
+				for part in partsList:
+					relVec = middlePos - part.getPosition()
+					relVec = EngineModule.Quat().fromAngles(
+						0,random.uniform(-angleRand,angleRand),0) * relVec
+					#part.addForce(relVec * 10)
+					part.addForce(relVec * random.uniform(minMult,maxMult))
+					#part.addForce(relVec * 0.5)
+
+				partsList = objects.get()["breast"]
+				for part in partsList:
+					relVec = middlePos - part.getPosition()
+					relVec = EngineModule.Quat().fromAngles(
+						0,random.uniform(-angleRand,angleRand),0) * relVec
+					part.addForce(relVec * random.uniform(minMult,maxMult))
+					#part.addForce(relVec * 0.5)
+
+
+
 
 				setMasses(Engine,EngineModule,selection,objects,fallingMass)
+
+				partsList = objects.get()["head"]
+				for part in partsList:
+					part.setMass(part.getMass() * 0.3)
+
+				partsList = objects.get()["breast"]
+				for part in partsList:
+					part.setMass(part.getMass() * 0.3)
+
 				objects.get()["anims"]["stand"] = {
 					"name":"falling","index":0,"starttime":Engine.getTime()}
 
@@ -285,9 +381,12 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 		#objects.append('hand-joint', [e for e in selection.get()])
 		#objects.get()["hip-joint"] = [e for e in selection.get()]
 
-		selection.clear()
-		for o in objects.get()["belly-joint"]:
-			selection.add(o)
+
+		"""
+		for o in objects.get()["head-debug"]:
+			print(str(o))
+			#selection.add(o)
+			"""
 
 	if key == EngineModule.Keys.K_LBRACKET:
 		print(objects)

@@ -1,3 +1,7 @@
+import random
+random.seed()
+#random.seed(12345)
+random.jumpahead(random.uniform(12345,9994949))
 
 import scripts.temp as temp
 import scripts.navigate as navigate
