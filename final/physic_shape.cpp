@@ -8,7 +8,8 @@ PhysicShape::PhysicShape(Engine* engine,Actor* actor,PxShape* shape) :
 	EngineGuiShape(engine),
 	mShape(shape),
 	mActor(actor),
-	mMesh(0)
+	mMesh(0),
+	mShapeType(NOP)
 	{
 }
 
@@ -16,16 +17,35 @@ PhysicShape::~PhysicShape() {
 
 }
 
+
+bool	PhysicShape::isBoxShape(){
+	if (mShapeType == BOX) return true;
+	return false;
+}
+
+bool	PhysicShape::isSphereShape(){
+	if (mShapeType == SPHERE) return true;
+	return false;
+}
+
+bool	PhysicShape::isCapsuleShape(){
+	if (mShapeType == CAPSULE) return true;
+	return false;
+}
+
+
 void PhysicShape::createGuiBox(Vec3& vec3) {
     setEntity(getEngine()->getSceneManager()->createEntity("Prefab_Cube"));
     getNode()->attachObject(getEntity());
 	setLocalSize(vec3);
+	mShapeType = BOX;
 }
 
 void PhysicShape::createGuiSphere(Vec3& vec3) {
     setEntity(getEngine()->getSceneManager()->createEntity("Prefab_Sphere"));
     getNode()->attachObject(getEntity());
 	setLocalSize(vec3);
+	mShapeType = SPHERE;
 }
 
 void PhysicShape::createGuiCapsule(Vec3& vec3) {
@@ -53,6 +73,7 @@ void PhysicShape::createGuiCapsule(Vec3& vec3) {
     getEntity()->setMaterialName("Body");
     getNode()->attachObject(getEntity());
 	mMesh = meshPtr.get();
+	mShapeType = CAPSULE;
 }
 
 void PhysicShape::updateGuiCapsule(Vec3& vec3) {

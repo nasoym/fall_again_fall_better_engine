@@ -225,6 +225,96 @@ def load(Engine,EngineModule,fileName,objects):
 
 				res.remove(node)
 
+
+
+			elif node.name==str(EngineModule.ObjectType.PHYSIC_SHAPE):
+				if node.hasProp("actor"):
+					actor = node.prop("actor")
+					actor = getFromUuidTable(Engine,uuidTable,actor)
+					if Engine.getFromUuid(actor):
+
+						shapeType = node.prop("shape")
+						actorEntity = Engine.getFromUuid(actor)
+
+						if node.hasProp("size"):
+							a = (node.prop("size").split(","))
+							size = EngineModule.Vec3( float(a[0]),float(a[1]),float(a[2]))
+
+						if shapeType == "box":
+							o = actorEntity.addBox(size)
+						elif shapeType == "sphere":
+							o = actorEntity.addSphere(size)
+						elif shapeType == "capsule":
+							o = actorEntity.addCapsule(size)
+
+						#o = Engine.createPhysic()
+
+						if node.hasProp("uuid"):
+							uuid = node.prop("uuid")
+							uuid = getFromUuidTable(Engine,uuidTable,uuid)
+							o.setUuid(uuid)
+						loadEngineObject(node,Engine,EngineModule,o)
+						#loadSize(node,Engine,EngineModule,o)
+						loadPosition(node,Engine,EngineModule,o)
+						loadOrientation(node,Engine,EngineModule,o)
+
+						if node.hasProp("colour") and node.hasProp("alpha"):
+							alpha = float(node.prop("alpha"))
+							a = (node.prop("colour").split(","))
+							colour = EngineModule.Vec3( float(a[0]),float(a[1]),float(a[2]))
+							o.setColour(colour.X(),colour.Y(),colour.Z(),alpha)
+						if node.hasProp("material"):
+							materialName = node.prop("material")
+							o.setMaterialName(materialName)
+
+						#if node.hasProp("local_size"):
+						#	a = (node.prop("local_size").split(","))
+						#	size = EngineModule.Vec3( float(a[0]),float(a[1]),float(a[2]))
+						#	o.setLocalSize(size)
+						if node.hasProp("local_position"):
+							a = (node.prop("local_position").split(","))
+							pos = EngineModule.Vec3( float(a[0]),float(a[1]),float(a[2]))
+							o.setLocalPosition(pos)
+						if node.hasProp("local_orientation"):
+							a = (node.prop("local_orientation").split(","))
+							orientation = EngineModule.Quat( float(a[0]),float(a[1]),float(a[2]),float(a[3]))
+							o.setLocalOrientation(orientation)
+
+
+						if node.hasProp("scaling"):
+							scalingType = node.prop("scaling")
+							if scalingType == "None":
+								o.setScalingNone()
+							elif scalingType == "Fixed":
+								o.setScalingFixed()
+							elif scalingType == "1To1":
+								o.setScaling1To1()
+							elif scalingType == "Scaling":
+								o.setScalingScaling()
+						castShadows = loadBool(node,"cast_shadows")
+						if castShadows:
+							o.turnOnShadows()
+						else:
+							o.turnOffShadows()
+
+						finalShape = loadBool(node,"final_shape")
+						if finalShape:
+							o.setFinalShape()
+						else:
+							o.setNonFinalShape()
+
+						res.remove(node)
+
+
+
+					else:
+						lastUnresolved = "physic_shape: "
+				else:
+					res.remove(node)
+
+
+
+
 			elif node.name==str(EngineModule.ObjectType.STATICBODY):
 				if isGuiContainerFullfilled(node,Engine,EngineModule,uuidTable):
 					o = Engine.createPhysicStatic()
@@ -240,6 +330,19 @@ def load(Engine,EngineModule,fileName,objects):
 					res.remove(node)
 				else:
 					lastUnresolved = "staticbody: gui container failed"
+
+			elif node.name==str(EngineModule.ObjectType.STATIC_ACTOR):
+				o = Engine.createStaticActor()
+				loadGuiContainer(node,Engine,EngineModule,o,uuidTable)
+				if node.hasProp("uuid"):
+					uuid = node.prop("uuid")
+					uuid = getFromUuidTable(Engine,uuidTable,uuid)
+					o.setUuid(uuid)
+				loadEngineObject(node,Engine,EngineModule,o)
+				loadSize(node,Engine,EngineModule,o)
+				loadPosition(node,Engine,EngineModule,o)
+				loadOrientation(node,Engine,EngineModule,o)
+				res.remove(node)
 
 			elif node.name==str(EngineModule.ObjectType.BODY):
 				if isGuiContainerFullfilled(node,Engine,EngineModule,uuidTable):
@@ -259,6 +362,22 @@ def load(Engine,EngineModule,fileName,objects):
 					res.remove(node)
 				else:
 					lastUnresolved = "body: gui container failed"
+
+			elif node.name==str(EngineModule.ObjectType.DYNAMIC_ACTOR):
+				o = Engine.createDynamicActor()
+				loadGuiContainer(node,Engine,EngineModule,o,uuidTable)
+				if node.hasProp("uuid"):
+					uuid = node.prop("uuid")
+					uuid = getFromUuidTable(Engine,uuidTable,uuid)
+					o.setUuid(uuid)
+				loadEngineObject(node,Engine,EngineModule,o)
+				loadSize(node,Engine,EngineModule,o)
+				loadPosition(node,Engine,EngineModule,o)
+				loadOrientation(node,Engine,EngineModule,o)
+				if node.hasProp("mass"):
+					mass = float(node.prop("mass"))
+					o.setMass(mass)
+				res.remove(node)
 
 			elif node.name==str(EngineModule.ObjectType.SPACECAGE):
 				if isGuiContainerFullfilled(node,Engine,EngineModule,uuidTable):
@@ -452,6 +571,59 @@ def save(Engine,EngineModule,fileName,objects):
 		elif o.getType()==EngineModule.ObjectType.SPACECAGE:
 			saveGuiContainer(node,Engine,EngineModule,o)
 			node.setProp("size",str(o.getSize()))
+
+		elif o.getType()==EngineModule.ObjectType.DYNAMIC_ACTOR:
+			saveGuiContainer(node,Engine,EngineModule,o)
+			node.setProp("position",str(o.getPosition()))
+			#node.setProp("size",str(o.getSize()))
+			node.setProp("orientation",str(o.getOrientation()))
+			node.setProp("mass",str(o.getMass()))
+
+		elif o.getType()==EngineModule.ObjectType.STATIC_ACTOR:
+			saveGuiContainer(node,Engine,EngineModule,o)
+			node.setProp("position",str(o.getPosition()))
+			#node.setProp("size",str(o.getSize()))
+			node.setProp("orientation",str(o.getOrientation()))
+
+		elif o.getType()==EngineModule.ObjectType.PHYSIC_SHAPE:
+			node.setProp("position",str(o.getPosition()))
+			node.setProp("size",str(o.getSize()))
+			node.setProp("orientation",str(o.getOrientation()))
+
+			node.setProp("local_position",str(o.getLocalPosition()))
+			node.setProp("local_size",str(o.getLocalSize()))
+			node.setProp("local_orientation",str(o.getLocalOrientation()))
+
+			scalingType = "1To1"
+			if o.isScalingFixed():
+				scalingType = "Fixed"
+			elif o.isScalingNone():
+				scalingType = "None"
+			elif o.isScaling1To1():
+				scalingType = "1To1"
+			elif o.isScalingScaling():
+				scalingType = "Scaling"
+			node.setProp("scaling",str(scalingType))
+
+			node.setProp("final_shape",str(o.isFinalShape()))
+			node.setProp("cast_shadows",str(o.getCastShadows()))
+
+			if o.hasColour():
+				node.setProp("colour",str(o.getColour()))
+				node.setProp("alpha",str(o.getAlpha()))
+
+			if not o.getMaterialName() == "":
+				node.setProp("material",str(o.getMaterialName()))
+
+			if o.isBoxShape():
+				node.setProp("shape","box")
+			elif o.isSphereShape():
+				node.setProp("shape","sphere")
+			elif o.isCapsuleShape():
+				node.setProp("shape","capsule")
+
+			node.setProp("actor",str(o.getActor().readUuid()))
+
 
 		doc.getRootElement().addChild(node)
 

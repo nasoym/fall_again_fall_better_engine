@@ -51,6 +51,7 @@ BOOST_PYTHON_MODULE(EngineModule) {
 	.value("ACTOR",ACTOR)
 	.value("DYNAMIC_ACTOR",DYNAMIC_ACTOR)
 	.value("PHYSIC_SHAPE",PHYSIC_SHAPE)
+	.value("STATIC_ACTOR",STATIC_ACTOR)
 	;
 
 
@@ -244,8 +245,11 @@ BOOST_PYTHON_MODULE(EngineModule) {
 		;
 
 	class_<PhysicShape,bases<EngineGuiShape> >("PhysicShape",no_init)
+		.def("isBoxShape",&PhysicShape::isBoxShape)
+		.def("isSphereShape",&PhysicShape::isSphereShape)
+		.def("isCapsuleShape",&PhysicShape::isCapsuleShape)
+		.def("getActor",&PhysicShape::getActor,return_value_policy<reference_existing_object>())
 		;
-
 
 
 	class_<EngineBox,bases<EngineGuiShape> >("EngineBox", init<Engine*>())
