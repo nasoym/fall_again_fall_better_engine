@@ -1,6 +1,8 @@
 #ifndef _PHYSIC_ENGINE_H
 #define _PHYSIC_ENGINE_H
 
+#include "logger.h"
+
 #include "PxPhysicsAPI.h"
 #include "PxDefaultErrorCallback.h"
 #include "PxDefaultCpuDispatcher.h"
@@ -14,6 +16,18 @@ class Allocator : public PxAllocatorCallback {
     void deallocate(void * ptr) {
         _aligned_free(ptr);
     }
+};
+
+class ErrorCallback: public PxDefaultErrorCallback {
+	void reportError(
+		PxErrorCode code, const char * message,const char* file, int line){
+			Logger::debug(
+				format("PhysX Error: message:%1% file:%2% line:%3%") %
+				message %
+				file %
+				line
+				);
+		}
 };
 
 class PhysicsEngine {
@@ -35,7 +49,8 @@ class PhysicsEngine {
 
     private:
 
-        PxDefaultErrorCallback	    mDefaultErrorCallback;
+        //PxDefaultErrorCallback	    mDefaultErrorCallback;
+        ErrorCallback	    mDefaultErrorCallback;
         Allocator                   mDefaultAllocator;
 
         PxPhysics *                 mPhysics;

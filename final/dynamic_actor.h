@@ -1,6 +1,8 @@
 #ifndef _DYNAMIC_ACTOR_H
 #define _DYNAMIC_ACTOR_H
 
+#include "logger.h"
+
 #include "PxPhysicsAPI.h"
 using namespace physx;
 

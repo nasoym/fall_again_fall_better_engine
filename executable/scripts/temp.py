@@ -47,6 +47,8 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 			print("fps: 0")
 
 	if key == EngineModule.Keys.K_PERIOD:
+		pass
+		"""
 		if len(selection.get()) > 0:
 			for o in selection.get():
 				if o.isActor():
@@ -54,8 +56,46 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 					o.isActor().addCapsule(EngineModule.Vec3(20,40,20))
 		else:
 			Engine.test()
+			"""
+		#Engine.test()
+
+		a = Engine.createArticulation()
+		a.setPosition(EngineModule.Vec3(0,200,0))
+		a.addCapsule(EngineModule.Vec3(50,10,10))
+
+		b = a.addArticulation()
+		b.addCapsule(EngineModule.Vec3(50,5,5))
+		b.setParentAnchor(EngineModule.Vec3(50,0,0))
+		b.setChildAnchor(EngineModule.Vec3(-50,0,0))
+		b.setSwingLimits(40,40)
+		b.setTwistLimits(0.1,0.2)
+
+		for i in range(0,20):
+			b = b.addArticulation()
+			b.addCapsule(EngineModule.Vec3(50,5,5))
+			b.setParentAnchor(EngineModule.Vec3(50,0,0))
+			b.setChildAnchor(EngineModule.Vec3(-50,0,0))
+			b.setSwingLimits(40,40)
+			b.setTwistLimits(0.1,0.2)
+
+
+		#b.setTwistLimitDisabled()
+		#b.setSwingLimitDisabled()
+
+		a.addToScene()
 			
 		#Engine.callPythonKeyPressed(EngineModule.Keys.K_SPACE)
+
+		"""
+		a = Engine.createDynamicActor()
+		s = a.addCapsule(EngineModule.Vec3(60,20,20))
+		s = a.addBox(EngineModule.Vec3(60,20,20))
+		s = a.addSphere(EngineModule.Vec3(60,20,20))
+		s.setLocalSize(EngineModule.Vec3(40,10,10))
+		s.setLocalOrientation(EngineModule.Quat().fromAngles(0,45,0))
+		s.setLocalPosition(EngineModule.Vec3(0,10,0))
+		"""
+
 
 	if key == EngineModule.Keys.K_SLASH:
 

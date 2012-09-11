@@ -1,4 +1,7 @@
 #include "logger.h"
+
+#include <Ogre.h>
+using namespace Ogre;
  
 Logger* Logger::m_pInstance = NULL; 
    
@@ -30,6 +33,7 @@ void Logger::setPattern(std::string pattern) {
 
 void Logger::default_print(std::string message) {
     std::cout << message << std::endl;
+	//LogManager::getSingleton().logMessage(message);
 }
 
 void Logger::debug(std::string message) {

@@ -305,7 +305,8 @@ EngineObject* Engine::getFromUuid(std::string uuidToFind){
 
 void Engine::setup(){
     mLogger = new Ogre::LogManager();
-    mLogger->createLog("log.log", true, false,true);
+    //mLogger->createLog("ogre.log",true,false,true);
+    mLogger->createLog("ogre.log",true,false,false);
 
 	//root = new Root("","");
 	mRoot = new Root();

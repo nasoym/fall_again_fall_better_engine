@@ -33,6 +33,7 @@ LIBLIST+=/c/Procs/MicrosoftVisualStudio10.0/VC/lib/msvcrt.lib
 LIBLIST+=/c/Procs/MicrosoftVisualStudio10.0/VC/lib/oldnames.lib
 LIBLIST+=/c/Procs/MicrosoftVisualStudio10.0/VC/lib/libcpmt.lib
 LIBLIST+=/c/Procs/MicrosoftSDKs/Windows/v7.0A/Lib/Kernel32.Lib
+LIBLIST+=/c/Procs/MicrosoftSDKs/Windows/v7.0A/Lib/Psapi.Lib
 LIBLIST+=/c/Procs/MicrosoftSDKs/Windows/v7.0A/Lib/Uuid.Lib
 LIBLIST+=/c/boost_1_47/lib/libboost_thread-vc100-mt-1_47.lib
 LIBLIST+=/c/boost_1_47/lib/libboost_date_time-vc100-mt-1_47.lib

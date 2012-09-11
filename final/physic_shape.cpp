@@ -38,7 +38,7 @@ void PhysicShape::createGuiCapsule(Vec3& vec3) {
 	}
 
 	Procedural::CapsuleGenerator capsule = Procedural::CapsuleGenerator();
-	capsule.setHeight(vec3.x);
+	capsule.setHeight(vec3.x*2.0f);
 	capsule.setRadius(vec3.y);
 
 	//capsule.setNumRings(3); //8
@@ -103,7 +103,7 @@ void        PhysicShape::setLocalSize(Vec3& vec3){
 			EngineGuiShape::setLocalSize(vec3);
 			break;
 		case PxGeometryType::eCAPSULE:
-			mShape->setGeometry(PxCapsuleGeometry(vec3.y,vec3.x*0.5f));
+			mShape->setGeometry(PxCapsuleGeometry(vec3.y,vec3.x));
 			//updateGuiCapsule(vec3.x*2,vec3.y);
 			updateGuiCapsule(vec3);
 			mLocalSize = vec3;

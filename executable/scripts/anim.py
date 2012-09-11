@@ -243,6 +243,8 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 	"""
 
 	if key == EngineModule.Keys.K_SPACE:
+		if not "head" in objects.get():
+			return
 
 		fallingMass = 1.0
 		risingMass = 0.01

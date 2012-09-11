@@ -8,19 +8,29 @@ class Engine;
 
 //#include "engine_gui_container.h"
 #include "actor.h"
-
+#include "logger.h"
 class Articulation : public Actor {
 	
 	public:
 		Articulation(Engine*);
 		Articulation(Engine*,Articulation*);
 		virtual ~Articulation();
+		Articulation* addArticulation();
+	public:
 
-		virtual Articulation*				isArticulation(){return this;}
-		virtual ObjectType					getType(){ return ARTICULATION;}
+		virtual Articulation*		isArticulation(){return this;}
+		virtual ObjectType			getType(){ return ARTICULATION;}
 
         virtual PxRigidActor*     	getActor(){return mLink;}
 
+		virtual void				addForce(Vec3);	
+		virtual void				resetMass();
+		virtual void				setMass(float mass);
+		virtual float				getMass();
+		virtual void				wakeUp();
+
+
+		void		addToScene();
 
 		Vec3		getParentAnchor();
 		Quat		getParentAnchorOrientation();
@@ -36,21 +46,22 @@ class Articulation : public Actor {
 		float		getSpring();
 		void		setDamping(float damping);
 		float		getDamping();
-		void		resetMass();
-		void		setMass(float mass);
-		float		getMass();
-		void		wakeUp();
 		void		setSolverIterationCounts(float posIters, float velIters);
 
+		void 		setSwingLimits(float,float);
+		float 		getSwingYLimit();
+		float 		getSwingZLimit();
+		void		setSwingLimitEnabled();
+		void		setSwingLimitDisabled();
 
-
-
+		void 		setTwistLimits(float,float);
+		float 		getTwistLowerLimit();
+		float 		getTwistUpperLimit();
+		void		setTwistLimitEnabled();
+		void		setTwistLimitDisabled();
 	public:
 		PxArticulation*			getArticulation(){return mArticulation;}
 		PxArticulationLink*		getLink(){return mLink;}
-
-
-
 
 
 

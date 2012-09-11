@@ -69,6 +69,8 @@ class Engine :
 		EngineObject*	createJoint(EngineObject* obj1,EngineObject* obj2);
 		EngineObject*	createPhysicStatic();
 		EngineObject*	createMesh(const char*);
+		Articulation*	createArticulation();
+		DynamicActor*	createDynamicActor();
 
 		void	callPythonKeyPressed(Keys);
 		void	callPythonKeyDown(Keys);
@@ -209,6 +211,8 @@ class Engine :
 	public:	//profiling
 		
 		void	printUsedResources();
+		int			getMemoryUsage();
 
+		void	log(std::string);	
 };
 #endif

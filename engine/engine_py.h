@@ -203,6 +203,40 @@ BOOST_PYTHON_MODULE(EngineModule) {
 		;
 	class_<DynamicActor,bases<Actor> >("DynamicActor", init<Engine*,Vec3&>())
 		;
+
+	class_<Articulation,bases<Actor> >("Articulation", init<Engine*>())
+		.def(init<Engine*,Articulation*>())
+
+		.def("addArticulation",&Articulation::addArticulation,return_value_policy<reference_existing_object>())
+
+		.def("addToScene",&Articulation::addToScene)
+		.def("getParentAnchor",&Articulation::getParentAnchor)
+		.def("getParentAnchorOrientation",&Articulation::getParentAnchorOrientation)
+		.def("getChildAnchor",&Articulation::getChildAnchor)
+		.def("getChildAnchorOrientation",&Articulation::getChildAnchorOrientation)
+		.def("setParentAnchor",&Articulation::setParentAnchor)
+		.def("setChildAnchor",&Articulation::setChildAnchor)
+		.def("setParentAnchorOrientation",&Articulation::setParentAnchorOrientation)
+		.def("setChildAnchorOrientation",&Articulation::setChildAnchorOrientation)
+		.def("getMotorTarget",&Articulation::getMotorTarget)
+		.def("setMotorTarget",&Articulation::setMotorTarget)
+		.def("setSpring",&Articulation::setSpring)
+		.def("getSpring",&Articulation::getSpring)
+		.def("setDamping",&Articulation::setDamping)
+		.def("getDamping",&Articulation::getDamping)
+		.def("setSolverIterationCounts",&Articulation::setSolverIterationCounts)
+		.def("setSwingLimits",&Articulation::setSwingLimits)
+		.def("getSwingYLimit",&Articulation::getSwingYLimit)
+		.def("getSwingZLimit",&Articulation::getSwingZLimit)
+		.def("setSwingLimitEnabled",&Articulation::setSwingLimitEnabled)
+		.def("setSwingLimitDisabled",&Articulation::setSwingLimitDisabled)
+		.def("setTwistLimits",&Articulation::setTwistLimits)
+		.def("getTwistLowerLimit",&Articulation::getTwistLowerLimit)
+		.def("getTwistUpperLimit",&Articulation::getTwistUpperLimit)
+		.def("setTwistLimitEnabled",&Articulation::setTwistLimitEnabled)
+		.def("setTwistLimitDisabled",&Articulation::setTwistLimitDisabled)
+		;
+
 	class_<PhysicShape,bases<EngineGuiShape> >("PhysicShape",no_init)
 		;
 
@@ -306,6 +340,8 @@ BOOST_PYTHON_MODULE(EngineModule) {
         .def("createJoint",&Engine::createJoint,return_value_policy<reference_existing_object>() )
         .def("createPhysicStatic",&Engine::createPhysicStatic,return_value_policy<reference_existing_object>() )
 		.def("createMesh",&Engine::createMesh,return_value_policy<reference_existing_object>() )
+		.def("createArticulation",&Engine::createArticulation,return_value_policy<reference_existing_object>() )
+		.def("createDynamicActor",&Engine::createDynamicActor,return_value_policy<reference_existing_object>() )
 
         .def("step",&Engine::step)
         .def("quit",&Engine::quit)
@@ -340,6 +376,9 @@ BOOST_PYTHON_MODULE(EngineModule) {
 		.def("callPythonKeyPressed",&Engine::callPythonKeyPressed)
 		.def("callPythonKeyDown",&Engine::callPythonKeyDown)
 		.def("callPythonKeyReleased",&Engine::callPythonKeyReleased)
+
+        .def("getMemoryUsage",&Engine::getMemoryUsage)
+        .def("log",&Engine::log)
 
         ;
 

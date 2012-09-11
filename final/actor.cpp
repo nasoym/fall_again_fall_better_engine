@@ -80,7 +80,7 @@ PhysicShape*		Actor::addSphere(Vec3& vec3){
 
 PhysicShape*		Actor::addCapsule(Vec3& vec3){
 	PxShape* shape = getActor()->createShape( 
-		PxCapsuleGeometry(vec3.y,vec3.x*0.5f), 
+		PxCapsuleGeometry(vec3.y,vec3.x), 
 		//PxCapsuleGeometry(5,30), 
 		*(getEngine()->getPhysicsEngine()->getMaterial()) 
 		);
