@@ -3,10 +3,12 @@
 #include "engine_mesh.h"
 #include "engine.h"
 
-#include "engine_body.h"
+//#include "engine_body.h"
 #include "engine_joint.h"
 #include "engine_gui_shape.h"
 #include "engine_gui_container.h"
+
+#include "actor.h"
 
 EngineMesh::EngineMesh(Engine* engine,const char* meshName) :
 	EngineGuiShape(engine),
@@ -32,7 +34,7 @@ int				EngineMesh::getNumberOfBones(){
 	return mBoneBodies.size();
 }
 
-EngineBody*		EngineMesh::getBodyByIndex(int index){
+Actor*		EngineMesh::getBodyByIndex(int index){
 	return mBoneBodies[index].body;
 }
 
@@ -57,7 +59,7 @@ void		EngineMesh::setupAllBones(){
 }
 
 void	EngineMesh::guiUpdate(){
-	EngineBody* rootBody = getBodyOfBone(mRootBone);
+	Actor* rootBody = getBodyOfBone(mRootBone);
 	if (rootBody) {
 	//if (false) {
 		Vec3	rootBodyPos = rootBody->getPosition();
@@ -74,7 +76,7 @@ void	EngineMesh::guiUpdate(){
 }
 
 void	EngineMesh::updateBone(Bone* bone){
-	EngineBody* body = getBodyOfBone(bone);
+	Actor* body = getBodyOfBone(bone);
 	if (body) {
 		boneSetOrientation(bone, body->getOrientation());
 		Vec3	localPos = Vec3();
@@ -100,7 +102,7 @@ void	EngineMesh::updateBone(Bone* bone){
 }
 
 void 	EngineMesh::calcLocalPosOfRootBone() {
-	EngineBody* rootBody = getBodyOfBone(mRootBone);
+	Actor* rootBody = getBodyOfBone(mRootBone);
 	if (rootBody) {
 		Logger::debug("calc local pos of root bone");
 		Vec3	rootBodyPos = rootBody->getPosition();
@@ -161,7 +163,7 @@ void	EngineMesh::setContainerForBone(Bone* bone,EngineGuiContainer* container){
 	}
 }
 
-void	EngineMesh::setBodyForBone(Bone* bone,EngineBody* body){
+void	EngineMesh::setBodyForBone(Bone* bone,Actor* body){
 	std::vector<BoneBody>::iterator	iter;
 	for(iter=mBoneBodies.begin();iter!=mBoneBodies.end();++iter){
 		if ((*iter).bone == bone) {
@@ -281,7 +283,7 @@ EngineJoint*	EngineMesh::getJointOfBone(Bone* bone) {
 	return 0;
 }
 
-EngineBody*	EngineMesh::getBodyOfBone(Bone* bone) {
+Actor*	EngineMesh::getBodyOfBone(Bone* bone) {
 	std::vector<BoneBody>::iterator	iter;
 	for(iter=mBoneBodies.begin();iter!=mBoneBodies.end();++iter){
 		if ( (*iter).bone == bone) {
@@ -291,7 +293,7 @@ EngineBody*	EngineMesh::getBodyOfBone(Bone* bone) {
 	return 0;
 }
 
-Bone*	EngineMesh::getBoneOfBody(EngineBody* body) {
+Bone*	EngineMesh::getBoneOfBody(Actor* body) {
 	std::vector<BoneBody>::iterator	iter;
 	for(iter=mBoneBodies.begin();iter!=mBoneBodies.end();++iter){
 		if ( (*iter).body == body) {
@@ -336,7 +338,7 @@ Bone*			EngineMesh::getBoneFromName(std::string boneName){
 	return 0;
 }
 
-void			EngineMesh::setBodyForBoneName(std::string boneName,EngineBody* body){
+void			EngineMesh::setBodyForBoneName(std::string boneName,Actor* body){
 	std::vector<BoneBody>::iterator	iter;
 	for(iter=mBoneBodies.begin();iter!=mBoneBodies.end();++iter){
 	    if( (*iter).bone->getName().compare(boneName) == 0 ) {
@@ -356,7 +358,7 @@ void			EngineMesh::setJointForBoneName(std::string boneName,EngineJoint* joint){
 	}
 }
 
-EngineBody*		EngineMesh::getBodyOfBoneName(std::string boneName){
+Actor*		EngineMesh::getBodyOfBoneName(std::string boneName){
 	Bone* bone = getBoneFromName(boneName);	
 	if (bone) {
 		return getBodyOfBone(bone);

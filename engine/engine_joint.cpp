@@ -3,27 +3,27 @@
 #include "engine_joint.h"
 #include "engine.h"
 
-#include "engine_body.h"
+#include "actor.h"
 #include "physic_joint.h"
 
-EngineJoint::EngineJoint(Engine* engine,EngineBody* body1, EngineBody* body2) :
+EngineJoint::EngineJoint(Engine* engine,Actor* body1, Actor* body2) :
 	EngineGuiContainer(engine),
 	mBody1(body1),
 	mBody2(body2)
 	{
 	mJoint = new PhysicJoint(
 		getEngine()->getPhysicsEngine(),
-		body1->getPhysicBody(),
-		body2->getPhysicBody()
+		body1,
+		body2
 	);
-	body1->addJoint(this);
-	body2->addJoint(this);
+	//body1->addJoint(this);
+	//body2->addJoint(this);
 }
 
-EngineBody*		EngineJoint::getBody1(){
+Actor*		EngineJoint::getBody1(){
 	return mBody1;
 }
-EngineBody*		EngineJoint::getBody2(){
+Actor*		EngineJoint::getBody2(){
 	return mBody2;
 }
 

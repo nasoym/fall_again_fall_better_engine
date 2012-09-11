@@ -10,12 +10,12 @@ using namespace Ogre;
 #include "engine_gui_shape.h"
 
 class Engine;
-class EngineBody;
 class EngineGuiContainer;
+class Actor;
 
 struct BoneBody {
 	Bone*		bone;
-	EngineBody*	body;
+	Actor*	body;
 	EngineJoint*joint;
 	EngineGuiContainer* container;
 	BoneBody(Bone* b) : bone(b),body(0),joint(0), container(0) {}
@@ -39,10 +39,10 @@ class EngineMesh : public EngineGuiShape {
 		void			boneSetPosition(Bone* bone,Vec3 vec3);
 		void			boneSetOrientation(Bone* bone,Quat quat,bool rotated=true);
 
-		EngineBody*		getBodyOfBone(Bone* bone);
+		Actor*		getBodyOfBone(Bone* bone);
 		EngineJoint*	getJointOfBone(Bone* bone);
-		Bone*			getBoneOfBody(EngineBody* body);
-		void			setBodyForBone(Bone* bone,EngineBody* body);
+		Bone*			getBoneOfBody(Actor* body);
+		void			setBodyForBone(Bone* bone,Actor* body);
 		void			setJointForBone(Bone* bone,EngineJoint* joint);
 		Bone*			getBoneFromName(std::string boneName);
 		Bone*			getRootBone(){return mRootBone;}
@@ -57,14 +57,14 @@ class EngineMesh : public EngineGuiShape {
 		// Python Api
 		std::string		getFileName(){return mMeshFileName;}
 		int				getNumberOfBones();
-		EngineBody*		getBodyByIndex(int);
+		Actor*		getBodyByIndex(int);
 		EngineJoint*	getJointByIndex(int);
 		std::string		getBoneNameByIndex(int);	
 
-		EngineBody*		getBodyOfBoneName(std::string);
+		Actor*		getBodyOfBoneName(std::string);
 		EngineJoint*	getJointOfBoneName(std::string);
 
-		void			setBodyForBoneName(std::string,EngineBody*);
+		void			setBodyForBoneName(std::string,Actor*);
 		void			setJointForBoneName(std::string,EngineJoint*);
 
 		Vec3			getBoneNamePosition(std::string);

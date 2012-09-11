@@ -112,6 +112,7 @@ BOOST_PYTHON_MODULE(EngineModule) {
 		.def("isActor",&EngineObject::isActor,return_value_policy<reference_existing_object>())
 		.def("isDynamicActor",&EngineObject::isDynamicActor,return_value_policy<reference_existing_object>())
 		.def("isPhysicShape",&EngineObject::isPhysicShape,return_value_policy<reference_existing_object>())
+		.def("isArticulation",&EngineObject::isArticulation,return_value_policy<reference_existing_object>())
 
 		.def("setSelectable",&EngineObject::setSelectable)
 		.def("setUnselectable",&EngineObject::setUnselectable)
@@ -296,7 +297,7 @@ BOOST_PYTHON_MODULE(EngineModule) {
 
 		;
 
-	class_<EngineJoint,bases<EngineGuiContainer> >("EngineJoint", init<Engine*,EngineBody*,EngineBody*>())
+	class_<EngineJoint,bases<EngineGuiContainer> >("EngineJoint", init<Engine*,Actor*,Actor*>())
 		.def("setAnchor1Size",&EngineJoint::setAnchor1Size)
 		.def("setAnchor2Size",&EngineJoint::setAnchor2Size)
 		.def("setAnchor1",&EngineJoint::setAnchor1)

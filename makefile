@@ -17,10 +17,10 @@ CFLAGS+=-I /c/Users/Sinan/Downloads/ogre/OgreSDK_vc10_v1-8-0/include/OGRE/
 CFLAGS+=-I /c/Users/Sinan/Downloads/ogre/OgreSDK_vc10_v1-8-0/include/OGRE/RTShaderSystem
 CFLAGS+=-I /c/Users/Sinan/Downloads/ogre/OgreProceduralSDK_vs10_v0.2/include/OgreProcedural/
 
-CFLAGS+=-I /c/Users/Sinan/Downloads/physx/PhysX-3.2_PC_SDK_Core/include/
-CFLAGS+=-I /c/Users/Sinan/Downloads/physx/PhysX-3.2_PC_SDK_Core/include/extensions/
-CFLAGS+=-I /c/Users/Sinan/Downloads/physx/PhysX-3.2_PC_SDK_Core/include/pxtask/
-CFLAGS+=-I /c/Users/Sinan/Downloads/physx/PhysX-3.2_PC_SDK_Core/include/foundation/
+CFLAGS+=-I /c/Users/Sinan/Downloads/physx/PhysX-3.2.1_PC_SDK_Core/include/
+CFLAGS+=-I /c/Users/Sinan/Downloads/physx/PhysX-3.2.1_PC_SDK_Core/include/extensions/
+CFLAGS+=-I /c/Users/Sinan/Downloads/physx/PhysX-3.2.1_PC_SDK_Core/include/pxtask/
+CFLAGS+=-I /c/Users/Sinan/Downloads/physx/PhysX-3.2.1_PC_SDK_Core/include/foundation/
 
 CFLAGS+=-I /c/Python27/include
 CFLAGS+=-I /c/boost_1_47/
@@ -42,10 +42,10 @@ LIBLIST+=/c/boost_1_47/lib/libboost_thread-vc100-mt-1_47.lib
 LIBLIST+=/c/boost_1_47/lib/libboost_date_time-vc100-mt-1_47.lib
 LIBLIST+=/c/boost_1_47/lib/boost_python-vc100-mt-1_47.lib
 
-LIBLIST+=/c/Users/Sinan/Downloads/physx/PhysX-3.2_PC_SDK_Core/Lib/win32/PhysX3_x86.lib
-LIBLIST+=/c/Users/Sinan/Downloads/physx/PhysX-3.2_PC_SDK_Core/Lib/win32/PhysX3Common_x86.lib
-LIBLIST+=/c/Users/Sinan/Downloads/physx/PhysX-3.2_PC_SDK_Core/Lib/win32/PhysX3Extensions.lib
-LIBLIST+=/c/Users/Sinan/Downloads/physx/PhysX-3.2_PC_SDK_Core/Lib/win32/PxTask.lib
+LIBLIST+=/c/Users/Sinan/Downloads/physx/PhysX-3.2.1_PC_SDK_Core/Lib/win32/PhysX3_x86.lib
+LIBLIST+=/c/Users/Sinan/Downloads/physx/PhysX-3.2.1_PC_SDK_Core/Lib/win32/PhysX3Common_x86.lib
+LIBLIST+=/c/Users/Sinan/Downloads/physx/PhysX-3.2.1_PC_SDK_Core/Lib/win32/PhysX3Extensions.lib
+LIBLIST+=/c/Users/Sinan/Downloads/physx/PhysX-3.2.1_PC_SDK_Core/Lib/win32/PxTask.lib
 
 LIBLIST+=/c/Users/Sinan/Downloads/ogre/OgreSDK_vc10_v1-8-0/lib/release/OgreMain.lib
 LIBLIST+=/c/Users/Sinan/Downloads/ogre/OgreSDK_vc10_v1-8-0/lib/release/OgreRTShaderSystem.lib

@@ -59,6 +59,7 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 			"""
 		#Engine.test()
 
+		"""
 		a = Engine.createArticulation()
 		a.setPosition(EngineModule.Vec3(0,200,0))
 		a.addCapsule(EngineModule.Vec3(50,10,10))
@@ -86,6 +87,7 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 			b.setTwistLimits(0.1,0.2)
 
 		a.addToScene()
+		"""
 
 		"""
 		a = create.createPhysicBoxFinal(Engine,EngineModule)
@@ -118,16 +120,21 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 			
 		#Engine.callPythonKeyPressed(EngineModule.Keys.K_SPACE)
 
-		"""
 		a = Engine.createDynamicActor()
 		s = a.addCapsule(EngineModule.Vec3(60,20,20))
-		s = a.addBox(EngineModule.Vec3(60,20,20))
-		s = a.addSphere(EngineModule.Vec3(60,20,20))
-		s.setLocalSize(EngineModule.Vec3(40,10,10))
-		s.setLocalOrientation(EngineModule.Quat().fromAngles(0,45,0))
-		s.setLocalPosition(EngineModule.Vec3(0,10,0))
-		"""
+		#s = a.addBox(EngineModule.Vec3(60,20,20))
+		#s = a.addSphere(EngineModule.Vec3(60,20,20))
+		#s.setLocalSize(EngineModule.Vec3(40,10,10))
+		#s.setLocalOrientation(EngineModule.Quat().fromAngles(0,45,0))
+		#s.setLocalPosition(EngineModule.Vec3(0,10,0))
 
+		b = Engine.createDynamicActor()
+		s = b.addCapsule(EngineModule.Vec3(60,20,20))
+
+		j = Engine.createJoint(a,b)
+		j.setAnchor1Size( EngineModule.Vec3(1,0,0) )
+		j.setAnchor2Size( EngineModule.Vec3(-1,0,0) )
+		j.setLimits(40,40)
 
 	if key == EngineModule.Keys.K_SLASH:
 

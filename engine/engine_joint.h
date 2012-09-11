@@ -2,7 +2,7 @@
 #define _ENGINE_JOINT_H
 
 class Engine;
-class EngineBody;
+class Actor;
 
 #include "math3d.h"
 
@@ -12,7 +12,7 @@ class EngineBody;
 
 class EngineJoint : public EngineGuiContainer {
     public:
-        EngineJoint(Engine*,EngineBody*,EngineBody*);
+        EngineJoint(Engine*,Actor*,Actor*);
 
 		virtual void		guiUpdate();
 
@@ -52,8 +52,8 @@ class EngineJoint : public EngineGuiContainer {
 		virtual EngineJoint*			isJoint(){return this;}
 		virtual ObjectType		getType(){ return JOINT;}
 
-		EngineBody*		getBody1();
-		EngineBody*		getBody2();
+		Actor*		getBody1();
+		Actor*		getBody2();
 
 		//debug
         void        dsetMotorSpring(float);
@@ -63,8 +63,8 @@ class EngineJoint : public EngineGuiContainer {
 
 	private:
 		PhysicJoint*	mJoint;
-		EngineBody*		mBody1;
-		EngineBody*		mBody2;
+		Actor*		mBody1;
+		Actor*		mBody2;
 };
 #endif
 

@@ -24,15 +24,15 @@ using namespace physx;
 	#endif 
 
 //-------------------------------------
-class PhysicBody;
+class Actor;
 class Engine;
 
 class PhysicJoint : public BaseJoint {
     private:
         PhysicsEngine*         mEngine;
 
-        PhysicBody*          mActor1;
-        PhysicBody*          mActor2;
+        Actor*          mActor1;
+        Actor*          mActor2;
 
         PxD6Joint *     mJoint;
 
@@ -46,7 +46,7 @@ class PhysicJoint : public BaseJoint {
         float           mDContactDistance;
 
     public:
-        PhysicJoint(PhysicsEngine*,PhysicBody*,PhysicBody*);
+        PhysicJoint(PhysicsEngine*,Actor*,Actor*);
         virtual ~PhysicJoint();
 
     protected:
@@ -55,8 +55,8 @@ class PhysicJoint : public BaseJoint {
         void        createJoint();
 
     public:
-        PhysicBody*      getActor1();
-        PhysicBody*      getActor2();
+        Actor*      getActor1();
+        Actor*      getActor2();
 
         void        setAnchor1(Vec3&);
         void        setAnchor2(Vec3&);

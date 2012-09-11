@@ -1,8 +1,9 @@
 #include "physic_joint.h"
 #include "physic_body.h"
 #include "physic_engine.h"
+#include "actor.h"
 
-PhysicJoint::PhysicJoint(PhysicsEngine* engine,PhysicBody* actor1,PhysicBody* actor2):
+PhysicJoint::PhysicJoint(PhysicsEngine* engine,Actor* actor1,Actor* actor2):
         mEngine(engine),
         mActor1(actor1),
         mActor2(actor2),
@@ -31,10 +32,10 @@ void PhysicJoint::recreateJoint() {
 void PhysicJoint::createJoint(){
     mJoint = PxD6JointCreate(
         *mEngine->getPhysics(), 
-        mActor1->getBody(),
+        mActor1->getActor(),
         PxTransform(PxVec3(
             0,0,0)),
-        mActor2->getBody(),
+        mActor2->getActor(),
         PxTransform(PxVec3(
             0,0,0))
         );
@@ -96,11 +97,11 @@ void PhysicJoint::unregisterJoint() {
     mJoint = 0;
 }
 
-PhysicBody*  PhysicJoint::getActor1(){
+Actor*  PhysicJoint::getActor1(){
     return mActor1;
 }
 
-PhysicBody*  PhysicJoint::getActor2(){
+Actor*  PhysicJoint::getActor2(){
     return mActor2;
 }
 

@@ -53,8 +53,8 @@ EngineObject*	Engine::createPhysicStatic(){
 }
 
 EngineObject*	Engine::createJoint(EngineObject* obj1,EngineObject* obj2){
-	if (obj1->isBody() && obj2->isBody() ) {
-		EngineJoint* engineObject = new EngineJoint(this,obj1->isBody(),obj2->isBody());
+	if (obj1->isActor() && obj2->isActor() ) {
+		EngineJoint* engineObject = new EngineJoint(this,obj1->isActor(),obj2->isActor());
 		return engineObject;
 	}
 	return 0;
