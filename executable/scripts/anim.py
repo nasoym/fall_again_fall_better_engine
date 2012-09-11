@@ -310,8 +310,9 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 				finalY = highY - ((highY-lowY) * 0.5)
 				finalZ = highZ - ((highZ-lowZ) * 0.5)
 				middlePos = EngineModule.Vec3(finalX,finalY,finalZ)
-				debug = objects.get()["head-debug"]
-				debug.setPosition(middlePos)
+				if "head-debug" in objects.get():
+					debug = objects.get()["head-debug"]
+					debug.setPosition(middlePos)
 
 				angleRand = 70
 				maxMult = 5
