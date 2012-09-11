@@ -70,7 +70,7 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 		b.setSwingLimits(40,40)
 		b.setTwistLimits(0.1,0.2)
 
-		for i in range(0,20):
+		for i in range(0,5):
 			b = b.addArticulation()
 			b.addCapsule(EngineModule.Vec3(50,5,5))
 			b.setParentAnchor(EngineModule.Vec3(50,0,0))
@@ -78,11 +78,43 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 			b.setSwingLimits(40,40)
 			b.setTwistLimits(0.1,0.2)
 
+			b = b.addArticulation()
+			b.addCapsule(EngineModule.Vec3(50,10,5))
+			b.setParentAnchor(EngineModule.Vec3(50,0,0))
+			b.setChildAnchor(EngineModule.Vec3(-50,0,0))
+			b.setSwingLimits(40,40)
+			b.setTwistLimits(0.1,0.2)
+
+		a.addToScene()
+
+		"""
+		a = create.createPhysicBoxFinal(Engine,EngineModule)
+		a.setSize(EngineModule.Vec3(50,10,10))
+		a.setPosition(EngineModule.Vec3(0,200,0))
+
+
+		for i in range(0,10):
+			b = create.createPhysicBoxFinal(Engine,EngineModule)
+			b.setSize(EngineModule.Vec3(50,5,5))
+			j = Engine.createJoint(a,b)
+			j.setAnchor1Size( EngineModule.Vec3(1,0,0) )
+			j.setAnchor2Size( EngineModule.Vec3(-1,0,0) )
+			j.setLimits(40,40)
+			a=b
+
+			b = create.createPhysicBoxFinal(Engine,EngineModule)
+			b.setSize(EngineModule.Vec3(50,10,10))
+			j = Engine.createJoint(a,b)
+			j.setAnchor1Size( EngineModule.Vec3(1,0,0) )
+			j.setAnchor2Size( EngineModule.Vec3(-1,0,0) )
+			j.setLimits(40,40)
+			a=b
+			"""
+
 
 		#b.setTwistLimitDisabled()
 		#b.setSwingLimitDisabled()
 
-		a.addToScene()
 			
 		#Engine.callPythonKeyPressed(EngineModule.Keys.K_SPACE)
 
