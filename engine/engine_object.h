@@ -18,6 +18,7 @@ class EngineBox;
 class Actor;
 class PhysicShape;
 class DynamicActor;
+class Articulation;
 
 
 enum ObjectType {
@@ -33,6 +34,7 @@ enum ObjectType {
 	ACTOR,
 	DYNAMIC_ACTOR,
 	PHYSIC_SHAPE,
+	ARTICULATION,
 
 };
 
@@ -67,6 +69,7 @@ class EngineObject {
 		virtual Actor*					isActor(){return 0;}
 		virtual DynamicActor*			isDynamicActor(){return 0;}
 		virtual PhysicShape*			isPhysicShape(){return 0;}
+		virtual Articulation*			isArticulation(){return 0;}
 
 		void			setSelectable(){mSelectable=true;}
 		void			setUnselectable(){mSelectable=false;}

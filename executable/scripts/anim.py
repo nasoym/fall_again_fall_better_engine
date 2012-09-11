@@ -48,7 +48,7 @@ FallingAnim = [
 		"neck-joint",
 		"breast-joint"
 		],
-		'time':FallingAnimTime,
+		'time':FallingAnimTime * 0.1,
 		'start':[(lambda Engine,EngineModule,objects,groupPart:
 			groupPart.setMotorValues(FallingSpring,FallingDamping,True))],
 		'end':[(lambda Engine,EngineModule,objects,groupPart:
@@ -68,7 +68,7 @@ FallingAnim = [
 		"larm-joint",
 		"hand-joint"
 		],
-		'time':FallingAnimTime,
+		'time':FallingAnimTime * 0.5,
 		'start':[(lambda Engine,EngineModule,objects,groupPart:
 			groupPart.setMotorValues(FallingSpring,FallingDamping,True))],
 		'end':[(lambda Engine,EngineModule,objects,groupPart:

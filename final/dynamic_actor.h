@@ -23,10 +23,10 @@ class DynamicActor : public Actor {
 		virtual void		setMass(float mass);
 		virtual void		resetMass();
 		virtual float		getMass();
+        virtual PxRigidActor*     	getActor(){return mBody;}
 
 	private:
         PxRigidDynamic*     mBody;
-        virtual PxRigidActor*     	getActor(){return mBody;}
 
 };
 #endif
