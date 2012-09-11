@@ -274,10 +274,11 @@ void    Engine::deleteObject(EngineObject* object) {
 		mIterator != mObjects.end(); ++mIterator) {
 		if ( (*mIterator) == object ){
 			mObjects.erase( mIterator);
-			delete (*mIterator);
+			//delete (*mIterator);
 			break;
 		}
 	}
+	Logger::debug("done with engine del");
 }
 
 void    Engine::addObject(EngineObject* object){

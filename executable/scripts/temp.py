@@ -38,6 +38,20 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 	"""
 
 
+	if key == EngineModule.Keys.K_DELETE:
+		print("deleting selection")
+		selectedObjects = selection.get()[:]
+		selection.clear()
+		#for o in selection.get()[:]:
+		while len(selectedObjects) > 0:
+			o = selectedObjects.pop()
+			#for o in selectedObjects:
+			print("object: " + str(o))
+			if o.isBox():
+				print("is box")
+				Engine.deleteObject(o)		
+				print("done")
+		print("done--")
 
 
 	if key == EngineModule.Keys.K_COMMA:
@@ -262,12 +276,12 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 
 		if Engine.isKeyDown(EngineModule.Keys.K_1):
 			print("temp loading")
-			#saveload.load(Engine,EngineModule,"xmlscene/ragdoll.xml",objects)
-			saveload.load(Engine,EngineModule,"xmlscene/test.xml",objects)
+			saveload.load(Engine,EngineModule,"xmlscene/ragdoll.xml",objects)
+			#saveload.load(Engine,EngineModule,"xmlscene/test.xml",objects)
 		elif Engine.isKeyDown(EngineModule.Keys.K_2):
 			print("temp saving")
-			#saveload.save(Engine,EngineModule,"xmlscene/ragdoll.xml",objects)
-			saveload.save(Engine,EngineModule,"xmlscene/test.xml",objects)
+			saveload.save(Engine,EngineModule,"xmlscene/ragdoll.xml",objects)
+			#saveload.save(Engine,EngineModule,"xmlscene/test.xml",objects)
 		else:
 			pass
 

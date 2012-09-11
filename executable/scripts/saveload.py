@@ -316,6 +316,25 @@ def load(Engine,EngineModule,fileName,objects):
 
 
 			elif node.name==str(EngineModule.ObjectType.STATICBODY):
+				o = Engine.createStaticActor()
+				a = (node.prop("size").split(","))
+				size = EngineModule.Vec3( float(a[0]),float(a[1]),float(a[2]))
+				o.addBox(size)
+
+				#loadGuiContainer(node,Engine,EngineModule,o,uuidTable)
+				if node.hasProp("uuid"):
+					uuid = node.prop("uuid")
+					uuid = getFromUuidTable(Engine,uuidTable,uuid)
+					o.setUuid(uuid)
+				loadEngineObject(node,Engine,EngineModule,o)
+				#loadSize(node,Engine,EngineModule,o)
+				loadPosition(node,Engine,EngineModule,o)
+				loadOrientation(node,Engine,EngineModule,o)
+				res.remove(node)
+
+
+
+				"""
 				if isGuiContainerFullfilled(node,Engine,EngineModule,uuidTable):
 					o = Engine.createPhysicStatic()
 					loadGuiContainer(node,Engine,EngineModule,o,uuidTable)
@@ -330,21 +349,32 @@ def load(Engine,EngineModule,fileName,objects):
 					res.remove(node)
 				else:
 					lastUnresolved = "staticbody: gui container failed"
+					"""
 
-			elif node.name==str(EngineModule.ObjectType.STATIC_ACTOR):
-				o = Engine.createStaticActor()
-				loadGuiContainer(node,Engine,EngineModule,o,uuidTable)
+			elif node.name==str(EngineModule.ObjectType.BODY):
+				o = Engine.createDynamicActor()
+				a = (node.prop("size").split(","))
+				size = EngineModule.Vec3( float(a[0]),float(a[1]),float(a[2]))
+				o.addBox(size)
+
+				#loadGuiContainer(node,Engine,EngineModule,o,uuidTable)
 				if node.hasProp("uuid"):
 					uuid = node.prop("uuid")
 					uuid = getFromUuidTable(Engine,uuidTable,uuid)
 					o.setUuid(uuid)
 				loadEngineObject(node,Engine,EngineModule,o)
-				loadSize(node,Engine,EngineModule,o)
+				#loadSize(node,Engine,EngineModule,o)
 				loadPosition(node,Engine,EngineModule,o)
 				loadOrientation(node,Engine,EngineModule,o)
+				if node.hasProp("mass"):
+					mass = float(node.prop("mass"))
+					o.setMass(mass)
 				res.remove(node)
 
-			elif node.name==str(EngineModule.ObjectType.BODY):
+
+
+
+				"""
 				if isGuiContainerFullfilled(node,Engine,EngineModule,uuidTable):
 					o = Engine.createPhysicBox()
 					loadGuiContainer(node,Engine,EngineModule,o,uuidTable)
@@ -362,6 +392,21 @@ def load(Engine,EngineModule,fileName,objects):
 					res.remove(node)
 				else:
 					lastUnresolved = "body: gui container failed"
+					"""
+
+			elif node.name==str(EngineModule.ObjectType.STATIC_ACTOR):
+				o = Engine.createStaticActor()
+				loadGuiContainer(node,Engine,EngineModule,o,uuidTable)
+				if node.hasProp("uuid"):
+					uuid = node.prop("uuid")
+					uuid = getFromUuidTable(Engine,uuidTable,uuid)
+					o.setUuid(uuid)
+				loadEngineObject(node,Engine,EngineModule,o)
+				#loadSize(node,Engine,EngineModule,o)
+				loadPosition(node,Engine,EngineModule,o)
+				loadOrientation(node,Engine,EngineModule,o)
+				res.remove(node)
+
 
 			elif node.name==str(EngineModule.ObjectType.DYNAMIC_ACTOR):
 				o = Engine.createDynamicActor()
@@ -371,7 +416,7 @@ def load(Engine,EngineModule,fileName,objects):
 					uuid = getFromUuidTable(Engine,uuidTable,uuid)
 					o.setUuid(uuid)
 				loadEngineObject(node,Engine,EngineModule,o)
-				loadSize(node,Engine,EngineModule,o)
+				#loadSize(node,Engine,EngineModule,o)
 				loadPosition(node,Engine,EngineModule,o)
 				loadOrientation(node,Engine,EngineModule,o)
 				if node.hasProp("mass"):

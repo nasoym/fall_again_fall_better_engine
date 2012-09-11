@@ -17,11 +17,16 @@ EngineGuiShape::EngineGuiShape(Engine* engine) :
 
 EngineGuiShape::~EngineGuiShape(){
 	Logger::debug("guiShape delete");
+
+	getNode()->detachObject(mEntity);
+	getEngine()->getSceneManager()->destroyEntity(mEntity);
+	mEntity = 0;
+
     SceneNode*  parentNode = mNode->getParentSceneNode();
     mNode->removeAndDestroyAllChildren();
     parentNode->removeChild(mNode);
-    mEntity = 0;
     mNode = 0;
+
 	if(!mMaterial.isNull()){
 		//TODO?  mMaterial.release();
 	}

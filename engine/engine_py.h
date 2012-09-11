@@ -116,6 +116,7 @@ BOOST_PYTHON_MODULE(EngineModule) {
 		.def("isPhysicShape",&EngineObject::isPhysicShape,return_value_policy<reference_existing_object>())
 		.def("isArticulation",&EngineObject::isArticulation,return_value_policy<reference_existing_object>())
 		.def("isStaticActor",&EngineObject::isStaticActor,return_value_policy<reference_existing_object>())
+		.def("isBox",&EngineObject::isBox,return_value_policy<reference_existing_object>())
 
 		.def("setSelectable",&EngineObject::setSelectable)
 		.def("setUnselectable",&EngineObject::setUnselectable)
