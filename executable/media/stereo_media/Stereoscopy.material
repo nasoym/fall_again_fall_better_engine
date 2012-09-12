@@ -39,7 +39,7 @@ fragment_program Stereo/Anaglyph_RC_fp cg
    source Stereoscopy.cg
    profiles ps_2_0 arbfp1
    entry_point Anaglyph_fp
-   compile_arguments -DLEFT_MASK=1,0,0,1 -DRIGHT_MASK=0,1,1,1
+   compile_arguments -DLEFT_MASK=1.0,0.0,0.0,1 -DRIGHT_MASK=0,1,1,1
 }
 
 fragment_program Stereo/Anaglyph_YB_fp cg

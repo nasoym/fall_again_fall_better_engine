@@ -29,7 +29,7 @@ Engine::Engine() :
     setupPhysics();
     setup();
 	setupStereo();
-	setupSSAO();
+	//setupSSAO();
     setupOIS();
     setupWindowEventListener();
 }
@@ -336,7 +336,7 @@ void Engine::setup(){
 	//mWindow = mRoot->createRenderWindow("main window",400,400,false);
 
     mSceneMgr = mRoot->createSceneManager(ST_GENERIC, "ExampleSMInstance");
-    mSceneMgr->setAmbientLight(ColourValue(0.2,0.2,0.2));
+    mSceneMgr->setAmbientLight(ColourValue(0.4,0.4,0.2));
 
 	mSceneMgr->setShadowTechnique(
 		//Ogre::SHADOWTYPE_STENCIL_ADDITIVE
@@ -375,8 +375,8 @@ void Engine::setup(){
     // Create one viewport, entire window
     mViewport = mWindow->addViewport(mCamera);
     //mViewport->setBackgroundColour(ColourValue(0.5,0.3,0.2));
-    //mViewport->setBackgroundColour(ColourValue(0,0,0));
-    mViewport->setBackgroundColour(ColourValue(0.395,0.395,0.395));
+    mViewport->setBackgroundColour(ColourValue(0,0,0));
+    //mViewport->setBackgroundColour(ColourValue(0.395,0.395,0.395));
     // Alter the camera aspect ratio to match the viewport
     mCamera->setAspectRatio( Real(mViewport->getActualWidth()) / Real(mViewport->getActualHeight()));
 
