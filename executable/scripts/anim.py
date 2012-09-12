@@ -41,6 +41,27 @@ FallingDamping = 30
 
 FallingAnim = [
 	{'groups':[
+		"foot-joint",
+		"lleg-joint",
+		"uleg-joint",
+		#"hip-joint",
+		#"root-joint",
+		#"belly-joint"
+		#"breast-joint",
+		#"shoulder-joint",
+		#"neck-joint",
+		#"head-joint",
+		#"uarm-joint",
+		#"larm-joint",
+		#"hand-joint"
+		],
+		'time':50,
+		'start':[(lambda Engine,EngineModule,objects,groupPart:
+			groupPart.setMotorValues(0,FallingDamping,True))],
+		'end':[(lambda Engine,EngineModule,objects,groupPart:
+			groupPart.setMotorValues(0,FallingDamping,True))],
+		},
+	{'groups':[
 		#"uleg-joint",
 		#"lleg-joint",
 		#"foot-joint",
@@ -48,13 +69,14 @@ FallingAnim = [
 		"neck-joint",
 		"breast-joint"
 		],
-		'time':FallingAnimTime * 0.1,
+		'time':50,
 		'start':[(lambda Engine,EngineModule,objects,groupPart:
 			groupPart.setMotorValues(FallingSpring,FallingDamping,True))],
 		'end':[(lambda Engine,EngineModule,objects,groupPart:
 			groupPart.setMotorValues(FallingSpring,FallingDamping,True))],
 		},
 	{'groups':[
+		#"foot-joint",
 		"lleg-joint",
 		"uleg-joint",
 		#"hip-joint",
@@ -68,7 +90,7 @@ FallingAnim = [
 		"larm-joint",
 		"hand-joint"
 		],
-		'time':FallingAnimTime * 0.5,
+		'time':500,
 		'start':[(lambda Engine,EngineModule,objects,groupPart:
 			groupPart.setMotorValues(FallingSpring,FallingDamping,True))],
 		'end':[(lambda Engine,EngineModule,objects,groupPart:
@@ -77,7 +99,8 @@ FallingAnim = [
 	{'groups':[
 		"hip-joint",
 		"root-joint",
-		"belly-joint"
+		"belly-joint",
+		"foot-joint"
 		],
 		'time':FallingAnimTime,
 		'start':[(lambda Engine,EngineModule,objects,groupPart:
@@ -85,12 +108,26 @@ FallingAnim = [
 		'end':[(lambda Engine,EngineModule,objects,groupPart:
 			groupPart.setMotorValues(FallingSpring,FallingDamping,True))],
 		},
-	{'groups':["foot-joint"],
-		'time':FallingAnimTime,
+	{'groups':[
+		"foot-joint",
+		"lleg-joint",
+		"uleg-joint",
+		"hip-joint",
+		"root-joint",
+		"belly-joint",
+		"breast-joint",
+		"shoulder-joint",
+		"neck-joint",
+		"head-joint",
+		"uarm-joint",
+		"larm-joint",
+		"hand-joint"
+		],
+		'time':500,
 		'start':[(lambda Engine,EngineModule,objects,groupPart:
-			groupPart.setMotorValues(0,0,True))],
+			groupPart.setMotorValues(20,FallingDamping,True))],
 		'end':[(lambda Engine,EngineModule,objects,groupPart:
-			groupPart.setMotorValues(0,0,True))],
+			groupPart.setMotorValues(20,FallingDamping,True))],
 		}
 	]
 
@@ -204,7 +241,7 @@ def playAnimation(Engine,EngineModule,objects,animData):
 def init(Engine,EngineModule,objects):
 	objects.get()["anims"] = {}
 	objects.setUnsavable("anims")
-	Engine.setTimingFactor(5.0)
+	Engine.setTimingFactor(7.0)
 	
 
 def guiUpdate(Engine,EngineModule,selection,objects):

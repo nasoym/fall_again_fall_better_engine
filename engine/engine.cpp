@@ -29,7 +29,7 @@ Engine::Engine() :
     setupPhysics();
     setup();
 	setupStereo();
-	//setupSSAO();
+	setupSSAO();
     setupOIS();
     setupWindowEventListener();
 }
@@ -101,7 +101,7 @@ Engine::~Engine(){
 
 		setUniform("SSAO/HorizonBased", "SSAO/HorizonBased", "cAngleBias", 0.2f, false, 1);
 
-		setUniform("SSAO/HemisphereMC", "SSAO/HemisphereMC", "cSampleLengthExponent", 8.0f, false, 1);
+		setUniform("SSAO/HemisphereMC", "SSAO/HemisphereMC", "cSampleLengthExponent", 15.0f, false, 1);
         
 		setUniform("SSAO/UnsharpMask", "SSAO/UnsharpMask/GaussianBlurY", "cKernelWidthBias", 1.0f, false, 1);
 		setUniform("SSAO/UnsharpMask", "SSAO/UnsharpMask/GaussianBlurX", "cKernelWidthBias", 1.0f, false, 1);
