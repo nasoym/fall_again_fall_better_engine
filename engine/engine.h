@@ -21,22 +21,55 @@ enum Keys;
 
 class PhysicsEngine;
 
-class GraphicsEngine;
-
 #include "engine_object.h"
-//class EngineObject;
 
 #include <boost/python/list.hpp>
 
-class Engine : 
-        public WindowEventListener,
-		public OIS::KeyListener,
-		public OIS::MouseListener
-		{
+class Engine : public WindowEventListener, 
+		public OIS::KeyListener, public OIS::MouseListener {
+
     public:
         Engine();
         ~Engine();
 
+    public:
+		// 		set/get Ambient color (vec3)
+		// 		set/get light color (vec3)
+		// 		set/get camera view angle (float)
+		//		set/get gravity
+		//		set camera rotation
+		//		read mouse rel in python
+		//		show/hide overlay text
+		//		set overlay text
+
+		void	setAmbientLight(Vec3 & vec3);
+		Vec3	getAmbientLight();
+		void	setCameraFOV(float fov);
+		float	getCameraFOV();
+
+		void	setGravity(Vec3 & vec3);
+		Vec3 	getGravity();
+
+		void	cameraRotateY(float degree){
+			mCamera->yaw(Degree(degree));
+		}
+		void	cameraRotateZ(float degree){
+			mCamera->pitch(Degree(degree));
+		}
+
+		int		getMouseRelX(){
+			const OIS::MouseState &ms = mMouse->getMouseState();
+			return ms.X.rel;
+		}
+		int		getMouseRelY(){
+			const OIS::MouseState &ms = mMouse->getMouseState();
+			return ms.Y.rel;
+		}
+
+
+
+
+    public:
         void    run();
 		void	step();
 		void	simulatePhysics(float time);

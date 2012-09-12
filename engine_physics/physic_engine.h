@@ -7,6 +7,7 @@
 #include "PxDefaultErrorCallback.h"
 #include "PxDefaultCpuDispatcher.h"
 #include "PxExtensionsAPI.h"
+#include "math3d.h"
 using namespace physx;
 
 class Allocator : public PxAllocatorCallback {
@@ -42,6 +43,10 @@ class PhysicsEngine {
         PxPhysics*  getPhysics();
         PxMaterial* getMaterial();
         PxScene*    getScene();
+
+
+		Vec3		getGravity(){return Vec3(mScene->getGravity());}
+		void		setGravity(Vec3 & vec3){mScene->setGravity(vec3.toPhysx());}
 
     private:
         void    setup();

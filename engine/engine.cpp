@@ -367,10 +367,11 @@ void Engine::setup(){
     mCamera->setPosition(Vector3(0,0,500));
     // Look back along -Z
     mCamera->lookAt(Vector3(0,0,-300));
-    mCamera->setNearClipDistance(5);
+    //mCamera->setNearClipDistance(1);
 	//mCamera->setFOVy(Radian(Degree(45).valueRadians())); // i.e. 60deg * 1.3.. maya and ogre use fovX and fovY
-	//mCamera->setFarClipDistance(400);
-	//mCamera->setNearClipDistance(0.1);
+
+	mCamera->setNearClipDistance(1);
+	mCamera->setFarClipDistance(4000);
 
     // Create one viewport, entire window
     mViewport = mWindow->addViewport(mCamera);
@@ -380,19 +381,6 @@ void Engine::setup(){
     // Alter the camera aspect ratio to match the viewport
     mCamera->setAspectRatio( Real(mViewport->getActualWidth()) / Real(mViewport->getActualHeight()));
 
-	/*
-    Light * light = mSceneMgr->createLight("MainLight");
-	light->setType(Light::LT_POINT);
-    light->setPosition(200,200,200);
-	light->setDiffuseColour(0.2,0.2,0.2);
-	light->setSpecularColour(0.5,0.5,0.5);
-
-    Light * light2 = mSceneMgr->createLight("MainLight2");
-	light2->setType(Light::LT_POINT);
-    light2->setPosition(-200,200,-200);
-	light2->setDiffuseColour(0.2,0.2,0.2);
-	light2->setSpecularColour(0.5,0.5,0.5);
-	*/
 
     Light * light3 = mSceneMgr->createLight("MainLight3");
 	light3->setType(Light::LT_DIRECTIONAL);
