@@ -239,14 +239,12 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 						yLimit = 0
 						zLimit = 0
 
-					if yLimit <= step:
+					if yLimit <= 0:
 						yLimit = 0
-					if zLimit <= step:
+					if zLimit <= 0:
 						zLimit = 0
 
-					print("changed limits: y: " + str(oldY) + "-" + 
-						str(yLimit) + " z: " + str(oldZ) + "-" + 
-						str(zLimit))
+					print("set limits: y: " + str(yLimit) + " z: " + str(zLimit))
 
 					text = "setLimits(Engine,EngineModule,"
 					text += "jointName='" + joint.getName() + "'"

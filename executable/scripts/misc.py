@@ -143,11 +143,19 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 
 	if key == EngineModule.Keys.K_N:
 		if Engine.isKeyDown(EngineModule.Keys.K_1):
-			Engine.setTimingFactor(Engine.getTimingFactor() * 0.9)
-			print("set timingfactor: " +str(Engine.getTimingFactor()))
+			if Engine.isKeyDown(EngineModule.Keys.K_EQUALS):
+				Engine.setTimingFactor(Engine.getTimingFactor() * 0.5)
+				print("set timingfactor: " +str(Engine.getTimingFactor()))
+			else:
+				Engine.setTimingFactor(Engine.getTimingFactor() * 0.9)
+				print("set timingfactor: " +str(Engine.getTimingFactor()))
 		if Engine.isKeyDown(EngineModule.Keys.K_2):
-			Engine.setTimingFactor(Engine.getTimingFactor() * 1.1)
-			print("set timingfactor: " +str(Engine.getTimingFactor()))
+			if Engine.isKeyDown(EngineModule.Keys.K_EQUALS):
+				Engine.setTimingFactor(Engine.getTimingFactor() * 2.0)
+				print("set timingfactor: " +str(Engine.getTimingFactor()))
+			else:
+				Engine.setTimingFactor(Engine.getTimingFactor() * 1.1)
+				print("set timingfactor: " +str(Engine.getTimingFactor()))
 
 	if key == EngineModule.Keys.K_I:
 		for o in selection.get():

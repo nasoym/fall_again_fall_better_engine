@@ -115,7 +115,6 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 		else:
 
 
-			"""
 			bodyJointScaleBody(Engine,EngineModule,bodyName='root',jointName='belly-joint',vector=EngineModule.Vec3(2.373790503,5.363181591,2.779959440))
 			bodyJointScaleJointPos(Engine,EngineModule,bodyName='belly',jointName='belly-joint',vector=EngineModule.Vec3(-3.033333778,0.000001589,-0.000000199))
 			bodyJointScaleBody(Engine,EngineModule,bodyName='hand-l',jointName='hand-l-joint',vector=EngineModule.Vec3(1.436753869,1.364018083,0.359188467))
@@ -168,49 +167,113 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 
 
 
+			bodyJointScaleBody(Engine,EngineModule,bodyName='head',jointName='head-joint',vector=EngineModule.Vec3(3.226835489,3.700126410,3.363751173))
+			bodyJointScaleJointPos(Engine,EngineModule,bodyName='head',jointName='head-joint',vector=EngineModule.Vec3(-0.800000429,-0.000000477,0.000000011))
+			bodyJointScaleBody(Engine,EngineModule,bodyName='head',jointName='head-joint',vector=EngineModule.Vec3(2.305550814,4.477152824,4.477152824))
+			bodyJointScaleJointPos(Engine,EngineModule,bodyName='head',jointName='head-joint',vector=EngineModule.Vec3(-2.100000381,-0.000000477,0.000000011))
+			bodyJointScaleBody(Engine,EngineModule,bodyName='head',jointName='head-joint',vector=EngineModule.Vec3(2.305550814,4.924868107,4.477152824))
+			bodyJointScaleBody(Engine,EngineModule,bodyName='breast',jointName='breast-joint',vector=EngineModule.Vec3(5.211327553,7.138394833,4.477152824))
+			bodyJointScaleJointPos(Engine,EngineModule,bodyName='breast',jointName='breast-joint',vector=EngineModule.Vec3(-1.000001788,0.000001907,0.199997157))
+			bodyJointScaleBody(Engine,EngineModule,bodyName='breast',jointName='breast-joint',vector=EngineModule.Vec3(5.211327553,7.138394833,4.924868107))
+			bodyJointScaleBody(Engine,EngineModule,bodyName='belly',jointName='belly-joint',vector=EngineModule.Vec3(3.095424652,6.334136963,3.933000565))
+			bodyJointScaleBody(Engine,EngineModule,bodyName='root',jointName='belly-joint',vector=EngineModule.Vec3(2.533615112,6.489449978,3.057955503))
+			bodyJointScaleJointPos(Engine,EngineModule,bodyName='root',jointName='belly-joint',vector=EngineModule.Vec3(0.400000900,-0.000001192,-0.000017166))
+
+			bodyJointScaleBody(Engine,EngineModule,bodyName='lleg-l',jointName='lleg-l-joint',vector=EngineModule.Vec3(13.635429382,2.297487020,2.088624477))
+			bodyJointScaleBody(Engine,EngineModule,bodyName='uarm-l',jointName='uarm-l-joint',vector=EngineModule.Vec3(9.539100647,2.297487020,2.088624477))
+			bodyJointScaleBody(Engine,EngineModule,bodyName='larm-l',jointName='larm-l-joint',vector=EngineModule.Vec3(7.937189579,1.569214463,1.426558614))
+
+			bodyJointScaleBody(Engine,EngineModule,bodyName='lleg-r',jointName='lleg-r-joint',vector=EngineModule.Vec3(13.635429382,2.297487020,2.088624477))
+			bodyJointScaleBody(Engine,EngineModule,bodyName='uarm-r',jointName='uarm-r-joint',vector=EngineModule.Vec3(9.539100647,2.297487020,2.088624477))
+			bodyJointScaleBody(Engine,EngineModule,bodyName='larm-r',jointName='larm-r-joint',vector=EngineModule.Vec3(7.937189579,1.569214463,1.426558614))
 
 
-			addSphere(Engine,EngineModule,bodyName='cheast',shapeName='2',size=EngineModule.Vec3(1.000000000,1.000000000,1.000000000),r=0.5,g=0.5,b=0.0,a=0.5)
-			movePhysicShape(Engine,EngineModule,bodyName='cheast',shapeName='2',pos=EngineModule.Vec3(20.000000000,0.000000000,0.000000000))
-			movePhysicShape(Engine,EngineModule,bodyName='cheast',shapeName='2',pos=EngineModule.Vec3(0.000000000,0.000000000,0.000000000))
-			movePhysicShape(Engine,EngineModule,bodyName='cheast',shapeName='2',pos=EngineModule.Vec3(1.000000000,0.000000000,0.000000000))
-			movePhysicShape(Engine,EngineModule,bodyName='cheast',shapeName='2',pos=EngineModule.Vec3(2.000000000,0.000000000,0.000000000))
-			movePhysicShape(Engine,EngineModule,bodyName='cheast',shapeName='2',pos=EngineModule.Vec3(2.000000000,1.000000000,0.000000000))
-			movePhysicShape(Engine,EngineModule,bodyName='cheast',shapeName='2',pos=EngineModule.Vec3(2.000000477,2.000000238,0.000000000))
-			movePhysicShape(Engine,EngineModule,bodyName='cheast',shapeName='2',pos=EngineModule.Vec3(2.000001192,3.000000954,0.000000000))
-			scalePhysicShape(Engine,EngineModule,bodyName='cheast',shapeName='2',pos=EngineModule.Vec3(1.100000024,1.000000000,1.000000000))
-			scalePhysicShape(Engine,EngineModule,bodyName='cheast',shapeName='2',pos=EngineModule.Vec3(1.210000038,1.100000024,1.100000024))
-			scalePhysicShape(Engine,EngineModule,bodyName='cheast',shapeName='2',pos=EngineModule.Vec3(1.331000090,1.210000038,1.210000038))
-			scalePhysicShape(Engine,EngineModule,bodyName='cheast',shapeName='2',pos=EngineModule.Vec3(1.464100122,1.331000090,1.331000090))
-			scalePhysicShape(Engine,EngineModule,bodyName='cheast',shapeName='2',pos=EngineModule.Vec3(1.610510111,1.464100122,1.464100122))
-			scalePhysicShape(Engine,EngineModule,bodyName='cheast',shapeName='2',pos=EngineModule.Vec3(1.771561146,1.610510111,1.610510111))
-			scalePhysicShape(Engine,EngineModule,bodyName='cheast',shapeName='2',pos=EngineModule.Vec3(1.948717356,1.771561146,1.771561146))
-			addCapsule(Engine,EngineModule,bodyName='cheast',shapeName='3',size=EngineModule.Vec3(1.000000000,1.000000000,1.000000000),r=0.5,g=0.5,b=0.0,a=0.5)
-			movePhysicShape(Engine,EngineModule,bodyName='cheast',shapeName='3',pos=EngineModule.Vec3(-0.000000358,0.999999285,0.000000000))
-			movePhysicShape(Engine,EngineModule,bodyName='cheast',shapeName='3',pos=EngineModule.Vec3(-0.000000656,-0.000000834,0.000000000))
-			movePhysicShape(Engine,EngineModule,bodyName='cheast',shapeName='3',pos=EngineModule.Vec3(-0.000000536,-1.000001073,0.000000000))
-			movePhysicShape(Engine,EngineModule,bodyName='cheast',shapeName='3',pos=EngineModule.Vec3(-0.000001073,-2.000001907,0.000000000))
-			movePhysicShape(Engine,EngineModule,bodyName='cheast',shapeName='3',pos=EngineModule.Vec3(-0.000001580,-3.000003338,0.000000000))
-			rotatePhysicShape(Engine,EngineModule,bodyName='cheast',shapeName='3',pos=EngineModule.Quat(0.999048710,0.043619417,0.000000001,0.000000030))
-			rotatePhysicShape(Engine,EngineModule,bodyName='cheast',shapeName='3',pos=EngineModule.Quat(0.996195376,0.087155819,0.000000004,0.000000045))
-			rotatePhysicShape(Engine,EngineModule,bodyName='cheast',shapeName='3',pos=EngineModule.Quat(0.995247543,0.087072894,0.043453455,0.003801745))
-			rotatePhysicShape(Engine,EngineModule,bodyName='cheast',shapeName='3',pos=EngineModule.Quat(0.992405117,0.086824216,0.086824208,0.007596180))
-			rotatePhysicShape(Engine,EngineModule,bodyName='cheast',shapeName='3',pos=EngineModule.Quat(0.987673342,0.086410232,0.130029678,0.011376151))
-			rotatePhysicShape(Engine,EngineModule,bodyName='cheast',shapeName='3',pos=EngineModule.Quat(0.981061578,0.085831776,0.172987640,0.015134526))
-			rotatePhysicShape(Engine,EngineModule,bodyName='cheast',shapeName='3',pos=EngineModule.Quat(0.972582340,0.085089944,0.215616345,0.018864036))
-			rotatePhysicShape(Engine,EngineModule,bodyName='cheast',shapeName='3',pos=EngineModule.Quat(0.962251782,0.084186137,0.257834613,0.022557653))
-			rotatePhysicShape(Engine,EngineModule,bodyName='cheast',shapeName='3',pos=EngineModule.Quat(0.950089693,0.083122082,0.299562126,0.026208339))
-			rotatePhysicShape(Engine,EngineModule,bodyName='cheast',shapeName='3',pos=EngineModule.Quat(0.948042333,0.096109703,0.295651317,0.067625768))
-			rotatePhysicShape(Engine,EngineModule,bodyName='cheast',shapeName='3',pos=EngineModule.Quat(0.944190383,0.108914398,0.291177720,0.108914405))
-			rotatePhysicShape(Engine,EngineModule,bodyName='cheast',shapeName='3',pos=EngineModule.Quat(0.938540995,0.121511742,0.286149830,0.149995759))
-			rotatePhysicShape(Engine,EngineModule,bodyName='cheast',shapeName='3',pos=EngineModule.Quat(0.931104958,0.133877799,0.280577272,0.190791592))
-			rotatePhysicShape(Engine,EngineModule,bodyName='cheast',shapeName='3',pos=EngineModule.Quat(0.921896935,0.145989031,0.274470598,0.231224313))
-			rotatePhysicShape(Engine,EngineModule,bodyName='cheast',shapeName='3',pos=EngineModule.Quat(0.910933912,0.157822371,0.267841488,0.271216929))
-			rotatePhysicShape(Engine,EngineModule,bodyName='cheast',shapeName='3',pos=EngineModule.Quat(0.898236930,0.169355318,0.260702550,0.310693234))
+
+			bodyJointScaleBody(Engine,EngineModule,bodyName='neck',jointName='neck-joint',vector=EngineModule.Vec3(2.182900190,2.954921246,2.954921246))
+			bodyJointScaleBody(Engine,EngineModule,bodyName='belly',jointName='belly-joint',vector=EngineModule.Vec3(3.033825636,6.334136963,3.933000565))
+
+			bodyJointScaleJointPos(Engine,EngineModule,bodyName='finger-index-high-l',jointName='finger-index-high-l-joint',vector=EngineModule.Vec3(-1.300001740,0.000002936,0.000005826))
+			bodyJointScaleBody(Engine,EngineModule,bodyName='finger-index-high-l',jointName='finger-index-high-l-joint',vector=EngineModule.Vec3(2.125452757,0.329934716,0.329934716))
+			bodyJointScaleJointPos(Engine,EngineModule,bodyName='finger-index-high-l',jointName='finger-index-high-l-joint',vector=EngineModule.Vec3(-1.200001836,0.000002936,0.000005826))
+
+			bodyJointScaleJointPos(Engine,EngineModule,bodyName='finger-index-high-r',jointName='finger-index-high-r-joint',vector=EngineModule.Vec3(-1.300001740,0.000002936,0.000005826))
+			bodyJointScaleBody(Engine,EngineModule,bodyName='finger-index-high-r',jointName='finger-index-high-r-joint',vector=EngineModule.Vec3(2.125452757,0.329934716,0.329934716))
+			bodyJointScaleJointPos(Engine,EngineModule,bodyName='finger-index-high-r',jointName='finger-index-high-r-joint',vector=EngineModule.Vec3(-1.200001836,0.000002936,0.000005826))
+
+
+			bodyJointScaleBody(Engine,EngineModule,bodyName='neck',jointName='neck-joint',vector=EngineModule.Vec3(2.182900190,2.954921246,2.954921246))
+			bodyJointScaleBody(Engine,EngineModule,bodyName='belly',jointName='belly-joint',vector=EngineModule.Vec3(3.033825636,6.334136963,3.933000565))
+			bodyJointScaleBody(Engine,EngineModule,bodyName='cheast',jointName='cheast-joint',vector=EngineModule.Vec3(4.148015022,5.959090710,4.432381153))
+			bodyJointScaleJointPos(Engine,EngineModule,bodyName='cheast',jointName='cheast-joint',vector=EngineModule.Vec3(-0.999999762,0.000001907,0.700000048))
+
+			bodyJointScaleJointPos(Engine,EngineModule,bodyName='finger-index-high-l',jointName='finger-index-high-l-joint',vector=EngineModule.Vec3(-1.300001740,0.000002936,0.000005826))
+			bodyJointScaleBody(Engine,EngineModule,bodyName='finger-index-high-l',jointName='finger-index-high-l-joint',vector=EngineModule.Vec3(2.125452757,0.329934716,0.329934716))
+			bodyJointScaleJointPos(Engine,EngineModule,bodyName='finger-index-high-l',jointName='finger-index-high-l-joint',vector=EngineModule.Vec3(-1.200001836,0.000002936,0.000005826))
+			bodyJointScaleBody(Engine,EngineModule,bodyName='finger-middle-high-l',jointName='finger-middle-high-l-joint',vector=EngineModule.Vec3(2.069151402,0.321195006,0.321195006))
+			bodyJointScaleBody(Engine,EngineModule,bodyName='finger-little-high-l',jointName='finger-little-high-l-joint',vector=EngineModule.Vec3(1.836014986,0.313505679,0.313505679))
+			bodyJointScaleBody(Engine,EngineModule,bodyName='finger-ring-high-l',jointName='finger-ring-high-l-joint',vector=EngineModule.Vec3(2.195024252,0.309758455,0.309758455))
+			bodyJointScaleBody(Engine,EngineModule,bodyName='finger-middle-high-l',jointName='finger-middle-high-l-joint',vector=EngineModule.Vec3(2.276066542,0.321195006,0.321195006))
+			bodyJointScaleBody(Engine,EngineModule,bodyName='thumb-high-l',jointName='thumb-high-l-joint',vector=EngineModule.Vec3(1.722578645,0.323549688,0.294136077))
+			bodyJointScaleBody(Engine,EngineModule,bodyName='foot-l',jointName='foot-l-joint',vector=EngineModule.Vec3(2.883241415,1.726135969,1.178974032))
+
+			bodyJointScaleJointPos(Engine,EngineModule,bodyName='finger-index-high-r',jointName='finger-index-high-r-joint',vector=EngineModule.Vec3(-1.300001740,0.000002936,0.000005826))
+			bodyJointScaleBody(Engine,EngineModule,bodyName='finger-index-high-r',jointName='finger-index-high-r-joint',vector=EngineModule.Vec3(2.125452757,0.329934716,0.329934716))
+			bodyJointScaleJointPos(Engine,EngineModule,bodyName='finger-index-high-r',jointName='finger-index-high-r-joint',vector=EngineModule.Vec3(-1.200001836,0.000002936,0.000005826))
+			bodyJointScaleBody(Engine,EngineModule,bodyName='finger-middle-high-r',jointName='finger-middle-high-r-joint',vector=EngineModule.Vec3(2.069151402,0.321195006,0.321195006))
+			bodyJointScaleBody(Engine,EngineModule,bodyName='finger-little-high-r',jointName='finger-little-high-r-joint',vector=EngineModule.Vec3(1.836014986,0.313505679,0.313505679))
+			bodyJointScaleBody(Engine,EngineModule,bodyName='finger-ring-high-r',jointName='finger-ring-high-r-joint',vector=EngineModule.Vec3(2.195024252,0.309758455,0.309758455))
+			bodyJointScaleBody(Engine,EngineModule,bodyName='finger-middle-high-r',jointName='finger-middle-high-r-joint',vector=EngineModule.Vec3(2.276066542,0.321195006,0.321195006))
+			bodyJointScaleBody(Engine,EngineModule,bodyName='thumb-high-r',jointName='thumb-high-r-joint',vector=EngineModule.Vec3(1.722578645,0.323549688,0.294136077))
+			bodyJointScaleBody(Engine,EngineModule,bodyName='foot-r',jointName='foot-r-joint',vector=EngineModule.Vec3(2.883241415,1.726135969,1.178974032))
+
+
+			setLimits(Engine,EngineModule,jointName='belly-joint',y=15.9999918938,z=14.9999976158)
+			bodyJointScaleBody(Engine,EngineModule,bodyName='cheast',jointName='cheast-joint',vector=EngineModule.Vec3(4.065469742,5.959090710,4.432381153))
+			setLimits(Engine,EngineModule,jointName='cheast-joint',y=10.9999979019,z=10.9999990463)
+			setLimits(Engine,EngineModule,jointName='breast-joint',y=10.9999979019,z=10.9999990463)
+			setLimits(Engine,EngineModule,jointName='neck-joint',y=15.999994278,z=15.9999980927)
+			setLimits(Engine,EngineModule,jointName='head-joint',y=20.9999895096,z=20.9999966621)
+
+			setLimits(Engine,EngineModule,jointName='uleg-l-joint',y=30.9999895096,z=30.9999918938)
+			setLimits(Engine,EngineModule,jointName='toes-l-joint',y=15.9999990463,z=0.999999713898)
+
+			setLimits(Engine,EngineModule,jointName='uleg-r-joint',y=30.9999895096,z=30.9999918938)
+			setLimits(Engine,EngineModule,jointName='toes-r-joint',y=15.9999990463,z=0.999999713898)
+
+
+
+
+
+			setLimits(Engine,EngineModule,jointName='larm-l-joint',y=0.999984836578,z=30.9999918938)
+			setLimits(Engine,EngineModule,jointName='finger-index-high-l-joint',y=55.9999799728,z=0.99999961853)
+			setMotorTarget(Engine,EngineModule,jointName='finger-index-high-l-joint',quaternion=EngineModule.Quat(0.996194839,0.000000000,0.087155752,0.000000000))
+			setLimits(Engine,EngineModule,jointName='finger-index-high-l-joint',y=60.9999704361,z=0.999998950958)
+			setLimits(Engine,EngineModule,jointName='finger-middle-high-l-joint',y=50.9999847412,z=0.99999961853)
+			setLimits(Engine,EngineModule,jointName='finger-ring-high-l-joint',y=50.9999847412,z=0.99999961853)
+			setLimits(Engine,EngineModule,jointName='finger-little-high-l-joint',y=50.9999847412,z=0.99999961853)
+			setLimits(Engine,EngineModule,jointName='hand-l-joint',y=30.9999895096,z=15.9999980927)
+			setLimits(Engine,EngineModule,jointName='thumb-high-l-joint',y=20.9999895096,z=20.9999966621)
+			setLimits(Engine,EngineModule,jointName='uarm-l-joint',y=35.9999728203,z=35.9999918938)
+			setLimits(Engine,EngineModule,jointName='lleg-l-joint',y=30.9999918938,z=0.99999961853)
+			setLimits(Engine,EngineModule,jointName='shoulder-l-joint',y=25.9999895096,z=25.999994278)
+
+			setLimits(Engine,EngineModule,jointName='larm-r-joint',y=0.999984836578,z=30.9999918938)
+			setLimits(Engine,EngineModule,jointName='finger-index-high-r-joint',y=55.9999799728,z=0.99999961853)
+			setMotorTarget(Engine,EngineModule,jointName='finger-index-high-r-joint',quaternion=EngineModule.Quat(0.996194839,0.000000000,0.087155752,0.000000000))
+			setLimits(Engine,EngineModule,jointName='finger-index-high-r-joint',y=60.9999704361,z=0.999998950958)
+			setLimits(Engine,EngineModule,jointName='finger-middle-high-r-joint',y=50.9999847412,z=0.99999961853)
+			setLimits(Engine,EngineModule,jointName='finger-ring-high-r-joint',y=50.9999847412,z=0.99999961853)
+			setLimits(Engine,EngineModule,jointName='finger-little-high-r-joint',y=50.9999847412,z=0.99999961853)
+			setLimits(Engine,EngineModule,jointName='hand-r-joint',y=30.9999895096,z=15.9999980927)
+			setLimits(Engine,EngineModule,jointName='thumb-high-r-joint',y=20.9999895096,z=20.9999966621)
+			setLimits(Engine,EngineModule,jointName='uarm-r-joint',y=35.9999728203,z=35.9999918938)
+			setLimits(Engine,EngineModule,jointName='lleg-r-joint',y=30.9999918938,z=0.99999961853)
+			setLimits(Engine,EngineModule,jointName='shoulder-r-joint',y=25.9999895096,z=25.999994278)
+
+
+
+
 			"""
-
-
-
 			addSphere(Engine,EngineModule,bodyName='uarm-l',shapeName='2',size=EngineModule.Vec3(1.000000000,1.000000000,1.000000000),r=0.5,g=0.5,b=0.0,a=0.5)
 			movePhysicShape(Engine,EngineModule,bodyName='uarm-l',shapeName='2',position=EngineModule.Vec3(0.000000000,1.000000000,0.000000000))
 			movePhysicShape(Engine,EngineModule,bodyName='uarm-l',shapeName='2',position=EngineModule.Vec3(0.000000000,2.000000000,0.000000000))
@@ -231,4 +294,5 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 			rotatePhysicShape(Engine,EngineModule,bodyName='larm-l',shapeName='2',quaternion=EngineModule.Quat(0.991444886,0.000000000,0.000000000,0.130526215))
 			rotatePhysicShape(Engine,EngineModule,bodyName='larm-l',shapeName='2',quaternion=EngineModule.Quat(0.984807968,0.000000000,0.000000000,0.173648238))
 			rotatePhysicShape(Engine,EngineModule,bodyName='larm-l',shapeName='2',quaternion=EngineModule.Quat(0.976296365,0.000000000,0.000000000,0.216439724))
+			"""
 

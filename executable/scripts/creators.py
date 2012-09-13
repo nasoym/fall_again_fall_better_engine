@@ -98,117 +98,97 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 				ragdoll.createLimitsHuman(Engine,EngineModule,char)
 
 			elif Engine.isKeyDown(EngineModule.Keys.K_5):
+				print("create character mesh")
+				o = Engine.createMesh("Character.mesh")
+				o.setName("Character.mesh")
+				#o = Engine.createMesh("tube.mesh")
+				o.setMaterialName("Body")
+				o.setSize(EngineModule.Vec3(1,1,1)*1000)
+				o.setPosition(EngineModule.Vec3(0,150,0))
 
-				if not Engine.isKeyDown(EngineModule.Keys.K_0):
-					print("create character mesh")
-					o = Engine.createMesh("Character.mesh")
-					o.setName("Character.mesh")
-					#o = Engine.createMesh("tube.mesh")
-					#o.setColour(1,0,0,0.2)
-					#o.setColour(1,0,0,0.9)
-					o.setMaterialName("Body")
-					o.setSize(EngineModule.Vec3(1,1,1)*1000)
-					o.setPosition(EngineModule.Vec3(0,150,0))
+				dyn_mesh.createBones(Engine,EngineModule,o)
+				#art_mesh.createBones(Engine,EngineModule,o)
+				o.setUnselectable()
+				o.calcLocalPosOfRootBone()
 
-					dyn_mesh.createBones(Engine,EngineModule,o)
-					#art_mesh.createBones(Engine,EngineModule,o)
-					o.setUnselectable()
-					o.calcLocalPosOfRootBone()
+				addMeshGround(Engine,EngineModule,o)
 
-					Engine.physicPauseToggle()
-				else:
-		
-					print("create character mesh with ground")
-					o = Engine.createMesh("Character.mesh")
-					o.setName("Character.mesh")
-					#o.setColour(1,0,0,0.2)
-					#o.setColour(1,0,0,0.9)
-					#o.setMaterialName("SSAO/GBuffer")
-					o.setSize(EngineModule.Vec3(1,1,1)*1000)
-					o.setPosition(EngineModule.Vec3(0,150,0))
-					rotationVec = EngineModule.Vec3(0,0,90)
-					dyn_mesh.createBones(Engine,EngineModule,o)
-					o.setUnselectable()
-					o.calcLocalPosOfRootBone()
-					o.setRotationX(rotationVec.x)
-					o.setRotationY(rotationVec.y)
-					o.setRotationZ(rotationVec.z)
-					Engine.physicPauseToggle()
+				Engine.physicPauseToggle()
 
-					body13 = None
-					body14 = None
-					body14 = o.getBodyOfBoneName("toes-r")
-					body13 = o.getBodyOfBoneName("toes-l")
-					if body13 and body14:
-						pos13 = body13.getPosition()
-						#pos13 += body13.getOrientation() * body13.getSize() 
-						pos14 = body14.getPosition()
-						#pos14 += body14.getOrientation() * body14.getSize() 
+def addMeshGround(Engine,EngineModule,mesh):
+	body14 = mesh.getBodyOfBoneName("toes-r")
+	body13 = mesh.getBodyOfBoneName("toes-l")
+	if body13 and body14:
+		pos13 = body13.getPosition()
+		#pos13 += body13.getOrientation() * body13.getSize() 
+		pos14 = body14.getPosition()
+		#pos14 += body14.getOrientation() * body14.getSize() 
 
-						halfpos = pos14 - pos13
-						halfpos = halfpos * EngineModule.Vec3(0.5,0.5,0.5)
-						finalPos = pos13 + halfpos
-						finalPos.y -= 2
+		halfpos = pos14 - pos13
+		halfpos = halfpos * EngineModule.Vec3(0.5,0.5,0.5)
+		finalPos = pos13 + halfpos
+		finalPos.y -= 2
 
-						xySize = (halfpos.x + halfpos.y ) * 5
+		xySize = (halfpos.x + halfpos.y ) * 5
 
-						ground = create.createPhysicStaticBoxStructure(Engine,EngineModule)
-						ground.setPosition(finalPos)
-						ground.setSize(EngineModule.Vec3(
-							xySize,1,xySize
-							) )
-						ground.setOrientation(o.getOrientation())
+		ground = create.createPhysicStaticBoxStructure(Engine,EngineModule)
+		ground.setPosition(finalPos)
+		ground.setSize(EngineModule.Vec3(
+			xySize,1,xySize
+			) )
+		ground.setOrientation(mesh.getOrientation())
 
 
-						globalAnchor = body13.getPosition()
-						parentLocalAnchor = ground.getOrientation().inverse() * (globalAnchor - ground.getPosition())
-						bodyPosition = body13.getPosition()
-						bodyPosition += body13.getOrientation() * (body13.getSize() * EngineModule.Vec3(-1,0,0))
-						bodyLocalAnchor = body13.getOrientation().inverse() * (globalAnchor - bodyPosition)
+		globalAnchor = body13.getPosition()
+		parentLocalAnchor = ground.getOrientation().inverse() * (globalAnchor - ground.getPosition())
+		bodyPosition = body13.getPosition()
+		bodyPosition += body13.getOrientation() * (body13.getSize() * EngineModule.Vec3(-1,0,0))
+		bodyLocalAnchor = body13.getOrientation().inverse() * (globalAnchor - bodyPosition)
 
-						#joint = create.createJoint(Engine,EngineModule,ground,body13)
-						joint = Engine.createJoint(ground,body13)
+		#joint = create.createJoint(Engine,EngineModule,ground,body13)
+		joint = Engine.createJoint(ground,body13)
 
-						joint.setAnchor1(parentLocalAnchor)
-						joint.setAnchor2(bodyLocalAnchor)
-						#joint.setAnchor1Orientation(EngineModule.Quat().fromAngles(0,0,-90))
-						#joint.setAnchor2Orientation(EngineModule.Quat().fromAngles(90,-90,0))
-						joint.setAnchor1Orientation(body13.getOrientation() * ground.getOrientation().inverse() )
-						#joint.setLimits(40,40)
-						#joint.setLimits(10,10)
-						#joint.setLimits(1,1)
-						joint.setLimits(0,0)
+		joint.setAnchor1(parentLocalAnchor)
+		joint.setAnchor2(bodyLocalAnchor)
+		#joint.setAnchor1Orientation(EngineModule.Quat().fromAngles(0,0,-90))
+		#joint.setAnchor2Orientation(EngineModule.Quat().fromAngles(90,-90,0))
+		joint.setAnchor1Orientation(body13.getOrientation() * ground.getOrientation().inverse() )
+		#joint.setLimits(40,40)
+		#joint.setLimits(10,10)
+		#joint.setLimits(1,1)
+		joint.setLimits(0,0)
 
-						b = Engine.createGuiBox()
-						b.setColour(0,1,1,0.5)
-						b.setSize(EngineModule.Vec3(1,4,4))
-						b.setScalingFixed()
-						joint.addShape(b)
+		b = Engine.createGuiBox()
+		b.setColour(0,1,1,0.5)
+		b.setSize(EngineModule.Vec3(1,4,4))
+		b.setScalingFixed()
+		joint.addShape(b)
 
-						globalAnchor = body14.getPosition()
-						parentLocalAnchor = ground.getOrientation().inverse() * (globalAnchor - ground.getPosition())
-						bodyPosition = body14.getPosition()
-						bodyPosition += body14.getOrientation() * (body14.getSize() * EngineModule.Vec3(-1,0,0))
-						bodyLocalAnchor = body14.getOrientation().inverse() * (globalAnchor - bodyPosition)
+		globalAnchor = body14.getPosition()
+		parentLocalAnchor = ground.getOrientation().inverse() * (globalAnchor - ground.getPosition())
+		bodyPosition = body14.getPosition()
+		bodyPosition += body14.getOrientation() * (body14.getSize() * EngineModule.Vec3(-1,0,0))
+		bodyLocalAnchor = body14.getOrientation().inverse() * (globalAnchor - bodyPosition)
 
-						#joint = create.createJoint(Engine,EngineModule,ground,body14)
-						joint = Engine.createJoint(ground,body14)
+		#joint = create.createJoint(Engine,EngineModule,ground,body14)
+		joint = Engine.createJoint(ground,body14)
 
-						joint.setAnchor1(parentLocalAnchor)
-						joint.setAnchor2(bodyLocalAnchor)
-						#joint.setAnchor1Orientation(EngineModule.Quat().fromAngles(0,0,-90))
-						#joint.setAnchor2Orientation(EngineModule.Quat().fromAngles(90,-90,0))
-						joint.setAnchor1Orientation(body14.getOrientation() * ground.getOrientation().inverse() )
-						#joint.setLimits(40,40)
-						#joint.setLimits(10,10)
-						#joint.setLimits(1,1)
-						joint.setLimits(0,0)
+		joint.setAnchor1(parentLocalAnchor)
+		joint.setAnchor2(bodyLocalAnchor)
+		#joint.setAnchor1Orientation(EngineModule.Quat().fromAngles(0,0,-90))
+		#joint.setAnchor2Orientation(EngineModule.Quat().fromAngles(90,-90,0))
+		joint.setAnchor1Orientation(body14.getOrientation() * ground.getOrientation().inverse() )
+		#joint.setLimits(40,40)
+		#joint.setLimits(10,10)
+		#joint.setLimits(1,1)
+		joint.setLimits(0,0)
 
-						b = Engine.createGuiBox()
-						b.setColour(0,1,1,0.5)
-						b.setSize(EngineModule.Vec3(1,4,4))
-						b.setScalingFixed()
-						joint.addShape(b)
+		b = Engine.createGuiBox()
+		b.setColour(0,1,1,0.5)
+		b.setSize(EngineModule.Vec3(1,4,4))
+		b.setScalingFixed()
+		joint.addShape(b)
+
 
 
 
