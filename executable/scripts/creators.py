@@ -11,6 +11,7 @@
 import createobjects as create
 import ragdoll
 import dynamic_mesh as dyn_mesh
+import articulation_mesh as art_mesh
 
 def init(Engine,EngineModule,objects):
 	pass
@@ -62,13 +63,14 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 			o.setPosition(EngineModule.Vec3(0,150,0))
 
 			rotationVec = EngineModule.Vec3(0,0,90)
-			dyn_mesh.createBones(Engine,EngineModule,o,rotationVec)
+			#dyn_mesh.createBones(Engine,EngineModule,o,rotationVec)
+			art_mesh.createBones(Engine,EngineModule,o)
 			o.setUnselectable()
 			o.calcLocalPosOfRootBone()
 			o.setRotationX(rotationVec.x)
 			o.setRotationY(rotationVec.y)
 			o.setRotationZ(rotationVec.z)
-			Engine.physicPauseToggle()
+			#Engine.physicPauseToggle()
 	
 
 		elif Engine.isKeyDown(EngineModule.Keys.K_6):
