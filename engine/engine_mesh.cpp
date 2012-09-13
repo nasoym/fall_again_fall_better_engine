@@ -107,17 +107,17 @@ void	EngineMesh::updateBone(Bone* bone){
 void 	EngineMesh::calcLocalPosOfRootBone() {
 	Actor* rootBody = getBodyOfBone(mRootBone);
 	if (rootBody) {
-		Logger::debug("calc local pos of root bone");
+		//Logger::debug("calc local pos of root bone");
 		Vec3	rootBodyPos = rootBody->getPosition();
 		Quat	rootBodyQuat = rootBody->getOrientation();
 		mLocalPos = rootBodyPos - getPosition();
 		mLocalPos = rootBodyQuat.inverse() * mLocalPos;
 		mLocalQuat = getOrientation() * rootBodyQuat.inverse();
 
-		Logger::debug(format("mesh pos: %1% ") % getPosition());
-		Logger::debug(format("mesh ori: %1% ") % getOrientation());
-		Logger::debug(format("local pos: %1% ") % mLocalPos);
-		Logger::debug(format("local ori: %1% ") % mLocalQuat);
+		//Logger::debug(format("mesh pos: %1% ") % getPosition());
+		//Logger::debug(format("mesh ori: %1% ") % getOrientation());
+		//Logger::debug(format("local pos: %1% ") % mLocalPos);
+		//Logger::debug(format("local ori: %1% ") % mLocalQuat);
 	}
 }
 
@@ -337,7 +337,7 @@ Bone*			EngineMesh::getBoneFromName(std::string boneName){
 			return (*iter).bone;
 		}
 	}
-	Logger::debug(format("bone for %1% was not found") % boneName );
+	//Logger::debug(format("bone for %1% was not found") % boneName );
 	return 0;
 }
 
@@ -408,7 +408,7 @@ std::string 	EngineMesh::getBoneNameParentName(std::string boneName){
 		if( parentBone) {
 			return parentBone->getName();
 		} else {
-			Logger::debug(format("parent for %1% was not found") % bone );
+			//Logger::debug(format("parent for %1% was not found") % bone );
 		}
 	}
 	return std::string("");

@@ -8,7 +8,7 @@
 	1: speed * 5
 """
 
-transformFactor = 0.7
+transformFactor = 0.5
 
 def moveCamera(Engine,EngineModule,direction):
 	factor = transformFactor
