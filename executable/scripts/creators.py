@@ -29,7 +29,6 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 		elif Engine.isKeyDown(EngineModule.Keys.K_2):
 			print("create physic box")
 			o = create.createPhysicBoxFinal(Engine,EngineModule)
-			#o = create.createBox(Engine,EngineModule)
 			o.setPosition(EngineModule.Vec3(0,150,0))
 			o.setSize(EngineModule.Vec3(10,10,10))
 		elif Engine.isKeyDown(EngineModule.Keys.K_3):
@@ -63,9 +62,14 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 			o.setMaterialName("Body")
 			o.setSize(EngineModule.Vec3(1,1,1)*1000)
 			o.setPosition(EngineModule.Vec3(0,150,0))
-			dyn_mesh.createBones(Engine,EngineModule,o)
+
+			rotationVec = EngineModule.Vec3(0,0,90)
+			dyn_mesh.createBones(Engine,EngineModule,o,rotationVec)
 			o.setUnselectable()
 			o.calcLocalPosOfRootBone()
+			o.setRotationX(rotationVec.x)
+			o.setRotationY(rotationVec.y)
+			o.setRotationZ(rotationVec.z)
 			Engine.physicPauseToggle()
 	
 

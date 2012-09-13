@@ -298,6 +298,9 @@ BOOST_PYTHON_MODULE(EngineModule) {
 		.def("getRootBoneName",&EngineMesh::getRootBoneName)
 		.def("calcLocalPosOfRootBone",&EngineMesh::calcLocalPosOfRootBone)
 
+		.def("setRotationX",&EngineMesh::setRotationX)
+		.def("setRotationY",&EngineMesh::setRotationY)
+		.def("setRotationZ",&EngineMesh::setRotationZ)
 
 		.def("setLocalPos",&EngineMesh::setLocalPos)
 		.def("setLocalQuat",&EngineMesh::setLocalQuat) 

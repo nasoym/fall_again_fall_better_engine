@@ -29,7 +29,7 @@ import bodyjoint
 def keyDown(Engine,EngineModule,key,selection,objects):
 	pass
 	if key == EngineModule.Keys.K_F:
-		forceValue = 5000
+		forceValue = 1000
 		force = EngineModule.Vec3(0,forceValue,0)
 		if Engine.isKeyDown(EngineModule.Keys.K_7):
 			forceValue *= 10

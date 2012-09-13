@@ -16,7 +16,10 @@ EngineMesh::EngineMesh(Engine* engine,const char* meshName) :
 	mLocalPos(Vec3()),
 	mLocalQuat(Quat()),
 	mRootShape(0),
-	mMeshFileName(std::string(meshName))
+	mMeshFileName(std::string(meshName)),
+	mRotationX(0),
+	mRotationY(0),
+	mRotationZ(90)
 	{
     setEntity(getEngine()->getSceneManager()->createEntity(meshName));
     getNode()->attachObject(getEntity());
@@ -200,7 +203,7 @@ Bone*	EngineMesh::getBoneParent(Bone* bone){
 Quat	EngineMesh::getBoneOrientation(Bone* bone,bool rotated){
 	Quat boneQuat = Quat(getOrientation() * bone->_getDerivedOrientation());
 	if (rotated) {
-		return Quat(boneQuat * Quat().fromAngles(0,0,90) );
+		return Quat(boneQuat * Quat().fromAngles(mRotationX,mRotationY,mRotationZ) );
 	} else {
 		return Quat(boneQuat);
 	}
@@ -213,7 +216,7 @@ void	EngineMesh::boneSetOrientation(Bone* bone,Quat quat,bool rotated){
 				Quat(
 					getOrientation().inverse() 
 					* quat
-					* Quat().fromAngles(0,0,90).inverse() 
+					* Quat().fromAngles(mRotationX,mRotationY,mRotationZ).inverse() 
 					).toOgre()
 				//Quat(getOrientation().inverse() * quat).toOgre()
 				);
@@ -222,7 +225,7 @@ void	EngineMesh::boneSetOrientation(Bone* bone,Quat quat,bool rotated){
 				Quat(
 					getOrientation().inverse() 
 					* quat
-					* Quat().fromAngles(0,0,90).inverse() 
+					* Quat().fromAngles(mRotationX,mRotationY,mRotationZ).inverse() 
 					).toOgre()
 				//Quat(getOrientation().inverse() * quat).toOgre()
 				);

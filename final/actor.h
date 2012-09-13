@@ -44,7 +44,9 @@ class Actor : public EngineGuiContainer {
 		virtual PxRigidActor*   getActor(){return 0;}
 		virtual void        wakeUp(){}
 
-		virtual void        setSize(Vec3& vec3){}
+		virtual void        setSize(Vec3& vec3){
+			return getShapeByIndex(0)->setLocalSize(vec3);
+		}
 		virtual Vec3    	getSize(){
 		//return Vec3();
 			return getShapeByIndex(0)->getLocalSize();

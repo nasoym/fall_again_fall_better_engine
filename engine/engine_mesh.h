@@ -91,6 +91,10 @@ class EngineMesh : public EngineGuiShape {
 		Vec3			getLocalPos(){ return mLocalPos;}
 		Quat			getLocalQuat(){ return mLocalQuat;}
 
+		void			setRotationX(float val){mRotationX=val;}
+		void			setRotationY(float val){mRotationY=val;}
+		void			setRotationZ(float val){mRotationZ=val;}
+
 	private:
 		std::vector<BoneBody> 	mBoneBodies;
 		Bone*					mRootBone;
@@ -98,6 +102,10 @@ class EngineMesh : public EngineGuiShape {
 		Quat 					mLocalQuat;
 		std::string				mMeshFileName;
 		EngineGuiContainer*			mRootShape;
+
+		float					mRotationX;
+		float					mRotationY;
+		float					mRotationZ;
 
 };
 #endif
