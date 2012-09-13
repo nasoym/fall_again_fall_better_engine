@@ -1,5 +1,10 @@
 import bodyjoint
 
+def storeOperation(text):
+	f = open("operations.txt","a")
+	f.write(text + "\n")
+	f.close()
+
 def delFromSelectionList(selectionList,engineObject):
 	for s in selectionList:
 		if s.readUuid() == engineObject.readUuid():

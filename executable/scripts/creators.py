@@ -14,6 +14,7 @@ import createobjects as create
 import ragdoll
 import dynamic_mesh as dyn_mesh
 import articulation_mesh as art_mesh
+import helpers
 
 def keyPressed(Engine,EngineModule,key,selection,objects):
 	pass
@@ -21,16 +22,44 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 		if len(selection.get()) == 1:
 			if selection.get()[0].isActor(): 
 				o = selection.get()[0]
+				numShapes = o.howManyPhysicShapes()
 				size = EngineModule.Vec3(10,10,10)
+				size = EngineModule.Vec3(1,1,1)
+
+				method=""
+				firstShape = o.getShapeByIndex(0)
+
 				if Engine.isKeyDown(EngineModule.Keys.K_1):
 					shape = o.addBox(size)
+					method = "addBox"
 				if Engine.isKeyDown(EngineModule.Keys.K_2):
 					shape = o.addCapsule(size)
+					method = "addCapsule"
 				if Engine.isKeyDown(EngineModule.Keys.K_3):
 					shape = o.addSphere(size)
+					method = "addSphere"
+
+				if firstShape.hasColour():
+					colour = firstShape.getColour()
+					alpha = firstShape.getAlpha()
+					shape.setColour(colour.x,colour.y,colour.z,alpha)
+
+				shape.setName(str(numShapes+1))
 
 				selection.clear()
 				selection.add(shape)
+
+				text = method + "(Engine,EngineModule"
+				text += ",bodyName='" + o.getName() + "'"
+				text += ",shapeName='" + shape.getName() + "'"
+				text += ",size=EngineModule.Vec3(" + str(size) + ")"
+				text += ",r=" + str(colour.x)
+				text += ",g=" + str(colour.y)
+				text += ",b=" + str(colour.z)
+				text += ",a=" + str(alpha)
+				text += ")"
+				helpers.storeOperation(text)
+
 		else:
 
 			if (Engine.isKeyDown(EngineModule.Keys.K_1)
@@ -50,6 +79,7 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 				elif Engine.isKeyDown(EngineModule.Keys.K_3):
 					shape = o.addSphere(size)
 				shape.setMaterialName("Body")
+				shape.setName("1")
 				o.setPosition(EngineModule.Vec3(0,200,0))
 
 			if Engine.isKeyDown(EngineModule.Keys.K_4):

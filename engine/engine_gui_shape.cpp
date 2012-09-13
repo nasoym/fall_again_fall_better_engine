@@ -152,7 +152,7 @@ void	EngineGuiShape::setupCustomMaterial(){
 	mMaterial = Ogre::MaterialManager::getSingleton().create(
 		readUuid(),
 		ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
-	mMaterial->getTechnique(0)->getPass(0)->setDiffuse(ColourValue(0.5f,0.5f,0.5f,0.5f)); 
+	mMaterial->getTechnique(0)->getPass(0)->setDiffuse(ColourValue(0.5f,0.5f,0.5f,0.25f)); 
 	//mMaterial->getTechnique(0)->getPass(0)->setDepthWriteEnabled(true); 
 	mMaterial->getTechnique(0)->getPass(0)->setDepthWriteEnabled(false); 
 	mMaterial->getTechnique(0)->getPass(0)->setSceneBlending(SBT_TRANSPARENT_ALPHA);

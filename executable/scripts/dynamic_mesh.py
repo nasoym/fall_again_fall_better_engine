@@ -122,14 +122,14 @@ def createBoneBody(Engine,EngineModule,mesh,boneName):
 		or "hand" in boneName 
 		or "toes" in boneName 
 		or "foot" in boneName 
+		or "belly" in boneName 
+		or "cheast" in boneName 
+		or "breast" in boneName 
 		):
 		shape = boneBody.addBox(EngineModule.Vec3(1,1,1))
-		pass
 	else:
 		shape = boneBody.addCapsule(EngineModule.Vec3(1,1,1))
-
-	
-	
+	shape.setColour(0.5,0.5,0,0.5)
 
 	boneWidth = 0.5
 	boneLength = getBoneLength(Engine,EngineModule,mesh,boneName)
@@ -137,6 +137,7 @@ def createBoneBody(Engine,EngineModule,mesh,boneName):
 	if localBoneWidth > (boneLength * 0.25):
 		localBoneWidth = boneLength * 0.25
 	shape.setLocalSize(EngineModule.Vec3(boneLength,localBoneWidth,localBoneWidth))
+	shape.setName("1")
 
 	boneParentName = mesh.getBoneNameParentName(boneName)
 	if boneParentName != "":

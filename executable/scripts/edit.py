@@ -48,11 +48,17 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 				print("found physicshape")
 				print("rotate shape")
 				angle = helpers.getModifiedQuaternion(Engine,EngineModule,5)
-				o.setLocalOrientation(o.getLocalOrientation() * angle)
-
+				newValue = o.getLocalOrientation() * angle
 				if Engine.isKeyDown(EngineModule.Keys.K_0):
-					o.setLocalOrientation(EngineModule.Quat())
+					newValue = EngineModule.Quat()
+				o.setLocalOrientation(newValue)
 
+				text = "rotatePhysicShape(Engine,EngineModule"
+				text += ",bodyName='" + o.getActor().getName() + "'"
+				text += ",shapeName='" + o.getName() + "'"
+				text += ",quaternion=EngineModule.Quat(" + str(newValue) + ")"
+				text += ")"
+				helpers.storeOperation(text)
 
 			elif o.isGuiShape():
 				print("found guishape")
@@ -122,11 +128,19 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 			elif o.isPhysicShape():
 				print("found physicshape")
 				print("move localy")
-				vector = helpers.getModifiedVector(Engine,EngineModule,20)
+				vector = helpers.getModifiedVector(Engine,EngineModule,1)
 				vector = o.getLocalOrientation() * vector
-				o.setLocalPosition(o.getLocalPosition() + vector)
+				newValue = o.getLocalPosition() + vector 
 				if Engine.isKeyDown(EngineModule.Keys.K_0):
-					o.setLocalPosition(EngineModule.Vec3())
+					newValue = EngineModule.Vec3()
+				o.setLocalPosition(newValue)
+
+				text = "movePhysicShape(Engine,EngineModule"
+				text += ",bodyName='" + o.getActor().getName() + "'"
+				text += ",shapeName='" + o.getName() + "'"
+				text += ",position=EngineModule.Vec3(" + str(newValue) + ")"
+				text += ")"
+				helpers.storeOperation(text)
 
 			elif o.isGuiShape():
 				print("found guishape")
@@ -178,7 +192,15 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 				print("found physicshape")
 				print("scale localy")
 				vector = helpers.getModifiedVector(Engine,EngineModule,0.1)
-				o.setLocalSize(o.getLocalSize() * (EngineModule.Vec3(1,1,1) + vector))
+				newValue = o.getLocalSize() * (EngineModule.Vec3(1,1,1) + vector)
+				o.setLocalSize(newValue)
+
+				text = "scalePhysicShape(Engine,EngineModule"
+				text += ",bodyName='" + o.getActor().getName() + "'"
+				text += ",shapeName='" + o.getName() + "'"
+				text += ",size=EngineModule.Vec3(" + str(newValue) + ")"
+				text += ")"
+				helpers.storeOperation(text)
 
 			elif o.isGuiShape():
 				print("found guishape")
@@ -241,7 +263,7 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 
 
 	if key == EngineModule.Keys.K_U:
-		print("select next joint")
+		print("select next object")
 		sel = selection.get()[:]
 		while len(sel)>0:
 			o = sel.pop()
@@ -260,16 +282,19 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 				body = o.getActor()
 				numShapes = body.howManyPhysicShapes()
 				if numShapes > 1:
+					print("has shapes: " + str(numShapes))
 					selection.clear()
 					currentIndex = 0
 					for i in range(0,numShapes):
 						shape = body.getPhysicShapeByIndex(i)
-						if shape.readUuid() == o.readUuid():
+						if shape.getName() == o.getName():
 							currentIndex = i
 							break
 					newIndex = currentIndex + 1
 					if newIndex == numShapes:
 						newIndex = 0
+					print("current index: " + str(currentIndex))
+					print("next index: " + str(newIndex))
 					selection.add(body.getPhysicShapeByIndex(newIndex))
 
 			elif o.isGuiShape():

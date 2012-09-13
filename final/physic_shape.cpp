@@ -74,6 +74,10 @@ void PhysicShape::createGuiCapsule(Vec3& vec3) {
     getNode()->attachObject(getEntity());
 	mMesh = meshPtr.get();
 	mShapeType = CAPSULE;
+
+	if (hasColour()) {
+		setCustomMaterial();
+	}
 }
 
 void PhysicShape::updateGuiCapsule(Vec3& vec3) {

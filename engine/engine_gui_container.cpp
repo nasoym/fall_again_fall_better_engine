@@ -17,6 +17,7 @@ EngineGuiContainer::~EngineGuiContainer(){
 }
 
 EngineGuiShape*		EngineGuiContainer::getShapeByIndex(int index){
+	//Logger::debug(format("get shape by index : %1%") % index);
 	return mShapes[index];
 }
 

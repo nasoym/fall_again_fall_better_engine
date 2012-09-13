@@ -1,2 +1,0 @@
-bodyJointScaleJointPos(Engine,EngineModule,bodyName='uleg-l',jointName='uleg-l-joint',vector=EngineModule.Vec3(-0.900000453,-0.000017166,0.100005008))
-bodyJointScaleJointPos(Engine,EngineModule,bodyName='uleg-l',jointName='uleg-l-joint',vector=EngineModule.Vec3(-0.800000429,-0.000017166,0.100005008))
