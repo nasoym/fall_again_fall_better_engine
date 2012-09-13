@@ -199,6 +199,9 @@ BOOST_PYTHON_MODULE(EngineModule) {
 		.def("addSphere",&Actor::addSphere,return_value_policy<reference_existing_object>())
 		.def("addCapsule",&Actor::addCapsule,return_value_policy<reference_existing_object>())
 
+		.def("getPhysicShapeByIndex",&Actor::getPhysicShapeByIndex,return_value_policy<reference_existing_object>())
+		.def("howManyPhysicShapes",&Actor::howManyPhysicShapes)
+
 		.def("addForce",&Actor::addForce)
 
 		.def("setMass",&Actor::setMass)

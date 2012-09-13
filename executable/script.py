@@ -5,7 +5,6 @@ random.jumpahead(random.uniform(12345,9994949))
 
 import scripts.temp as temp
 import scripts.navigate as navigate
-import scripts.bonescale as bonescale
 import scripts.select as select
 #import scripts.powered_doll as powered_doll
 import scripts.misc as misc
@@ -96,7 +95,6 @@ modules = []
 
 modules.append(navigate)
 modules.append(select)
-modules.append(bonescale)
 modules.append(temp)
 modules.append(creators)
 modules.append(misc)

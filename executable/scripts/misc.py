@@ -17,84 +17,34 @@
 		5: hide non final shapes
 		6: show all shapes
 	n: set timingfactor 1:*0.9 2:*1.1
+	j: set ambient light
+	h: set camera fov
+	g: set gravity
 	i: show object info
-
-	r: set ambient light
-	y: set camera fov
-	u: set gravity
 """
 import saveload
 import bodyjoint
+import helpers
 
 def keyDown(Engine,EngineModule,key,selection,objects):
 	pass
 	if key == EngineModule.Keys.K_F:
-		forceValue = 1000
-		force = EngineModule.Vec3(0,forceValue,0)
-
-		if Engine.isKeyDown(EngineModule.Keys.K_EQUALS):
-			forceValue *= 10
-		if Engine.isKeyDown(EngineModule.Keys.K_MINUS):
-			forceValue *= 0.5
-
-		if Engine.isKeyDown(EngineModule.Keys.K_1):
-			force = EngineModule.Vec3(forceValue,0,0)
-		if Engine.isKeyDown(EngineModule.Keys.K_2):
-			force = EngineModule.Vec3(0,forceValue,0)
-		if Engine.isKeyDown(EngineModule.Keys.K_3):
-			force = EngineModule.Vec3(0,0,forceValue)
-		if Engine.isKeyDown(EngineModule.Keys.K_4):
-			force = EngineModule.Vec3(-forceValue,0,0)
-		if Engine.isKeyDown(EngineModule.Keys.K_5):
-			force = EngineModule.Vec3(0,-forceValue,0)
-		if Engine.isKeyDown(EngineModule.Keys.K_6):
-			force = EngineModule.Vec3(0,0,-forceValue)
-
+		force = helpers.getModifiedVector(Engine,EngineModule,10000)
 		for o in selection.get():
 			if o.isActor():
 				o.isActor().addForce(force)
 
-
-def vecclamp(vec):
-	if vec.x > 1.0:
-		vec.x = 1.0
-	if vec.y > 1.0:
-		vec.y = 1.0
-	if vec.z > 1.0:
-		vec.z = 1.0
-	
-	if vec.x < 0.0:
-		vec.x = 0.0
-	if vec.y < 0.0:
-		vec.y = 0.0
-	if vec.z < 0.0:
-		vec.z = 0.0
-	return vec
-
 def keyPressed(Engine,EngineModule,key,selection,objects):
-	pass
-	"""
-	if key == EngineModule.Keys.K_R:
-		ambient = Engine.getAmbientLight()
-		if Engine.isKeyDown(EngineModule.Keys.K_1):
-			ambient.x += 0.05
-		if Engine.isKeyDown(EngineModule.Keys.K_2):
-			ambient.y += 0.05
-		if Engine.isKeyDown(EngineModule.Keys.K_3):
-			ambient.z += 0.05
-		if Engine.isKeyDown(EngineModule.Keys.K_4):
-			ambient.x -= 0.05
-		if Engine.isKeyDown(EngineModule.Keys.K_5):
-			ambient.y -= 0.05
-		if Engine.isKeyDown(EngineModule.Keys.K_6):
-			ambient.z -= 0.05
-		vecclamp(ambient)
-		print("set ambient light to: " + str(ambient))
-		Engine.setAmbientLight(ambient)
-		"""
 
-	"""
-	if key == EngineModule.Keys.K_Y:
+	if key == EngineModule.Keys.K_J:
+		ambient = Engine.getAmbientLight()
+		factor = helpers.getModifiedVector(Engine,EngineModule,0.05)
+		ambient = ambient + factor
+		helpers.vecclamp(ambient)
+		Engine.setAmbientLight(ambient)
+		print("set ambient light to: " + str(ambient))
+
+	if key == EngineModule.Keys.K_H:
 		fov = Engine.getCameraFOV()
 		if Engine.isKeyDown(EngineModule.Keys.K_1):
 			fov += 2
@@ -104,27 +54,15 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 			fov = 0
 		if fov > 180:
 			fov = 180
-		print("set FieldOfView to: " + str(fov))
 		Engine.setCameraFOV(fov)
-		"""
+		print("set FieldOfView to: " + str(fov))
 
-	if key == EngineModule.Keys.K_U:
+	if key == EngineModule.Keys.K_G:
 		gravity = Engine.getGravity()
-		if Engine.isKeyDown(EngineModule.Keys.K_1):
-			gravity.x += 0.5
-		if Engine.isKeyDown(EngineModule.Keys.K_2):
-			gravity.y += 0.5
-		if Engine.isKeyDown(EngineModule.Keys.K_3):
-			gravity.z += 0.5
-		if Engine.isKeyDown(EngineModule.Keys.K_4):
-			gravity.x -= 0.5
-		if Engine.isKeyDown(EngineModule.Keys.K_5):
-			gravity.y -= 0.5
-		if Engine.isKeyDown(EngineModule.Keys.K_6):
-			gravity.z -= 0.5
-		print("set gravity to: " + str(gravity))
+		factor = helpers.getModifiedVector(Engine,EngineModule,0.5)
+		gravity = gravity + factor
 		Engine.setGravity(gravity)
-
+		print("set gravity to: " + str(gravity))
 
 	if key == EngineModule.Keys.K_K:
 		if Engine.isKeyDown(EngineModule.Keys.K_1):
@@ -210,7 +148,6 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 		if Engine.isKeyDown(EngineModule.Keys.K_2):
 			Engine.setTimingFactor(Engine.getTimingFactor() * 1.1)
 			print("set timingfactor: " +str(Engine.getTimingFactor()))
-
 
 	if key == EngineModule.Keys.K_I:
 		for o in selection.get():

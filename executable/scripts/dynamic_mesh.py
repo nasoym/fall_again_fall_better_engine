@@ -97,8 +97,21 @@ def createBoneBody(Engine,EngineModule,mesh,boneName):
 	boneBody.setPosition(bonePosition)  
 	mesh.setBodyForBoneName(boneName,boneBody)
 
-	shape = boneBody.addCapsule(EngineModule.Vec3(1,1,1))
+	#shape = boneBody.addCapsule(EngineModule.Vec3(1,1,1))
 	#shape = boneBody.addBox(EngineModule.Vec3(1,1,1))
+
+	if (boneName == "root" 
+		or "hand" in boneName 
+		or "toes" in boneName 
+		or "foot" in boneName 
+		):
+		shape = boneBody.addBox(EngineModule.Vec3(1,1,1))
+		pass
+	else:
+		shape = boneBody.addCapsule(EngineModule.Vec3(1,1,1))
+
+	
+	
 
 	boneWidth = 0.5
 	boneLength = getBoneLength(Engine,EngineModule,mesh,boneName)
@@ -127,6 +140,7 @@ def createBoneBody(Engine,EngineModule,mesh,boneName):
 			joint.setAnchor1Orientation(boneLocalRotation)
 			joint.setLimits(1,1)
 			mesh.setJointForBoneName(boneName,joint)
+			joint.setName(boneName + "-joint")
 		
 			b = Engine.createGuiBox()
 			b.setColour(0,0,1,0.2)

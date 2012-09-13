@@ -79,7 +79,7 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 			o.setSize(EngineModule.Vec3(1,1,1)*1000)
 			o.setPosition(EngineModule.Vec3(0,150,0))
 			rotationVec = EngineModule.Vec3(0,0,90)
-			dyn_mesh.createBones(Engine,EngineModule,o,rotationVec)
+			dyn_mesh.createBones(Engine,EngineModule,o)
 			o.setUnselectable()
 			o.calcLocalPosOfRootBone()
 			o.setRotationX(rotationVec.x)
@@ -89,14 +89,21 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 
 			body13 = None
 			body14 = None
-			bonesNumber = o.getNumberOfBones()
-			bonesList = []
+			#bonesNumber = o.getNumberOfBones()
+			#bonesList = []
+			body14 = o.getBodyOfBoneName("toes-r")
+			body13 = o.getBodyOfBoneName("toes-l")
+			"""
 			for i in range(0,bonesNumber):
 				body = o.getBodyByIndex(i)
+
+
+				print("body:" + str(body))
 				if body.getName() == "toes-r":
 					body14 = body
 				if body.getName() == "toes-l":
 					body13 = body
+					"""
 			if body13 and body14:
 				pos13 = body13.getPosition()
 				#pos13 += body13.getOrientation() * body13.getSize() 

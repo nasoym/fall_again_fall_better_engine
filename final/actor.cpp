@@ -15,6 +15,18 @@ Actor::Actor(Engine* engine) :
 void	Actor::physicUpdate(){
 }
 
+int					Actor::howManyPhysicShapes(){
+	return howManyShapes();
+}
+
+PhysicShape*		Actor::getPhysicShapeByIndex(int index){
+	EngineGuiShape* shape = getShapeByIndex(index);
+	if (shape->isPhysicShape()) {
+		return shape->isPhysicShape();
+	}
+	return 0;
+}
+
 void	Actor::guiUpdate(){
 	if (mDoGuiUpdates) {
 		EngineGuiContainer::setPosition(getPosition());

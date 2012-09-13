@@ -39,6 +39,9 @@ class Actor : public EngineGuiContainer {
 		PhysicShape*		addSphere(Vec3&);
 		PhysicShape*		addCapsule(Vec3&);
 
+		int					howManyPhysicShapes();
+		PhysicShape*		getPhysicShapeByIndex(int);	
+
 		void				setGuiUpdatesOff(){mDoGuiUpdates=false;}
 		void				setGuiUpdatesOn(){mDoGuiUpdates=true;}
 

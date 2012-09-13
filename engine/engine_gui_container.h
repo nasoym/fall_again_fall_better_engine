@@ -28,7 +28,6 @@ class EngineGuiContainer : public EngineObject {
 		void				addShape(EngineGuiShape*);
 		void				removeShape(EngineGuiShape*);
 		bool				hasShape(EngineGuiShape*);
-
 		int     			howManyShapes();
 
 		void				addDebugAxises(float debugSize=5.0, float debugWidth=0.5);
