@@ -12,7 +12,6 @@ import scripts.misc as misc
 import scripts.creators as creators
 import scripts.main as main
 import scripts.anim as anim
-#import scripts.anim_old as anim
 import scripts.serialReader as serialReader
 import scripts.test as test
 

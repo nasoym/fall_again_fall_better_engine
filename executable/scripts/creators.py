@@ -10,8 +10,6 @@
 
 import createobjects as create
 import ragdoll
-import mesh
-import articulation_mesh as art_mesh
 import dynamic_mesh as dyn_mesh
 
 def init(Engine,EngineModule,objects):
@@ -81,9 +79,14 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 			#o.setMaterialName("SSAO/GBuffer")
 			o.setSize(EngineModule.Vec3(1,1,1)*1000)
 			o.setPosition(EngineModule.Vec3(0,150,0))
-			mesh.createBones(Engine,EngineModule,o)
+			rotationVec = EngineModule.Vec3(0,0,90)
+			dyn_mesh.createBones(Engine,EngineModule,o,rotationVec)
 			o.setUnselectable()
 			o.calcLocalPosOfRootBone()
+			o.setRotationX(rotationVec.x)
+			o.setRotationY(rotationVec.y)
+			o.setRotationZ(rotationVec.z)
+			Engine.physicPauseToggle()
 
 			body13 = None
 			body14 = None
@@ -91,9 +94,9 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 			bonesList = []
 			for i in range(0,bonesNumber):
 				body = o.getBodyByIndex(i)
-				if body.getName() == "Bone.014":
+				if body.getName() == "toes-r":
 					body14 = body
-				if body.getName() == "Bone.013":
+				if body.getName() == "toes-l":
 					body13 = body
 			if body13 and body14:
 				pos13 = body13.getPosition()

@@ -10,7 +10,6 @@
 	b: work on body,joint: singual anchor pos 
 	n: set timingfactor 1:*0.9 2:*1.1
 """
-import mesh
 import createobjects as create
 import saveload
 import bodyjoint
