@@ -66,7 +66,8 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 			#art_mesh.createBones(Engine,EngineModule,o)
 			o.setUnselectable()
 			o.calcLocalPosOfRootBone()
-			#Engine.physicPauseToggle()
+
+			Engine.physicPauseToggle()
 	
 
 		elif Engine.isKeyDown(EngineModule.Keys.K_6):
