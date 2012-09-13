@@ -63,8 +63,8 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 			o.setPosition(EngineModule.Vec3(0,150,0))
 
 			rotationVec = EngineModule.Vec3(0,0,90)
-			#dyn_mesh.createBones(Engine,EngineModule,o,rotationVec)
-			art_mesh.createBones(Engine,EngineModule,o)
+			dyn_mesh.createBones(Engine,EngineModule,o,rotationVec)
+			#art_mesh.createBones(Engine,EngineModule,o)
 			o.setUnselectable()
 			o.calcLocalPosOfRootBone()
 			o.setRotationX(rotationVec.x)

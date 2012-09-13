@@ -17,23 +17,21 @@ def createBoneBody(Engine,EngineModule,mesh,boneName,rotationVec):
 		boneLength = defaultBoneLength
 	boneBody = Engine.createDynamicActor()
 	boneBody.setName(str(boneName))
+	mesh.setBodyForBoneName(boneName,boneBody)
 
-	#boneBody.setSize(EngineModule.Vec3(boneLength,boneWidth,boneWidth))
 	s = boneBody.addCapsule(EngineModule.Vec3(1,1,1))
 	#s = boneBody.addBox(EngineModule.Vec3(1,1,1))
 	localBoneWidth = boneWidth
 	#localBoneWidth = boneLength * 0.25
 	if localBoneWidth > (boneLength * 0.25):
 		localBoneWidth = boneLength * 0.25
-	#s.setLocalSize(EngineModule.Vec3(boneLength,boneWidth,boneWidth))
 	s.setLocalSize(EngineModule.Vec3(boneLength,localBoneWidth,localBoneWidth))
-	#s.setLocalSize(EngineModule.Vec3(boneWidth,boneWidth,boneLength))
-	mesh.setBodyForBoneName(boneName,boneBody)
-	boneParentName = mesh.getBoneNameParentName(boneName)
 
+	boneParentName = mesh.getBoneNameParentName(boneName)
 
 	#print("bone: " + str(boneName) + " parent: " + str(boneParentName))
 	if boneParentName == "":
+		#this is the root bone
 		#print("create bone: " + str(boneName) )
 		boneBody.setOrientation(
 			mesh.getBoneNameOrientation(boneName,False)
@@ -49,11 +47,8 @@ def createBoneBody(Engine,EngineModule,mesh,boneName,rotationVec):
 		#print("create bone: " + str(boneName) + " as child of: " + str(boneParentName) )
 		boneParentBody = mesh.getBodyOfBoneName(boneParentName)
 		#print("parent body: " + str(boneParentBody))
-		if boneParentBody:
-			#print("parent has body")
-			pass
-		else:
-			#print("parent has NO body")
+		if not boneParentBody:
+			#print("parent has no body")
 			pass
 		if not boneParentBody == 0:
 			pass
@@ -111,19 +106,13 @@ def createBoneBody(Engine,EngineModule,mesh,boneName,rotationVec):
 	
 		b = Engine.createGuiBox()
 		b.setColour(0,0,1,0.2)
-		#b.setSize(EngineModule.Vec3(2,4,4))
 		b.setSize(EngineModule.Vec3(boneWidth*0.25,boneWidth*2,boneWidth*2))
 		b.setScalingFixed()
 		joint.addShape(b)
-
 		#joint.addDebugAxises(1,0.2)
 		mesh.setJointForBoneName(boneName,joint)
 
 		parentChildren = mesh.getBoneNameChildren(boneParentName)
 		if parentChildren > 1:
-			#boneBody.setSize( boneBody.getSize() * EngineModule.Vec3(0.3,0.6,0.6) )
 			boneBody.getShapeByIndex(0).setLocalSize( boneBody.getSize() * EngineModule.Vec3(0.3,0.6,0.6) )
-
-
-
 
