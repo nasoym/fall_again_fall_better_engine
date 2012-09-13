@@ -63,15 +63,11 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 			o.setMaterialName("Body")
 			o.setSize(EngineModule.Vec3(1,1,1)*1000)
 			o.setPosition(EngineModule.Vec3(0,150,0))
-			#art_mesh.createBones(Engine,EngineModule,o)
 			dyn_mesh.createBones(Engine,EngineModule,o)
 			o.setUnselectable()
 			o.calcLocalPosOfRootBone()
+			Engine.physicPauseToggle()
 	
-			r = o.getBodyOfBoneName(o.getRootBoneName())
-			if r.isArticulation():
-				print("root bone is articulation so add to scene")
-				r.addToScene()
 
 		elif Engine.isKeyDown(EngineModule.Keys.K_6):
 			print("create character mesh with ground")
