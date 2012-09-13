@@ -6,6 +6,12 @@ material white : diffuse_template
     set_texture_alias diffuse_tex white.bmp
 }
 
+material red_cyan : diffuse_template
+{
+    set_texture_alias ambient_tex red-cyan.bmp
+    set_texture_alias diffuse_tex red-cyan.bmp
+}
+
 material orange : diffuse_template
 {
     set_texture_alias ambient_tex orange.bmp

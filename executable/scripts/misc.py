@@ -54,8 +54,9 @@ def keyDown(Engine,EngineModule,key,selection,objects):
 	if key == EngineModule.Keys.K_MLEFT:
 		mx = Engine.getMouseRelX()	
 		my = Engine.getMouseRelY()	
-		Engine.cameraRotateY(mx * -0.1)
-		Engine.cameraRotateZ(my * -0.1)
+		factor = 0.1
+		Engine.cameraRotateY(mx * -factor)
+		Engine.cameraRotateZ(my * -factor)
 
 def vecclamp(vec):
 	if vec.x > 1.0:
@@ -253,6 +254,7 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 				zLimit = 0
 
 			j.setLimits(yLimit,zLimit)
+			"""
 
 	if key == EngineModule.Keys.K_Z:
 		print("change material and visibilty")
@@ -302,7 +304,6 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 					o = Engine.getObject(i)
 					if o.isGuiShape():
 						o.show()
-						"""
 
 def keyReleased(Engine,EngineModule,key,selection,objects):
 	pass

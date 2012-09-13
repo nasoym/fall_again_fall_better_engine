@@ -364,15 +364,10 @@ void Engine::setup(){
     ResourceGroupManager::getSingleton().initialiseAllResourceGroups();
 
     mCamera = mSceneMgr->createCamera("PlayerCam");
-    // Position it at 500 in Z direction
     mCamera->setPosition(Vector3(0,0,500));
-    // Look back along -Z
     mCamera->lookAt(Vector3(0,0,-300));
-    //mCamera->setNearClipDistance(1);
-	//mCamera->setFOVy(Radian(Degree(45).valueRadians())); // i.e. 60deg * 1.3.. maya and ogre use fovX and fovY
-
 	mCamera->setNearClipDistance(1);
-	mCamera->setFarClipDistance(4000);
+	mCamera->setFarClipDistance(20000);
 
     // Create one viewport, entire window
     mViewport = mWindow->addViewport(mCamera);
@@ -399,6 +394,41 @@ void Engine::setup(){
 	*/
 
 	mRaySceneQuery = mSceneMgr->createRayQuery(Ray());
+
+
+
+	/*
+	Rectangle2D* rect = new Rectangle2D(true);
+	//rect->setCorners(-1.0, 1.0, 1.0, -1.0);
+	rect->setCorners(-0.3, 0.3, 0.3, -0.3);
+	//rect->setMaterial("Body");
+	rect->setMaterial("red_cyan");
+
+	MaterialPtr	mMaterial = Ogre::MaterialManager::getSingleton().create(
+		"red-box", ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
+	//mMaterial->getTechnique(0)->getPass(0)->setSceneBlending(SBT_TRANSPARENT_ALPHA);
+	//mMaterial->getTechnique(0)->getPass(0)->setDepthWriteEnabled(false);
+	//mMaterial->getTechnique(0)->getPass(0)->setDepthCheckEnabled(false);
+	mMaterial->getTechnique(0)->getPass(0)->setLightingEnabled(false);
+	mMaterial->getTechnique(0)->getPass(0)->setColourWriteEnabled(true);
+	//mMaterial->getTechnique(0)->getPass(0)->setDiffuse(ColourValue(1.0f,0.0f,0.0f,0.5f)); 
+	//mMaterial->getTechnique(0)->getPass(0)->setEmissive(ColourValue(1.0f,0.0f,0.0f,0.5f)); 
+	mMaterial->getTechnique(0)->getPass(0)->setAmbient(ColourValue(1.0f,0.0f,0.0f,0.5f)); 
+    //rect->setMaterial("red-box");
+	 
+	// Render the background before everything else
+	rect->setRenderQueueGroup(RENDER_QUEUE_BACKGROUND);
+
+	// Use infinite AAB to always stay visible
+	AxisAlignedBox aabInf;
+	aabInf.setInfinite();
+	rect->setBoundingBox(aabInf);
+	 
+	// Attach background to the scene
+	SceneNode* node = mSceneMgr->getRootSceneNode()->createChildSceneNode("Background");
+	node->attachObject(rect);
+	*/
+
 
 }
 

@@ -55,7 +55,7 @@ FallingAnim = [
 		#"larm-joint",
 		#"hand-joint"
 		],
-		'time':50,
+		'time':1500,
 		'start':[(lambda Engine,EngineModule,objects,groupPart:
 			groupPart.setMotorValues(5,FallingDamping,True))],
 		'end':[(lambda Engine,EngineModule,objects,groupPart:
@@ -352,7 +352,7 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 					debug.setPosition(middlePos)
 
 				angleRand = 70
-				maxMult = 5
+				maxMult = 9
 				minMult = 1.0
 				for part in partsList:
 					relVec = middlePos - part.getPosition()
