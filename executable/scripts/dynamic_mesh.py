@@ -1,15 +1,16 @@
 import createobjects as create
 
-def createBones(Engine,EngineModule,mesh,rotationVec,boneName=None):
+def createBones(Engine,EngineModule,mesh,boneName=None):
 	if not boneName:
 		boneName = mesh.getRootBoneName()
-	createBoneBody(Engine,EngineModule,mesh,boneName,rotationVec)
+	createBoneBody(Engine,EngineModule,mesh,boneName)
 	childBones = mesh.getBoneNameChildren(boneName)
 	for i in range(0,childBones):
 		childBoneName = mesh.getBoneNameChildName(boneName,i)
-		createBones(Engine,EngineModule,mesh,rotationVec,childBoneName)
+		createBones(Engine,EngineModule,mesh,childBoneName)
 
-def createBoneBody(Engine,EngineModule,mesh,boneName,rotationVec):
+
+def createBoneBody(Engine,EngineModule,mesh,boneName):
 	boneWidth = 1.0
 	defaultBoneLength = 1
 	boneLength = mesh.getBoneNameSize(boneName)
@@ -35,9 +36,7 @@ def createBoneBody(Engine,EngineModule,mesh,boneName,rotationVec):
 		#print("create bone: " + str(boneName) )
 		boneBody.setOrientation(
 			mesh.getBoneNameOrientation(boneName,False)
-			* EngineModule.Quat().fromAngles(
-				rotationVec.x,rotationVec.y,rotationVec.z
-				)
+			* EngineModule.Quat().fromAngles(0,0,90)
 			)
 		boneBody.setPosition(
 			mesh.getBoneNamePosition(boneName)
@@ -61,8 +60,7 @@ def createBoneBody(Engine,EngineModule,mesh,boneName,rotationVec):
 		localOrientationAxis = boneLocalOrientation.toAxis()
 		localOrientationAngle = boneLocalOrientation.toAngle()
 
-		rotatedOrientationAxis = EngineModule.Quat().fromAngles(
-				-rotationVec.x,-rotationVec.y,-rotationVec.z) * localOrientationAxis
+		rotatedOrientationAxis = EngineModule.Quat().fromAngles(0,0,-90) * localOrientationAxis
 		rotatedLocalOrientation = EngineModule.Quat().fromAngleAxis(localOrientationAngle,rotatedOrientationAxis)
 
 		parentOrientation = boneParentBody.getOrientation()
