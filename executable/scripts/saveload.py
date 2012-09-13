@@ -449,6 +449,23 @@ def load(Engine,EngineModule,fileName,objects):
 					a = (node.prop("orientation").split(","))
 					orientation = EngineModule.Quat( float(a[0]),float(a[1]),float(a[2]),float(a[3]))
 					Engine.setCameraOrientation(orientation)
+				if node.hasProp("fov"):
+					fov = float(node.prop("fov"))
+					Engine.setCameraFOV(fov)
+				res.remove(node)
+
+			elif node.name=="SETTINGS":
+				if node.hasProp("timing_factor"):
+					timing = float(node.prop("timing_factor"))
+					Engine.setTimingFactor(timing)
+				if node.hasProp("ambient"):
+					a = (node.prop("ambient").split(","))
+					ambient = EngineModule.Vec3( float(a[0]),float(a[1]),float(a[2]))
+					Engine.setAmbientLight(ambient)
+				if node.hasProp("gravity"):
+					a = (node.prop("gravity").split(","))
+					gravity = EngineModule.Vec3( float(a[0]),float(a[1]),float(a[2]))
+					Engine.setAmbientLight(gravity)
 				res.remove(node)
 
 			elif node.name=="OBJECTS":
@@ -675,6 +692,13 @@ def save(Engine,EngineModule,fileName,objects):
 	node = libxml2.newNode("CAMERA")
 	node.setProp("position",str(Engine.getCameraPosition()))
 	node.setProp("orientation",str(Engine.getCameraOrientation()))
+	node.setProp("fov",str(Engine.getCameraFOV()))
+	doc.getRootElement().addChild(node)
+
+	node = libxml2.newNode("SETTINGS")
+	node.setProp("ambient",str(Engine.getAmbientLight()))
+	node.setProp("gravity",str(Engine.getGravity()))
+	node.setProp("timing_factor",str(Engine.getTimingFactor()))
 	doc.getRootElement().addChild(node)
 
 	for k,v in objects.get().items():

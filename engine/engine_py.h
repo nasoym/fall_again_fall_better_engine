@@ -392,6 +392,17 @@ BOOST_PYTHON_MODULE(EngineModule) {
         .def("getMemoryUsage",&Engine::getMemoryUsage)
         .def("log",&Engine::log)
 
+		.def("setAmbientLight",&Engine::setAmbientLight)
+		.def("getAmbientLight",&Engine::getAmbientLight)
+		.def("setCameraFOV",&Engine::setCameraFOV)
+		.def("getCameraFOV",&Engine::getCameraFOV)
+		.def("setGravity",&Engine::setGravity)
+		.def("getGravity",&Engine::getGravity)
+		.def("cameraRotateY",&Engine::cameraRotateY)
+		.def("cameraRotateZ",&Engine::cameraRotateZ)
+		.def("getMouseRelX",&Engine::getMouseRelX)
+		.def("getMouseRelY",&Engine::getMouseRelY)
+
         ;
 
     class_<Vec3>("Vec3",init<>())

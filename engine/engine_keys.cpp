@@ -132,10 +132,12 @@ bool Engine::keyReleased(const OIS::KeyEvent& evt){
 bool Engine::mouseMoved(const OIS::MouseEvent& evt) {
 	const OIS::MouseState &ms = mMouse->getMouseState();
 	//if( ms.buttonDown( OIS::MB_Left ) ) {
+	/*
 	if (isKeyDown(K_MLEFT)){
 		mCamera->yaw(Degree(-ms.X.rel * 0.13));
 		mCamera->pitch(Degree(-ms.Y.rel * 0.13));
 	}
+	*/
     return true;
 }
 

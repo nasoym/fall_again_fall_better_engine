@@ -51,8 +51,64 @@ def keyDown(Engine,EngineModule,key,selection,objects):
 			if o.isActor():
 				o.isActor().addForce(force)
 
+	if key == EngineModule.Keys.K_MLEFT:
+		mx = Engine.getMouseRelX()	
+		my = Engine.getMouseRelY()	
+		Engine.cameraRotateY(mx * -0.1)
+		Engine.cameraRotateZ(my * -0.1)
+
+def vecclamp(vec):
+	if vec.x > 1.0:
+		vec.x = 1.0
+	if vec.y > 1.0:
+		vec.y = 1.0
+	if vec.z > 1.0:
+		vec.z = 1.0
+	
+	if vec.x < 0.0:
+		vec.x = 0.0
+	if vec.y < 0.0:
+		vec.y = 0.0
+	if vec.z < 0.0:
+		vec.z = 0.0
+	return vec
+
 def keyPressed(Engine,EngineModule,key,selection,objects):
 	pass
+	if key == EngineModule.Keys.K_R:
+		ambient = Engine.getAmbientLight()
+		if Engine.isKeyDown(EngineModule.Keys.K_1):
+			ambient.x += 0.05
+		if Engine.isKeyDown(EngineModule.Keys.K_2):
+			ambient.y += 0.05
+		if Engine.isKeyDown(EngineModule.Keys.K_3):
+			ambient.z += 0.05
+		if Engine.isKeyDown(EngineModule.Keys.K_4):
+			ambient.x -= 0.05
+		if Engine.isKeyDown(EngineModule.Keys.K_5):
+			ambient.y -= 0.05
+		if Engine.isKeyDown(EngineModule.Keys.K_6):
+			ambient.z -= 0.05
+		vecclamp(ambient)
+		Engine.setAmbientLight(ambient)
+
+	if key == EngineModule.Keys.K_Y:
+		fov = Engine.getCameraFOV()
+		if Engine.isKeyDown(EngineModule.Keys.K_1):
+			fov += 2
+		if Engine.isKeyDown(EngineModule.Keys.K_2):
+			fov -= 2
+		if fov < 0:
+			fov = 0
+		if fov > 180:
+			fov = 180
+		Engine.setCameraFOV(fov)
+
+	if key == EngineModule.Keys.K_U:
+		gravity = Engine.getGravity()
+
+
+	"""
 	if key == EngineModule.Keys.K_K:
 		print("save scene")
 		saveload.save(Engine,EngineModule,"xmlscene/scene.xml",objects)
@@ -230,6 +286,7 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 					o = Engine.getObject(i)
 					if o.isGuiShape():
 						o.show()
+						"""
 
 def keyReleased(Engine,EngineModule,key,selection,objects):
 	pass
