@@ -465,7 +465,7 @@ def load(Engine,EngineModule,fileName,objects):
 				if node.hasProp("gravity"):
 					a = (node.prop("gravity").split(","))
 					gravity = EngineModule.Vec3( float(a[0]),float(a[1]),float(a[2]))
-					Engine.setAmbientLight(gravity)
+					Engine.setGravity(gravity)
 				res.remove(node)
 
 			elif node.name=="OBJECTS":

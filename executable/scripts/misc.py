@@ -90,6 +90,7 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 		if Engine.isKeyDown(EngineModule.Keys.K_6):
 			ambient.z -= 0.05
 		vecclamp(ambient)
+		print("set ambient light to: " + str(ambient))
 		Engine.setAmbientLight(ambient)
 
 	if key == EngineModule.Keys.K_Y:
@@ -102,13 +103,27 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 			fov = 0
 		if fov > 180:
 			fov = 180
+		print("set FieldOfView to: " + str(fov))
 		Engine.setCameraFOV(fov)
 
 	if key == EngineModule.Keys.K_U:
 		gravity = Engine.getGravity()
+		if Engine.isKeyDown(EngineModule.Keys.K_1):
+			gravity.x += 0.5
+		if Engine.isKeyDown(EngineModule.Keys.K_2):
+			gravity.y += 0.5
+		if Engine.isKeyDown(EngineModule.Keys.K_3):
+			gravity.z += 0.5
+		if Engine.isKeyDown(EngineModule.Keys.K_4):
+			gravity.x -= 0.5
+		if Engine.isKeyDown(EngineModule.Keys.K_5):
+			gravity.y -= 0.5
+		if Engine.isKeyDown(EngineModule.Keys.K_6):
+			gravity.z -= 0.5
+		print("set gravity to: " + str(gravity))
+		Engine.setGravity(gravity)
 
 
-	"""
 	if key == EngineModule.Keys.K_K:
 		print("save scene")
 		saveload.save(Engine,EngineModule,"xmlscene/scene.xml",objects)
@@ -119,6 +134,7 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 		saveload.load(Engine,EngineModule,"xmlscene/scene.xml",objects)
 		print("done")
 
+	"""
 	if key == EngineModule.Keys.K_R:
 		print("change joint motor target orientation")
 		j = None

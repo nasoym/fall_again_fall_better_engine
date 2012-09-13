@@ -336,7 +336,8 @@ void Engine::setup(){
 	//mWindow = mRoot->createRenderWindow("main window",400,400,false);
 
     mSceneMgr = mRoot->createSceneManager(ST_GENERIC, "ExampleSMInstance");
-    mSceneMgr->setAmbientLight(ColourValue(0.4,0.4,0.2));
+    //mSceneMgr->setAmbientLight(ColourValue(0.4,0.4,0.2));
+    mSceneMgr->setAmbientLight(ColourValue(0.2,0.2,0.2));
 
 	mSceneMgr->setShadowTechnique(
 		//Ogre::SHADOWTYPE_STENCIL_ADDITIVE
