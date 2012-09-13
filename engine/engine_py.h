@@ -205,6 +205,9 @@ BOOST_PYTHON_MODULE(EngineModule) {
 		.def("resetMass",&Actor::resetMass)
 		.def("getMass",&Actor::getMass)
 
+		.def("howManyJoints",&Actor::howManyJoints)
+		.def("getJoint",&Actor::getJoint,return_value_policy<reference_existing_object>())
+
 		;
 	class_<DynamicActor,bases<Actor> >("DynamicActor", init<Engine*,Vec3&>())
 		;

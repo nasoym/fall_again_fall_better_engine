@@ -9,5 +9,4 @@ def init(Engine,EngineModule,objects):
 			if not o.isFinalShape():
 				o.hide()
 
-	#Engine.setTimingFactor(2.7)
 

@@ -43,6 +43,13 @@ def keyDown(Engine,EngineModule,key,selection,objects):
 		key == EngineModule.Keys.K_PGUP):
 		moveCamera(Engine,EngineModule,EngineModule.Vec3(0,1,0))
 
+	if key == EngineModule.Keys.K_MLEFT:
+		mx = Engine.getMouseRelX()	
+		my = Engine.getMouseRelY()	
+		factor = 0.1
+		Engine.cameraRotateY(mx * -factor)
+		Engine.cameraRotateZ(my * -factor)
+
 def keyPressed(Engine,EngineModule,key,selection,objects):
 	pass
 

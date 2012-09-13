@@ -16,9 +16,13 @@ EngineJoint::EngineJoint(Engine* engine,Actor* body1, Actor* body2) :
 		body1,
 		body2
 	);
-	//body1->addJoint(this);
-	//body2->addJoint(this);
+    //mActor1->addJoint(this);
+    //mActor2->addJoint(this);
+	body1->addJoint(this);
+	body2->addJoint(this);
 }
+    //mActor1->deleteJoint(this);
+    //mActor2->deleteJoint(this);
 
 Actor*		EngineJoint::getBody1(){
 	return mBody1;

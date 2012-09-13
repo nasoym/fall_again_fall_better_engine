@@ -10,13 +10,14 @@ using namespace physx;
 
 class Engine;
 class PhysicShape;
+class Joint;
 
 #include "physic_basejoint.h"
 
 class Actor : public EngineGuiContainer {
 
 	protected:
-		std::vector<BaseJoint*>    mJoints;
+		std::vector<EngineJoint*>    mJoints;
 
     public:
         Actor(Engine*);
@@ -58,38 +59,14 @@ class Actor : public EngineGuiContainer {
 		virtual void		resetMass(){}
 		virtual float		getMass(){return 0;}
 
-    virtual void    Actor::deleteAllJoints() {
-        std::vector<BaseJoint*>::iterator  mJointsIterator;
-        for (mJointsIterator = mJoints.begin(); 
-            mJointsIterator != mJoints.end(); ++mJointsIterator) {
-            delete (*mJointsIterator);
-        }
-        mJoints.clear();
-    }
 
-    virtual void    Actor::deleteJoint(BaseJoint* joint) {
-        std::vector<BaseJoint*>::iterator  mJointsIterator;
-        for (mJointsIterator = mJoints.begin(); 
-            mJointsIterator != mJoints.end(); ++mJointsIterator) {
-            if ( (*mJointsIterator) == joint ){
-                delete (*mJointsIterator);
-                mJoints.erase( mJointsIterator);
-                break;
-            }
-        }
-    }
 
-    virtual int     Actor::howManyJoints() {
-        return mJoints.size();
-    }
+		virtual void    deleteAllJoints();
+		virtual void    deleteJoint(EngineJoint* joint);
+		virtual int     howManyJoints();
+		virtual void    addJoint(EngineJoint* joint);
+		virtual EngineJoint*  getJoint(int index);
 
-    virtual void    Actor::addJoint(BaseJoint* joint){
-        mJoints.push_back(joint);
-    }
-
-    virtual BaseJoint*  Actor::getJoint(int index) {
-        return mJoints[index];
-    }
 
 	private:
 		bool				mDoGuiUpdates;

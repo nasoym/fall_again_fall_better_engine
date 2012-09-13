@@ -1,7 +1,4 @@
-"""
-anim:
-	m: joint motor
-		1:on 2:off 3,4,5: set different values
+"""anim:
 	[: select set of objects
 	]: print all objects
 	;: set masses of body parts
@@ -241,13 +238,10 @@ def playAnimation(Engine,EngineModule,objects,animData):
 def init(Engine,EngineModule,objects):
 	objects.get()["anims"] = {}
 	objects.setUnsavable("anims")
-	Engine.setTimingFactor(7.0)
-	
 
 def guiUpdate(Engine,EngineModule,selection,objects):
 	for k,v in objects.get()["anims"].items():
 		playAnimation(Engine,EngineModule,objects,v)
-
 
 
 def setMasses(Engine,EngineModule,selection,objects,factor):
@@ -263,21 +257,6 @@ def setMasses(Engine,EngineModule,selection,objects,factor):
 
 def keyPressed(Engine,EngineModule,key,selection,objects):
 	pass
-	"""
-	if key == EngineModule.Keys.K_COMMA:
-	if key == EngineModule.Keys.K_PERIOD:
-	if key == EngineModule.Keys.K_SLASH:
-
-	if key == EngineModule.Keys.K_SEMICOLON:
-	if key == EngineModule.Keys.K_APOSTROPHE:
-	if key == EngineModule.Keys.K_BACKSLASH:
-
-	if key == EngineModule.Keys.K_LBRACKET:
-	if key == EngineModule.Keys.K_RBRACKET:
-
-	if key == EngineModule.Keys.K_MINUS:
-	if key == EngineModule.Keys.K_EQUALS:
-	"""
 
 	if key == EngineModule.Keys.K_SPACE:
 		if not "head" in objects.get():
@@ -446,44 +425,3 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 	if key == EngineModule.Keys.K_LBRACKET:
 		print(objects)
 
-	if key == EngineModule.Keys.K_M:
-        #void        dsetContactDistance(float);
-		objectsNumber = Engine.howManyObjects()
-		for i in range(0,objectsNumber):
-			o = Engine.getObject(i)
-
-			if o.isJoint():
-				j = o.isJoint()
-
-				if Engine.isKeyDown(EngineModule.Keys.K_1):
-					j.setMotorOn()
-
-				if Engine.isKeyDown(EngineModule.Keys.K_2):
-					j.setMotorOff()
-
-				if Engine.isKeyDown(EngineModule.Keys.K_3):
-					exp = 38
-					spring = (10 ** exp) * 1.4
-					damping = (10 ** exp) * 1
-					#spring = (10 ** 10) * 1
-					#damping = (10 ** 8) * 1
-
-					j.dsetMotorSpring(spring)
-					j.dsetMotorDamping(damping)
-					j.dsetMotorAccel(True)
-				if Engine.isKeyDown(EngineModule.Keys.K_4):
-					spring = (10 ** 1) * 1
-					damping = (10 ** 1) * 4
-					spring = 2
-					damping = 5
-					j.dsetMotorSpring(spring)
-					j.dsetMotorDamping(damping)
-					j.dsetMotorAccel(True)
-
-				if Engine.isKeyDown(EngineModule.Keys.K_5):
-					spring = (10 ** 15) * 1
-					damping = (10 ** 14) * 1
-					damping = (10 ** 13) * 1
-					j.dsetMotorSpring(spring)
-					j.dsetMotorDamping(damping)
-					j.dsetMotorAccel(False)

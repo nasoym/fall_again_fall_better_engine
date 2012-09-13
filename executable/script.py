@@ -7,13 +7,14 @@ import scripts.temp as temp
 import scripts.navigate as navigate
 import scripts.bonescale as bonescale
 import scripts.select as select
-import scripts.powered_doll as powered_doll
+#import scripts.powered_doll as powered_doll
 import scripts.misc as misc
 import scripts.creators as creators
 import scripts.main as main
 import scripts.anim as anim
 import scripts.serialReader as serialReader
 import scripts.test as test
+import scripts.edit as edit
 
 class Selection(object):
 	def __init__(self):
@@ -100,6 +101,7 @@ modules.append(temp)
 modules.append(creators)
 modules.append(misc)
 modules.append(anim)
+modules.append(edit)
 
 #modules.append(test)
 #modules.append(serialReader)

@@ -4,6 +4,7 @@
 #include "engine.h"
 #include "physic_engine.h"
 #include "physic_shape.h"
+#include "engine_joint.h"
 
 Actor::Actor(Engine* engine) :
 	EngineGuiContainer(engine),
@@ -92,4 +93,40 @@ PhysicShape*		Actor::addCapsule(Vec3& vec3){
     wakeUp();
 	return physicShape;
 }
+
+
+void    Actor::deleteAllJoints() {
+	std::vector<EngineJoint*>::iterator  mJointsIterator;
+	for (mJointsIterator = mJoints.begin(); 
+		mJointsIterator != mJoints.end(); ++mJointsIterator) {
+		delete (*mJointsIterator);
+	}
+	mJoints.clear();
+}
+
+void    Actor::deleteJoint(EngineJoint* joint) {
+	std::vector<EngineJoint*>::iterator  mJointsIterator;
+	for (mJointsIterator = mJoints.begin(); 
+		mJointsIterator != mJoints.end(); ++mJointsIterator) {
+		if ( (*mJointsIterator) == joint ){
+			delete (*mJointsIterator);
+			mJoints.erase( mJointsIterator);
+			break;
+		}
+	}
+}
+
+int     Actor::howManyJoints() {
+	return mJoints.size();
+}
+
+void    Actor::addJoint(EngineJoint* joint){
+	mJoints.push_back(joint);
+}
+
+EngineJoint*  Actor::getJoint(int index) {
+	return mJoints[index];
+}
+
+
 

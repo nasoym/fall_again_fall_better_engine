@@ -13,14 +13,10 @@ PhysicJoint::PhysicJoint(PhysicsEngine* engine,Actor* actor1,Actor* actor2):
         mDMotorAccel(true),
         mDContactDistance(0.01f)
     {
-    mActor1->addJoint(this);
-    mActor2->addJoint(this);
     createJoint();
 }
 
 PhysicJoint::~PhysicJoint(){
-    mActor1->deleteJoint(this);
-    mActor2->deleteJoint(this);
     unregisterJoint();
 }
 

@@ -1,4 +1,12 @@
 
+
+def howIsBodyConnectedToJoint(body,joint):
+	if joint.getBody1().readUuid() == body.readUuid():
+		return 1
+	elif joint.getBody2().readUuid() == body.readUuid():
+		return 2
+	return 0
+
 def getBodyJointAnchorSizePos(body,joint):
 	if joint.getBody1().readUuid() == body.readUuid():
 		return joint.getAnchor1Size()
@@ -36,17 +44,15 @@ def isBodyJointConnected(body,joint):
 		return True
 	elif joint.getBody2().readUuid() == body.readUuid():
 		return True
-	else:
-		print("body is not 1 or 2")
 	return False
 
 def getBodyJoint(selection):
 	body = None
 	joint = None
 	if len(selection) == 2:
-		if selection[0].isBody():
+		if selection[0].isActor():
 			body = selection[0]
-		if selection[1].isBody():
+		if selection[1].isActor():
 			body = selection[1]
 		if selection[0].isJoint():
 			joint = selection[0]
