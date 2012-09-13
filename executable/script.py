@@ -14,6 +14,7 @@ import scripts.anim as anim
 import scripts.serialReader as serialReader
 import scripts.test as test
 import scripts.edit as edit
+import scripts.operations as operations
 
 class Selection(object):
 	def __init__(self):
@@ -100,6 +101,7 @@ modules.append(creators)
 modules.append(misc)
 modules.append(anim)
 modules.append(edit)
+modules.append(operations)
 
 #modules.append(test)
 #modules.append(serialReader)

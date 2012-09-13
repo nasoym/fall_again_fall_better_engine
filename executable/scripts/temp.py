@@ -36,6 +36,24 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 
 	if key == EngineModule.Keys.K_PERIOD:
 		pass
+		print(type(EngineModule.Vec3()))
+		print(type(EngineModule.Quat()))
+
+		v = EngineModule.Vec3()
+		q = EngineModule.Quat()
+
+		if type(v) == EngineModule.Vec3:
+			print("is Vector")
+		if type(q) == EngineModule.Quat:
+			print("is Quat")
+
+		if type(q) == EngineModule.Vec3:
+			print("is Vector ?")
+		if type(v) == EngineModule.Quat:
+			print("is Quat ?")
+
+		
+
 		#Engine.setTimingFactor(0.0001)
 		#print("timingfactor: " +str(Engine.getTimingFactor()))
 		#Engine.simulatePhysics(1.0/60.0)
@@ -117,12 +135,12 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 		a = Engine.createStaticActor()
 		s = a.addCapsule(EngineModule.Vec3(60,20,20))
 		a.setPosition(EngineModule.Vec3(0,100,0))
-		"""
 
 		a = Engine.createDynamicActor()
 		s = a.addCapsule(EngineModule.Vec3(60,20,20))
 		s = a.addBox(EngineModule.Vec3(60,20,20))
 		s.setLocalPosition(EngineModule.Vec3(0,10,0))
+		"""
 
 		#s = a.addBox(EngineModule.Vec3(60,20,20))
 		#s = a.addSphere(EngineModule.Vec3(60,20,20))

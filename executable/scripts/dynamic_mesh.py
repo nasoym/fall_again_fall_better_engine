@@ -74,13 +74,31 @@ def getClosestBoneParentBody(Engine,EngineModule,mesh,boneName):
 		else:
 			return getClosestBoneParentBody(Engine,EngineModule,mesh,boneParentName)
 
-def calcBoneLocalOrientation(Engien,EngineModule,mesh,boneName):
+def calcBoneLocalOrientation(Engine,EngineModule,mesh,boneName):
 	boneLocalOrientation = mesh.getBoneNameLocalOrientation(boneName)
 	localOrientationAxis = boneLocalOrientation.toAxis()
 	localOrientationAngle = boneLocalOrientation.toAngle()
 	rotatedOrientationAxis = EngineModule.Quat().fromAngles(0,0,-90) * localOrientationAxis
 	rotatedLocalOrientation = EngineModule.Quat().fromAngleAxis(localOrientationAngle,rotatedOrientationAxis)
 	return rotatedLocalOrientation
+
+
+def calcFinalBoneLocalOrientation(Engine,EngineModule,mesh,boneName):
+	boneLocalRotation = calcBoneLocalOrientation(Engine,EngineModule,mesh,boneName)
+	boneParentName = mesh.getBoneNameParentName(boneName)
+	if boneParentName == "":
+		pass
+	else:
+		boneParentBody = mesh.getBodyOfBoneName(boneParentName)
+		if boneParentBody:
+			pass
+		else:
+			boneParentLocalRotation = calcBoneLocalOrientation(Engine,EngineModule,mesh,boneParentName)
+			boneLocalRotation = boneParentLocalRotation * boneLocalRotation
+			#boneLocalRotation = boneLocalRotation * boneParentLocalRotation
+
+	return boneLocalRotation
+	
 
 
 def createBoneBody(Engine,EngineModule,mesh,boneName):
@@ -127,7 +145,8 @@ def createBoneBody(Engine,EngineModule,mesh,boneName):
 			joint = Engine.createJoint(boneParentBody,boneBody)
 
 			globalAnchor = bonePosition - (boneOrientation * EngineModule.Vec3(boneLength,0,0) )
-			boneLocalRotation = calcBoneLocalOrientation(Engine,EngineModule,mesh,boneName)
+			#boneLocalRotation = calcBoneLocalOrientation(Engine,EngineModule,mesh,boneName)
+			boneLocalRotation = calcFinalBoneLocalOrientation(Engine,EngineModule,mesh,boneName)
 
 			parentLocalAnchor = (boneParentBody.getOrientation().inverse() * 
 				(globalAnchor - boneParentBody.getPosition()))

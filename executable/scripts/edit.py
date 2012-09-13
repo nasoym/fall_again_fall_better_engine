@@ -7,28 +7,28 @@
 	t: translate
 	y: scale
 	u: select next
-	o: add shape
 """
 
 import bodyjoint
 import helpers
 
+def storeOperation(text):
+	f = open("operations.txt","a")
+	f.write(text + "\n")
+	f.close()
+
+def storeBodyJointOperation(EngineModule,method,body,joint,value):
+	text = method + "(Engine,EngineModule,"
+	text += "bodyName='" + body.getName() + "'"
+	text += ",jointName='" + joint.getName() + "'"
+	if type(value) == EngineModule.Vec3:
+		text += ",vector=EngineModule.Vec3(" + str(value) + "))"
+	if type(value) == EngineModule.Quat:
+		text += ",quaternion=EngineModule.Quat(" + str(value) + "))"
+	storeOperation(text)
+
 def keyPressed(Engine,EngineModule,key,selection,objects):
 
-	if key == EngineModule.Keys.K_O:
-		if len(selection.get()) == 1:
-			if selection.get()[0].isActor(): 
-				o = selection.get()[0]
-				size = EngineModule.Vec3(10,10,10)
-				if Engine.isKeyDown(EngineModule.Keys.K_1):
-					shape = o.addBox(size)
-				if Engine.isKeyDown(EngineModule.Keys.K_2):
-					shape = o.addCapsule(size)
-				if Engine.isKeyDown(EngineModule.Keys.K_3):
-					shape = o.addSphere(size)
-
-				selection.clear()
-				selection.add(shape)
 
 	if key == EngineModule.Keys.K_R:
 		print("rotate")
@@ -53,9 +53,6 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 				if Engine.isKeyDown(EngineModule.Keys.K_0):
 					o.setLocalOrientation(EngineModule.Quat())
 
-				f = open("operations.txt","a")
-				f.write("rotate physic shape\n")
-				f.close()
 
 			elif o.isGuiShape():
 				print("found guishape")
@@ -93,14 +90,16 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 					print("rotate joint motor target")
 					angle = helpers.getModifiedQuaternion(Engine,EngineModule,10)
 					motorTarget = joint.getMotorTarget() * angle
-					joint.setMotorTarget(motorTarget)
-
 					if Engine.isKeyDown(EngineModule.Keys.K_0):
 						print("reset motor target")
-						joint.setMotorTarget(EngineModule.Quat())
-
+						motorTarget = EngineModule.Quat()
+					joint.setMotorTarget(motorTarget)
 					if joint.isMotorOn():
 						joint.setMotorOn()
+					text = "setMotorTarget(Engine,EngineModule,"
+					text += "jointName='" + joint.getName() + "'"
+					text += ",quaternion=EngineModule.Quat(" + str(motorTarget) + "))"
+					storeOperation(text)
 
 			else:
 				print("found too many connected joints and bodies")
@@ -138,11 +137,9 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 					print("move joint pos in rel to body")
 					vector = helpers.getModifiedVector(Engine,EngineModule,0.1)
 					currentJointPos = bodyjoint.getBodyJointAnchorSizePos(body,joint)
-					bodyjoint.bodyJointScaleJointPos(body,joint, 
-						currentJointPos + vector
-						)
-					if Engine.isKeyDown(EngineModule.Keys.K_0):
-						pass
+					newValue = currentJointPos + vector
+					bodyjoint.bodyJointScaleJointPos(body,joint,newValue)
+					storeBodyJointOperation(EngineModule,"bodyJointScaleJointPos",body,joint,newValue)
 
 				elif body and not joint:
 					print("found single body")	
@@ -191,9 +188,9 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 					print("found body and joint")	
 					print("scale body with regards of joints")
 					vector = helpers.getModifiedVector(Engine,EngineModule,0.1)
-					bodyjoint.bodyJointScaleBody(body,joint,
-						body.getSize() * (EngineModule.Vec3(1,1,1) + vector)
-						)
+					newValue = body.getSize() * (EngineModule.Vec3(1,1,1) + vector)
+					bodyjoint.bodyJointScaleBody(body,joint,newValue)
+					storeBodyJointOperation(EngineModule,"bodyJointScaleBody",body,joint,newValue)
 
 				elif body and not joint:
 					print("found single body")	
@@ -228,6 +225,11 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 					print("changed limits: y: " + str(oldY) + "-" + 
 						str(yLimit) + " z: " + str(oldZ) + "-" + 
 						str(zLimit))
+
+					text = "setLimits(Engine,EngineModule,"
+					text += "jointName='" + joint.getName() + "'"
+					text += ",y=" + str(yLimit) + ",z=" + str(zLimit) + ")"
+					storeOperation(text)
 
 					joint.setLimits(yLimit,zLimit)
 
