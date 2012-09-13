@@ -115,6 +115,99 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 
 				Engine.physicPauseToggle()
 
+				objects.appendList("uleg", o.getBodyOfBoneName("uleg-l"))
+				objects.appendList("uleg", o.getBodyOfBoneName("uleg-r"))
+
+				objects.appendList("lleg", o.getBodyOfBoneName("lleg-l"))
+				objects.appendList("lleg", o.getBodyOfBoneName("lleg-r"))
+
+				objects.appendList("uarm", o.getBodyOfBoneName("uarm-l"))
+				objects.appendList("uarm", o.getBodyOfBoneName("uarm-r"))
+
+				objects.appendList("larm", o.getBodyOfBoneName("larm-l"))
+				objects.appendList("larm", o.getBodyOfBoneName("larm-r"))
+
+				objects.appendList("hand", o.getBodyOfBoneName("hand-l"))
+				objects.appendList("hand", o.getBodyOfBoneName("hand-r"))
+
+				objects.appendList("hand", o.getBodyOfBoneName("thumb-high-l"))
+				objects.appendList("hand", o.getBodyOfBoneName("finger-index-high-l"))
+				objects.appendList("hand", o.getBodyOfBoneName("finger-middle-high-l"))
+				objects.appendList("hand", o.getBodyOfBoneName("finger-ring-high-l"))
+				objects.appendList("hand", o.getBodyOfBoneName("finger-little-high-l"))
+
+				objects.appendList("hand", o.getBodyOfBoneName("thumb-high-r"))
+				objects.appendList("hand", o.getBodyOfBoneName("finger-index-high-r"))
+				objects.appendList("hand", o.getBodyOfBoneName("finger-middle-high-r"))
+				objects.appendList("hand", o.getBodyOfBoneName("finger-ring-high-r"))
+				objects.appendList("hand", o.getBodyOfBoneName("finger-little-high-r"))
+
+				objects.appendList("feet", o.getBodyOfBoneName("foot-l"))
+				objects.appendList("feet", o.getBodyOfBoneName("foot-r"))
+
+				objects.appendList("feet", o.getBodyOfBoneName("toes-l"))
+				objects.appendList("feet", o.getBodyOfBoneName("toes-r"))
+
+				objects.appendList("shoulder", o.getBodyOfBoneName("shoulder-l"))
+				objects.appendList("shoulder", o.getBodyOfBoneName("shoulder-r"))
+
+				objects.appendList("root", o.getBodyOfBoneName("root"))
+				objects.appendList("belly", o.getBodyOfBoneName("belly"))
+				objects.appendList("breast", o.getBodyOfBoneName("cheast"))
+				objects.appendList("breast", o.getBodyOfBoneName("breast"))
+				objects.appendList("neck", o.getBodyOfBoneName("neck"))
+				objects.appendList("head", o.getBodyOfBoneName("head"))
+
+
+
+
+
+
+				objects.appendList("uleg-joint", o.getJointOfBoneName("uleg-l"))
+				objects.appendList("uleg-joint", o.getJointOfBoneName("uleg-r"))
+
+				objects.appendList("lleg-joint", o.getJointOfBoneName("lleg-l"))
+				objects.appendList("lleg-joint", o.getJointOfBoneName("lleg-r"))
+
+				objects.appendList("uarm-joint", o.getJointOfBoneName("uarm-l"))
+				objects.appendList("uarm-joint", o.getJointOfBoneName("uarm-r"))
+
+				objects.appendList("larm-joint", o.getJointOfBoneName("larm-l"))
+				objects.appendList("larm-joint", o.getJointOfBoneName("larm-r"))
+
+				objects.appendList("hand-joint", o.getJointOfBoneName("hand-l"))
+				objects.appendList("hand-joint", o.getJointOfBoneName("hand-r"))
+
+				objects.appendList("hand-joint", o.getJointOfBoneName("thumb-high-l"))
+				objects.appendList("hand-joint", o.getJointOfBoneName("finger-index-high-l"))
+				objects.appendList("hand-joint", o.getJointOfBoneName("finger-middle-high-l"))
+				objects.appendList("hand-joint", o.getJointOfBoneName("finger-ring-high-l"))
+				objects.appendList("hand-joint", o.getJointOfBoneName("finger-little-high-l"))
+
+				objects.appendList("hand-joint", o.getJointOfBoneName("thumb-high-r"))
+				objects.appendList("hand-joint", o.getJointOfBoneName("finger-index-high-r"))
+				objects.appendList("hand-joint", o.getJointOfBoneName("finger-middle-high-r"))
+				objects.appendList("hand-joint", o.getJointOfBoneName("finger-ring-high-r"))
+				objects.appendList("hand-joint", o.getJointOfBoneName("finger-little-high-r"))
+
+				objects.appendList("foot-joint", o.getJointOfBoneName("foot-l"))
+				objects.appendList("foot-joint", o.getJointOfBoneName("foot-r"))
+
+				objects.appendList("foot-joint", o.getJointOfBoneName("toes-l"))
+				objects.appendList("foot-joint", o.getJointOfBoneName("toes-r"))
+
+				objects.appendList("shoulder-joint", o.getJointOfBoneName("shoulder-l"))
+				objects.appendList("shoulder-joint", o.getJointOfBoneName("shoulder-r"))
+
+				objects.appendList("belly-joint", o.getJointOfBoneName("belly"))
+				objects.appendList("breast-joint", o.getJointOfBoneName("cheast"))
+				objects.appendList("breast-joint", o.getJointOfBoneName("breast"))
+				objects.appendList("neck-joint", o.getJointOfBoneName("neck"))
+				objects.appendList("head-joint", o.getJointOfBoneName("head"))
+
+
+
+
 def addMeshGround(Engine,EngineModule,mesh):
 	body14 = mesh.getBodyOfBoneName("toes-r")
 	body13 = mesh.getBodyOfBoneName("toes-l")

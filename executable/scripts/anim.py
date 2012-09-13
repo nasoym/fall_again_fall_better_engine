@@ -41,8 +41,6 @@ FallingAnim = [
 		"foot-joint",
 		"lleg-joint",
 		"uleg-joint",
-		#"hip-joint",
-		#"root-joint",
 		#"belly-joint"
 		#"breast-joint",
 		#"shoulder-joint",
@@ -76,8 +74,6 @@ FallingAnim = [
 		#"foot-joint",
 		"lleg-joint",
 		"uleg-joint",
-		#"hip-joint",
-		#"root-joint",
 		#"belly-joint",
 		"breast-joint",
 		"shoulder-joint",
@@ -94,8 +90,6 @@ FallingAnim = [
 			groupPart.setMotorValues(FallingSpring,FallingDamping,True))],
 		},
 	{'groups':[
-		"hip-joint",
-		"root-joint",
 		"belly-joint",
 		"foot-joint"
 		],
@@ -109,8 +103,6 @@ FallingAnim = [
 		"foot-joint",
 		"lleg-joint",
 		"uleg-joint",
-		"hip-joint",
-		"root-joint",
 		"belly-joint",
 		"breast-joint",
 		"shoulder-joint",
@@ -160,13 +152,6 @@ RisingAnim = [
 			groupPart.setMotorValues(RisingStandSpring,RisingStandDamping,True))]
 		},
 
-	{'groups':["hip-joint","root-joint"],
-		'time':RisingAnimTime,
-		'start':[(lambda Engine,EngineModule,objects,groupPart:
-			groupPart.setMotorValues(RisingSpring,RisingDamping,True))],
-		'end':[(lambda Engine,EngineModule,objects,groupPart:
-			groupPart.setMotorValues(RisingStandSpring,RisingStandDamping,True))]
-		},
 	{'groups':["belly-joint"],
 		'time':RisingAnimTime,
 		'start':[(lambda Engine,EngineModule,objects,groupPart:
@@ -245,7 +230,7 @@ def guiUpdate(Engine,EngineModule,selection,objects):
 
 
 def setMasses(Engine,EngineModule,selection,objects,factor):
-	parts = ["feet","lleg","uleg","hip","root","belly",
+	parts = ["feet","lleg","uleg","root","belly",
 		"breast","shoulder","neck","uarm","larm","head","hand"]
 	for p in parts:
 		bodyList = objects.get()[p]
@@ -367,7 +352,7 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 
 
 	if key == EngineModule.Keys.K_SEMICOLON:
-		parts = ["feet","lleg","uleg","hip","root","belly",
+		parts = ["feet","lleg","uleg","root","belly",
 			"breast","shoulder","neck","uarm","larm","head","hand"]
 		i = len(parts)
 		print("resetting body masses")
