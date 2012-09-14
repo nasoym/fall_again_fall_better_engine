@@ -7,6 +7,22 @@ import createobjects as create
 import helpers
 import datetime
 
+"""
+if key == EngineModule.Keys.K_COMMA:
+if key == EngineModule.Keys.K_PERIOD:
+if key == EngineModule.Keys.K_SLASH:
+
+if key == EngineModule.Keys.K_SEMICOLON:
+if key == EngineModule.Keys.K_APOSTROPHE:
+if key == EngineModule.Keys.K_BACKSLASH:
+
+if key == EngineModule.Keys.K_LBRACKET:
+if key == EngineModule.Keys.K_RBRACKET:
+
+if key == EngineModule.Keys.K_MINUS:
+if key == EngineModule.Keys.K_EQUALS:
+"""
+
 def keyDown(Engine,EngineModule,key,selection,objects):
 	pass
 
@@ -40,64 +56,18 @@ def readMasses(Engine,EngineModule,bodies):
 			else:
 				print(bodyName + " : " + str(bodyMass))
 
+def printFps(Engine):
+	if not Engine.getTimeDifference() == 0:
+		print("fps: " + str(float(1000.0 / Engine.getTimeDifference())))
+	else:
+		print("fps: 0")
 
 def keyPressed(Engine,EngineModule,key,selection,objects):
-	"""
-	if key == EngineModule.Keys.K_COMMA:
-	if key == EngineModule.Keys.K_PERIOD:
-	if key == EngineModule.Keys.K_SLASH:
-
-	if key == EngineModule.Keys.K_SEMICOLON:
-	if key == EngineModule.Keys.K_APOSTROPHE:
-	if key == EngineModule.Keys.K_BACKSLASH:
-
-	if key == EngineModule.Keys.K_LBRACKET:
-	if key == EngineModule.Keys.K_RBRACKET:
-
-	if key == EngineModule.Keys.K_MINUS:
-	if key == EngineModule.Keys.K_EQUALS:
-	"""
 
 	if key == EngineModule.Keys.K_COMMA:
-		"""
-		if not Engine.getTimeDifference() == 0:
-			print("fps: " + str(float(1000.0 / Engine.getTimeDifference())))
-		else:
-			print("fps: 0")
-			"""
-
 		"""
 		parts = ["feet","lleg","uleg","root","belly",
 			"breast","shoulder","neck","uarm","larm","head","hand"]
-
-		parts = ["feet","lleg","uleg","root","belly",
-			"breast","neck","head"]
-		group = {}
-		for p in parts:
-			bodyList = objects.get()[p]
-			for b in bodyList:
-				group[p] = b
-				print(str(p) + " - " + str(b))
-				break
-		print(str(group))
-		for p in parts:
-			b = group[p]
-			print(str(p) + " - " + str(b))
-			print(b.getMass())
-
-		print("now the group ------------")
-		for i in range(0,len(parts)):
-			b = group[parts[i]]
-			print(str(p) + " - " + str(b))
-			print(b.getMass())
-			print(b.getName())
-			if i > 0:
-				otherMass = group[parts[i-1]].getMass()
-				factor = b.getMass() / otherMass
-				print("factor: " + str(factor))
-				helpers.storeOperation(str(parts[i]) + " : " + str(b.getName()))
-				"""
-
 
 		#bodies = ["Bone.012", "Bone.010", "Bone", "Bone.002", "Bone.003", "Bone.007", "Bone.008"]
 		helpers.storeOperation(str(datetime.datetime.now()))
@@ -114,29 +84,20 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 			for b in bodyList:
 				newMass = b.getMass() * 0.01
 				b.setMass(newMass)
-
-
-
-		"""
-		print("---------mass relationships----------------")
-		helpers.storeOperation("---------mass relationships----------------")
-		for i in range(0,len(bodies)):
-			bodyName = bodies[i]
-			print(bodyName)
-			body = helpers.getBodyFromName(Engine,EngineModule,bodyName)
-			#body.resetMass()
-			bodyMass = body.getMass()
-			if i > 0:
-				otherBodyName = bodies[i-1]
-				otherBody = helpers.getBodyFromName(Engine,EngineModule,otherBodyName)
-				otherBodyMass = otherBody.getMass()
-
-				factor = bodyMass / otherBodyMass
-				helpers.storeOperation(bodyName + " : " + str(bodyMass) + " * " + str(factor))
-				body.setMass( otherBodyMass * 1.5);
-			else:
-				helpers.storeOperation(bodyName + " : " + str(bodyMass))
 				"""
+
+
+		objectsNumber = Engine.howManyObjects()
+		for i in range(0,objectsNumber):
+			o = Engine.getObject(i)
+			if o.isStaticActor():
+				helpers.storeOperation("static: " + 
+					"EngineModule.Vec3(" + str(o.getPosition()) + ") EngineModule.Quat(" +
+					str(o.getOrientation()) + ")"
+					)
+
+
+
 
 
 	if key == EngineModule.Keys.K_PERIOD:

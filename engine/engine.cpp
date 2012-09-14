@@ -309,7 +309,6 @@ void Engine::setup(){
     //mLogger->createLog("ogre.log",true,false,true);
     mLogger->createLog("ogre.log",true,false,false);
 
-	//root = new Root("","");
 	mRoot = new Root();
     setupResources();
 
@@ -336,7 +335,6 @@ void Engine::setup(){
 	//mWindow = mRoot->createRenderWindow("main window",400,400,false);
 
     mSceneMgr = mRoot->createSceneManager(ST_GENERIC, "ExampleSMInstance");
-    //mSceneMgr->setAmbientLight(ColourValue(0.4,0.4,0.2));
     mSceneMgr->setAmbientLight(ColourValue(0.2,0.2,0.2));
 
 	mSceneMgr->setShadowTechnique(
@@ -353,7 +351,6 @@ void Engine::setup(){
 	//LiSPSMShadowCameraSetup *camSetup = new LiSPSMShadowCameraSetup();
 	PSSMShadowCameraSetup *camSetup = new PSSMShadowCameraSetup();
 	mSceneMgr->setShadowCameraSetup(ShadowCameraSetupPtr(camSetup));
-
 	//mSceneMgr->setShadowTextureSelfShadow(true);
     mSceneMgr->setShadowColour(ColourValue(0.5,0.5,0.5));
 
@@ -371,16 +368,11 @@ void Engine::setup(){
 
     // Create one viewport, entire window
     mViewport = mWindow->addViewport(mCamera);
-    //mViewport->setBackgroundColour(ColourValue(0.5,0.3,0.2));
     mViewport->setBackgroundColour(ColourValue(0,0,0));
-    //mViewport->setBackgroundColour(ColourValue(0.395,0.395,0.395));
-    // Alter the camera aspect ratio to match the viewport
     mCamera->setAspectRatio( Real(mViewport->getActualWidth()) / Real(mViewport->getActualHeight()));
-
 
     Light * light3 = mSceneMgr->createLight("MainLight3");
 	light3->setType(Light::LT_DIRECTIONAL);
-    //light3->setPosition(-200,200,-200);
 	light3->setDiffuseColour(0.2,0.2,0.2);
 	light3->setSpecularColour(0.5,0.5,0.5);
 	light3->setDirection(Vector3(0,-1,1));
@@ -394,41 +386,6 @@ void Engine::setup(){
 	*/
 
 	mRaySceneQuery = mSceneMgr->createRayQuery(Ray());
-
-
-
-	/*
-	Rectangle2D* rect = new Rectangle2D(true);
-	//rect->setCorners(-1.0, 1.0, 1.0, -1.0);
-	rect->setCorners(-0.3, 0.3, 0.3, -0.3);
-	//rect->setMaterial("Body");
-	rect->setMaterial("red_cyan");
-
-	MaterialPtr	mMaterial = Ogre::MaterialManager::getSingleton().create(
-		"red-box", ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
-	//mMaterial->getTechnique(0)->getPass(0)->setSceneBlending(SBT_TRANSPARENT_ALPHA);
-	//mMaterial->getTechnique(0)->getPass(0)->setDepthWriteEnabled(false);
-	//mMaterial->getTechnique(0)->getPass(0)->setDepthCheckEnabled(false);
-	mMaterial->getTechnique(0)->getPass(0)->setLightingEnabled(false);
-	mMaterial->getTechnique(0)->getPass(0)->setColourWriteEnabled(true);
-	//mMaterial->getTechnique(0)->getPass(0)->setDiffuse(ColourValue(1.0f,0.0f,0.0f,0.5f)); 
-	//mMaterial->getTechnique(0)->getPass(0)->setEmissive(ColourValue(1.0f,0.0f,0.0f,0.5f)); 
-	mMaterial->getTechnique(0)->getPass(0)->setAmbient(ColourValue(1.0f,0.0f,0.0f,0.5f)); 
-    //rect->setMaterial("red-box");
-	 
-	// Render the background before everything else
-	rect->setRenderQueueGroup(RENDER_QUEUE_BACKGROUND);
-
-	// Use infinite AAB to always stay visible
-	AxisAlignedBox aabInf;
-	aabInf.setInfinite();
-	rect->setBoundingBox(aabInf);
-	 
-	// Attach background to the scene
-	SceneNode* node = mSceneMgr->getRootSceneNode()->createChildSceneNode("Background");
-	node->attachObject(rect);
-	*/
-
 
 }
 
@@ -494,7 +451,6 @@ unsigned long Engine::getElapsedTime() {
 	mCurrentTime = mTimer.getMilliseconds();
 	mTimeDifference = mCurrentTime - mLastTime;
 	mLastTime = mCurrentTime;
-    //Logger::debug(format("%1% %2%") % mCurrentTime % timeDifference);
 	return mTimeDifference;
 }
 
