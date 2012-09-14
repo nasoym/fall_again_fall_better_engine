@@ -222,14 +222,23 @@ def addMeshGround(Engine,EngineModule,mesh):
 		finalPos = pos13 + halfpos
 		finalPos.y -= 2
 
-		xySize = (halfpos.x + halfpos.y ) * 5
+		xySize = (halfpos.x + halfpos.y ) * 25
 
-		ground = create.createPhysicStaticBoxStructure(Engine,EngineModule)
+		#ground = create.createPhysicStaticBoxStructure(Engine,EngineModule)
+		#ground.setSize(EngineModule.Vec3(xySize,1,xySize))
+
+		#ground = Engine.createStaticActor()
+		ground = Engine.createStaticActor()
 		ground.setPosition(finalPos)
-		ground.setSize(EngineModule.Vec3(
-			xySize,1,xySize
-			) )
+		shape = ground.addBox(EngineModule.Vec3(xySize,1,xySize))
+		shape.setColour(0,1,0,0.5)
+		shape.setScaling1To1()
+
 		ground.setOrientation(mesh.getOrientation())
+
+
+
+
 
 
 		globalAnchor = body13.getPosition()

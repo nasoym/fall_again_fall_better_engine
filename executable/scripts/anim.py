@@ -248,7 +248,7 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 			return
 
 		fallingMass = 2.0
-		risingMass = 0.01
+		risingMass = 0.0001
 		if not "stand" in objects.get()["anims"]:
 			setMasses(Engine,EngineModule,selection,objects,fallingMass)
 			objects.get()["anims"]["stand"] = {
