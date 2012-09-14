@@ -59,6 +59,17 @@ def setLimits(Engine,EngineModule,jointName,y,z):
 	joint = getJoint(Engine,EngineModule,jointName)
 	joint.setLimits(y,z)
 
+
+def bodyJointAbsoluteRotation(Engine,EngineModule,bodyName,jointName,quaternion):
+	mesh = getMesh(Engine,EngineModule)
+	body = mesh.getBodyOfBoneName(bodyName)
+	joint = getJoint(Engine,EngineModule,jointName)
+	bodyNum = bodyjoint.howIsBodyConnectedToJoint(body,joint)
+	if bodyNum == 1:
+		joint.setAnchor1Orientation(quaternion)
+	if bodyNum == 2:
+		joint.setAnchor2Orientation(quaternion)
+
 def getShapeFromName(Engine,EngineModule,bodyName,shapeName):
 	objectsNumber = Engine.howManyObjects()
 	for i in range(0,objectsNumber):
@@ -269,6 +280,39 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 			setLimits(Engine,EngineModule,jointName='uarm-r-joint',y=35.9999728203,z=35.9999918938)
 			setLimits(Engine,EngineModule,jointName='lleg-r-joint',y=30.9999918938,z=0.99999961853)
 			setLimits(Engine,EngineModule,jointName='shoulder-r-joint',y=25.9999895096,z=25.999994278)
+
+
+
+			bodyJointAbsoluteRotation(Engine,EngineModule,bodyName='larm-l',jointName='larm-l-joint',quaternion=EngineModule.Quat(0.499999940,0.000000000,0.000000000,0.866025567))
+			setLimits(Engine,EngineModule,jointName='larm-l-joint',y=0,z=0)
+
+
+			setMotorTarget(Engine,EngineModule,jointName='lleg-l-joint',quaternion=EngineModule.Quat(1.000000000,0.000000000,0.000000000,0.000000000))
+
+			setLimits(Engine,EngineModule,jointName='lleg-l-joint',y=84.9999713898,z=9.99998855591e-08)
+			setLimits(Engine,EngineModule,jointName='foot-l-joint',y=30.9999775887,z=30.9999895096)
+			setLimits(Engine,EngineModule,jointName='uleg-l-joint',y=45.9999656677,z=45.9999895096)
+			setLimits(Engine,EngineModule,jointName='lleg-l-joint',y=84.9999523163,z=10.0)
+			setMotorTarget(Engine,EngineModule,jointName='lleg-l-joint',quaternion=EngineModule.Quat(0.939692676,0.000000000,-0.342020214,0.000000000))
+			bodyJointAbsoluteRotation(Engine,EngineModule,bodyName='lleg-l',jointName='lleg-l-joint',quaternion=EngineModule.Quat(0.939692855,0.000000000,-0.342020273,0.000000000))
+
+			setLimits(Engine,EngineModule,jointName='lleg-r-joint',y=85.9999370575,z=0.99999961853)
+			setLimits(Engine,EngineModule,jointName='foot-r-joint',y=30.9999895096,z=30.9999918938)
+			setLimits(Engine,EngineModule,jointName='uleg-r-joint',y=45.9999656677,z=45.9999895096)
+			setLimits(Engine,EngineModule,jointName='lleg-r-joint',y=85.9999275208,z=10.9999990463)
+			setMotorTarget(Engine,EngineModule,jointName='lleg-r-joint',quaternion=EngineModule.Quat(0.939692795,0.000000000,-0.342020273,0.000000000))
+			bodyJointAbsoluteRotation(Engine,EngineModule,bodyName='lleg-r',jointName='lleg-r-joint',quaternion=EngineModule.Quat(0.939692676,0.000000000,-0.342020214,0.000000000))
+
+			bodyJointScaleBody(Engine,EngineModule,bodyName='uarm-r',jointName='uarm-r-joint',vector=EngineModule.Vec3(9.443709373,2.297487020,2.297487020))
+			setLimits(Engine,EngineModule,jointName='uarm-r-joint',y=50.9999656677,z=35.9999799728)
+			bodyJointScaleBody(Engine,EngineModule,bodyName='uarm-r',jointName='uarm-r-joint',vector=EngineModule.Vec3(9.443709373,2.274512053,2.527235746))
+			bodyJointAbsoluteRotation(Engine,EngineModule,bodyName='uarm-r',jointName='uarm-r-joint',quaternion=EngineModule.Quat(0.939692676,0.000000000,-0.342020214,0.000000000))
+
+			bodyJointScaleBody(Engine,EngineModule,bodyName='uarm-l',jointName='uarm-l-joint',vector=EngineModule.Vec3(9.443709373,2.297487020,2.297487020))
+			setLimits(Engine,EngineModule,jointName='uarm-l-joint',y=50.9999656677,z=35.9999799728)
+			bodyJointScaleBody(Engine,EngineModule,bodyName='uarm-l',jointName='uarm-l-joint',vector=EngineModule.Vec3(9.443709373,2.274512053,2.527235746))
+			bodyJointAbsoluteRotation(Engine,EngineModule,bodyName='uarm-l',jointName='uarm-l-joint',quaternion=EngineModule.Quat(0.939692676,0.000000000,-0.342020214,0.000000000))
+
 
 
 

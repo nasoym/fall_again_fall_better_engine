@@ -71,16 +71,17 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 					bodyNum = bodyjoint.howIsBodyConnectedToJoint(body,joint)
 					if bodyNum == 1:
 						newOri = joint.getAnchor1Orientation() * angle
-						joint.setAnchor1Orientation(newOri)
 						if Engine.isKeyDown(EngineModule.Keys.K_0):
-							joint.setAnchor1Orientation(EngineModule.Quat())
+							newOri = EngineModule.Quat()
+						joint.setAnchor1Orientation(newOri)
 						#TODO take care of all other joints
 					if bodyNum == 2:
 						newOri = joint.getAnchor2Orientation() * angle
-						joint.setAnchor2Orientation(newOri)
 						if Engine.isKeyDown(EngineModule.Keys.K_0):
-							joint.setAnchor2Orientation(EngineModule.Quat())
+							newOri = EngineModule.Quat()
+						joint.setAnchor2Orientation(newOri)
 						#TODO take care of all other joints
+					storeBodyJointOperation(EngineModule,"bodyJointAbsoluteRotation",body,joint,newOri)
 
 				elif body and not joint:
 					print("found single body")	
