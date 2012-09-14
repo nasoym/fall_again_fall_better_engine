@@ -150,11 +150,19 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 				if body and joint:
 					print("found body and joint")	
 					print("move joint pos in rel to body")
-					vector = helpers.getModifiedVector(Engine,EngineModule,0.1)
-					currentJointPos = bodyjoint.getBodyJointAnchorSizePos(body,joint)
-					newValue = currentJointPos + vector
-					bodyjoint.bodyJointScaleJointPos(body,joint,newValue)
-					storeBodyJointOperation(EngineModule,"bodyJointScaleJointPos",body,joint,newValue)
+
+					if Engine.isKeyDown(EngineModule.Keys.K_9):
+						vector = helpers.getModifiedVector(Engine,EngineModule,0.1)
+						currentJointPos = bodyjoint.getBodyJointAnchorPos(body,joint)
+						newValue = currentJointPos + vector
+						bodyjoint.setBodyJointAnchorPos(body,joint,newValue)
+						storeBodyJointOperation(EngineModule,"setBodyJointAnchorPos",body,joint,newValue)
+					else:
+						vector = helpers.getModifiedVector(Engine,EngineModule,0.1)
+						currentJointPos = bodyjoint.getBodyJointAnchorSizePos(body,joint)
+						newValue = currentJointPos + vector
+						bodyjoint.bodyJointScaleJointPos(body,joint,newValue)
+						storeBodyJointOperation(EngineModule,"bodyJointScaleJointPos",body,joint,newValue)
 
 				elif body and not joint:
 					print("found single body")	
@@ -168,6 +176,8 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 
 				elif joint and not body:
 					print("found single joint")	
+
+
 
 			else:
 				print("found too many connected joints and bodies")

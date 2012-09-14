@@ -315,8 +315,6 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 
 
 
-
-
 			"""
 			addSphere(Engine,EngineModule,bodyName='uarm-l',shapeName='2',size=EngineModule.Vec3(1.000000000,1.000000000,1.000000000),r=0.5,g=0.5,b=0.0,a=0.5)
 			movePhysicShape(Engine,EngineModule,bodyName='uarm-l',shapeName='2',position=EngineModule.Vec3(0.000000000,1.000000000,0.000000000))

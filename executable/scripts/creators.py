@@ -233,18 +233,18 @@ def createFigure(Engine,EngineModule,objects,position,quaternion):
 
 
 def addMeshGround(Engine,EngineModule,mesh):
-	body14 = mesh.getBodyOfBoneName("toes-r")
-	body13 = mesh.getBodyOfBoneName("toes-l")
+	foot_ground_r = mesh.getBodyOfBoneName("toes-r")
+	foot_ground_l = mesh.getBodyOfBoneName("toes-l")
 	ground = None
-	if body13 and body14:
-		pos13 = body13.getPosition()
-		#pos13 += body13.getOrientation() * body13.getSize() 
-		pos14 = body14.getPosition()
-		#pos14 += body14.getOrientation() * body14.getSize() 
+	if foot_ground_l and foot_ground_r:
+		foot_ground_l_position = foot_ground_l.getPosition()
+		#foot_ground_l_position += foot_ground_l.getOrientation() * foot_ground_l.getSize() 
+		foot_ground_r_position = foot_ground_r.getPosition()
+		#foot_ground_r_position += foot_ground_r.getOrientation() * foot_ground_r.getSize() 
 
-		halfpos = pos14 - pos13
+		halfpos = foot_ground_r_position - foot_ground_l_position
 		halfpos = halfpos * EngineModule.Vec3(0.5,0.5,0.5)
-		finalPos = pos13 + halfpos
+		finalPos = foot_ground_l_position + halfpos
 		finalPos.y -= 2
 
 		xySize = (halfpos.x + halfpos.y ) * 2
@@ -260,30 +260,32 @@ def addMeshGround(Engine,EngineModule,mesh):
 		shape.setScaling1To1()
 
 		ground.setOrientation(mesh.getOrientation())
+		ground.setName("ground")
 
 
 
 
 
 
-		globalAnchor = body13.getPosition()
+		globalAnchor = foot_ground_l.getPosition()
 		parentLocalAnchor = ground.getOrientation().inverse() * (globalAnchor - ground.getPosition())
-		bodyPosition = body13.getPosition()
-		bodyPosition += body13.getOrientation() * (body13.getSize() * EngineModule.Vec3(-1,0,0))
-		bodyLocalAnchor = body13.getOrientation().inverse() * (globalAnchor - bodyPosition)
+		bodyPosition = foot_ground_l.getPosition()
+		bodyPosition += foot_ground_l.getOrientation() * (foot_ground_l.getSize() * EngineModule.Vec3(-1,0,0))
+		bodyLocalAnchor = foot_ground_l.getOrientation().inverse() * (globalAnchor - bodyPosition)
 
-		#joint = create.createJoint(Engine,EngineModule,ground,body13)
-		joint = Engine.createJoint(ground,body13)
+		#joint = create.createJoint(Engine,EngineModule,ground,foot_ground_l)
+		joint = Engine.createJoint(ground,foot_ground_l)
 
 		joint.setAnchor1(parentLocalAnchor)
 		joint.setAnchor2(bodyLocalAnchor)
 		#joint.setAnchor1Orientation(EngineModule.Quat().fromAngles(0,0,-90))
 		#joint.setAnchor2Orientation(EngineModule.Quat().fromAngles(90,-90,0))
-		joint.setAnchor1Orientation(body13.getOrientation() * ground.getOrientation().inverse() )
+		joint.setAnchor1Orientation(foot_ground_l.getOrientation() * ground.getOrientation().inverse() )
 		#joint.setLimits(40,40)
 		#joint.setLimits(10,10)
 		#joint.setLimits(1,1)
 		joint.setLimits(0,0)
+		joint.setName("foot-ground-l")
 
 		b = Engine.createGuiBox()
 		b.setColour(0,1,1,0.5)
@@ -291,20 +293,20 @@ def addMeshGround(Engine,EngineModule,mesh):
 		b.setScalingFixed()
 		joint.addShape(b)
 
-		globalAnchor = body14.getPosition()
+		globalAnchor = foot_ground_r.getPosition()
 		parentLocalAnchor = ground.getOrientation().inverse() * (globalAnchor - ground.getPosition())
-		bodyPosition = body14.getPosition()
-		bodyPosition += body14.getOrientation() * (body14.getSize() * EngineModule.Vec3(-1,0,0))
-		bodyLocalAnchor = body14.getOrientation().inverse() * (globalAnchor - bodyPosition)
+		bodyPosition = foot_ground_r.getPosition()
+		bodyPosition += foot_ground_r.getOrientation() * (foot_ground_r.getSize() * EngineModule.Vec3(-1,0,0))
+		bodyLocalAnchor = foot_ground_r.getOrientation().inverse() * (globalAnchor - bodyPosition)
 
-		#joint = create.createJoint(Engine,EngineModule,ground,body14)
-		joint = Engine.createJoint(ground,body14)
+		#joint = create.createJoint(Engine,EngineModule,ground,foot_ground_r)
+		joint = Engine.createJoint(ground,foot_ground_r)
 
 		joint.setAnchor1(parentLocalAnchor)
 		joint.setAnchor2(bodyLocalAnchor)
 		#joint.setAnchor1Orientation(EngineModule.Quat().fromAngles(0,0,-90))
 		#joint.setAnchor2Orientation(EngineModule.Quat().fromAngles(90,-90,0))
-		joint.setAnchor1Orientation(body14.getOrientation() * ground.getOrientation().inverse() )
+		joint.setAnchor1Orientation(foot_ground_r.getOrientation() * ground.getOrientation().inverse() )
 		#joint.setLimits(40,40)
 		#joint.setLimits(10,10)
 		#joint.setLimits(1,1)
