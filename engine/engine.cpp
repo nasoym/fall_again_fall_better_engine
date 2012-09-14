@@ -383,7 +383,7 @@ void Engine::setup(){
     //light3->setPosition(-200,200,-200);
 	light3->setDiffuseColour(0.2,0.2,0.2);
 	light3->setSpecularColour(0.5,0.5,0.5);
-	light3->setDirection(Vector3(0,-1,-1));
+	light3->setDirection(Vector3(0,-1,1));
 
 	/*
     //Entity *ent = mSceneMgr->createEntity("head","cube.mesh");

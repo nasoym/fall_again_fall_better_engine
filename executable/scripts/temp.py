@@ -4,12 +4,42 @@
 	/:
 """
 import createobjects as create
+import helpers
+import datetime
 
 def keyDown(Engine,EngineModule,key,selection,objects):
 	pass
 
 def keyReleased(Engine,EngineModule,key,selection,objects):
 	pass
+
+def calcMasses(Engine,EngineModule,bodies,factor):
+		for i in range(0,len(bodies)):
+			bodyName = bodies[i]
+			body = helpers.getBodyFromName(Engine,EngineModule,bodyName)
+			bodyMass = body.getMass()
+			if i > 0:
+				otherBodyName = bodies[i-1]
+				otherBody = helpers.getBodyFromName(Engine,EngineModule,otherBodyName)
+				otherBodyMass = otherBody.getMass()
+				body.setMass( otherBodyMass * factor);
+
+def readMasses(Engine,EngineModule,bodies):
+		for i in range(0,len(bodies)):
+			bodyName = bodies[i]
+			body = helpers.getBodyFromName(Engine,EngineModule,bodyName)
+			bodyMass = body.getMass()
+			if i > 0:
+				otherBodyName = bodies[i-1]
+				otherBody = helpers.getBodyFromName(Engine,EngineModule,otherBodyName)
+				otherBodyMass = otherBody.getMass()
+				#factor = otherBodyMass / bodyMass
+				factor = bodyMass / otherBodyMass
+
+				print(bodyName + " : " + str(bodyMass) + " * " + str(factor))
+			else:
+				print(bodyName + " : " + str(bodyMass))
+
 
 def keyPressed(Engine,EngineModule,key,selection,objects):
 	"""
@@ -29,13 +59,92 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 	"""
 
 	if key == EngineModule.Keys.K_COMMA:
+		"""
 		if not Engine.getTimeDifference() == 0:
 			print("fps: " + str(float(1000.0 / Engine.getTimeDifference())))
 		else:
 			print("fps: 0")
+			"""
+
+		"""
+		parts = ["feet","lleg","uleg","root","belly",
+			"breast","shoulder","neck","uarm","larm","head","hand"]
+
+		parts = ["feet","lleg","uleg","root","belly",
+			"breast","neck","head"]
+		group = {}
+		for p in parts:
+			bodyList = objects.get()[p]
+			for b in bodyList:
+				group[p] = b
+				print(str(p) + " - " + str(b))
+				break
+		print(str(group))
+		for p in parts:
+			b = group[p]
+			print(str(p) + " - " + str(b))
+			print(b.getMass())
+
+		print("now the group ------------")
+		for i in range(0,len(parts)):
+			b = group[parts[i]]
+			print(str(p) + " - " + str(b))
+			print(b.getMass())
+			print(b.getName())
+			if i > 0:
+				otherMass = group[parts[i-1]].getMass()
+				factor = b.getMass() / otherMass
+				print("factor: " + str(factor))
+				helpers.storeOperation(str(parts[i]) + " : " + str(b.getName()))
+				"""
+
+
+		#bodies = ["Bone.012", "Bone.010", "Bone", "Bone.002", "Bone.003", "Bone.007", "Bone.008"]
+		helpers.storeOperation(str(datetime.datetime.now()))
+		bodies = ["toes-l", "foot-l", "lleg-l", "uleg-l", "root", "belly", "cheast", "breast", "neck", "head"]
+		calcMasses(Engine,EngineModule,bodies,0.7)
+
+		bodies = ["toes-r", "foot-r", "lleg-r", "uleg-r", "root", "belly", "cheast", "breast", "neck", "head"]
+		calcMasses(Engine,EngineModule,bodies,0.7)
+
+		parts = ["feet","lleg","uleg","root","belly",
+			"breast","shoulder","neck","uarm","larm","head","hand"]
+		for p in parts:
+			bodyList = objects.get()[p]
+			for b in bodyList:
+				newMass = b.getMass() * 0.01
+				b.setMass(newMass)
+
+
+
+		"""
+		print("---------mass relationships----------------")
+		helpers.storeOperation("---------mass relationships----------------")
+		for i in range(0,len(bodies)):
+			bodyName = bodies[i]
+			print(bodyName)
+			body = helpers.getBodyFromName(Engine,EngineModule,bodyName)
+			#body.resetMass()
+			bodyMass = body.getMass()
+			if i > 0:
+				otherBodyName = bodies[i-1]
+				otherBody = helpers.getBodyFromName(Engine,EngineModule,otherBodyName)
+				otherBodyMass = otherBody.getMass()
+
+				factor = bodyMass / otherBodyMass
+				helpers.storeOperation(bodyName + " : " + str(bodyMass) + " * " + str(factor))
+				body.setMass( otherBodyMass * 1.5);
+			else:
+				helpers.storeOperation(bodyName + " : " + str(bodyMass))
+				"""
+
 
 	if key == EngineModule.Keys.K_PERIOD:
 		pass
+		helpers.storeOperation(str(datetime.datetime.now()))
+		bodies = ["toes-l", "foot-l", "lleg-l", "uleg-l", "root", "belly", "cheast", "breast", "neck", "head"]
+		readMasses(Engine,EngineModule,bodies)
+		"""
 		print(type(EngineModule.Vec3()))
 		print(type(EngineModule.Quat()))
 
@@ -51,6 +160,7 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 			print("is Vector ?")
 		if type(v) == EngineModule.Quat:
 			print("is Quat ?")
+			"""
 
 		
 
@@ -159,24 +269,31 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 		"""
 
 	if key == EngineModule.Keys.K_SLASH:
+		parts = ["feet","lleg","uleg","root","belly",
+			"breast","shoulder","neck","uarm","larm","head","hand"]
+		for p in parts:
+			bodyList = objects.get()[p]
+			for b in bodyList:
+				b.resetMass()
 
+		"""
 		print("set Solver Iterations")
 		#for o in selection.get():
 		objectsNumber = Engine.howManyObjects()
 		for i in range(0,objectsNumber):
 			o = Engine.getObject(i)
-			"""
-			if o.isBody():
+			#if o.isBody():
+			if False:
 				b = o.isBody()
 				b.dsetSolverIterations(4,1)
 				#b.dsetSolverIterations(4,4)
 				#b.dsetSolverIterations(32,8)
 				#b.dsetSolverIterations(4,8)
 				#b.dsetSolverIterations(16,1)
-				"""
 			if o.isGuiShape():
 				o.setMaterialName("SSAO/GBuffer")
 				#o.setMaterialName("Body")
+				"""
 
 
 

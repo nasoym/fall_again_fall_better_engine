@@ -14,7 +14,7 @@ random.seed()
 #random.seed(12345)
 random.jumpahead(random.uniform(12345,9994949))
 
-
+import helpers
 
 FallingAnimTime = 1000
 
@@ -239,6 +239,26 @@ def setMasses(Engine,EngineModule,selection,objects,factor):
 			newMass = b.getMass() * factor
 			b.setMass(newMass)
 
+def setMassesList(Engine,EngineModule,selection,objects,factor,parts):
+	for p in parts:
+		bodyList = objects.get()[p]
+		for b in bodyList:
+			#b.resetMass()
+			newMass = b.getMass() * factor
+			#b.setMass(newMass)
+
+def calcMasses(Engine,EngineModule,bodies,factor):
+	for i in range(0,len(bodies)):
+		bodyName = bodies[i]
+		body = helpers.getBodyFromName(Engine,EngineModule,bodyName)
+		if body:
+			bodyMass = body.getMass()
+			if i > 0:
+				otherBodyName = bodies[i-1]
+				otherBody = helpers.getBodyFromName(Engine,EngineModule,otherBodyName)
+				otherBodyMass = otherBody.getMass()
+				body.setMass( otherBodyMass * factor);
+
 
 def keyPressed(Engine,EngineModule,key,selection,objects):
 	pass
@@ -247,20 +267,65 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 		if not "head" in objects.get():
 			return
 
-		fallingMass = 2.0
-		risingMass = 0.0001
+		fallingMass = 1.5
+		risingMass = 0.001
 		if not "stand" in objects.get()["anims"]:
+			print("toggle animation: to falling")
 			setMasses(Engine,EngineModule,selection,objects,fallingMass)
 			objects.get()["anims"]["stand"] = {
 				"name":"falling","index":0,"starttime":Engine.getTime()}
 		else:
 			if objects.get()["anims"]["stand"]["name"] == "falling":
+				print("toggle animation: to rising")
 
-
-				setMasses(Engine,EngineModule,selection,objects,risingMass)
+				#setMasses(Engine,EngineModule,selection,objects,0.01)
 				objects.get()["anims"]["stand"] = {
 					"name":"rising","index":0,"starttime":Engine.getTime()}
+				"""
+				setMassesList(Engine,EngineModule,selection,
+					objects,10,["feet","lleg"])
+				setMassesList(Engine,EngineModule,selection,
+					objects,20,["uleg"])
+
+				setMassesList(Engine,EngineModule,selection,
+					objects,0.02,["root","belly","breast"])
+
+				setMassesList(Engine,EngineModule,selection,
+					objects,0.1,["uarm","larm","hand","shoulder","neck"])
+
+				setMassesList(Engine,EngineModule,selection,
+					objects,0.01,["head"])
+
+				bodies = ["toes-l", "foot-l", "lleg-l", "uleg-l", "root", "belly", "cheast", "breast", "neck", "head","shoulder-l","uarm-l","larm-l","hand-l", "thumb-high-l", "finger-index-high-l", "finger-middle-high-l", "finger-ring-high-l", "finger-little-high-l"]
+				calcMasses(Engine,EngineModule,bodies,0.2)
+
+				bodies = ["toes-r", "foot-r", "lleg-r", "uleg-r", "root", "belly", "cheast", "breast", "neck", "head","shoulder-r","uarm-r","larm-r","hand-r", "thumb-high-r", "finger-index-high-r", "finger-middle-high-r", "finger-ring-high-r", "finger-little-high-r"]
+				calcMasses(Engine,EngineModule,bodies,0.2)
+					"""
+
+
+				parts = ["feet","lleg","uleg","root","belly",
+					"breast","shoulder","neck","uarm","larm","head","hand"]
+				for p in parts:
+					bodyList = objects.get()[p]
+					for b in bodyList:
+						newMass = b.getMass() * 0.5
+						b.setMass(newMass)
+
+				bodies = ["toes-l", "foot-l", "lleg-l", "uleg-l"]
+				calcMasses(Engine,EngineModule,bodies,0.2)
+
+				bodies = ["toes-r", "foot-r", "lleg-r", "uleg-r"]
+				calcMasses(Engine,EngineModule,bodies,0.2)
+
+				bodies = ["uleg-l", "root", "belly", "cheast", "breast", "neck", "head","shoulder-l","uarm-l","larm-l","hand-l", "thumb-high-l", "finger-index-high-l", "finger-middle-high-l", "finger-ring-high-l", "finger-little-high-l"]
+				calcMasses(Engine,EngineModule,bodies,0.5)
+
+				bodies = ["uleg-r", "root", "belly", "cheast", "breast", "neck", "head","shoulder-r","uarm-r","larm-r","hand-r", "thumb-high-r", "finger-index-high-r", "finger-middle-high-r", "finger-ring-high-r", "finger-little-high-r"]
+				calcMasses(Engine,EngineModule,bodies,0.5)
+
 			elif objects.get()["anims"]["stand"]["name"] == "rising":
+				print("toggle animation: to falling")
 
 				"""
 				randRange = 150
@@ -282,6 +347,7 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 
 
 
+				"""
 				partsList = objects.get()["head"]
 				pos = partsList[0].getPosition()
 				lowX = pos.x
@@ -333,6 +399,7 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 						0,random.uniform(-angleRand,angleRand),0) * relVec
 					part.addForce(relVec * random.uniform(minMult,maxMult))
 					#part.addForce(relVec * 0.5)
+					"""
 
 
 

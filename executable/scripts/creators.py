@@ -99,8 +99,9 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 
 			elif Engine.isKeyDown(EngineModule.Keys.K_5):
 				print("create character mesh")
-				o = Engine.createMesh("Character.mesh")
-				o.setName("Character.mesh")
+				o = Engine.createMesh("figure.mesh")
+				#o = Engine.createMesh("Character.mesh")
+				o.setName("figure.mesh")
 				#o = Engine.createMesh("tube.mesh")
 				o.setMaterialName("Body")
 				o.setSize(EngineModule.Vec3(1,1,1)*1000)

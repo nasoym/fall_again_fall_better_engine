@@ -1,5 +1,14 @@
 import bodyjoint
 
+def getBodyFromName(Engine,EngineModule,bodyName):
+	objectsNumber = Engine.howManyObjects()
+	for i in range(0,objectsNumber):
+		o = Engine.getObject(i)
+		if o.isActor():
+			if o.getName() == bodyName:
+				return o
+	return None
+
 def storeOperation(text):
 	f = open("operations.txt","a")
 	f.write(text + "\n")
