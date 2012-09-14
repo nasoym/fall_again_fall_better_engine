@@ -11,9 +11,6 @@
 
 import random
 random.seed()
-#random.seed(12345)
-random.jumpahead(random.uniform(12345,9994949))
-
 import helpers
 
 FallingAnimTime = 1000
@@ -120,6 +117,7 @@ FallingAnim = [
 		}
 	]
 
+
 RisingAnimTime = 200
 RisingAnimTime = 150
 exp=38
@@ -181,45 +179,6 @@ animLists={}
 animLists["falling"] = FallingAnim
 animLists["rising"] = RisingAnim
 
-
-def runMethods(Engine,EngineModule,objects,animList,index,methodName):
-	for groupName in animList[index]['groups']:
-		partsList = objects.get()[groupName]
-		#print("group: " + str(groupName))
-		for part in partsList:
-			methods = animList[index][methodName]
-			for method in methods:
-				method(Engine,EngineModule,objects,part)
-
-def playAnimation(Engine,EngineModule,objects,animData):
-	animName = animData["name"]
-	if animName in animLists:
-		startTime = animData["starttime"]
-		animIndex = animData["index"]
-		animList = animLists[animName]
-		animListSize = len(animList)
-		currentTime = Engine.getTime()
-		if animIndex < animListSize:
-			endTime = startTime + animList[animIndex]['time']
-			if ((currentTime > startTime) and
-				(currentTime < endTime)):
-				if animIndex != 0:
-					#print("run anim end: " + str(animName) + " index : " + str(animIndex-1))
-					runMethods(Engine,EngineModule,
-						objects,animList,animIndex-1,"end")
-				#print("run anim start: " + str(animName) + " index : " + str(animIndex))
-				runMethods(Engine,EngineModule,
-					objects,animList,animIndex,"start")
-				animData["index"] = animIndex + 1
-				animData["starttime"] = endTime
-		elif animIndex == animListSize:
-			if currentTime > startTime:
-				#print("run anim end: " + str(animName) + " index : " + str(animIndex-1))
-				runMethods(Engine,EngineModule,
-					objects,animList,animIndex-1,"end")
-				animData["index"] = animIndex + 1
-				#print("done")
-
 def init(Engine,EngineModule,objects):
 	objects.get()["anims"] = {}
 	objects.setUnsavable("anims")
@@ -228,59 +187,28 @@ def guiUpdate(Engine,EngineModule,selection,objects):
 	for k,v in objects.get()["anims"].items():
 		playAnimation(Engine,EngineModule,objects,v)
 
-
-def setMasses(Engine,EngineModule,selection,objects,factor):
-	parts = ["feet","lleg","uleg","root","belly",
-		"breast","shoulder","neck","uarm","larm","head","hand"]
-	for p in parts:
-		bodyList = objects.get()[p]
-		for b in bodyList:
-			b.resetMass()
-			newMass = b.getMass() * factor
-			b.setMass(newMass)
-
-def setMassesList(Engine,EngineModule,selection,objects,factor,parts):
-	for p in parts:
-		bodyList = objects.get()[p]
-		for b in bodyList:
-			#b.resetMass()
-			newMass = b.getMass() * factor
-			#b.setMass(newMass)
-
-def calcMasses(Engine,EngineModule,bodies,factor):
-	for i in range(0,len(bodies)):
-		bodyName = bodies[i]
-		body = helpers.getBodyFromName(Engine,EngineModule,bodyName)
-		if body:
-			bodyMass = body.getMass()
-			if i > 0:
-				otherBodyName = bodies[i-1]
-				otherBody = helpers.getBodyFromName(Engine,EngineModule,otherBodyName)
-				otherBodyMass = otherBody.getMass()
-				body.setMass( otherBodyMass * factor);
-
-
 def keyPressed(Engine,EngineModule,key,selection,objects):
-	pass
+	allbodies = ["toes-l", "foot-l", "lleg-l", "uleg-l", "root", "belly", "cheast", "breast", "neck", "head","shoulder-l","uarm-l","larm-l","hand-l", "thumb-high-l", "finger-index-high-l", "finger-middle-high-l", "finger-ring-high-l", "finger-little-high-l"]
 
 	if key == EngineModule.Keys.K_SPACE:
 		if not "head" in objects.get():
 			return
 
 		fallingMass = 1.5
-		risingMass = 0.001
+
 		if not "stand" in objects.get()["anims"]:
 			print("toggle animation: to falling")
-			setMasses(Engine,EngineModule,selection,objects,fallingMass)
 			objects.get()["anims"]["stand"] = {
 				"name":"falling","index":0,"starttime":Engine.getTime()}
+			setMasses(Engine,EngineModule,selection,objects,fallingMass)
 		else:
 			if objects.get()["anims"]["stand"]["name"] == "falling":
 				print("toggle animation: to rising")
-
-				#setMasses(Engine,EngineModule,selection,objects,0.01)
 				objects.get()["anims"]["stand"] = {
 					"name":"rising","index":0,"starttime":Engine.getTime()}
+
+				#setMasses(Engine,EngineModule,selection,objects,0.01)
+
 				"""
 				setMassesList(Engine,EngineModule,selection,
 					objects,10,["feet","lleg"])
@@ -476,4 +404,77 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 
 	if key == EngineModule.Keys.K_LBRACKET:
 		print(objects)
+
+
+
+
+def runMethods(Engine,EngineModule,objects,animList,index,methodName):
+	for groupName in animList[index]['groups']:
+		partsList = objects.get()[groupName]
+		#print("group: " + str(groupName))
+		for part in partsList:
+			methods = animList[index][methodName]
+			for method in methods:
+				method(Engine,EngineModule,objects,part)
+
+def playAnimation(Engine,EngineModule,objects,animData):
+	animName = animData["name"]
+	if animName in animLists:
+		startTime = animData["starttime"]
+		animIndex = animData["index"]
+		animList = animLists[animName]
+		animListSize = len(animList)
+		currentTime = Engine.getTime()
+		if animIndex < animListSize:
+			endTime = startTime + animList[animIndex]['time']
+			if ((currentTime > startTime) and
+				(currentTime < endTime)):
+				if animIndex != 0:
+					#print("run anim end: " + str(animName) + " index : " + str(animIndex-1))
+					runMethods(Engine,EngineModule,
+						objects,animList,animIndex-1,"end")
+				#print("run anim start: " + str(animName) + " index : " + str(animIndex))
+				runMethods(Engine,EngineModule,
+					objects,animList,animIndex,"start")
+				animData["index"] = animIndex + 1
+				animData["starttime"] = endTime
+		elif animIndex == animListSize:
+			if currentTime > startTime:
+				#print("run anim end: " + str(animName) + " index : " + str(animIndex-1))
+				runMethods(Engine,EngineModule,
+					objects,animList,animIndex-1,"end")
+				animData["index"] = animIndex + 1
+				#print("done")
+
+def setMasses(Engine,EngineModule,selection,objects,factor):
+	parts = ["feet","lleg","uleg","root","belly",
+		"breast","shoulder","neck","uarm","larm","head","hand"]
+	for p in parts:
+		bodyList = objects.get()[p]
+		for b in bodyList:
+			b.resetMass()
+			newMass = b.getMass() * factor
+			b.setMass(newMass)
+
+def setMassesList(Engine,EngineModule,selection,objects,parts,factor):
+	for p in parts:
+		if p in objects.get():
+			bodyList = objects.get()[p]
+			if bodyList:
+				for b in bodyList:
+					if b:
+						b.setMass(b.getMass() * factor)
+
+def calcMasses(Engine,EngineModule,bodies,factor):
+	for i in range(0,len(bodies)):
+		bodyName = bodies[i]
+		body = helpers.getBodyFromName(Engine,EngineModule,bodyName)
+		if body:
+			bodyMass = body.getMass()
+			if i > 0:
+				otherBodyName = bodies[i-1]
+				otherBody = helpers.getBodyFromName(Engine,EngineModule,otherBodyName)
+				otherBodyMass = otherBody.getMass()
+				body.setMass( otherBodyMass * factor);
+
 

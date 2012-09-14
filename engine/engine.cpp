@@ -312,16 +312,16 @@ void Engine::setup(){
 	mRoot = new Root();
     setupResources();
 
-	//if (mUseFirstRenderer){ 
-	if (false) {
+	if (mUseFirstRenderer){ 
+	//if (false) {
 		RenderSystemList rlist = mRoot->getAvailableRenderers();
 		RenderSystemList::iterator it = rlist.begin();
 		while (it !=rlist.end()) {
 			RenderSystem *rSys = *(it++);
-			rSys->setConfigOption("Full Screen", "No");
-			//rSys->setConfigOption("Full Screen", "Yes");
-			rSys->setConfigOption("Video Mode", "700 x 850 @ 32-bit colour");
-			//rSys->setConfigOption("Video Mode", "1024 x 768 @ 32-bit colour");
+			//rSys->setConfigOption("Full Screen", "No");
+			rSys->setConfigOption("Full Screen", "Yes");
+			//rSys->setConfigOption("Video Mode", "700 x 850 @ 32-bit colour");
+			rSys->setConfigOption("Video Mode", "1024 x 768 @ 32-bit colour");
 			//rSys->setConfigOption("Video Mode", "1280 x 800 @ 32-bit colour");
 			mRoot->setRenderSystem(rSys);
 			break;
@@ -335,7 +335,7 @@ void Engine::setup(){
 	//mWindow = mRoot->createRenderWindow("main window",400,400,false);
 
     mSceneMgr = mRoot->createSceneManager(ST_GENERIC, "ExampleSMInstance");
-    mSceneMgr->setAmbientLight(ColourValue(0.2,0.2,0.2));
+    mSceneMgr->setAmbientLight(ColourValue(0.14,0.09,0.06));
 
 	mSceneMgr->setShadowTechnique(
 		//Ogre::SHADOWTYPE_STENCIL_ADDITIVE
@@ -345,14 +345,15 @@ void Engine::setup(){
 	//mSceneMgr->setShadowTextureSettings( 1024, 3, Ogre::PF_FLOAT32_R );
 	//mSceneMgr->setShadowTextureSettings( 512, 2);
 	//mSceneMgr->setShadowTextureSettings( 1024, 4);
-	mSceneMgr->setShadowTextureSettings( 2048, 4);
+	mSceneMgr->setShadowTextureSettings( 2048, 8);
 
+	//DefaultShadowCameraSetup *camSetup = new DefaultShadowCameraSetup();
 	//FocusedShadowCameraSetup *camSetup = new FocusedShadowCameraSetup();
 	//LiSPSMShadowCameraSetup *camSetup = new LiSPSMShadowCameraSetup();
 	PSSMShadowCameraSetup *camSetup = new PSSMShadowCameraSetup();
 	mSceneMgr->setShadowCameraSetup(ShadowCameraSetupPtr(camSetup));
 	//mSceneMgr->setShadowTextureSelfShadow(true);
-    mSceneMgr->setShadowColour(ColourValue(0.5,0.5,0.5));
+    mSceneMgr->setShadowColour(ColourValue(0.30,0.15,0.02));
 
     mRootSceneNode = mSceneMgr->getRootSceneNode();
     mDebugSceneNode = mRootSceneNode->createChildSceneNode();
@@ -364,7 +365,7 @@ void Engine::setup(){
     mCamera->setPosition(Vector3(0,0,500));
     mCamera->lookAt(Vector3(0,0,-300));
 	mCamera->setNearClipDistance(1);
-	mCamera->setFarClipDistance(20000);
+	mCamera->setFarClipDistance(100000);
 
     // Create one viewport, entire window
     mViewport = mWindow->addViewport(mCamera);
@@ -373,8 +374,9 @@ void Engine::setup(){
 
     Light * light3 = mSceneMgr->createLight("MainLight3");
 	light3->setType(Light::LT_DIRECTIONAL);
-	light3->setDiffuseColour(0.2,0.2,0.2);
-	light3->setSpecularColour(0.5,0.5,0.5);
+	light3->setDiffuseColour(0.69,0.623,0.53);
+	light3->setSpecularColour(0.86,0.78,0.68);
+
 	light3->setDirection(Vector3(0,-1,1));
 
 	/*
