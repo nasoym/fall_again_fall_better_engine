@@ -52,6 +52,14 @@ def getBodyListFromGroupName(objects,groupName):
 	else:
 		return []
 
+def getBodyListFromGroupNameList(objects,groupNameList):
+	bodyList = []
+	for groupName in groupNameList:
+		if groupName in objects.get():
+			for body in objects.get()[groupName]:
+				bodyList.append(body)
+	return bodyList
+
 def getBodyListFromNameList(Engine,EngineModule,nameList):
 	bodyList = []
 	for bodyName in nameList:

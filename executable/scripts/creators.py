@@ -133,7 +133,7 @@ def createFigure(Engine,EngineModule,objects,position,quaternion):
 	o.setUnselectable()
 	o.calcLocalPosOfRootBone()
 
-	ground = addMeshGround(Engine,EngineModule,o)
+	ground = addMeshGround(Engine,EngineModule,objects,o)
 	ground.setPosition(position)
 	ground.setOrientation(quaternion)
 
@@ -232,7 +232,7 @@ def createFigure(Engine,EngineModule,objects,position,quaternion):
 
 
 
-def addMeshGround(Engine,EngineModule,mesh):
+def addMeshGround(Engine,EngineModule,objects,mesh):
 	foot_ground_r = mesh.getBodyOfBoneName("toes-r")
 	foot_ground_l = mesh.getBodyOfBoneName("toes-l")
 	ground = None
@@ -275,6 +275,8 @@ def addMeshGround(Engine,EngineModule,mesh):
 
 		#joint = create.createJoint(Engine,EngineModule,ground,foot_ground_l)
 		joint = Engine.createJoint(ground,foot_ground_l)
+		joint.setName("foot-ground-l")
+		objects.appendList("foot-joint", joint)
 
 		joint.setAnchor1(parentLocalAnchor)
 		joint.setAnchor2(bodyLocalAnchor)
@@ -285,7 +287,8 @@ def addMeshGround(Engine,EngineModule,mesh):
 		#joint.setLimits(10,10)
 		#joint.setLimits(1,1)
 		joint.setLimits(0,0)
-		joint.setName("foot-ground-l")
+
+
 
 		b = Engine.createGuiBox()
 		b.setColour(0,1,1,0.5)
@@ -301,6 +304,8 @@ def addMeshGround(Engine,EngineModule,mesh):
 
 		#joint = create.createJoint(Engine,EngineModule,ground,foot_ground_r)
 		joint = Engine.createJoint(ground,foot_ground_r)
+		joint.setName("foot-ground-r")
+		objects.appendList("foot-joint", joint)
 
 		joint.setAnchor1(parentLocalAnchor)
 		joint.setAnchor2(bodyLocalAnchor)
