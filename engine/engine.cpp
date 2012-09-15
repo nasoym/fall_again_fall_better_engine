@@ -310,27 +310,13 @@ void Engine::setup(){
     mLogger->createLog("ogre.log",true,false,false);
 
 	mRoot = new Root();
+	mRoot->restoreConfig();
     setupResources();
 
-	if (mUseFirstRenderer){ 
-	//if (false) {
-		RenderSystemList rlist = mRoot->getAvailableRenderers();
-		RenderSystemList::iterator it = rlist.begin();
-		while (it !=rlist.end()) {
-			RenderSystem *rSys = *(it++);
-			//rSys->setConfigOption("Full Screen", "No");
-			rSys->setConfigOption("Full Screen", "Yes");
-			//rSys->setConfigOption("Video Mode", "700 x 850 @ 32-bit colour");
-			rSys->setConfigOption("Video Mode", "1024 x 768 @ 32-bit colour");
-			//rSys->setConfigOption("Video Mode", "1280 x 800 @ 32-bit colour");
-			mRoot->setRenderSystem(rSys);
-			break;
-		}
-	} else {
-		mRoot->showConfigDialog();
-	}
+	//mRoot->showConfigDialog();
 
 	mWindow = mRoot->initialise(true);
+
 	//mRoot->initialise(false);
 	//mWindow = mRoot->createRenderWindow("main window",400,400,false);
 
@@ -538,6 +524,7 @@ void Engine::windowResized(RenderWindow* rw) {
     ms.height = height;
 
     mCamera->setAspectRatio( Real(width) / Real(height));
+	releaseMouseKeys();
 }
 
 void Engine::windowMoved(RenderWindow* rw) {
