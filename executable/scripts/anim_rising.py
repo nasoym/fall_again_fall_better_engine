@@ -7,7 +7,47 @@ RisingDamping=(10 ** exp) * 1.0
 RisingStandSpring=(10 ** exp) * 1.2
 RisingStandDamping=(10 ** exp) * 1.0
 
+
+#RisingSpring  = 500000
+#RisingDamping = 900000000
+#FootRisingSpring  = 500000000
+#FootRisingDamping = 900000000
+
+
+exp=38
+FootRisingSpring=(10 ** exp) * 1.2
+FootRisingDamping=(10 ** exp) * 1.0
+
+
+exp=28
+RisingSpring=(10 ** exp) * 0.5
+exp=28
+RisingDamping=(10 ** exp) * 1.0
+
+angularForce = False
+#angularForce = True
+
+"""
+	{'groups':[
+		"foot-joint"
+		],
+		'time':5,
+		'start':[(lambda Engine,EngineModule,objects,groupPart:
+			groupPart.setMotorValues(RisingSpring,RisingDamping,angularForce))],
+		'end':[(lambda Engine,EngineModule,objects,groupPart:
+			groupPart.setMotorValues(RisingSpring,RisingDamping,angularForce))],
+		},
+		"""
 SimpleAnimation = [
+	{'groups':[
+		"foot-joint"
+		],
+		'time':50,
+		'start':[(lambda Engine,EngineModule,objects,groupPart:
+			groupPart.setMotorValues(RisingSpring,RisingDamping,angularForce))],
+		'end':[(lambda Engine,EngineModule,objects,groupPart:
+			groupPart.setMotorValues(RisingSpring,RisingDamping,angularForce))],
+		},
 	{'groups':[
 		"foot-joint",
 		"lleg-joint",
@@ -23,9 +63,9 @@ SimpleAnimation = [
 		],
 		'time':500,
 		'start':[(lambda Engine,EngineModule,objects,groupPart:
-			groupPart.setMotorValues(RisingSpring,RisingDamping,True))],
+			groupPart.setMotorValues(RisingSpring,RisingDamping,angularForce))],
 		'end':[(lambda Engine,EngineModule,objects,groupPart:
-			groupPart.setMotorValues(RisingSpring,RisingDamping,True))],
+			groupPart.setMotorValues(RisingSpring,RisingDamping,angularForce))],
 		}
 	]
 
