@@ -11,6 +11,7 @@
 
 import random
 random.seed()
+import animation_helper
 import helpers
 
 FallingAnimTime = 1000
@@ -185,7 +186,10 @@ def init(Engine,EngineModule,objects):
 
 def guiUpdate(Engine,EngineModule,selection,objects):
 	for k,v in objects.get()["anims"].items():
-		playAnimation(Engine,EngineModule,objects,v)
+		animName = v["name"]
+		if animName in animLists:
+			animList = animLists[animName]
+			animation_helper.playAnimation(Engine,EngineModule,objects,v,animList)
 
 def keyPressed(Engine,EngineModule,key,selection,objects):
 	allbodies = ["toes-l", "foot-l", "lleg-l", "uleg-l", "root", "belly", "cheast", "breast", "neck", "head","shoulder-l","uarm-l","larm-l","hand-l", "thumb-high-l", "finger-index-high-l", "finger-middle-high-l", "finger-ring-high-l", "finger-little-high-l"]
@@ -407,45 +411,6 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 
 
 
-
-def runMethods(Engine,EngineModule,objects,animList,index,methodName):
-	for groupName in animList[index]['groups']:
-		partsList = objects.get()[groupName]
-		#print("group: " + str(groupName))
-		for part in partsList:
-			methods = animList[index][methodName]
-			for method in methods:
-				method(Engine,EngineModule,objects,part)
-
-def playAnimation(Engine,EngineModule,objects,animData):
-	animName = animData["name"]
-	if animName in animLists:
-		startTime = animData["starttime"]
-		animIndex = animData["index"]
-		animList = animLists[animName]
-		animListSize = len(animList)
-		currentTime = Engine.getTime()
-		if animIndex < animListSize:
-			endTime = startTime + animList[animIndex]['time']
-			if ((currentTime > startTime) and
-				(currentTime < endTime)):
-				if animIndex != 0:
-					#print("run anim end: " + str(animName) + " index : " + str(animIndex-1))
-					runMethods(Engine,EngineModule,
-						objects,animList,animIndex-1,"end")
-				#print("run anim start: " + str(animName) + " index : " + str(animIndex))
-				runMethods(Engine,EngineModule,
-					objects,animList,animIndex,"start")
-				animData["index"] = animIndex + 1
-				animData["starttime"] = endTime
-		elif animIndex == animListSize:
-			if currentTime > startTime:
-				#print("run anim end: " + str(animName) + " index : " + str(animIndex-1))
-				runMethods(Engine,EngineModule,
-					objects,animList,animIndex-1,"end")
-				animData["index"] = animIndex + 1
-				#print("done")
-
 def setMasses(Engine,EngineModule,selection,objects,factor):
 	parts = ["feet","lleg","uleg","root","belly",
 		"breast","shoulder","neck","uarm","larm","head","hand"]
@@ -476,5 +441,4 @@ def calcMasses(Engine,EngineModule,bodies,factor):
 				otherBody = helpers.getBodyFromName(Engine,EngineModule,otherBodyName)
 				otherBodyMass = otherBody.getMass()
 				body.setMass( otherBodyMass * factor);
-
 
