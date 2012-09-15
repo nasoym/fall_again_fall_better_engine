@@ -4,16 +4,40 @@
 
 StaticActor::StaticActor(Engine* engine, Vec3 & position) :
 	Actor(engine),
-	mBody(0)
+	mBody(0),
+	mAddedToScene(false)
 	{
     mBody = (getEngine()->getPhysicsEngine()->getPhysics())->createRigidStatic( 
 		PxTransform(position.toPhysx()) );
-    (getEngine()->getPhysicsEngine()->getScene())->addActor(*mBody);
+    //(getEngine()->getPhysicsEngine()->getScene())->addActor(*mBody);
 }
 
 StaticActor::~StaticActor( ){
     mBody->release();
     mBody = 0;
+}
+
+
+PhysicShape*		StaticActor::addBox(Vec3& vec3){
+    //(getEngine()->getPhysicsEngine()->getScene())->removeActor(*mBody);
+	PhysicShape* shape = Actor::addBox(vec3);
+	if (!mAddedToScene) {
+		(getEngine()->getPhysicsEngine()->getScene())->addActor(*mBody);
+		mAddedToScene = true;
+	}
+	return shape;
+}
+PhysicShape*		StaticActor::addSphere(Vec3& vec3){
+    //(getEngine()->getPhysicsEngine()->getScene())->removeActor(*mBody);
+	PhysicShape* shape = Actor::addSphere(vec3);
+    //(getEngine()->getPhysicsEngine()->getScene())->addActor(*mBody);
+	return shape;
+}
+PhysicShape*		StaticActor::addCapsule(Vec3& vec3){
+    //(getEngine()->getPhysicsEngine()->getScene())->removeActor(*mBody);
+	PhysicShape* shape = Actor::addCapsule(vec3);
+    //(getEngine()->getPhysicsEngine()->getScene())->addActor(*mBody);
+	return shape;
 }
 
 void    StaticActor::setPosition(Vec3& vec3) {

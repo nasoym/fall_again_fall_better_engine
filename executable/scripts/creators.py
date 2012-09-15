@@ -39,6 +39,8 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 					shape = o.addSphere(size)
 					method = "addSphere"
 
+				colour = EngineModule.Vec3(1,1,1)
+				alpha = 1
 				if firstShape.hasColour():
 					colour = firstShape.getColour()
 					alpha = firstShape.getAlpha()
@@ -236,6 +238,7 @@ def addMeshGround(Engine,EngineModule,objects,mesh):
 	foot_ground_r = mesh.getBodyOfBoneName("toes-r")
 	foot_ground_l = mesh.getBodyOfBoneName("toes-l")
 	ground = None
+
 	if foot_ground_l and foot_ground_r:
 		foot_ground_l_position = foot_ground_l.getPosition()
 		#foot_ground_l_position += foot_ground_l.getOrientation() * foot_ground_l.getSize() 
@@ -248,16 +251,16 @@ def addMeshGround(Engine,EngineModule,objects,mesh):
 		finalPos.y -= 2
 
 		xySize = (halfpos.x + halfpos.y ) * 2
+		xySize *= 20
 
 		#ground = create.createPhysicStaticBoxStructure(Engine,EngineModule)
 		#ground.setSize(EngineModule.Vec3(xySize,1,xySize))
 
-		#ground = Engine.createStaticActor()
 		ground = Engine.createStaticActor()
-		ground.setPosition(finalPos)
 		shape = ground.addBox(EngineModule.Vec3(xySize,1,xySize))
 		shape.setColour(0,1,0,0.5)
 		shape.setScaling1To1()
+		ground.setPosition(finalPos)
 
 		ground.setOrientation(mesh.getOrientation())
 		ground.setName("ground")

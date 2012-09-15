@@ -35,9 +35,9 @@ class Actor : public EngineGuiContainer {
 		virtual Actor*		isActor(){return this;}
 		virtual ObjectType	getType(){return ACTOR;}
 
-		PhysicShape*		addBox(Vec3&);
-		PhysicShape*		addSphere(Vec3&);
-		PhysicShape*		addCapsule(Vec3&);
+		virtual PhysicShape*		addBox(Vec3&);
+		virtual PhysicShape*		addSphere(Vec3&);
+		virtual PhysicShape*		addCapsule(Vec3&);
 
 		int					howManyPhysicShapes();
 		PhysicShape*		getPhysicShapeByIndex(int);	
