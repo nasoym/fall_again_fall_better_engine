@@ -11,7 +11,7 @@ def createJoint(Engine,EngineModule,body1,body2):
 def createPhysicBoxFinal(Engine,EngineModule):
 	o = Engine.createDynamicActor()
 	b = o.addBox(EngineModule.Vec3(1,1,1))
-	b.setMaterialName("Body")
+	b.setMaterialName(Engine.getDefaultShadedMaterialName())
 	b.setScaling1To1()
 	o.setPosition(EngineModule.Vec3(0,150,0))
 	o.setSize(EngineModule.Vec3(10,10,10))
@@ -29,7 +29,7 @@ def createPhysicBoxStructure(Engine,EngineModule):
 def createPhysicStaticBoxFinal(Engine,EngineModule):
 	o = Engine.createStaticActor()
 	b = o.addBox(EngineModule.Vec3(1,1,1))
-	b.setMaterialName("Body")
+	b.setMaterialName(Engine.getDefaultShadedMaterialName())
 	b.setScaling1To1()
 	o.setPosition(EngineModule.Vec3(0,150,0))
 	o.setSize(EngineModule.Vec3(10,10,10))
@@ -59,8 +59,7 @@ def createSpaceCage(Engine,EngineModule,size):
 	shape = Engine.createGuiBox()
 	shape.setScalingNone()
 	#shape.setColour(red,green,blue,ground_opacity)
-	shape.setMaterialName("Body")
-	#shape.setMaterialName("SSAO/GBuffer")
+	shape.setMaterialName(Engine.getDefaultShadedMaterialName())
 	shape.turnOffShadows()
 	shape.setFinalShape()
 	shape.setSize(EngineModule.Vec3(size.X(),wall,size.Z()))

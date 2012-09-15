@@ -100,8 +100,6 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 			Engine.isKeyDown(EngineModule.Keys.K_2) or
 			Engine.isKeyDown(EngineModule.Keys.K_3) or
 			Engine.isKeyDown(EngineModule.Keys.K_4)):
-			materialName = "Body"
-			#materialName = "test2"
 			for o in selection.get():
 				if o and o.isGuiContainer():
 					shapesNumber = o.howManyShapes()
@@ -111,7 +109,7 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 						if Engine.isKeyDown(EngineModule.Keys.K_1):
 							shape.setCustomMaterial()
 						elif Engine.isKeyDown(EngineModule.Keys.K_2):
-							shape.setMaterialName(materialName)
+							shape.setMaterialName(Engine.getDefaultShadedMaterialName())
 						elif Engine.isKeyDown(EngineModule.Keys.K_3):
 							shape.setFinalShape()
 						elif Engine.isKeyDown(EngineModule.Keys.K_4):
@@ -120,7 +118,7 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 					if Engine.isKeyDown(EngineModule.Keys.K_1):
 						o.setCustomMaterial()
 					elif Engine.isKeyDown(EngineModule.Keys.K_2):
-						o.setMaterialName(materialName)
+						o.setMaterialName(Engine.getDefaultShadedMaterialName())
 					elif Engine.isKeyDown(EngineModule.Keys.K_3):
 						o.setFinalShape()
 					elif Engine.isKeyDown(EngineModule.Keys.K_4):

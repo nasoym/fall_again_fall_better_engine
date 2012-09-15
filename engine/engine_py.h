@@ -171,6 +171,7 @@ BOOST_PYTHON_MODULE(EngineModule) {
 		.def("turnOnShadows",&EngineGuiShape::turnOnShadows)
 		.def("getCastShadows",&EngineGuiShape::getCastShadows)
 
+
 		;
 
     class_<EngineGuiContainer, bases<EngineObject> >("EngineGuiContainer", init<Engine*>())
@@ -411,6 +412,10 @@ BOOST_PYTHON_MODULE(EngineModule) {
 		.def("cameraRotateZ",&Engine::cameraRotateZ)
 		.def("getMouseRelX",&Engine::getMouseRelX)
 		.def("getMouseRelY",&Engine::getMouseRelY)
+
+
+		.def("getDefaultShadedMaterialName",&Engine::getDefaultShadedMaterialName)
+
 
         ;
 

@@ -66,6 +66,8 @@ class Engine : public WindowEventListener,
 			return ms.Y.rel;
 		}
 
+		std::string		getDefaultShadedMaterialName();
+		void	setupDefaultMaterial();
 
 
 
@@ -216,9 +218,14 @@ class Engine : public WindowEventListener,
         RenderWindow*   mWindow;
         Viewport*       mViewport;
 		Timer			mTimer;
+
+		Light*			mMainLight;
+
 		unsigned long mCurrentTime;
 		unsigned long mLastTime;
 		unsigned long mTimeDifference;
+
+		std::string		mDefaultShadedMaterialName;
 
         SceneNode*      mRootSceneNode;
         SceneNode*      mDebugSceneNode;

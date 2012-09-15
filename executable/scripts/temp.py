@@ -251,9 +251,6 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 				#b.dsetSolverIterations(32,8)
 				#b.dsetSolverIterations(4,8)
 				#b.dsetSolverIterations(16,1)
-			if o.isGuiShape():
-				o.setMaterialName("SSAO/GBuffer")
-				#o.setMaterialName("Body")
 				"""
 
 

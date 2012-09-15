@@ -95,6 +95,7 @@ class EngineGuiShape : public EngineObject {
 								}
 		bool				getCastShadows(){return mEntity->getCastShadows();}
 
+
 	private:
         Entity*     		mEntity; 
         SceneNode*  		mNode;

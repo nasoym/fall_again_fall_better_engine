@@ -78,7 +78,7 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 					shape = o.addCapsule(size)
 				elif Engine.isKeyDown(EngineModule.Keys.K_3):
 					shape = o.addSphere(size)
-				shape.setMaterialName("Body")
+				shape.setMaterialName(Engine.getDefaultShadedMaterialName())
 				shape.setName("1")
 				o.setPosition(EngineModule.Vec3(0,200,0))
 
@@ -122,7 +122,7 @@ def createFigure(Engine,EngineModule,objects,position,quaternion):
 	#o = Engine.createMesh("Character.mesh")
 	o.setName("figure.mesh")
 	#o = Engine.createMesh("tube.mesh")
-	o.setMaterialName("Body")
+	o.setMaterialName(Engine.getDefaultShadedMaterialName())
 	o.setSize(EngineModule.Vec3(1,1,1)*1000)
 	#o.setPosition(EngineModule.Vec3(0,150,0))
 	o.setPosition(EngineModule.Vec3(position.x,20,position.z))

@@ -23,7 +23,8 @@ Engine::Engine() :
 	mLastTime(0),
 	mTimeDifference(0),
 	mPhysicPaused(false),
-	mUseFirstRenderer(true)
+	mUseFirstRenderer(true),
+	mDefaultShadedMaterialName("")
 	{
     Logger::debug(format("creating engine: %p ") % this);
     setupPhysics();
@@ -321,7 +322,6 @@ void Engine::setup(){
 	//mWindow = mRoot->createRenderWindow("main window",400,400,false);
 
     mSceneMgr = mRoot->createSceneManager(ST_GENERIC, "ExampleSMInstance");
-    mSceneMgr->setAmbientLight(ColourValue(0.14,0.09,0.06));
 
 	mSceneMgr->setShadowTechnique(
 		//Ogre::SHADOWTYPE_STENCIL_ADDITIVE
@@ -332,6 +332,7 @@ void Engine::setup(){
 	//mSceneMgr->setShadowTextureSettings( 512, 2);
 	//mSceneMgr->setShadowTextureSettings( 1024, 4);
 	mSceneMgr->setShadowTextureSettings( 2048, 8);
+	mSceneMgr->setShadowFarDistance(5000);
 
 	//DefaultShadowCameraSetup *camSetup = new DefaultShadowCameraSetup();
 	//FocusedShadowCameraSetup *camSetup = new FocusedShadowCameraSetup();
@@ -339,7 +340,6 @@ void Engine::setup(){
 	PSSMShadowCameraSetup *camSetup = new PSSMShadowCameraSetup();
 	mSceneMgr->setShadowCameraSetup(ShadowCameraSetupPtr(camSetup));
 	//mSceneMgr->setShadowTextureSelfShadow(true);
-    mSceneMgr->setShadowColour(ColourValue(0.30,0.15,0.02));
 
     mRootSceneNode = mSceneMgr->getRootSceneNode();
     mDebugSceneNode = mRootSceneNode->createChildSceneNode();
@@ -355,15 +355,17 @@ void Engine::setup(){
 
     // Create one viewport, entire window
     mViewport = mWindow->addViewport(mCamera);
-    mViewport->setBackgroundColour(ColourValue(0,0,0));
     mCamera->setAspectRatio( Real(mViewport->getActualWidth()) / Real(mViewport->getActualHeight()));
 
-    Light * light3 = mSceneMgr->createLight("MainLight3");
-	light3->setType(Light::LT_DIRECTIONAL);
-	light3->setDiffuseColour(0.69,0.623,0.53);
-	light3->setSpecularColour(0.86,0.78,0.68);
+    mMainLight = mSceneMgr->createLight("MainLight");
+	mMainLight->setType(Light::LT_DIRECTIONAL);
+	mMainLight->setDirection(Vector3(0,-1,1));
 
-	light3->setDirection(Vector3(0,-1,1));
+    Light* mSecondLight = mSceneMgr->createLight("SecondLight");
+	mSecondLight->setType(Light::LT_DIRECTIONAL);
+	mSecondLight->setDirection(Vector3(0,-1,-1));
+	mSecondLight->setCastShadows(false);
+
 
 	/*
     //Entity *ent = mSceneMgr->createEntity("head","cube.mesh");
@@ -375,6 +377,56 @@ void Engine::setup(){
 
 	mRaySceneQuery = mSceneMgr->createRayQuery(Ray());
 
+
+	ColourValue	col0 = ColourValue(0.00,0.00,0.00,1.0);
+	ColourValue	col1 = ColourValue(0.14,0.09,0.06,1.0);
+	ColourValue	col2 = ColourValue(0.30,0.15,0.02,1.0);
+	ColourValue	col3 = ColourValue(0.69,0.62,0.53,1.0);
+	ColourValue	col4 = ColourValue(0.86,0.78,0.68,1.0);
+	ColourValue	col5 = ColourValue(0.30,0.15,0.02,1.0);
+	ColourValue	col6 = ColourValue(0.30,0.15,0.02,1.0);
+	ColourValue	col7 = ColourValue(0.30,0.15,0.02,1.0);
+
+    mSceneMgr->setAmbientLight(col1);
+
+    mSceneMgr->setShadowColour(col2);
+    mViewport->setBackgroundColour(col0);
+	mMainLight->setDiffuseColour(col3);
+	mMainLight->setSpecularColour(col4);
+
+	mSecondLight->setDiffuseColour(col0);
+	mSecondLight->setSpecularColour(col1);
+
+	MaterialPtr mat = MaterialManager::getSingleton().getByName("Body");
+	mat->getTechnique(0)->getPass(0)->setAmbient(col1);
+	mat->getTechnique(0)->getPass(0)->setDiffuse(col2);
+	mat->getTechnique(0)->getPass(0)->setSpecular(col3);
+	mat->getTechnique(0)->getPass(0)->setShininess(2.0f);
+
+	setupDefaultMaterial();
+}
+
+void			Engine::setupDefaultMaterial(){
+	MaterialPtr material = Ogre::MaterialManager::getSingleton().create(
+		"default_material",
+		ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);
+	material->getTechnique(0)->getPass(0)->setDiffuse(ColourValue(0.5f,0.5f,0.5f,0.25f)); 
+	//material->getTechnique(0)->getPass(0)->setDepthWriteEnabled(true); 
+	material->getTechnique(0)->getPass(0)->setDepthWriteEnabled(false); 
+	material->getTechnique(0)->getPass(0)->setSceneBlending(SBT_TRANSPARENT_ALPHA);
+	material->getTechnique(0)->getPass(0)->setCullingMode(CULL_NONE);
+	Pass* wireFramePass = material->getTechnique(0)->createPass();
+	wireFramePass->setSceneBlending(SBT_TRANSPARENT_ALPHA);
+	wireFramePass->setDepthWriteEnabled(true);
+	wireFramePass->setPolygonMode(PM_WIREFRAME);
+	wireFramePass->setDiffuse(ColourValue(0,0,0,0.2f));
+
+	mDefaultShadedMaterialName = std::string("Body");
+	//mDefaultShadedMaterialName = std::string("default_material");
+}
+
+std::string		Engine::getDefaultShadedMaterialName(){
+	return mDefaultShadedMaterialName;
 }
 
 void Engine::close(){
@@ -489,6 +541,7 @@ void Engine::processOIS() {
             }
         }
 
+		/*
         if( !mMouse->buffered() ) {
             const OIS::MouseState &ms = mMouse->getMouseState();
             if( ms.buttonDown( OIS::MB_Right ) ) {
@@ -497,6 +550,7 @@ void Engine::processOIS() {
             } else {
             }
         }
+		*/
     }
 }
 
@@ -524,7 +578,7 @@ void Engine::windowResized(RenderWindow* rw) {
     ms.height = height;
 
     mCamera->setAspectRatio( Real(width) / Real(height));
-	releaseMouseKeys();
+	//releaseMouseKeys();
 }
 
 void Engine::windowMoved(RenderWindow* rw) {
