@@ -116,7 +116,7 @@ modules.append(edit)
 modules.append(operations)
 
 #modules.append(test)
-#modules.append(serialReader)
+modules.append(serialReader)
 #modules.append(main)
 
 guiUpdates=[]

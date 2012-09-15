@@ -368,15 +368,47 @@ void Engine::setup(){
 
 
 	/*
-    //Entity *ent = mSceneMgr->createEntity("head","cube.mesh");
-    Entity *ent = mSceneMgr->createEntity("head","Prefab_Cube");
-    //ent->setMaterialName("Ogre/Skin");
-    //ent->setMaterialName("Examples/Chrome");
-    mSceneMgr->getRootSceneNode()->createChildSceneNode()->attachObject(ent);
+	Entity* ent;
+	SceneNode* node;
+
+    node = mSceneMgr->getRootSceneNode()->createChildSceneNode();
+	ent = mSceneMgr->createEntity("Prefab_Cube");
+    ent->setMaterialName("Body");
+	node->attachObject(ent);
+	node->setPosition(0,-40,0);
+	node->setScale(10,0.001,10);
+	ent->setCastShadows(false);
+	//ent->setCastShadows(true);
+
+    node = mSceneMgr->getRootSceneNode()->createChildSceneNode();
+    //ent = mSceneMgr->createEntity("figure.mesh");
+    ent = mSceneMgr->createEntity("tube.mesh");
+    ent->setMaterialName("Body");
+	node->attachObject(ent);
+	node->setPosition(0,-50,0);
+	node->setPosition(0,0,0);
+	node->setScale(30,30,30);
+	ent->setCastShadows(true);
+
+    node = mSceneMgr->getRootSceneNode()->createChildSceneNode();
+    ent = mSceneMgr->createEntity("athene.mesh");
+    ent->setMaterialName("Body");
+	node->attachObject(ent);
+	node->setPosition(60,60,0);
+	node->setScale(1,1,1);
+	ent->setCastShadows(true);
+
+    node = mSceneMgr->getRootSceneNode()->createChildSceneNode();
+	ent = mSceneMgr->createEntity("Prefab_Cube");
+    ent->setMaterialName("Body");
+	node->attachObject(ent);
+	node->setPosition(-60,20,0);
+	node->setScale(0.3,0.3,0.3);
+	ent->setCastShadows(true);
 	*/
 
-	mRaySceneQuery = mSceneMgr->createRayQuery(Ray());
 
+	mRaySceneQuery = mSceneMgr->createRayQuery(Ray());
 
 	ColourValue	col0 = ColourValue(0.00,0.00,0.00,1.0);
 	ColourValue	col1 = ColourValue(0.14,0.09,0.06,1.0);
