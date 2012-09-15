@@ -38,11 +38,24 @@ angularForce = False
 			groupPart.setMotorValues(RisingSpring,RisingDamping,angularForce))],
 		},
 		"""
+Timing = 1000
 SimpleAnimation = [
-	{'groups':[
-		"foot-joint"
-		],
-		'time':50,
+	{'groups':[ "foot-joint" ],
+		'time':Timing,
+		'start':[(lambda Engine,EngineModule,objects,groupPart:
+			groupPart.setMotorValues(RisingSpring,RisingDamping,angularForce))],
+		'end':[(lambda Engine,EngineModule,objects,groupPart:
+			groupPart.setMotorValues(RisingSpring,RisingDamping,angularForce))],
+		},
+	{'groups':[ "lleg-joint" ],
+		'time':Timing,
+		'start':[(lambda Engine,EngineModule,objects,groupPart:
+			groupPart.setMotorValues(RisingSpring,RisingDamping,angularForce))],
+		'end':[(lambda Engine,EngineModule,objects,groupPart:
+			groupPart.setMotorValues(RisingSpring,RisingDamping,angularForce))],
+		},
+	{'groups':[ "uleg-joint" ],
+		'time':Timing,
 		'start':[(lambda Engine,EngineModule,objects,groupPart:
 			groupPart.setMotorValues(RisingSpring,RisingDamping,angularForce))],
 		'end':[(lambda Engine,EngineModule,objects,groupPart:

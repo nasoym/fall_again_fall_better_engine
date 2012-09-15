@@ -286,12 +286,11 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 				joint,tooMany = helpers.findJointForBody(Engine,EngineModule,sel,o)
 				body = o
 			elif o.isPhysicShape():
-				print("found physicshape")
 				# select next physic shape
+				print("found physicshape")
 				body = o.getActor()
 				numShapes = body.howManyPhysicShapes()
 				if numShapes > 1:
-					print("has shapes: " + str(numShapes))
 					selection.clear()
 					currentIndex = 0
 					for i in range(0,numShapes):
@@ -302,16 +301,16 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 					newIndex = currentIndex + 1
 					if newIndex == numShapes:
 						newIndex = 0
-					print("current index: " + str(currentIndex))
-					print("next index: " + str(newIndex))
-					selection.add(body.getPhysicShapeByIndex(newIndex))
+					newShape = body.getPhysicShapeByIndex(newIndex)
+					selection.add(newShape)
+					return
 
 			elif o.isGuiShape():
 				print("found guishape")
 
 			if not tooMany:
 				if body and joint:
-					#print("found body and joint")	
+					print("found body and joint")	
 					selection.remove(joint)
 
 					bodyJoints = body.howManyJoints()
@@ -329,11 +328,12 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 					j = body.getJoint(newIndex)
 					selection.add(j)
 				elif body and not joint:
-					#print("found single body")	
+					print("found single body")	
 					if Engine.isKeyDown(EngineModule.Keys.K_1):
 						if body.howManyJoints() > 0:
 							j = body.getJoint(0)
 							selection.add(j)
+
 					if Engine.isKeyDown(EngineModule.Keys.K_2):
 						if body.howManyPhysicShapes() > 0:
 							shape = body.getPhysicShapeByIndex(0)
@@ -341,7 +341,7 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 							selection.add(shape)
 				elif joint and not body:
 					pass
-					#print("found single joint")	
+					print("found single joint")	
 			else:
 				print("found too many connected joints and bodies")
 

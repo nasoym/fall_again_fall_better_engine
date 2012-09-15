@@ -15,9 +15,9 @@ import helpers
 import anim_falling
 import anim_rising
 
-reload(anim_falling)
-reload(anim_rising)
-print("reload anim files")
+#reload(anim_falling)
+#reload(anim_rising)
+
 
 animLists={}
 #animLists["falling"] = anim_falling.FallingAnim
@@ -185,7 +185,7 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 			objects.get()["anims"]["stand"] = {
 				"name":"falling","index":0,"starttime":Engine.getTime()}
 			setHeavy(Engine,EngineModule,objects)
-			Engine.setGravity(EngineModule.Vec3(0,-10,0))
+			Engine.setGravity(EngineModule.Vec3(0,-30,0))
 
 
 
