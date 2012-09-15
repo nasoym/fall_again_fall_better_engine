@@ -18,6 +18,28 @@ FallingDamping = 50
 FallingSpring = 5
 FallingDamping = 30
 
+SimpleAnimation = [
+	{'groups':[
+		"foot-joint",
+		"lleg-joint",
+		"uleg-joint",
+		"belly-joint",
+		"breast-joint",
+		"shoulder-joint",
+		"neck-joint",
+		"head-joint",
+		"uarm-joint",
+		"larm-joint",
+		"hand-joint"
+		],
+		'time':500,
+		'start':[(lambda Engine,EngineModule,objects,groupPart:
+			groupPart.setMotorValues(0,0,True))],
+		'end':[(lambda Engine,EngineModule,objects,groupPart:
+			groupPart.setMotorValues(0,0,True))],
+		}
+	]
+
 FallingAnim = [
 	{'groups':[
 		"foot-joint",

@@ -2,12 +2,13 @@ import helpers
 
 def runMethods(Engine,EngineModule,objects,animList,index,methodName):
 	for groupName in animList[index]['groups']:
-		partsList = objects.get()[groupName]
-		#print("group: " + str(groupName))
-		for part in partsList:
-			methods = animList[index][methodName]
-			for method in methods:
-				method(Engine,EngineModule,objects,part)
+		if groupName in objects.get():
+			partsList = objects.get()[groupName]
+			#print("group: " + str(groupName))
+			for part in partsList:
+				methods = animList[index][methodName]
+				for method in methods:
+					method(Engine,EngineModule,objects,part)
 
 def playAnimation(Engine,EngineModule,objects,animData,animList):
 	#animName = animData["name"]

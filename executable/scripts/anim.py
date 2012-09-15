@@ -16,15 +16,17 @@ import anim_falling
 import anim_rising
 
 animLists={}
-animLists["falling"] = anim_falling.FallingAnim
-animLists["rising"] = anim_rising.RisingAnim
+#animLists["falling"] = anim_falling.FallingAnim
+#animLists["rising"] = anim_rising.RisingAnim
+
+animLists["falling"] = anim_falling.SimpleAnimation
+animLists["rising"] = anim_rising.SimpleAnimation
 
 def init(Engine,EngineModule,objects):
 	objects.get()["anims"] = {}
 	objects.setUnsavable("anims")
 
-	objects.get()["anims"]["stand"] = {
-		"name":"rising","index":0,"starttime":Engine.getTime()}
+	objects.get()["anims"]["stand"] = {"name":"rising","index":0,"starttime":Engine.getTime()}
 
 	random.seed()
 
