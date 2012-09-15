@@ -251,7 +251,7 @@ def addMeshGround(Engine,EngineModule,objects,mesh):
 		finalPos.y -= 2
 
 		xySize = (halfpos.x + halfpos.y ) * 2
-		xySize *= 20
+		#xySize *= 20
 
 		#ground = create.createPhysicStaticBoxStructure(Engine,EngineModule)
 		#ground.setSize(EngineModule.Vec3(xySize,1,xySize))
