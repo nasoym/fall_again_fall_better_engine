@@ -40,4 +40,75 @@ def playAnimation(Engine,EngineModule,objects,animData,animList):
 
 
 
+def showBodyList(bodyList):
+	for body in bodyList:
+		if body:
+			print("body: " + body.getName() + " : " + str(type(body)))
+
+def getBodyListFromGroupName(objects,groupName):
+	if groupName in objects.get():
+		bodyList = objects.get()[groupName]
+		return bodyList
+	else:
+		return []
+
+def getBodyListFromNameList(Engine,EngineModule,nameList):
+	bodyList = []
+	for bodyName in nameList:
+		body = helpers.getBodyFromName(Engine,EngineModule,bodyName)
+		bodyList.append(body)
+	return bodyList
+		
+
+def resetMasses(bodyList):
+	for body in bodyList:
+		body.resetMass()
+
+def multiplyMasses(bodyList,factor):
+	for body in bodyList:
+		newMass = body.getMass() * factor
+		body.setMass(newMass)
+
+def showMassRelationToPrev(bodyList):
+	for i in range(0,len(bodyList)):
+		body = bodyList[i]
+		if i > 0:
+			prevBody = bodyList[i-1]
+			massRelation = body.getMass() / prevBody.getMass()
+			print("body: " + body.getName() + " mass: " + str(body.getMass()) + 
+				" relation to prev: " + str(massRelation))
+		else:
+			print("body: " + body.getName() + " mass: " + str(body.getMass())) 
+
+def showMassRelationToAll(bodyList):
+	totalMass = 0
+	for body in bodyList:
+		totalMass += body.getMass()
+	for body in bodyList:
+		massRelation = body.getMass() / totalMass
+		print("body: " + body.getName() + " mass: " + str(body.getMass()) + 
+			" relation to all: " + str(massRelation))
+
+
+def approachRelationToPrev(bodyList,finalRelation,approachPercentage):
+	for i in range(0,len(bodyList)):
+		body = bodyList[i]
+		if i > 0:
+			prevBody = bodyList[i-1]
+			massInFinalRelation = prevBody.getMass() * finalRelation
+			diffToActualMass = massInFinalRelation - body.getMass()
+			newMass = body.getMass() + (diffToActualMass * approachPercentage)
+			body.setMass(newMass)
+
+def approachEqualMassDistribution(bodyList,approachPercentage):
+	totalMass = 0
+	totalBodies = 0
+	for body in bodyList:
+		totalMass += body.getMass()
+		totalBodies += 1
+	for body in bodyList:
+		massInFinalRelation = totalMass / totalBodies
+		diffToActualMass = massInFinalRelation - body.getMass()
+		newMass = body.getMass() + (diffToActualMass * approachPercentage)
+		body.setMass(newMass)
 
