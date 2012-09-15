@@ -261,6 +261,7 @@ def addMeshGround(Engine,EngineModule,objects,mesh):
 		shape.setColour(0,1,0,0.5)
 		shape.setScaling1To1()
 		ground.setPosition(finalPos)
+		ground.setSize(EngineModule.Vec3(xySize,1,xySize))
 
 		ground.setOrientation(mesh.getOrientation())
 		ground.setName("ground")

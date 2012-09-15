@@ -15,9 +15,11 @@ class StaticActor : public Actor {
         StaticActor(Engine*,Vec3&);
         ~StaticActor();
 
+		/*
 		virtual PhysicShape*		addBox(Vec3&);
 		virtual PhysicShape*		addSphere(Vec3&);
 		virtual PhysicShape*		addCapsule(Vec3&);
+		*/
 
 		virtual StaticActor*	isStaticActor(){return this;}
 		virtual ObjectType		getType(){return STATIC_ACTOR;}
