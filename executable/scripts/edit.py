@@ -67,21 +67,25 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 				if body and joint:
 					print("found body and joint")	
 					print("rotate joint orientation")
-					angle = helpers.getModifiedQuaternion(Engine,EngineModule,10)
-					bodyNum = bodyjoint.howIsBodyConnectedToJoint(body,joint)
-					if bodyNum == 1:
-						newOri = joint.getAnchor1Orientation() * angle
-						if Engine.isKeyDown(EngineModule.Keys.K_0):
-							newOri = EngineModule.Quat()
-						joint.setAnchor1Orientation(newOri)
-						#TODO take care of all other joints
-					if bodyNum == 2:
-						newOri = joint.getAnchor2Orientation() * angle
-						if Engine.isKeyDown(EngineModule.Keys.K_0):
-							newOri = EngineModule.Quat()
-						joint.setAnchor2Orientation(newOri)
-						#TODO take care of all other joints
-					storeBodyJointOperation(EngineModule,"bodyJointAbsoluteRotation",body,joint,newOri)
+					if Engine.isKeyDown(EngineModule.Keys.K_9):
+						angle = helpers.getModifiedQuaternion(Engine,EngineModule,10)
+						bodyNum = bodyjoint.howIsBodyConnectedToJoint(body,joint)
+						if bodyNum == 1:
+							newOri = joint.getAnchor1Orientation() * angle
+							if Engine.isKeyDown(EngineModule.Keys.K_0):
+								newOri = EngineModule.Quat()
+							joint.setAnchor1Orientation(newOri)
+							#TODO take care of all other joints
+						if bodyNum == 2:
+							newOri = joint.getAnchor2Orientation() * angle
+							if Engine.isKeyDown(EngineModule.Keys.K_0):
+								newOri = EngineModule.Quat()
+							joint.setAnchor2Orientation(newOri)
+							#TODO take care of all other joints
+						storeBodyJointOperation(EngineModule,"bodyJointAbsoluteRotation",body,joint,newOri)
+					else:
+						quaternion = helpers.getModifiedQuaternion(Engine,EngineModule,5)
+						bodyjoint.bodyJointRotateJoint(body,joint,quaternion)
 
 				elif body and not joint:
 					print("found single body")	

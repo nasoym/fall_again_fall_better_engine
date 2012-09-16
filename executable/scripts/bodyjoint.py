@@ -15,6 +15,14 @@ def getBodyJointAnchorSizePos(body,joint):
 	else:
 		print("body is not 1 or 2")
 
+def getBodyJointAnchorOrientation(body,joint):
+	if joint.getBody1().readUuid() == body.readUuid():
+		return joint.getAnchor1Orientation()
+	elif joint.getBody2().readUuid() == body.readUuid():
+		return joint.getAnchor2Orientation()
+	else:
+		print("body is not 1 or 2")
+
 def getBodyJointAnchorPos(body,joint):
 	if joint.getBody1().readUuid() == body.readUuid():
 		return joint.getAnchor1()
@@ -36,6 +44,14 @@ def setBodyJointAnchorPos(body,joint,position):
 		joint.setAnchor1(position)
 	elif joint.getBody2().readUuid() == body.readUuid():
 		joint.setAnchor2(position)
+	else:
+		print("body is not 1 or 2")
+
+def setBodyJointAnchorOrientation(body,joint,orientation):
+	if joint.getBody1().readUuid() == body.readUuid():
+		joint.setAnchor1Orientation(orientation)
+	elif joint.getBody2().readUuid() == body.readUuid():
+		joint.setAnchor2Orientation(orientation)
 	else:
 		print("body is not 1 or 2")
 
@@ -63,6 +79,7 @@ def getBodyJoint(selection):
 def bodyJointScaleBody(body,joint,newBodySize):
 	if isBodyJointConnected(body,joint):
 		oldJointAnchorPos = getBodyJointAnchorPos(body,joint)
+
 		oldJointAnchorSizePos = getBodyJointAnchorSizePos(body,joint)
 		body.setSize(newBodySize)
 		setBodyJointAnchorSizePos(body,joint,oldJointAnchorSizePos)
@@ -76,7 +93,7 @@ def bodyJointScaleBody(body,joint,newBodySize):
 				oldRelativePos = anchor - oldJointAnchorPos
 				newRelativePos = oldRelativePos + newJointAnchorPos
 				setBodyJointAnchorPos(body,j,newRelativePos)
-		
+
 def bodyJointScaleJointPos(body,joint,newJointSizePos):
 	if isBodyJointConnected(body,joint):
 		oldJointAnchorPos = getBodyJointAnchorPos(body,joint)
@@ -88,6 +105,30 @@ def bodyJointScaleJointPos(body,joint,newJointSizePos):
 			j = body.getJoint(index)
 			if not (j.readUuid() == joint.readUuid()):
 				anchor = getBodyJointAnchorPos(body,j)
+				oldRelativePos = anchor - oldJointAnchorPos
+				newRelativePos = oldRelativePos + newJointAnchorPos
+				setBodyJointAnchorPos(body,j,newRelativePos)
+
+		
+def bodyJointRotateJoint(body,joint,quaternion):
+	if isBodyJointConnected(body,joint):
+
+		oldJointAnchorPos = getBodyJointAnchorPos(body,joint)
+		oldJointAnchorOrientation = getBodyJointAnchorOrientation(body,joint)
+
+		newJointAnchorOrientation = oldJointAnchorOrientation * quaternion
+
+		setBodyJointAnchorOrientation(body,joint,newJointAnchorOrientation)
+
+		newJointAnchorPos = getBodyJointAnchorPos(body,joint)
+
+
+		bodyJoints = body.howManyJoints()
+		for index in range(0,bodyJoints):
+			j = body.getJoint(index)
+			if not (j.readUuid() == joint.readUuid()):
+				anchor = getBodyJointAnchorPos(body,j)
+				orientation = getBodyJointAnchorPos(body,j)
 				oldRelativePos = anchor - oldJointAnchorPos
 				newRelativePos = oldRelativePos + newJointAnchorPos
 				setBodyJointAnchorPos(body,j,newRelativePos)
