@@ -20,8 +20,8 @@ def calcBoneGlobalPosRot(Engine,EngineModule,mesh,boneName):
 		if boneParentName == "":
 			boneOrientation = (mesh.getBoneNameOrientation(boneName,False) *
 				EngineModule.Quat().fromAngles(0,0,90))
-			bonePosition = (mesh.getBoneNamePosition(boneName) +
-				(boneOrientation * EngineModule.Vec3(boneLength,0,0) ))
+			bonePosition = mesh.getBoneNamePosition(boneName)
+			#+ (boneOrientation * EngineModule.Vec3(boneLength,0,0) ))
 		else:
 			boneLocalPosition = mesh.getBoneNameLocalPosition(boneName)
 			scaledBoneLocalPosition = boneLocalPosition * mesh.getMeshScale()

@@ -9,6 +9,7 @@
 """
 
 transformFactor = 0.5
+transformFactor = 0.25
 
 def moveCamera(Engine,EngineModule,direction):
 	factor = transformFactor

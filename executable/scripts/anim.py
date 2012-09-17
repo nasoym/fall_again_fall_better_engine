@@ -15,8 +15,13 @@ import helpers
 import anim_falling
 import anim_rising
 
-#reload(anim_falling)
-#reload(anim_rising)
+
+def reloadanim():
+	reload(anim_falling)
+	reload(anim_rising)
+	print("reloading external anim files")
+
+reloadanim()
 
 
 animLists={}

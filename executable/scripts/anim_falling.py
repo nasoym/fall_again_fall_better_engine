@@ -18,6 +18,9 @@ FallingDamping = 50
 FallingSpring = 10
 FallingDamping = 3000000
 
+FallingSpring = 0
+FallingDamping = 0
+
 SimpleAnimation = [
 	{'groups':[
 		"foot-joint",

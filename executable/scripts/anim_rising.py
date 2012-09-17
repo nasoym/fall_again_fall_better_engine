@@ -25,7 +25,7 @@ exp=28
 RisingDamping=(10 ** exp) * 1.0
 
 exp=38
-RisingSpring=(10 ** exp) * 0.9
+RisingSpring=(10 ** exp) * 1.2
 exp=38
 RisingDamping=(10 ** exp) * 1.0
 
@@ -42,9 +42,6 @@ angularForce = False
 		'end':[(lambda Engine,EngineModule,objects,groupPart:
 			groupPart.setMotorValues(RisingSpring,RisingDamping,angularForce))],
 		},
-		"""
-Timing = 1000
-SimpleAnimation = [
 	{'groups':[ "foot-joint" ],
 		'time':Timing,
 		'start':[(lambda Engine,EngineModule,objects,groupPart:
@@ -66,6 +63,9 @@ SimpleAnimation = [
 		'end':[(lambda Engine,EngineModule,objects,groupPart:
 			groupPart.setMotorValues(RisingSpring,RisingDamping,angularForce))],
 		},
+		"""
+Timing = 1000
+SimpleAnimation = [
 	{'groups':[
 		"foot-joint",
 		"lleg-joint",

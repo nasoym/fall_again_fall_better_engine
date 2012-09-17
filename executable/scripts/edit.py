@@ -27,6 +27,15 @@ def storeBodyJointOperation(EngineModule,method,body,joint,value):
 		text += ",quaternion=EngineModule.Quat(" + str(value) + "))"
 	storeOperation(text)
 
+def storeBodyOperation(EngineModule,method,body,value):
+	text = method + "(Engine,EngineModule,"
+	text += "bodyName='" + body.getName() + "'"
+	if type(value) == EngineModule.Vec3:
+		text += ",vector=EngineModule.Vec3(" + str(value) + "))"
+	if type(value) == EngineModule.Quat:
+		text += ",quaternion=EngineModule.Quat(" + str(value) + "))"
+	storeOperation(text)
+
 def keyPressed(Engine,EngineModule,key,selection,objects):
 
 
@@ -92,10 +101,11 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 					print("found single body")	
 					print("rotate body")
 					angle = helpers.getModifiedQuaternion(Engine,EngineModule,5)
-					body.setOrientation(body.getOrientation() * angle)
-
+					newOrientation = body.getOrientation() * angle
 					if Engine.isKeyDown(EngineModule.Keys.K_0):
-						body.setOrientation(EngineModule.Quat())
+						newOrientation = EngineModule.Quat()
+					body.setOrientation(newOrientation)
+					storeBodyOperation(EngineModule,"bodyOrientation",body,newOrientation)
 
 				elif joint and not body:
 					print("found single joint")	
@@ -174,10 +184,12 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 					print("move globaly")
 					vector = helpers.getModifiedVector(Engine,EngineModule,20)
 					vector = body.getOrientation() * vector
-					body.setPosition(body.getPosition() + vector)
-
+					newPosition = body.getPosition() + vector
 					if Engine.isKeyDown(EngineModule.Keys.K_0):
-						body.setPosition(EngineModule.Vec3())
+						newPosition = EngineModule.Vec3()
+					body.setPosition(newPosition)
+
+					storeBodyOperation(EngineModule,"bodyPosition",body,newPosition)
 
 				elif joint and not body:
 					print("found single joint")	
@@ -234,7 +246,9 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 					print("found single body")	
 					print("scale")
 					vector = helpers.getModifiedVector(Engine,EngineModule,0.1)
-					body.setSize(body.getSize() * (EngineModule.Vec3(1,1,1) + vector))
+					newSize = body.getSize() * (EngineModule.Vec3(1,1,1) + vector)
+					body.setSize(newSize)
+					storeBodyOperation(EngineModule,"bodySize",body,newSize)
 
 				elif joint and not body:
 					print("found single joint")	

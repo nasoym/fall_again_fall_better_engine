@@ -301,11 +301,12 @@ def addMeshGround(Engine,EngineModule,objects,mesh):
 
 
 
-		b = Engine.createGuiBox()
-		b.setColour(0,1,1,0.5)
-		b.setSize(EngineModule.Vec3(1,4,4))
-		b.setScalingFixed()
-		joint.addShape(b)
+		#b = Engine.createGuiBox()
+		#b.setColour(0,1,1,0.5)
+		#b.setSize(EngineModule.Vec3(1,4,4))
+		#b.setScalingFixed()
+		#joint.addShape(b)
+		joint.addDebugAxises(1,0.2)
 
 		globalAnchor = foot_ground_r.getPosition()
 		parentLocalAnchor = ground.getOrientation().inverse() * (globalAnchor - ground.getPosition())
@@ -328,11 +329,12 @@ def addMeshGround(Engine,EngineModule,objects,mesh):
 		#joint.setLimits(1,1)
 		joint.setLimits(0,0)
 
-		b = Engine.createGuiBox()
-		b.setColour(0,1,1,0.5)
-		b.setSize(EngineModule.Vec3(1,4,4))
-		b.setScalingFixed()
-		joint.addShape(b)
+		#b = Engine.createGuiBox()
+		#b.setColour(0,1,1,0.5)
+		#b.setSize(EngineModule.Vec3(1,4,4))
+		#b.setScalingFixed()
+		#joint.addShape(b)
+		joint.addDebugAxises(1,0.2)
 
 	return ground
 
