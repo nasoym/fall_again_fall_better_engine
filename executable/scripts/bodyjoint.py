@@ -128,8 +128,14 @@ def bodyJointRotateJoint(body,joint,quaternion):
 			j = body.getJoint(index)
 			if not (j.readUuid() == joint.readUuid()):
 				anchor = getBodyJointAnchorPos(body,j)
-				orientation = getBodyJointAnchorPos(body,j)
+				orientation = getBodyJointAnchorOrientation(body,j)
+
 				oldRelativePos = anchor - oldJointAnchorPos
 				newRelativePos = oldRelativePos + newJointAnchorPos
+				newRelativePos = quaternion * newRelativePos
+
 				setBodyJointAnchorPos(body,j,newRelativePos)
+
+				newOrientation = quaternion * orientation
+				setBodyJointAnchorOrientation(body,j,newOrientation)
 

@@ -24,6 +24,11 @@ RisingSpring=(10 ** exp) * 0.5
 exp=28
 RisingDamping=(10 ** exp) * 1.0
 
+exp=38
+RisingSpring=(10 ** exp) * 0.9
+exp=38
+RisingDamping=(10 ** exp) * 1.0
+
 angularForce = False
 #angularForce = True
 

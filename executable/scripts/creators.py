@@ -16,6 +16,8 @@ import dynamic_mesh as dyn_mesh
 import articulation_mesh as art_mesh
 import helpers
 
+import operations
+
 def keyPressed(Engine,EngineModule,key,selection,objects):
 	pass
 	if key == EngineModule.Keys.K_C:
@@ -135,6 +137,8 @@ def createFigure(Engine,EngineModule,objects,position,quaternion):
 	o.setUnselectable()
 	o.calcLocalPosOfRootBone()
 
+	#operations.runOperations(Engine,EngineModule)
+
 	ground = addMeshGround(Engine,EngineModule,objects,o)
 	ground.setPosition(position)
 	ground.setOrientation(quaternion)
@@ -237,6 +241,9 @@ def createFigure(Engine,EngineModule,objects,position,quaternion):
 def addMeshGround(Engine,EngineModule,objects,mesh):
 	foot_ground_r = mesh.getBodyOfBoneName("toes-r")
 	foot_ground_l = mesh.getBodyOfBoneName("toes-l")
+
+	foot_ground_r = mesh.getBodyOfBoneName("foot-r")
+	foot_ground_l = mesh.getBodyOfBoneName("foot-l")
 	ground = None
 
 	if foot_ground_l and foot_ground_r:

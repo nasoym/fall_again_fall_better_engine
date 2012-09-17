@@ -14,7 +14,7 @@ import helpers
 
 def storeOperation(text):
 	f = open("operations.txt","a")
-	f.write(text + "\n")
+	f.write("\t" + text + "\n")
 	f.close()
 
 def storeBodyJointOperation(EngineModule,method,body,joint,value):
@@ -86,6 +86,7 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 					else:
 						quaternion = helpers.getModifiedQuaternion(Engine,EngineModule,5)
 						bodyjoint.bodyJointRotateJoint(body,joint,quaternion)
+						storeBodyJointOperation(EngineModule,"bodyJointRotateJoint",body,joint,quaternion)
 
 				elif body and not joint:
 					print("found single body")	

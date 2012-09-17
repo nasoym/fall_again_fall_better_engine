@@ -6,9 +6,10 @@ def runMethods(Engine,EngineModule,objects,animList,index,methodName):
 			partsList = objects.get()[groupName]
 			#print("group: " + str(groupName))
 			for part in partsList:
-				methods = animList[index][methodName]
-				for method in methods:
-					method(Engine,EngineModule,objects,part)
+				if part:
+					methods = animList[index][methodName]
+					for method in methods:
+						method(Engine,EngineModule,objects,part)
 
 def playAnimation(Engine,EngineModule,objects,animData,animList):
 	animName = animData["name"]
@@ -70,25 +71,29 @@ def getBodyListFromNameList(Engine,EngineModule,nameList):
 	bodyList = []
 	for bodyName in nameList:
 		body = helpers.getBodyFromName(Engine,EngineModule,bodyName)
-		bodyList.append(body)
+		if body:
+			bodyList.append(body)
 	return bodyList
 		
 
 def resetMasses(bodyList):
 	for body in bodyList:
-		if body.isActor():
-			body.resetMass()
+		if body:
+			if body.isActor():
+				body.resetMass()
 
 def multiplyMasses(bodyList,factor):
 	for body in bodyList:
-		if body.isActor():
-			newMass = body.getMass() * factor
-			body.setMass(newMass)
+		if body:
+			if body.isActor():
+				newMass = body.getMass() * factor
+				body.setMass(newMass)
 
 def setMasses(bodyList,mass):
 	for body in bodyList:
-		if body.isActor():
-			body.setMass(mass)
+		if body:
+			if body.isActor():
+				body.setMass(mass)
 
 def showMassRelationToPrev(bodyList):
 	text = ""

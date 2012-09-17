@@ -108,6 +108,8 @@ def createBoneBody(Engine,EngineModule,mesh,boneName):
 		return
 	if "hip-" in boneName:
 		return
+	if "toes-" in boneName:
+		return
 
 	boneBody = Engine.createDynamicActor()
 	boneBody.setName(str(boneName))
