@@ -38,11 +38,20 @@ SimpleAnimation = [
 		"larm-joint",
 		"hand-joint"
 		],
-		'time':1500,
+		'time':100,
 		'start':[(lambda Engine,EngineModule,objects,groupPart:
 			groupPart.setMotorValues(FallingSpring,FallingDamping,True))],
 		'end':[(lambda Engine,EngineModule,objects,groupPart:
 			groupPart.setMotorValues(FallingSpring,FallingDamping,True))],
+		},
+	{'groups':[
+		"belly"
+		],
+		'time':100,
+		'start':[(lambda Engine,EngineModule,objects,groupPart:
+			groupPart.addForce(EngineModule.Vec3(0,-40000,0)))],
+		'end':[(lambda Engine,EngineModule,objects,groupPart:
+			groupPart.addForce(EngineModule.Vec3(0,-40000,0)))],
 		}
 	]
 

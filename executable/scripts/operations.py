@@ -277,6 +277,15 @@ def runOperations(Engine,EngineModule):
 
 
 
+	rotatePhysicShape(Engine,EngineModule,bodyName='breast',shapeName='1',quaternion=EngineModule.Quat(0.939693928,0.000000000,-0.342020541,0.000000000))
+	scalePhysicShape(Engine,EngineModule,bodyName='breast',shapeName='1',size=EngineModule.Vec3(5.675136089,6.926376820,2.591103554))
+	movePhysicShape(Engine,EngineModule,bodyName='breast',shapeName='1',position=EngineModule.Vec3(-0.246501684,0.000000000,-2.817671299))
+
+	addBox(Engine,EngineModule,bodyName='breast',shapeName='2',size=EngineModule.Vec3(1.000000000,1.000000000,1.000000000),r=0.5,g=0.5,b=0.0,a=0.5)
+	scalePhysicShape(Engine,EngineModule,bodyName='breast',shapeName='2',size=EngineModule.Vec3(4.549024105,7.400252819,3.138428926))
+	movePhysicShape(Engine,EngineModule,bodyName='breast',shapeName='2',position=EngineModule.Vec3(0.000006653,-0.000000000,2.000099182))
+	rotatePhysicShape(Engine,EngineModule,bodyName='breast',shapeName='2',quaternion=EngineModule.Quat(0.999052584,0.000000000,-0.043619774,0.000000000))
+	movePhysicShape(Engine,EngineModule,bodyName='breast',shapeName='2',position=EngineModule.Vec3(0.043585222,-0.000000000,1.502009034))
 
 
 
@@ -349,8 +358,19 @@ def runOperations(Engine,EngineModule):
 	bodyJointAbsoluteRotation(Engine,EngineModule,bodyName='lleg-r',jointName='lleg-r-joint',quaternion=EngineModule.Quat(0.939692676,0.000000000,-0.342020214,0.000000000))
 
 
+	#bodyJointRotateJoint(Engine,EngineModule,bodyName='lleg-l',jointName='lleg-l-joint',quaternion=EngineModule.Quat(0.999048233,0.000000000,0.043619394,0.000000000))
+	#bodyJointAbsoluteRotation(Engine,EngineModule,bodyName='lleg-l',jointName='lleg-l-joint',quaternion=EngineModule.Quat(0.965926230,0.000000000,0.258819222,0.000000000))
+	#setMotorTarget(Engine,EngineModule,jointName='lleg-l-joint',quaternion=EngineModule.Quat(0.965926111,0.000000000,0.258819193,0.000000000))
 
+	bodyJointAbsoluteRotation(Engine,EngineModule,bodyName='lleg-l',jointName='lleg-l-joint',quaternion=EngineModule.Quat().fromAngles(0,-80,0))
+	setMotorTarget(Engine,EngineModule,jointName='lleg-l-joint',quaternion=EngineModule.Quat().fromAngles(0,-80,0))
 
+	#bodyJointRotateJoint(Engine,EngineModule,bodyName='lleg-r',jointName='lleg-r-joint',quaternion=EngineModule.Quat(0.999048233,0.000000000,0.043619394,0.000000000))
+	#bodyJointAbsoluteRotation(Engine,EngineModule,bodyName='lleg-r',jointName='lleg-r-joint',quaternion=EngineModule.Quat(0.965926230,0.000000000,0.258819222,0.000000000))
+	#setMotorTarget(Engine,EngineModule,jointName='lleg-r-joint',quaternion=EngineModule.Quat(0.965926111,0.000000000,0.258819193,0.000000000))
+
+	bodyJointAbsoluteRotation(Engine,EngineModule,bodyName='lleg-r',jointName='lleg-r-joint',quaternion=EngineModule.Quat().fromAngles(0,-80,0))
+	setMotorTarget(Engine,EngineModule,jointName='lleg-r-joint',quaternion=EngineModule.Quat().fromAngles(0,-80,0))
 
 
 	setLimits(Engine,EngineModule,jointName='foot-l-joint',y=50,z=50)
