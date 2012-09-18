@@ -11,7 +11,7 @@ def getBodyFromName(Engine,EngineModule,bodyName):
 
 def storeOperation(text):
 	f = open("operations.txt","a")
-	f.write(text + "\n")
+	f.write("\t" + text + "\n")
 	f.close()
 
 def delFromSelectionList(selectionList,engineObject):

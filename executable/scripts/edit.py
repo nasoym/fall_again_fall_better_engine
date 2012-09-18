@@ -166,7 +166,10 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 					print("found body and joint")	
 					print("move joint pos in rel to body")
 
-					if Engine.isKeyDown(EngineModule.Keys.K_9):
+					if ((Engine.isKeyDown(EngineModule.Keys.K_9)) or
+						(Engine.isKeyDown(EngineModule.Keys.K_8)) or
+						(Engine.isKeyDown(EngineModule.Keys.K_0))
+						):
 						vector = helpers.getModifiedVector(Engine,EngineModule,0.1)
 						currentJointPos = bodyjoint.getBodyJointAnchorPos(body,joint)
 						newValue = currentJointPos + vector

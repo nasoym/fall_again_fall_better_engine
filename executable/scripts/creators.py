@@ -137,11 +137,13 @@ def createFigure(Engine,EngineModule,objects,position,quaternion):
 	o.setUnselectable()
 	o.calcLocalPosOfRootBone()
 
-	#operations.runOperations(Engine,EngineModule)
+	operations.runOperations(Engine,EngineModule)
 
 	ground = addMeshGround(Engine,EngineModule,objects,o)
 	ground.setPosition(position)
 	ground.setOrientation(quaternion)
+
+	operations.runOperations2(Engine,EngineModule)
 
 	Engine.physicPauseToggle()
 
@@ -248,20 +250,18 @@ def addMeshGround(Engine,EngineModule,objects,mesh):
 
 	if foot_ground_l and foot_ground_r:
 		foot_ground_l_position = foot_ground_l.getPosition()
-		#foot_ground_l_position += foot_ground_l.getOrientation() * foot_ground_l.getSize() 
+		foot_ground_l_position += foot_ground_l.getOrientation() * (foot_ground_l.getSize() * EngineModule.Vec3(1,0,0))
+
 		foot_ground_r_position = foot_ground_r.getPosition()
-		#foot_ground_r_position += foot_ground_r.getOrientation() * foot_ground_r.getSize() 
+		foot_ground_r_position += foot_ground_r.getOrientation() * (foot_ground_r.getSize() * EngineModule.Vec3(1,0,0)) 
 
 		halfpos = foot_ground_r_position - foot_ground_l_position
 		halfpos = halfpos * EngineModule.Vec3(0.5,0.5,0.5)
 		finalPos = foot_ground_l_position + halfpos
-		finalPos.y -= 2
-
-		xySize = (halfpos.x + halfpos.y ) * 2
-		#xySize *= 20
-
-		#ground = create.createPhysicStaticBoxStructure(Engine,EngineModule)
-		#ground.setSize(EngineModule.Vec3(xySize,1,xySize))
+		#finalPos.y -= 1.0
+		#xySize = (halfpos.x + halfpos.y ) * 2
+		xySize = 15
+		#xySize = 95
 
 		ground = Engine.createStaticActor()
 		shape = ground.addBox(EngineModule.Vec3(xySize,1,xySize))
@@ -269,12 +269,8 @@ def addMeshGround(Engine,EngineModule,objects,mesh):
 		shape.setScaling1To1()
 		ground.setPosition(finalPos)
 		ground.setSize(EngineModule.Vec3(xySize,1,xySize))
-
 		ground.setOrientation(mesh.getOrientation())
 		ground.setName("ground")
-
-
-
 
 
 
@@ -284,29 +280,16 @@ def addMeshGround(Engine,EngineModule,objects,mesh):
 		bodyPosition += foot_ground_l.getOrientation() * (foot_ground_l.getSize() * EngineModule.Vec3(-1,0,0))
 		bodyLocalAnchor = foot_ground_l.getOrientation().inverse() * (globalAnchor - bodyPosition)
 
-		#joint = create.createJoint(Engine,EngineModule,ground,foot_ground_l)
 		joint = Engine.createJoint(ground,foot_ground_l)
 		joint.setName("foot-ground-l")
+		joint.addDebugAxises(1,0.2)
 		objects.appendList("foot-joint", joint)
 
 		joint.setAnchor1(parentLocalAnchor)
 		joint.setAnchor2(bodyLocalAnchor)
-		#joint.setAnchor1Orientation(EngineModule.Quat().fromAngles(0,0,-90))
-		#joint.setAnchor2Orientation(EngineModule.Quat().fromAngles(90,-90,0))
 		joint.setAnchor1Orientation(foot_ground_l.getOrientation() * ground.getOrientation().inverse() )
-		#joint.setLimits(40,40)
-		#joint.setLimits(10,10)
-		#joint.setLimits(1,1)
-		joint.setLimits(0,0)
+		joint.setLimits(10,10)
 
-
-
-		#b = Engine.createGuiBox()
-		#b.setColour(0,1,1,0.5)
-		#b.setSize(EngineModule.Vec3(1,4,4))
-		#b.setScalingFixed()
-		#joint.addShape(b)
-		joint.addDebugAxises(1,0.2)
 
 		globalAnchor = foot_ground_r.getPosition()
 		parentLocalAnchor = ground.getOrientation().inverse() * (globalAnchor - ground.getPosition())
@@ -314,28 +297,14 @@ def addMeshGround(Engine,EngineModule,objects,mesh):
 		bodyPosition += foot_ground_r.getOrientation() * (foot_ground_r.getSize() * EngineModule.Vec3(-1,0,0))
 		bodyLocalAnchor = foot_ground_r.getOrientation().inverse() * (globalAnchor - bodyPosition)
 
-		#joint = create.createJoint(Engine,EngineModule,ground,foot_ground_r)
 		joint = Engine.createJoint(ground,foot_ground_r)
 		joint.setName("foot-ground-r")
+		joint.addDebugAxises(1,0.2)
 		objects.appendList("foot-joint", joint)
 
 		joint.setAnchor1(parentLocalAnchor)
 		joint.setAnchor2(bodyLocalAnchor)
-		#joint.setAnchor1Orientation(EngineModule.Quat().fromAngles(0,0,-90))
-		#joint.setAnchor2Orientation(EngineModule.Quat().fromAngles(90,-90,0))
 		joint.setAnchor1Orientation(foot_ground_r.getOrientation() * ground.getOrientation().inverse() )
-		#joint.setLimits(40,40)
-		#joint.setLimits(10,10)
-		#joint.setLimits(1,1)
-		joint.setLimits(0,0)
-
-		#b = Engine.createGuiBox()
-		#b.setColour(0,1,1,0.5)
-		#b.setSize(EngineModule.Vec3(1,4,4))
-		#b.setScalingFixed()
-		#joint.addShape(b)
-		joint.addDebugAxises(1,0.2)
+		joint.setLimits(10,10)
 
 	return ground
-
-

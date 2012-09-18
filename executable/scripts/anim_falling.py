@@ -18,8 +18,11 @@ FallingDamping = 50
 FallingSpring = 10
 FallingDamping = 3000000
 
-FallingSpring = 0
-FallingDamping = 0
+FallingSpring = 100
+FallingDamping = 200
+
+FallingSpring = 10
+FallingDamping = 20
 
 SimpleAnimation = [
 	{'groups':[
@@ -40,25 +43,6 @@ SimpleAnimation = [
 			groupPart.setMotorValues(FallingSpring,FallingDamping,True))],
 		'end':[(lambda Engine,EngineModule,objects,groupPart:
 			groupPart.setMotorValues(FallingSpring,FallingDamping,True))],
-		},
-	{'groups':[
-		"foot-joint",
-		"lleg-joint",
-		"uleg-joint",
-		"belly-joint",
-		"breast-joint",
-		"shoulder-joint",
-		"neck-joint",
-		"head-joint",
-		"uarm-joint",
-		"larm-joint",
-		"hand-joint"
-		],
-		'time':500,
-		'start':[(lambda Engine,EngineModule,objects,groupPart:
-			groupPart.setMotorValues(0,0,True))],
-		'end':[(lambda Engine,EngineModule,objects,groupPart:
-			groupPart.setMotorValues(0,0,True))],
 		}
 	]
 

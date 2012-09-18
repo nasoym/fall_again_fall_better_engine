@@ -87,7 +87,7 @@ void	EngineMesh::updateBone(Bone* bone){
 		if (joint) {
 			localPos = body->getOrientation() * joint->getAnchor2();
 		} else {
-			localPos = body->getOrientation() * (body->getSize()*Vec3(-1,0,0));
+			//localPos = body->getOrientation() * (body->getSize()*Vec3(-1,0,0));
 		}
 		boneSetPosition(bone, body->getPosition() + localPos);
 	}
