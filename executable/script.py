@@ -65,28 +65,30 @@ class Objects(object):
 		return text
 
 	def append(self,key,value):
-		if key in self.objects:
-			if not type(self.objects[key]) == list:
-				self.objects[key] = [self.objects[key]]
-			if type(value) == list:
-				for e in value[:]:
-					self.objects[key].append(e)
+		if value:
+			if key in self.objects:
+				if not type(self.objects[key]) == list:
+					self.objects[key] = [self.objects[key]]
+				if type(value) == list:
+					for e in value[:]:
+						self.objects[key].append(e)
+				else:
+					self.objects[key].append(value)
 			else:
-				self.objects[key].append(value)
-		else:
-			self.objects[key] = value
+				self.objects[key] = value
 
 	def appendList(self,key,value):
-		if key in self.objects:
-			if not type(self.objects[key]) == list:
-				self.objects[key] = [self.objects[key]]
-			if type(value) == list:
-				for e in value[:]:
-					self.objects[key].append(e)
+		if value:
+			if key in self.objects:
+				if not type(self.objects[key]) == list:
+					self.objects[key] = [self.objects[key]]
+				if type(value) == list:
+					for e in value[:]:
+						self.objects[key].append(e)
+				else:
+					self.objects[key].append(value)
 			else:
-				self.objects[key].append(value)
-		else:
-			self.objects[key] = [value]
+				self.objects[key] = [value]
 
 	def setUnsavable(self,key):
 		if not key in self.unsavable:

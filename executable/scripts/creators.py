@@ -72,6 +72,8 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 				or Engine.isKeyDown(EngineModule.Keys.K_3) ):
 
 				size = EngineModule.Vec3(10,10,10)
+				size = EngineModule.Vec3(15,5,1)
+
 				if Engine.isKeyDown(EngineModule.Keys.K_0):
 					o = Engine.createStaticActor()
 				else:

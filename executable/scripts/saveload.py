@@ -236,8 +236,8 @@ def load(Engine,EngineModule,fileName,objects):
 						shapeType = node.prop("shape")
 						actorEntity = Engine.getFromUuid(actor)
 
-						if node.hasProp("size"):
-							a = (node.prop("size").split(","))
+						if node.hasProp("local_size"):
+							a = (node.prop("local_size").split(","))
 							size = EngineModule.Vec3( float(a[0]),float(a[1]),float(a[2]))
 
 						if shapeType == "box":
@@ -255,8 +255,19 @@ def load(Engine,EngineModule,fileName,objects):
 							o.setUuid(uuid)
 						loadEngineObject(node,Engine,EngineModule,o)
 						#loadSize(node,Engine,EngineModule,o)
-						loadPosition(node,Engine,EngineModule,o)
-						loadOrientation(node,Engine,EngineModule,o)
+						#loadPosition(node,Engine,EngineModule,o)
+						#loadOrientation(node,Engine,EngineModule,o)
+
+						"""
+						if node.hasProp("local_position"):
+							a = (node.prop("local_position").split(","))
+							localPos = EngineModule.Vec3( float(a[0]),float(a[1]),float(a[2]))
+							o.setLocalPosition(localPos)
+						if node.hasProp("local_orientation"):
+							a = (node.prop("local_orientation").split(","))
+							localOrientation = EngineModule.Vec3( float(a[0]),float(a[1]),float(a[2]),float(a[3]))
+							o.setLocalOrientation(localOrientation)
+							"""
 
 						if node.hasProp("colour") and node.hasProp("alpha"):
 							alpha = float(node.prop("alpha"))

@@ -10,7 +10,8 @@ def createJoint(Engine,EngineModule,body1,body2):
 
 def createPhysicBoxFinal(Engine,EngineModule):
 	o = Engine.createDynamicActor()
-	b = o.addBox(EngineModule.Vec3(1,1,1))
+	#b = o.addBox(EngineModule.Vec3(1,1,1))
+	b = o.addCapsule(EngineModule.Vec3(1,1,1))
 	b.setMaterialName(Engine.getDefaultShadedMaterialName())
 	b.setScaling1To1()
 	o.setPosition(EngineModule.Vec3(0,150,0))
