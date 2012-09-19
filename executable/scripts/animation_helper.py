@@ -10,6 +10,8 @@ def runMethods(Engine,EngineModule,objects,animList,index,methodName):
 					methods = animList[index][methodName]
 					for method in methods:
 						method(Engine,EngineModule,objects,part)
+				else:
+					print("anim part is none: " + str(part))
 
 def playAnimation(Engine,EngineModule,objects,animData,animList):
 	animName = animData["name"]
@@ -22,22 +24,22 @@ def playAnimation(Engine,EngineModule,objects,animData,animList):
 		if ((currentTime > startTime) and
 			(currentTime < endTime)):
 			if animIndex != 0:
-				print("run anim end: " + str(animName) + " index : " + str(animIndex-1))
+				#print("run anim end: " + str(animName) + " index : " + str(animIndex-1))
 				runMethods(Engine,EngineModule,
 					objects,animList,animIndex-1,"end")
-			print("run anim start: " + str(animName) + " index : " + str(animIndex))
+			#print("run anim start: " + str(animName) + " index : " + str(animIndex))
 			runMethods(Engine,EngineModule,
 				objects,animList,animIndex,"start")
 			animData["index"] = animIndex + 1
-			print("go to next anim index")
+			#print("go to next anim index")
 			animData["starttime"] = endTime
 	elif animIndex == animListSize:
 		if currentTime > startTime:
-			print("run anim end: " + str(animName) + " index : " + str(animIndex-1))
+			#print("run anim end: " + str(animName) + " index : " + str(animIndex-1))
 			runMethods(Engine,EngineModule,
 				objects,animList,animIndex-1,"end")
 			animData["index"] = animIndex + 1
-			print("done")
+			#print("done")
 
 
 
