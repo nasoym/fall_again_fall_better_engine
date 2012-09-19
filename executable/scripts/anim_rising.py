@@ -26,8 +26,14 @@ RisingDamping=(10 ** exp) * 1.0
 
 exp=3
 exp=28
+exp=8
+exp=5
 RisingSpring=(10 ** exp) * 1.5
 RisingDamping=(10 ** exp) * 1.0
+
+exp=1
+ArmRisingSpring=(10 ** exp) * 1.5
+ArmRisingDamping=(10 ** exp) * 1.0
 
 #angularForce = False
 angularForce = True
@@ -67,23 +73,49 @@ angularForce = True
 Timing = 1000
 SimpleAnimation = [
 	{'groups':[
+		"shoulder-joint",
+		"uarm-joint",
+		"larm-joint",
+		"hand-joint"
+		],
+		'time':50,
+		'start':[(lambda Engine,EngineModule,objects,groupPart:
+			groupPart.setMotorValues(0,0,angularForce))],
+			#groupPart.setMotorValues(ArmRisingSpring,ArmRisingDamping,angularForce))],
+		'end':[(lambda Engine,EngineModule,objects,groupPart:
+			groupPart.setMotorValues(0,0,angularForce))],
+			#groupPart.setMotorValues(ArmRisingSpring,ArmRisingDamping,angularForce))],
+		},
+	{'groups':[
 		"foot-joint",
 		"lleg-joint",
 		"uleg-joint",
 		"belly-joint",
 		"breast-joint",
-		"shoulder-joint",
 		"neck-joint",
-		"head-joint",
-		"uarm-joint",
-		"larm-joint",
-		"hand-joint"
+		"head-joint"
+		#"shoulder-joint",
+		#"uarm-joint",
+		#"larm-joint",
+		#"hand-joint"
 		],
 		'time':500,
 		'start':[(lambda Engine,EngineModule,objects,groupPart:
 			groupPart.setMotorValues(RisingSpring,RisingDamping,angularForce))],
 		'end':[(lambda Engine,EngineModule,objects,groupPart:
 			groupPart.setMotorValues(RisingSpring,RisingDamping,angularForce))],
+		},
+	{'groups':[
+		"shoulder-joint",
+		"uarm-joint",
+		"larm-joint",
+		"hand-joint"
+		],
+		'time':500,
+		'start':[(lambda Engine,EngineModule,objects,groupPart:
+			groupPart.setMotorValues(ArmRisingSpring,ArmRisingDamping,angularForce))],
+		'end':[(lambda Engine,EngineModule,objects,groupPart:
+			groupPart.setMotorValues(ArmRisingSpring,ArmRisingDamping,angularForce))],
 		}
 	]
 

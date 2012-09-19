@@ -214,6 +214,7 @@ BOOST_PYTHON_MODULE(EngineModule) {
 
 		;
 	class_<DynamicActor,bases<Actor> >("DynamicActor", init<Engine*,Vec3&>())
+		.def("setSolverIterations",&DynamicActor::setSolverIterations)
 		;
 
 	class_<StaticActor,bases<Actor> >("StaticActor", init<Engine*,Vec3&>())

@@ -45,6 +45,20 @@ def guiUpdate(Engine,EngineModule,selection,objects):
 			animList = animLists[animName]
 			animation_helper.playAnimation(Engine,EngineModule,objects,v,animList)
 
+def setMiddleArms(Engine,EngineModule,objects):
+	bodyRightHandLine = [ "shoulder-r", "uarm-r", "larm-r", "hand-r" ]
+	bodyLeftHandLine = [ "shoulder-l", "uarm-l", "larm-l", "hand-l" ]
+	lHandLine = animation_helper.getBodyListFromNameList(Engine,EngineModule,bodyLeftHandLine)
+	rHandLine = animation_helper.getBodyListFromNameList(Engine,EngineModule,bodyRightHandLine)
+	animation_helper.multiplyMasses(lHandLine,100.0)
+	animation_helper.multiplyMasses(rHandLine,100.0)
+
+	animation_helper.multiplyMasses(animation_helper.getBodyListFromNameList(
+		Engine,EngineModule,["hand-l"]),5.0)
+	animation_helper.multiplyMasses(animation_helper.getBodyListFromNameList(
+		Engine,EngineModule,["hand-r"]),5.0)
+
+
 def setLight(Engine,EngineModule,objects):
 	bodyAllGroups = ["feet","lleg","uleg","root","belly","breast","neck","head","shoulder","uarm","larm","hand"]
 	bodyRightHeadLine = [ "toes-r", "foot-r", "lleg-r", "uleg-r", "root", "belly", "cheast", "breast", "neck", "head"]
@@ -198,7 +212,7 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 			objects.get()["anims"]["stand"] = {
 				"name":"rising","index":0,"starttime":Engine.getTime()}
 			setLight(Engine,EngineModule,objects)
-			#setMiddle(Engine,EngineModule,objects)
+			setMiddleArms(Engine,EngineModule,objects)
 			#Engine.setGravity(EngineModule.Vec3(0,35,0))
 			Engine.setGravity(EngineModule.Vec3(0,-10,0))
 
@@ -207,9 +221,11 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 			objects.get()["anims"]["stand"] = {
 				"name":"falling","index":0,"starttime":Engine.getTime()}
 			setHeavy(Engine,EngineModule,objects)
-			#setMiddle(Engine,EngineModule,objects)
-			#Engine.setGravity(EngineModule.Vec3(0,-300,0))
+			anim_falling.addRandomFallingForce(Engine,EngineModule,objects)
+
 			Engine.setGravity(EngineModule.Vec3(0,-10,0))
+			Engine.setGravity(EngineModule.Vec3(0,-60,0))
+			Engine.setGravity(EngineModule.Vec3(0,-100,0))
 
 
 

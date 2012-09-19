@@ -9,6 +9,8 @@ DynamicActor::DynamicActor(Engine* engine, Vec3 & position) :
 	{
     mBody = (getEngine()->getPhysicsEngine()->getPhysics())->createRigidDynamic( PxTransform(position.toPhysx()) );
     (getEngine()->getPhysicsEngine()->getScene())->addActor(*mBody);
+
+	setSolverIterations(16,4);
 }
 
 DynamicActor::~DynamicActor( ){
@@ -40,3 +42,9 @@ void DynamicActor::setMass(float mass){
 float DynamicActor::getMass(){
 	return mBody->getMass();
 }
+
+void DynamicActor::setSolverIterations(int i1,int i2){
+	mBody->setSolverIterationCounts(i1,i2);
+    wakeUp();
+}
+

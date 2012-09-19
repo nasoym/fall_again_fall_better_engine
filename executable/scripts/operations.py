@@ -321,6 +321,11 @@ def runOperations(Engine,EngineModule):
 
 
 
+	setMotorTarget(Engine,EngineModule,jointName='uarm-l-joint',quaternion=EngineModule.Quat().fromAngles(0,45,0))
+	setMotorTarget(Engine,EngineModule,jointName='shoulder-l-joint',quaternion=EngineModule.Quat().fromAngles(0,6,0))
+
+	setMotorTarget(Engine,EngineModule,jointName='uarm-r-joint',quaternion=EngineModule.Quat().fromAngles(0,45,0))
+	setMotorTarget(Engine,EngineModule,jointName='shoulder-r-joint',quaternion=EngineModule.Quat().fromAngles(0,6,0))
 
 
 

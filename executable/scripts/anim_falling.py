@@ -1,3 +1,5 @@
+import random
+
 FallingAnimTime = 1000
 
 FallingSpring = 0.1
@@ -18,11 +20,12 @@ FallingDamping = 50
 FallingSpring = 10
 FallingDamping = 3000000
 
-FallingSpring = 100
-FallingDamping = 200
 
 FallingSpring = 10
 FallingDamping = 20
+
+FallingSpring = 1000
+FallingDamping = 3000
 
 SimpleAnimation = [
 	{'groups':[
@@ -38,27 +41,84 @@ SimpleAnimation = [
 		"larm-joint",
 		"hand-joint"
 		],
-		'time':100,
+		'time':1500,
 		'start':[(lambda Engine,EngineModule,objects,groupPart:
 			#groupPart.setMotorValues(0,0,True))],
-			groupPart.setMotorOff())],
+			#groupPart.setMotorOff())],
 			#groupPart.setMotorValues(FallingSpring,FallingDamping,True))],
+			groupPart.setMotorValues(5,50,True)),
+			(lambda Engine,EngineModule,objects,groupPart:
+				addRandomFallingForce(Engine,EngineModule,objects)
+			],
 		'end':[(lambda Engine,EngineModule,objects,groupPart:
 			#groupPart.setMotorValues(0,0,True))],
-			groupPart.setMotorOff())],
+			#groupPart.setMotorOff())],
 			#groupPart.setMotorValues(FallingSpring,FallingDamping,True))],
+			groupPart.setMotorValues(5,50,True))],
 		},
 	{'groups':[
-		"belly"
+		"uarm-joint",
+		"larm-joint",
+		"hand-joint"
 		],
-		'time':100,
+		'time':50,
 		'start':[(lambda Engine,EngineModule,objects,groupPart:
-			groupPart.addForce(EngineModule.Vec3(0,-4,0)))],
+			#groupPart.setMotorValues(1,10,True))],
+			#groupPart.setMotorValues(0,0,True))],
+			#groupPart.setMotorOff())],
+			#groupPart.setMotorValues(FallingSpring,FallingDamping,True))],
+			groupPart.setMotorValues(500,5000,True))],
 		'end':[(lambda Engine,EngineModule,objects,groupPart:
-			groupPart.addForce(EngineModule.Vec3(0,-4,0)))],
+			#groupPart.setMotorValues(1,10,True))],
+			#groupPart.setMotorValues(0,0,True))],
+			#groupPart.setMotorOff())],
+			#groupPart.setMotorValues(FallingSpring,FallingDamping,True))],
+			groupPart.setMotorValues(500,5000,True))],
 		}
 	]
+"""
 
+	{'groups':[
+		"belly","root"
+		],
+		'time':1500,
+		'start':[(lambda Engine,EngineModule,objects,groupPart:
+			groupPart),
+			(lambda Engine,EngineModule,objects,groupPart:
+				#addRandomFallingForce(Engine,EngineModule,objects)
+				groupPart)
+			)
+			],
+			#groupPart.addForce(EngineModule.Vec3(0,-40000,0)))],
+		'end':[(lambda Engine,EngineModule,objects,groupPart:
+			groupPart)],
+			#groupPart.addForce(EngineModule.Vec3(0,-40000,0)))],
+		},
+	{'groups':[
+		"foot-joint",
+		"lleg-joint",
+		"uleg-joint",
+		"belly-joint",
+		"breast-joint",
+		"shoulder-joint",
+		"neck-joint",
+		"head-joint"
+		#"uarm-joint",
+		#"larm-joint",
+		#"hand-joint"
+		],
+		'time':50,
+		'start':[(lambda Engine,EngineModule,objects,groupPart:
+			#groupPart.setMotorValues(0,0,True))],
+			#groupPart.setMotorOff())],
+			groupPart.setMotorValues(FallingSpring,FallingDamping,True))],
+		'end':[(lambda Engine,EngineModule,objects,groupPart:
+			#groupPart.setMotorValues(0,0,True))],
+			#groupPart.setMotorOff())],
+			groupPart.setMotorValues(FallingSpring,FallingDamping,True))],
+		},
+
+"""
 FallingAnim = [
 	{'groups':[
 		"foot-joint",
@@ -144,7 +204,8 @@ FallingAnim = [
 	]
 
 def addRandomFallingForce(Engine,EngineModule,objects):
-
+	print("add random force")
+	"""
 	randRange = 150
 	randStep = 20
 	#getRandVal = lambda : random.choice([ -randRange, randRange, -randRange * 0.5, randRange * 0.5, 0])
@@ -160,6 +221,7 @@ def addRandomFallingForce(Engine,EngineModule,objects):
 	for part in partsList:
 		force = EngineModule.Vec3(getRandVal(),0,getRandVal())
 		part.addForce(force)
+		"""
 
 
 
@@ -192,18 +254,36 @@ def addRandomFallingForce(Engine,EngineModule,objects):
 	finalY = highY - ((highY-lowY) * 0.5)
 	finalZ = highZ - ((highZ-lowZ) * 0.5)
 	middlePos = EngineModule.Vec3(finalX,finalY,finalZ)
+	"""
 	if "head-debug" in objects.get():
 		debug = objects.get()["head-debug"]
 		debug.setPosition(middlePos)
+	else:
+	"""
+	if not "head-debug" in objects.get():
+		b = Engine.createGuiBox()
+		b.setColour(0,0,1,0.5)
+		b.setSize(EngineModule.Vec3(10,10,10))
+		b.setPosition(EngineModule.Vec3(0,200,0))
+		objects.get()["head-debug"] = b
+
+	debug = objects.get()["head-debug"]
+	debug.setPosition(middlePos)
 
 	angleRand = 70
-	maxMult = 9
-	minMult = 1.0
+	maxMult = 39
+	minMult = 5.0
+
+	angleRand = 60
+	maxMult = 90
+	minMult = 30.0
+
+
 	for part in partsList:
 		relVec = middlePos - part.getPosition()
 		relVec = EngineModule.Quat().fromAngles(
 			0,random.uniform(-angleRand,angleRand),0) * relVec
-		#part.addForce(relVec * 10)
+		#part.addForce(relVec * 100)
 		part.addForce(relVec * random.uniform(minMult,maxMult))
 		#part.addForce(relVec * 0.5)
 
@@ -212,6 +292,7 @@ def addRandomFallingForce(Engine,EngineModule,objects):
 		relVec = middlePos - part.getPosition()
 		relVec = EngineModule.Quat().fromAngles(
 			0,random.uniform(-angleRand,angleRand),0) * relVec
+		#part.addForce(relVec * 100)
 		part.addForce(relVec * random.uniform(minMult,maxMult))
 		#part.addForce(relVec * 0.5)
 

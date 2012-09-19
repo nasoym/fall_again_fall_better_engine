@@ -29,6 +29,8 @@ class DynamicActor : public Actor {
 		virtual void			resetMass();
 		virtual float			getMass();
 
+		void 					setSolverIterations(int i1,int i2);
+
 	private:
         PxRigidDynamic*     	mBody;
 };

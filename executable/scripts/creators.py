@@ -103,11 +103,28 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 				ragdoll.createLimits(Engine,EngineModule,char,45)
 				ragdoll.createLimitsHuman(Engine,EngineModule,char)
 
+			elif Engine.isKeyDown(EngineModule.Keys.K_8):
+				Engine.setCameraPosition(
+					EngineModule.Vec3(-39.260421753,51.768470764,-253.214447021)
+					)
+				Engine.setCameraOrientation(
+					EngineModule.Quat(0.061658185,0.000627403,-0.998036027,0.011049764)
+					)
+				Engine.setCameraFOV(50)
+
+
 			elif Engine.isKeyDown(EngineModule.Keys.K_7):
 
 				#saveload.load(Engine,EngineModule,"xmlscene/ragdoll.xml",objects)
 
 				yPos = 0.0
+
+				saveload.load(Engine,EngineModule,"xmlscene/ragdoll.xml",objects,
+					loadingPosition=EngineModule.Vec3(18.637054443,yPos,-93.069076538),loadingOrientation=EngineModule.Quat(0.608761549,0.000000000,0.793353617,0.000000000))
+				saveload.load(Engine,EngineModule,"xmlscene/ragdoll.xml",objects,
+					loadingPosition=EngineModule.Vec3(0.000000000,yPos,117.283714294),loadingOrientation=EngineModule.Quat(1.000000000,0.000000000,0.000000000,0.000000000))
+				saveload.load(Engine,EngineModule,"xmlscene/ragdoll.xml",objects,
+					loadingPosition=EngineModule.Vec3(60.000000000,yPos,57.283725739),loadingOrientation=EngineModule.Quat(0.866025507,0.000000000,0.500000119,0.000000000))
 				saveload.load(Engine,EngineModule,"xmlscene/ragdoll.xml",objects,
 					loadingPosition=EngineModule.Vec3(40.076103210,yPos,-4.459388256),loadingOrientation=EngineModule.Quat(0.999048233,0.000000000,-0.043619387,0.000000000))
 
@@ -117,14 +134,7 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 				saveload.load(Engine,EngineModule,"xmlscene/ragdoll.xml",objects,
 					loadingPosition=EngineModule.Vec3(100.000000000,yPos,-42.716278076),loadingOrientation=EngineModule.Quat(0.866025507,0.000000000,0.500000119,0.000000000))
 				saveload.load(Engine,EngineModule,"xmlscene/ragdoll.xml",objects,
-					loadingPosition=EngineModule.Vec3(18.637054443,yPos,-93.069076538),loadingOrientation=EngineModule.Quat(0.608761549,0.000000000,0.793353617,0.000000000))
-				saveload.load(Engine,EngineModule,"xmlscene/ragdoll.xml",objects,
-					loadingPosition=EngineModule.Vec3(60.000000000,yPos,57.283725739),loadingOrientation=EngineModule.Quat(0.866025507,0.000000000,0.500000119,0.000000000))
-
-				saveload.load(Engine,EngineModule,"xmlscene/ragdoll.xml",objects,
 					loadingPosition=EngineModule.Vec3(-98.567276001,yPos,103.246383667),loadingOrientation=EngineModule.Quat(0.965926170,0.000000000,-0.258819163,0.000000000))
-				saveload.load(Engine,EngineModule,"xmlscene/ragdoll.xml",objects,
-					loadingPosition=EngineModule.Vec3(0.000000000,yPos,117.283714294),loadingOrientation=EngineModule.Quat(1.000000000,0.000000000,0.000000000,0.000000000))
 				saveload.load(Engine,EngineModule,"xmlscene/ragdoll.xml",objects,
 					loadingPosition=EngineModule.Vec3(-20.000000000,yPos,17.283725739),loadingOrientation=EngineModule.Quat(0.923879683,0.000000000,-0.382683575,0.000000000))
 				saveload.load(Engine,EngineModule,"xmlscene/ragdoll.xml",objects,
@@ -135,6 +145,7 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 					loadingPosition=EngineModule.Vec3(-80.000000000,yPos,37.283725739),loadingOrientation=EngineModule.Quat(-0.608761787,0.000000000,-0.793353677,0.000000000))
 				saveload.load(Engine,EngineModule,"xmlscene/ragdoll.xml",objects,
 					loadingPosition=EngineModule.Vec3(-4.641016006,yPos,-40.036834717),loadingOrientation=EngineModule.Quat(0.500000119,0.000000000,-0.866025686,0.000000000))
+
 					"""
 
 

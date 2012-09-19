@@ -28,6 +28,7 @@ def load(Engine,EngineModule,fileName,objects,loadingPosition=None,loadingOrient
 
 	if not loadingOrientation:
 		loadingOrientation = EngineModule.Quat()
+	loadingOrientation = loadingOrientation * EngineModule.Quat().fromAngles(0,180,0)
 
 	while(len(res)>0):
 
