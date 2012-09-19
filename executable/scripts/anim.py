@@ -95,7 +95,6 @@ def setLight(Engine,EngineModule,objects):
 	animation_helper.multiplyMasses(allBodies,0.01)
 	#animation_helper.multiplyMasses(allBodies,0.1)
 
-	#Engine.setGravity(EngineModule.Vec3(0,35,0))
 
 def setHeavy(Engine,EngineModule,objects):
 	bodyAllGroups = ["feet","lleg","uleg","root","belly","breast","neck","head","shoulder","uarm","larm","hand"]
@@ -146,7 +145,11 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 	if key == EngineModule.Keys.K_LBRACKET:
 		pass
 		print("modify masses")
-		setLight(Engine,EngineModule,objects)
+		#setLight(Engine,EngineModule,objects)
+		shoulders = animation_helper.getBodyListFromGroupNameList(objects,["shoulder"])
+		print("s: " + str(shoulders))
+		for o in shoulders:
+			selection.add(o)
 
 	if key == EngineModule.Keys.K_RBRACKET:
 		pass
@@ -195,15 +198,18 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 			objects.get()["anims"]["stand"] = {
 				"name":"rising","index":0,"starttime":Engine.getTime()}
 			setLight(Engine,EngineModule,objects)
+			#setMiddle(Engine,EngineModule,objects)
+			#Engine.setGravity(EngineModule.Vec3(0,35,0))
 			Engine.setGravity(EngineModule.Vec3(0,-10,0))
 
 		elif objects.get()["anims"]["stand"]["name"] == "rising":
 			print("toggle animation: to falling")
 			objects.get()["anims"]["stand"] = {
 				"name":"falling","index":0,"starttime":Engine.getTime()}
-			#setHeavy(Engine,EngineModule,objects)
+			setHeavy(Engine,EngineModule,objects)
 			#setMiddle(Engine,EngineModule,objects)
-			Engine.setGravity(EngineModule.Vec3(0,-300,0))
+			#Engine.setGravity(EngineModule.Vec3(0,-300,0))
+			Engine.setGravity(EngineModule.Vec3(0,-10,0))
 
 
 

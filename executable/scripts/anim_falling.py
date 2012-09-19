@@ -26,12 +26,12 @@ FallingDamping = 20
 
 SimpleAnimation = [
 	{'groups':[
-		#"foot-joint",
+		"foot-joint",
 		"lleg-joint",
-		#"uleg-joint",
-		#"belly-joint",
-		#"breast-joint",
-		#"shoulder-joint",
+		"uleg-joint",
+		"belly-joint",
+		"breast-joint",
+		"shoulder-joint",
 		"neck-joint",
 		"head-joint",
 		"uarm-joint",

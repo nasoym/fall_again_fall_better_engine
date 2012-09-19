@@ -8,7 +8,8 @@
 
 Actor::Actor(Engine* engine) :
 	EngineGuiContainer(engine),
-	mDoGuiUpdates(true)
+	mDoGuiUpdates(true),
+	mMass(1000)
 	{
 }
 

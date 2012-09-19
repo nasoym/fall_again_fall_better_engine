@@ -58,9 +58,11 @@ class Actor : public EngineGuiContainer {
 
 		virtual void		addForce(Vec3){}	
 
-		virtual void		setMass(float mass){}
-		virtual void		resetMass(){}
-		virtual float		getMass(){return 0;}
+		virtual void		setMass(float mass){mMass = mass;}
+		virtual void		resetMass(){mMass = 1000;}
+		virtual float		getMass(){return mMass;}
+
+		float			mMass;
 
 
 
