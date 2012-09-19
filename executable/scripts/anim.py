@@ -215,6 +215,7 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 			setMiddleArms(Engine,EngineModule,objects)
 			#Engine.setGravity(EngineModule.Vec3(0,35,0))
 			Engine.setGravity(EngineModule.Vec3(0,-10,0))
+			Engine.setTimingFactor(2.0)
 
 		elif objects.get()["anims"]["stand"]["name"] == "rising":
 			print("toggle animation: to falling")
@@ -226,6 +227,8 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 			Engine.setGravity(EngineModule.Vec3(0,-10,0))
 			Engine.setGravity(EngineModule.Vec3(0,-60,0))
 			Engine.setGravity(EngineModule.Vec3(0,-100,0))
+
+			Engine.setTimingFactor(1.0)
 
 
 
