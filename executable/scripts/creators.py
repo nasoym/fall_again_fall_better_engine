@@ -15,6 +15,7 @@ import ragdoll
 import dynamic_mesh as dyn_mesh
 import articulation_mesh as art_mesh
 import helpers
+import saveload
 
 import operations
 
@@ -101,11 +102,16 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 				ragdoll.createLimitsHuman(Engine,EngineModule,char)
 
 			elif Engine.isKeyDown(EngineModule.Keys.K_7):
+
+				saveload.load(Engine,EngineModule,"xmlscene/ragdoll.xml",objects)
+
+				"""
+				saveload.load(Engine,EngineModule,"xmlscene/ragdoll.xml",objects,
+					loadingPosition=EngineModule.Vec3(40.076103210,0.085070647,-4.459388256),loadingOrientation=EngineModule.Quat(0.999048233,0.000000000,-0.043619387,0.000000000))
 				createFigure(Engine,EngineModule,objects,EngineModule.Vec3(40.076103210,0.085070647,-4.459388256),EngineModule.Quat(0.999048233,0.000000000,-0.043619387,0.000000000))
 				createFigure(Engine,EngineModule,objects,EngineModule.Vec3(-92.474678040,0.085070647,-33.463573456),EngineModule.Quat(0.953717113,0.000000000,-0.300705880,0.000000000))
 				createFigure(Engine,EngineModule,objects,EngineModule.Vec3(100.000000000,0.094522946,-42.716278076),EngineModule.Quat(0.866025507,0.000000000,0.500000119,0.000000000))
 				createFigure(Engine,EngineModule,objects,EngineModule.Vec3(18.637054443,0.085070647,-93.069076538),EngineModule.Quat(0.608761549,0.000000000,0.793353617,0.000000000))
-				"""
 				createFigure(Engine,EngineModule,objects,EngineModule.Vec3(60.000000000,0.094522946,57.283725739),EngineModule.Quat(0.866025507,0.000000000,0.500000119,0.000000000))
 				createFigure(Engine,EngineModule,objects,EngineModule.Vec3(-98.567276001,0.094522946,103.246383667),EngineModule.Quat(0.965926170,0.000000000,-0.258819163,0.000000000))
 				createFigure(Engine,EngineModule,objects,EngineModule.Vec3(0.000000000,0.094522946,117.283714294),EngineModule.Quat(1.000000000,0.000000000,0.000000000,0.000000000))
