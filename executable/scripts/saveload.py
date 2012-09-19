@@ -21,6 +21,8 @@ def load(Engine,EngineModule,fileName,objects):
 	lastUnresolved=""
 	lastResultLength = 0
 
+	objectsList = []
+
 	while(len(res)>0):
 
 		if len(res) == lastResultLength:
@@ -480,6 +482,10 @@ def load(Engine,EngineModule,fileName,objects):
 				res.remove(node)
 
 			elif node.name=="OBJECTS":
+				objectsList.append(node)
+				res.remove(node)
+
+				"""
 				if node.hasProp("name"):
 					name = node.prop("name")
 					if node.hasProp("content"):
@@ -498,7 +504,40 @@ def load(Engine,EngineModule,fileName,objects):
 						res.remove(node)
 				else:
 					res.remove(node)
+					"""
 
+	lastUnresolved=""
+	lastResultLength = 0
+
+	while(len(objectsList)>0):
+
+		if len(objectsList) == lastResultLength:
+			print("could not resolve dependencies:" + str(lastResultLength))
+			print(str(objectsList))
+			print(lastUnresolved)
+			break
+		lastResultLength = len(objectsList)
+		for node in objectsList[:]:
+
+			if node.name=="OBJECTS":
+				if node.hasProp("name"):
+					name = node.prop("name")
+					if node.hasProp("content"):
+						contentString = node.prop("content")
+						contentList = contentString.split(":",1)
+						contentType = contentList[0]
+						contentValue = contentList[1]
+						content = translateType(Engine,EngineModule,contentType,contentValue,uuidTable)
+						#print("name: " + name)
+						#print("content: " + str(content))
+						if content:
+							objects.append(name,content)
+						else:
+							pass
+							print("not found")
+						objectsList.remove(node)
+				else:
+					objectsList.remove(node)
 
 def translateType(Engine,EngineModule,typeString,valueString,uuidTable):
 	if typeString == "str":
@@ -512,6 +551,7 @@ def translateType(Engine,EngineModule,typeString,valueString,uuidTable):
 		if Engine.getFromUuid(objectUuid):
 			return Engine.getFromUuid(objectUuid)
 		else:
+			print("object uuid was not found: " + str(objectUuid))
 			objectsNumber = Engine.howManyObjects()
 			for i in range(0,objectsNumber):
 				o = Engine.getObject(i)

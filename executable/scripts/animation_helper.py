@@ -49,7 +49,10 @@ def showBodyList(bodyList):
 	for body in bodyList:
 		if body:
 			#print("body: " + body.getName() + " : " + str(body.getMass())[:5])
-			text += " " + body.getName() + ":" + str(body.getMass())[:5]
+			text += " " + body.getName() + ":"
+			if body.isDynamicActor():
+				text += str(body.getMass())[:5]
+
 			number += 1
 	print(text)
 	print("total bodies: " + str(number))

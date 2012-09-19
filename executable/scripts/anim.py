@@ -117,7 +117,6 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 	bodyLeftFingers = ["thumb-high-l", "finger-index-high-l", "finger-middle-high-l", "finger-ring-high-l", "finger-little-high-l"]
 
 
-	#jointGroupNames = [ "foot-joint", "lleg-joint", "uleg-joint", "belly-joint", "breast-joint", "shoulder-joint", "neck-joint", "head-joint", "uarm-joint", "larm-joint", "hand-joint" ]
 
 	allBodies = animation_helper.getBodyListFromGroupNameList(objects,bodyAllGroups)
 
@@ -132,6 +131,9 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 	feet = animation_helper.getBodyListFromGroupNameList(objects,["feet"])
 	llegs = animation_helper.getBodyListFromGroupNameList(objects,["lleg"])
 
+	jointGroupNames = [ "foot-joint", "lleg-joint", "uleg-joint", "belly-joint", "breast-joint", "shoulder-joint", "neck-joint", "head-joint", "uarm-joint", "larm-joint", "hand-joint" ]
+	joints = animation_helper.getBodyListFromGroupNameList(objects,jointGroupNames)
+
 	if key == EngineModule.Keys.K_SEMICOLON:
 		print("reset masses")
 		animation_helper.resetMasses(allBodies)
@@ -145,6 +147,9 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 		pass
 		print("------------------------------------------------------")
 
+		animation_helper.showBodyList(joints)
+
+		"""
 		print("right head line:")
 		animation_helper.showMassRelationToPrev(rHeadLine)
 
@@ -164,6 +169,7 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 		animation_helper.showBodyList(lFingers)
 
 		#showMassRelationToAll(bodyList)
+		"""
 
 
 		"""
