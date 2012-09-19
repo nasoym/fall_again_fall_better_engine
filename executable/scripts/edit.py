@@ -56,7 +56,7 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 			elif o.isPhysicShape():
 				print("found physicshape")
 				print("rotate shape")
-				angle = helpers.getModifiedQuaternion(Engine,EngineModule,5)
+				angle = helpers.getModifiedQuaternion(Engine,EngineModule,2.5)
 				newValue = o.getLocalOrientation() * angle
 				if Engine.isKeyDown(EngineModule.Keys.K_0):
 					newValue = EngineModule.Quat()
@@ -110,7 +110,7 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 				elif joint and not body:
 					print("found single joint")	
 					print("rotate joint motor target")
-					angle = helpers.getModifiedQuaternion(Engine,EngineModule,10)
+					angle = helpers.getModifiedQuaternion(Engine,EngineModule,2)
 					motorTarget = joint.getMotorTarget() * angle
 					if Engine.isKeyDown(EngineModule.Keys.K_0):
 						print("reset motor target")
@@ -144,7 +144,7 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 			elif o.isPhysicShape():
 				print("found physicshape")
 				print("move localy")
-				vector = helpers.getModifiedVector(Engine,EngineModule,1)
+				vector = helpers.getModifiedVector(Engine,EngineModule,0.25)
 				vector = o.getLocalOrientation() * vector
 				newValue = o.getLocalPosition() + vector 
 				if Engine.isKeyDown(EngineModule.Keys.K_0):
