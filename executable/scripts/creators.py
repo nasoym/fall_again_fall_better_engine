@@ -105,23 +105,51 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 
 			elif Engine.isKeyDown(EngineModule.Keys.K_7):
 
-				saveload.load(Engine,EngineModule,"xmlscene/ragdoll.xml",objects)
+				#saveload.load(Engine,EngineModule,"xmlscene/ragdoll.xml",objects)
+
+				yPos = -0.5
+				saveload.load(Engine,EngineModule,"xmlscene/ragdoll.xml",objects,
+					loadingPosition=EngineModule.Vec3(40.076103210,yPos,-4.459388256),loadingOrientation=EngineModule.Quat(0.999048233,0.000000000,-0.043619387,0.000000000))
+				saveload.load(Engine,EngineModule,"xmlscene/ragdoll.xml",objects,
+					loadingPosition=EngineModule.Vec3(-92.474678040,yPos,-33.463573456),loadingOrientation=EngineModule.Quat(0.953717113,0.000000000,-0.300705880,0.000000000))
+				saveload.load(Engine,EngineModule,"xmlscene/ragdoll.xml",objects,
+					loadingPosition=EngineModule.Vec3(100.000000000,yPos,-42.716278076),loadingOrientation=EngineModule.Quat(0.866025507,0.000000000,0.500000119,0.000000000))
+				saveload.load(Engine,EngineModule,"xmlscene/ragdoll.xml",objects,
+					loadingPosition=EngineModule.Vec3(18.637054443,yPos,-93.069076538),loadingOrientation=EngineModule.Quat(0.608761549,0.000000000,0.793353617,0.000000000))
+				saveload.load(Engine,EngineModule,"xmlscene/ragdoll.xml",objects,
+					loadingPosition=EngineModule.Vec3(60.000000000,yPos,57.283725739),loadingOrientation=EngineModule.Quat(0.866025507,0.000000000,0.500000119,0.000000000))
 
 				"""
 				saveload.load(Engine,EngineModule,"xmlscene/ragdoll.xml",objects,
-					loadingPosition=EngineModule.Vec3(40.076103210,0.085070647,-4.459388256),loadingOrientation=EngineModule.Quat(0.999048233,0.000000000,-0.043619387,0.000000000))
-				createFigure(Engine,EngineModule,objects,EngineModule.Vec3(40.076103210,0.085070647,-4.459388256),EngineModule.Quat(0.999048233,0.000000000,-0.043619387,0.000000000))
-				createFigure(Engine,EngineModule,objects,EngineModule.Vec3(-92.474678040,0.085070647,-33.463573456),EngineModule.Quat(0.953717113,0.000000000,-0.300705880,0.000000000))
-				createFigure(Engine,EngineModule,objects,EngineModule.Vec3(100.000000000,0.094522946,-42.716278076),EngineModule.Quat(0.866025507,0.000000000,0.500000119,0.000000000))
-				createFigure(Engine,EngineModule,objects,EngineModule.Vec3(18.637054443,0.085070647,-93.069076538),EngineModule.Quat(0.608761549,0.000000000,0.793353617,0.000000000))
-				createFigure(Engine,EngineModule,objects,EngineModule.Vec3(60.000000000,0.094522946,57.283725739),EngineModule.Quat(0.866025507,0.000000000,0.500000119,0.000000000))
-				createFigure(Engine,EngineModule,objects,EngineModule.Vec3(-98.567276001,0.094522946,103.246383667),EngineModule.Quat(0.965926170,0.000000000,-0.258819163,0.000000000))
-				createFigure(Engine,EngineModule,objects,EngineModule.Vec3(0.000000000,0.094522946,117.283714294),EngineModule.Quat(1.000000000,0.000000000,0.000000000,0.000000000))
-				createFigure(Engine,EngineModule,objects,EngineModule.Vec3(-20.000000000,0.094522946,17.283725739),EngineModule.Quat(0.923879683,0.000000000,-0.382683575,0.000000000))
-				createFigure(Engine,EngineModule,objects,EngineModule.Vec3(120.000000000,0.094522946,57.283725739),EngineModule.Quat(0.953717053,0.000000000,0.300705850,0.000000000))
-				createFigure(Engine,EngineModule,objects,EngineModule.Vec3(-150.000000000,0.094522946,57.283725739),EngineModule.Quat(-0.130526334,0.000000000,-0.991445363,0.000000000))
-				createFigure(Engine,EngineModule,objects,EngineModule.Vec3(-80.000000000,0.050233360,37.283725739),EngineModule.Quat(-0.608761787,0.000000000,-0.793353677,0.000000000))
-				createFigure(Engine,EngineModule,objects,EngineModule.Vec3(-4.641016006,0.062016498,-40.036834717),EngineModule.Quat(0.500000119,0.000000000,-0.866025686,0.000000000))
+					loadingPosition=EngineModule.Vec3(-98.567276001,yPos,103.246383667),loadingOrientation=EngineModule.Quat(0.965926170,0.000000000,-0.258819163,0.000000000))
+				saveload.load(Engine,EngineModule,"xmlscene/ragdoll.xml",objects,
+					loadingPosition=EngineModule.Vec3(0.000000000,yPos,117.283714294),loadingOrientation=EngineModule.Quat(1.000000000,0.000000000,0.000000000,0.000000000))
+				saveload.load(Engine,EngineModule,"xmlscene/ragdoll.xml",objects,
+					loadingPosition=EngineModule.Vec3(-20.000000000,yPos,17.283725739),loadingOrientation=EngineModule.Quat(0.923879683,0.000000000,-0.382683575,0.000000000))
+				saveload.load(Engine,EngineModule,"xmlscene/ragdoll.xml",objects,
+					loadingPosition=EngineModule.Vec3(120.000000000,yPos,57.283725739),loadingOrientation=EngineModule.Quat(0.953717053,0.000000000,0.300705850,0.000000000))
+				saveload.load(Engine,EngineModule,"xmlscene/ragdoll.xml",objects,
+					loadingPosition=EngineModule.Vec3(-150.000000000,yPos,57.283725739),loadingOrientation=EngineModule.Quat(-0.130526334,0.000000000,-0.991445363,0.000000000))
+				saveload.load(Engine,EngineModule,"xmlscene/ragdoll.xml",objects,
+					loadingPosition=EngineModule.Vec3(-80.000000000,yPos,37.283725739),loadingOrientation=EngineModule.Quat(-0.608761787,0.000000000,-0.793353677,0.000000000))
+				saveload.load(Engine,EngineModule,"xmlscene/ragdoll.xml",objects,
+					loadingPosition=EngineModule.Vec3(-4.641016006,yPos,-40.036834717),loadingOrientation=EngineModule.Quat(0.500000119,0.000000000,-0.866025686,0.000000000))
+					"""
+
+
+				"""
+				EngineModule.Vec3(40.076103210,0.085070647,-4.459388256),EngineModule.Quat(0.999048233,0.000000000,-0.043619387,0.000000000))
+				EngineModule.Vec3(-92.474678040,0.085070647,-33.463573456),EngineModule.Quat(0.953717113,0.000000000,-0.300705880,0.000000000))
+				EngineModule.Vec3(100.000000000,0.094522946,-42.716278076),EngineModule.Quat(0.866025507,0.000000000,0.500000119,0.000000000))
+				EngineModule.Vec3(18.637054443,0.085070647,-93.069076538),EngineModule.Quat(0.608761549,0.000000000,0.793353617,0.000000000))
+				EngineModule.Vec3(60.000000000,0.094522946,57.283725739),EngineModule.Quat(0.866025507,0.000000000,0.500000119,0.000000000))
+				EngineModule.Vec3(-98.567276001,0.094522946,103.246383667),EngineModule.Quat(0.965926170,0.000000000,-0.258819163,0.000000000))
+				EngineModule.Vec3(0.000000000,0.094522946,117.283714294),EngineModule.Quat(1.000000000,0.000000000,0.000000000,0.000000000))
+				EngineModule.Vec3(-20.000000000,0.094522946,17.283725739),EngineModule.Quat(0.923879683,0.000000000,-0.382683575,0.000000000))
+				EngineModule.Vec3(120.000000000,0.094522946,57.283725739),EngineModule.Quat(0.953717053,0.000000000,0.300705850,0.000000000))
+				EngineModule.Vec3(-150.000000000,0.094522946,57.283725739),EngineModule.Quat(-0.130526334,0.000000000,-0.991445363,0.000000000))
+				EngineModule.Vec3(-80.000000000,0.050233360,37.283725739),EngineModule.Quat(-0.608761787,0.000000000,-0.793353677,0.000000000))
+				EngineModule.Vec3(-4.641016006,0.062016498,-40.036834717),EngineModule.Quat(0.500000119,0.000000000,-0.866025686,0.000000000))
 				"""
 
 			elif Engine.isKeyDown(EngineModule.Keys.K_5):

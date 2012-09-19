@@ -11,7 +11,7 @@ def getFromUuidTable(Engine,uuidTable,uuid):
 		addToUuidTable(Engine,uuidTable,uuid)
 		return uuidTable[uuid]
 
-def load(Engine,EngineModule,fileName,objects):
+def load(Engine,EngineModule,fileName,objects,loadingPosition=None,loadingOrientation=None):
 	doc = libxml2.parseFile(fileName)
 	xctxt = doc.xpathNewContext()
 	res = xctxt.xpathEval("/scene/*")
@@ -22,6 +22,12 @@ def load(Engine,EngineModule,fileName,objects):
 	lastResultLength = 0
 
 	objectsList = []
+
+	if not loadingPosition:
+		loadingPosition = EngineModule.Vec3()
+
+	if not loadingOrientation:
+		loadingOrientation = EngineModule.Quat()
 
 	while(len(res)>0):
 
@@ -418,6 +424,10 @@ def load(Engine,EngineModule,fileName,objects):
 				#loadSize(node,Engine,EngineModule,o)
 				loadPosition(node,Engine,EngineModule,o)
 				loadOrientation(node,Engine,EngineModule,o)
+
+				o.setPosition(o.getPosition()+loadingPosition)
+				#o.setOrientation(loadingOrientation * o.getOrientation())
+				o.setOrientation(o.getOrientation() * loadingOrientation)
 				res.remove(node)
 
 
@@ -435,6 +445,8 @@ def load(Engine,EngineModule,fileName,objects):
 				if node.hasProp("mass"):
 					mass = float(node.prop("mass"))
 					o.setMass(mass)
+				o.setPosition(o.getPosition()+loadingPosition)
+				o.setOrientation(o.getOrientation() * loadingOrientation)
 				res.remove(node)
 
 			elif node.name==str(EngineModule.ObjectType.SPACECAGE):
