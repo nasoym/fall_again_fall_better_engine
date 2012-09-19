@@ -2,7 +2,7 @@
 #angularForce = False
 angularForce = True
 
-SimpleAnimation = [
+"""
 	{'groups':[
 		#"shoulder-joint",
 		"uarm-joint",
@@ -13,6 +13,8 @@ SimpleAnimation = [
 	'start':[(lambda Engine,EngineModule,objects,groupPart:
 		groupPart.setMotorValues(10,20,angularForce))]
 	},
+	"""
+SimpleAnimation = [
 	{'groups':[
 		"foot-joint",
 		"lleg-joint",
@@ -28,7 +30,7 @@ SimpleAnimation = [
 		],
 	'end':[], 'time':500,
 	'start':[(lambda Engine,EngineModule,objects,groupPart:
-		groupPart.setMotorValues( (10**10)*1.5 , (10**10)*1.0 ,angularForce))]
+		groupPart.setMotorValues( (10**30)*1.5 , (10**30)*1.0 ,angularForce))]
 	},
 	{'groups':[
 		#"shoulder-joint",

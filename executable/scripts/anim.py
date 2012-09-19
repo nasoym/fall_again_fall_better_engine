@@ -36,7 +36,7 @@ def init(Engine,EngineModule,objects):
 	objects.setUnsavable("anims")
 	random.seed()
 
-	objects.get()["anims"]["stand"] = {"name":"falling","index":0,"starttime":Engine.getTime()}
+	objects.get()["anims"]["stand"] = {"name":"falling","index":0,"starttime":Engine.getTime(),"done":False}
 
 def guiUpdate(Engine,EngineModule,selection,objects):
 	for k,v in objects.get()["anims"].items():
@@ -207,28 +207,33 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 		if not "head" in objects.get():
 			return
 
-		if objects.get()["anims"]["stand"]["name"] == "falling":
-			print("toggle animation: to rising")
-			objects.get()["anims"]["stand"] = {
-				"name":"rising","index":0,"starttime":Engine.getTime()}
-			setLight(Engine,EngineModule,objects)
-			setMiddleArms(Engine,EngineModule,objects)
-			#Engine.setGravity(EngineModule.Vec3(0,35,0))
-			Engine.setGravity(EngineModule.Vec3(0,-10,0))
-			Engine.setTimingFactor(2.0)
+		if objects.get()["anims"]["stand"]["done"]:
+			if objects.get()["anims"]["stand"]["name"] == "falling":
+				print("toggle animation: to rising")
+				objects.get()["anims"]["stand"] = {
+					"name":"rising","index":0,"starttime":Engine.getTime(),"done":False}
+				setLight(Engine,EngineModule,objects)
+				setMiddleArms(Engine,EngineModule,objects)
+				#Engine.setGravity(EngineModule.Vec3(0,35,0))
+				Engine.setGravity(EngineModule.Vec3(0,-10,0))
+				Engine.setTimingFactor(2.0)
 
-		elif objects.get()["anims"]["stand"]["name"] == "rising":
-			print("toggle animation: to falling")
-			objects.get()["anims"]["stand"] = {
-				"name":"falling","index":0,"starttime":Engine.getTime()}
-			setHeavy(Engine,EngineModule,objects)
-			anim_falling.addRandomFallingForce(Engine,EngineModule,objects)
+			elif objects.get()["anims"]["stand"]["name"] == "rising":
+				print("toggle animation: to falling")
+				objects.get()["anims"]["stand"] = {
+					"name":"falling","index":0,"starttime":Engine.getTime(),"done":False}
+				setHeavy(Engine,EngineModule,objects)
+				anim_falling.addRandomFallingForce(Engine,EngineModule,objects)
 
-			Engine.setGravity(EngineModule.Vec3(0,-10,0))
-			Engine.setGravity(EngineModule.Vec3(0,-60,0))
-			Engine.setGravity(EngineModule.Vec3(0,-100,0))
+				Engine.setGravity(EngineModule.Vec3(0,-10,0))
+				Engine.setGravity(EngineModule.Vec3(0,-60,0))
+				Engine.setGravity(EngineModule.Vec3(0,-100,0))
 
-			Engine.setTimingFactor(1.0)
+				Engine.setTimingFactor(1.0)
+
+		else:
+			print("set on done to true")
+			objects.get()["anims"]["stand"]["ondone"] = True
 
 
 

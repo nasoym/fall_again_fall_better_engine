@@ -159,6 +159,7 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 				print("set timingfactor: " +str(Engine.getTimingFactor()))
 
 	if key == EngineModule.Keys.K_I:
+		print("fps: " + str(float(1000.0 / Engine.getTimeDifference())))
 		for o in selection.get():
 			print("object: " + str(o))
 			print("    name: " + str(o.getName()))

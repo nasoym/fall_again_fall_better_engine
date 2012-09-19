@@ -26,7 +26,7 @@ SimpleAnimation = [
 		"larm-joint",
 		"hand-joint"
 		],
-		'end':[],'time':50,
+		'end':[],'time':1500,
 		'start':[(lambda Engine,EngineModule,objects,groupPart:
 			#groupPart.setMotorValues(1,10,True))],
 			#groupPart.setMotorValues(0,0,True))],
