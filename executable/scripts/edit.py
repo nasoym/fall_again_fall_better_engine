@@ -24,7 +24,7 @@ def storeBodyJointOperation(EngineModule,method,body,joint,value):
 	if type(value) == EngineModule.Vec3:
 		text += ",vector=EngineModule.Vec3(" + str(value) + "))"
 	if type(value) == EngineModule.Quat:
-		text += ",quaternion=EngineModule.Quat(" + str(value) + "))"
+		text += ",quaternion=EngineModule.Quat().fromAngles(" + str(value.toAngles()) + "))"
 	storeOperation(text)
 
 def storeBodyOperation(EngineModule,method,body,value):
@@ -33,7 +33,8 @@ def storeBodyOperation(EngineModule,method,body,value):
 	if type(value) == EngineModule.Vec3:
 		text += ",vector=EngineModule.Vec3(" + str(value) + "))"
 	if type(value) == EngineModule.Quat:
-		text += ",quaternion=EngineModule.Quat(" + str(value) + "))"
+		#text += ",quaternion=EngineModule.Quat(" + str(value) + "))"
+		text += ",quaternion=EngineModule.Quat().fromAngles(" + str(value.toAngles()) + "))"
 	storeOperation(text)
 
 def keyPressed(Engine,EngineModule,key,selection,objects):
@@ -65,7 +66,7 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 				text = "rotatePhysicShape(Engine,EngineModule"
 				text += ",bodyName='" + o.getActor().getName() + "'"
 				text += ",shapeName='" + o.getName() + "'"
-				text += ",quaternion=EngineModule.Quat(" + str(newValue) + ")"
+				text += ",quaternion=EngineModule.Quat().fromAngles(" + str(newValue.toAngles()) + ")"
 				text += ")"
 				helpers.storeOperation(text)
 
@@ -120,7 +121,7 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 						joint.setMotorOn()
 					text = "setMotorTarget(Engine,EngineModule,"
 					text += "jointName='" + joint.getName() + "'"
-					text += ",quaternion=EngineModule.Quat(" + str(motorTarget) + "))"
+					text += ",quaternion=EngineModule.Quat().fromAngles(" + str(motorTarget.toAngles()) + "))"
 					storeOperation(text)
 
 			else:

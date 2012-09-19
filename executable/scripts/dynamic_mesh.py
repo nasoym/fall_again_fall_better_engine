@@ -111,7 +111,10 @@ def createBoneBody(Engine,EngineModule,mesh,boneName):
 	if "toes-" in boneName:
 		return
 
-	boneBody = Engine.createDynamicActor()
+	if "root" in boneName:
+		boneBody = Engine.createStaticActor()
+	else:
+		boneBody = Engine.createDynamicActor()
 	boneBody.setName(str(boneName))
 	boneBody.setOrientation(boneOrientation)
 	boneBody.setPosition(bonePosition)  

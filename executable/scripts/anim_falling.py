@@ -26,12 +26,12 @@ FallingDamping = 20
 
 SimpleAnimation = [
 	{'groups':[
-		"foot-joint",
+		#"foot-joint",
 		"lleg-joint",
-		"uleg-joint",
-		"belly-joint",
-		"breast-joint",
-		"shoulder-joint",
+		#"uleg-joint",
+		#"belly-joint",
+		#"breast-joint",
+		#"shoulder-joint",
 		"neck-joint",
 		"head-joint",
 		"uarm-joint",
@@ -40,18 +40,22 @@ SimpleAnimation = [
 		],
 		'time':100,
 		'start':[(lambda Engine,EngineModule,objects,groupPart:
-			groupPart.setMotorValues(FallingSpring,FallingDamping,True))],
+			#groupPart.setMotorValues(0,0,True))],
+			groupPart.setMotorOff())],
+			#groupPart.setMotorValues(FallingSpring,FallingDamping,True))],
 		'end':[(lambda Engine,EngineModule,objects,groupPart:
-			groupPart.setMotorValues(FallingSpring,FallingDamping,True))],
+			#groupPart.setMotorValues(0,0,True))],
+			groupPart.setMotorOff())],
+			#groupPart.setMotorValues(FallingSpring,FallingDamping,True))],
 		},
 	{'groups':[
 		"belly"
 		],
 		'time':100,
 		'start':[(lambda Engine,EngineModule,objects,groupPart:
-			groupPart.addForce(EngineModule.Vec3(0,-40000,0)))],
+			groupPart.addForce(EngineModule.Vec3(0,-4,0)))],
 		'end':[(lambda Engine,EngineModule,objects,groupPart:
-			groupPart.addForce(EngineModule.Vec3(0,-40000,0)))],
+			groupPart.addForce(EngineModule.Vec3(0,-4,0)))],
 		}
 	]
 

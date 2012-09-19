@@ -179,7 +179,6 @@ def createFigure(Engine,EngineModule,objects,position,quaternion):
 	ground = addMeshGround(Engine,EngineModule,objects,o)
 	ground.setPosition(position)
 	ground.setOrientation(quaternion)
-
 	operations.runOperations2(Engine,EngineModule)
 
 	Engine.physicPauseToggle()
@@ -300,7 +299,8 @@ def addMeshGround(Engine,EngineModule,objects,mesh):
 		xySize = 15
 		#xySize = 95
 
-		ground = Engine.createStaticActor()
+		#ground = Engine.createStaticActor()
+		ground = Engine.createDynamicActor()
 		shape = ground.addBox(EngineModule.Vec3(xySize,1,xySize))
 		shape.setColour(0,1,0,0.5)
 		shape.setScaling1To1()

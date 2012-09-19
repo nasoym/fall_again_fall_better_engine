@@ -29,7 +29,10 @@ import helpers
 def keyDown(Engine,EngineModule,key,selection,objects):
 	pass
 	if key == EngineModule.Keys.K_F:
-		force = helpers.getModifiedVector(Engine,EngineModule,10000)
+		#force = helpers.getModifiedVector(Engine,EngineModule,10000)
+		force = helpers.getModifiedVector(Engine,EngineModule,100)
+		#force = helpers.getModifiedVector(Engine,EngineModule,10)
+		#force = helpers.getModifiedVector(Engine,EngineModule,1)
 		for o in selection.get():
 			if o.isActor():
 				o.isActor().addForce(force)

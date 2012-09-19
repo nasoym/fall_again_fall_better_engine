@@ -25,6 +25,7 @@ exp=28
 RisingDamping=(10 ** exp) * 1.0
 
 exp=3
+exp=28
 RisingSpring=(10 ** exp) * 1.5
 RisingDamping=(10 ** exp) * 1.0
 
