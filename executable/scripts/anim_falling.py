@@ -2,6 +2,26 @@ import random
 
 SimpleAnimation = [
 	{'groups':[
+		#"foot-joint",
+		#"lleg-joint",
+		#"uleg-joint",
+		"belly-joint",
+		"breast-joint",
+		"shoulder-joint",
+		"neck-joint",
+		"head-joint",
+		#"uarm-joint",
+		#"larm-joint",
+		#"hand-joint"
+		],
+		'end':[],'time':500,
+		'start':[(lambda Engine,EngineModule,objects,groupPart:
+			#groupPart.setMotorValues(0,0,True))],
+			#groupPart.setMotorOff())],
+			#groupPart.setMotorValues(FallingSpring,FallingDamping,True))],
+			groupPart.setMotorValues(25,50,True))]
+		},
+	{'groups':[
 		"foot-joint",
 		"lleg-joint",
 		"uleg-joint",
@@ -19,7 +39,7 @@ SimpleAnimation = [
 			#groupPart.setMotorValues(0,0,True))],
 			#groupPart.setMotorOff())],
 			#groupPart.setMotorValues(FallingSpring,FallingDamping,True))],
-			groupPart.setMotorValues(5,50,True))]
+			groupPart.setMotorValues(25,50,True))]
 		},
 	{'groups':[
 		"uarm-joint",
@@ -102,6 +122,8 @@ def addRandomFallingForce(Engine,EngineModule,objects):
 	partsList = objects.get()["head"]
 	for part in partsList:
 		relVec = middlePos - part.getPosition()
+		relVec.normalise()
+		relVec = relVec * 60.0
 		relVec = EngineModule.Quat().fromAngles(
 			0,random.uniform(-angleRand,angleRand),0) * relVec
 		force = relVec * random.uniform(minMult,maxMult)

@@ -107,17 +107,18 @@ selectContainers = Selection()
 
 modules = []
 #modules.append(powered_doll)
+#modules.append(test)
 
 modules.append(navigate)
 modules.append(select)
 modules.append(temp)
 modules.append(creators)
 modules.append(misc)
-modules.append(anim)
 modules.append(edit)
 modules.append(operations)
 
-#modules.append(test)
+modules.append(anim)
+
 modules.append(serialReader)
 #modules.append(main)
 

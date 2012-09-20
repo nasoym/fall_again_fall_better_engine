@@ -10,7 +10,8 @@ DynamicActor::DynamicActor(Engine* engine, Vec3 & position) :
     mBody = (getEngine()->getPhysicsEngine()->getPhysics())->createRigidDynamic( PxTransform(position.toPhysx()) );
     (getEngine()->getPhysicsEngine()->getScene())->addActor(*mBody);
 
-	setSolverIterations(16,4);
+	//setSolverIterations(16,4);
+	setSolverIterations(16,2);
 }
 
 DynamicActor::~DynamicActor( ){

@@ -24,7 +24,12 @@ def guiUpdate(Engine,EngineModule,selection,objects):
 			serial_state = s.read(size=1)
 
 			if serial_state != old_state:
-				objects.get()["serial_state"] = serial_state
-				print("state: " + str(serial_state))
-				Engine.callPythonKeyPressed(EngineModule.Keys.K_SPACE)
+				if serial_state == "1":
+					objects.get()["serial_state"] = serial_state
+					print("state: " + str(serial_state))
+					Engine.callPythonKeyPressed(EngineModule.Keys.K_SPACE)
+				if serial_state == "0":
+					objects.get()["serial_state"] = serial_state
+					print("state: " + str(serial_state))
+					Engine.callPythonKeyReleased(EngineModule.Keys.K_SPACE)
 

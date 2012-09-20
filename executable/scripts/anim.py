@@ -23,7 +23,6 @@ def reloadanim():
 
 reloadanim()
 
-
 animLists={}
 #animLists["falling"] = anim_falling.FallingAnim
 #animLists["rising"] = anim_rising.RisingAnim
@@ -36,7 +35,12 @@ def init(Engine,EngineModule,objects):
 	objects.setUnsavable("anims")
 	random.seed()
 
-	objects.get()["anims"]["stand"] = {"name":"falling","index":0,"starttime":Engine.getTime(),"done":False}
+	objects.get()["anims"]["stand"] = {"name":"rising","index":0,"starttime":Engine.getTime(),"done":True}
+	#setLight(Engine,EngineModule,objects)
+	#setMiddleArms(Engine,EngineModule,objects)
+	##Engine.setGravity(EngineModule.Vec3(0,35,0))
+	#Engine.setGravity(EngineModule.Vec3(0,-10,0))
+	#Engine.setTimingFactor(2.0)
 
 def guiUpdate(Engine,EngineModule,selection,objects):
 	for k,v in objects.get()["anims"].items():
@@ -152,89 +156,54 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 	jointGroupNames = [ "foot-joint", "lleg-joint", "uleg-joint", "belly-joint", "breast-joint", "shoulder-joint", "neck-joint", "head-joint", "uarm-joint", "larm-joint", "hand-joint" ]
 	joints = animation_helper.getBodyListFromGroupNameList(objects,jointGroupNames)
 
-	if key == EngineModule.Keys.K_SEMICOLON:
-		print("reset masses")
-		animation_helper.resetMasses(allBodies)
 
-	if key == EngineModule.Keys.K_LBRACKET:
-		pass
-		print("modify masses")
-		#setLight(Engine,EngineModule,objects)
-		shoulders = animation_helper.getBodyListFromGroupNameList(objects,["shoulder"])
-		print("s: " + str(shoulders))
-		for o in shoulders:
-			selection.add(o)
+	if key == EngineModule.Keys.K_SPACE:
+		if not "head" in objects.get():
+			return
+		print("hello")
+		print(str(objects.get()["anims"]["stand"]["done"]))
+		#if objects.get()["anims"]["stand"]["done"]:
+		if objects.get()["anims"]["stand"]["name"] == "rising":
+			print("toggle animation: to falling")
+			objects.get()["anims"]["stand"] = {
+				"name":"falling","index":0,"starttime":Engine.getTime(),"done":False}
+			setHeavy(Engine,EngineModule,objects)
+			anim_falling.addRandomFallingForce(Engine,EngineModule,objects)
 
-	if key == EngineModule.Keys.K_RBRACKET:
-		pass
-		print("------------------------------------------------------")
+			Engine.setGravity(EngineModule.Vec3(0,-10,0))
+			Engine.setGravity(EngineModule.Vec3(0,-60,0))
+			#Engine.setGravity(EngineModule.Vec3(0,-150,0))
 
-		animation_helper.showBodyList(joints)
-
-		"""
-		print("right head line:")
-		animation_helper.showMassRelationToPrev(rHeadLine)
-
-		print("left head line:")
-		animation_helper.showMassRelationToPrev(lHeadLine)
-
-		print("right hand line:")
-		animation_helper.showMassRelationToPrev(rHandLine)
-
-		print("left hand line:")
-		animation_helper.showMassRelationToPrev(lHandLine)
-
-		print("right fingers:")
-		animation_helper.showBodyList(rFingers)
-
-		print("left fingers:")
-		animation_helper.showBodyList(lFingers)
-
-		#showMassRelationToAll(bodyList)
-		"""
-
+			Engine.setTimingFactor(1.0)
 
 		"""
-		b = Engine.createGuiBox()
-		b.setColour(0,0,1,0.5)
-		b.setSize(EngineModule.Vec3(10,10,10))
-		b.setPosition(EngineModule.Vec3(0,200,0))
-		objects.get()["head-debug"] = b
+		else:
+			pass
+			print("set on done to true")
+			#	objects.get()["anims"]["stand"]["ondone"] = True
 		"""
 
+def keyReleased(Engine,EngineModule,key,selection,objects):
 
 	if key == EngineModule.Keys.K_SPACE:
 		if not "head" in objects.get():
 			return
 
-		if objects.get()["anims"]["stand"]["done"]:
-			if objects.get()["anims"]["stand"]["name"] == "falling":
-				print("toggle animation: to rising")
-				objects.get()["anims"]["stand"] = {
-					"name":"rising","index":0,"starttime":Engine.getTime(),"done":False}
-				setLight(Engine,EngineModule,objects)
-				setMiddleArms(Engine,EngineModule,objects)
-				#Engine.setGravity(EngineModule.Vec3(0,35,0))
-				Engine.setGravity(EngineModule.Vec3(0,-10,0))
-				Engine.setTimingFactor(2.0)
+		#if objects.get()["anims"]["stand"]["done"]:
+		if objects.get()["anims"]["stand"]["name"] == "falling":
+			print("toggle animation: to rising")
+			objects.get()["anims"]["stand"] = {
+				"name":"rising","index":0,"starttime":Engine.getTime(),"done":False}
+			setLight(Engine,EngineModule,objects)
+			setMiddleArms(Engine,EngineModule,objects)
+			#Engine.setGravity(EngineModule.Vec3(0,35,0))
+			Engine.setGravity(EngineModule.Vec3(0,-10,0))
+			Engine.setTimingFactor(2.0)
 
-			elif objects.get()["anims"]["stand"]["name"] == "rising":
-				print("toggle animation: to falling")
-				objects.get()["anims"]["stand"] = {
-					"name":"falling","index":0,"starttime":Engine.getTime(),"done":False}
-				setHeavy(Engine,EngineModule,objects)
-				anim_falling.addRandomFallingForce(Engine,EngineModule,objects)
-
-				Engine.setGravity(EngineModule.Vec3(0,-10,0))
-				Engine.setGravity(EngineModule.Vec3(0,-60,0))
-				Engine.setGravity(EngineModule.Vec3(0,-100,0))
-
-				Engine.setTimingFactor(1.0)
-
+		"""
 		else:
 			print("set on done to true")
 			objects.get()["anims"]["stand"]["ondone"] = True
-
-
+			"""
 
 

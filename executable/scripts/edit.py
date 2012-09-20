@@ -101,7 +101,7 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 				elif body and not joint:
 					print("found single body")	
 					print("rotate body")
-					angle = helpers.getModifiedQuaternion(Engine,EngineModule,5)
+					angle = helpers.getModifiedQuaternion(Engine,EngineModule,90)
 					newOrientation = body.getOrientation() * angle
 					if Engine.isKeyDown(EngineModule.Keys.K_0):
 						newOrientation = EngineModule.Quat()

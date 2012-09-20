@@ -45,8 +45,8 @@ def playAnimation(Engine,EngineModule,objects,animData,animList):
 			if "ondone" in animData:
 				if animData["ondone"]:
 					print("resend space key")
-					Engine.callPythonKeyPressed(EngineModule.Keys.K_SPACE)
-			#print("done")
+					Engine.callPythonKeyReleased(EngineModule.Keys.K_SPACE)
+			#print("animation done")
 
 
 
