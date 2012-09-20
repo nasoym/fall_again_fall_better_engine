@@ -240,6 +240,8 @@ class Engine : public WindowEventListener,
 		bool			mUseFirstRenderer;
 		RaySceneQuery*  mRaySceneQuery;
 
+		bool			mHideMouse;
+
 		//StereoManager	mStereoManager;
 
 	private: //python

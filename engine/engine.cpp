@@ -24,6 +24,7 @@ Engine::Engine() :
 	mTimeDifference(0),
 	mPhysicPaused(false),
 	mUseFirstRenderer(true),
+	mHideMouse(false),
 	mDefaultShadedMaterialName("")
 	{
     Logger::debug(format("creating engine: %p ") % this);
@@ -314,7 +315,9 @@ void Engine::setup(){
 	mRoot->restoreConfig();
     setupResources();
 
-	//mRoot->showConfigDialog();
+	if (!mUseFirstRenderer){
+		mRoot->showConfigDialog();
+	}
 
 	mWindow = mRoot->initialise(true);
 
@@ -536,8 +539,11 @@ void Engine::setupOIS() {
     mWindow->getCustomAttribute("WINDOW", &windowHnd);
     windowHndStr << windowHnd;
     pl.insert(std::make_pair(std::string("WINDOW"), windowHndStr.str()));
-    //pl.insert(std::make_pair(std::string("w32_mouse"), "DISCL_FOREGROUND"));
-    //pl.insert(std::make_pair(std::string("w32_mouse"), "DISCL_NONEXCLUSIVE"));
+
+	if (!mHideMouse){
+		pl.insert(std::make_pair(std::string("w32_mouse"), "DISCL_FOREGROUND"));
+		pl.insert(std::make_pair(std::string("w32_mouse"), "DISCL_NONEXCLUSIVE"));
+	}
 
     pl.insert(std::make_pair("w32_keyboard", "DISCL_FOREGROUND"));
     pl.insert(std::make_pair("w32_keyboard", "DISCL_NONEXCLUSIVE"));

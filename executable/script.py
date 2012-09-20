@@ -6,7 +6,6 @@ random.jumpahead(random.uniform(12345,9994949))
 import scripts.temp as temp
 import scripts.navigate as navigate
 import scripts.select as select
-#import scripts.powered_doll as powered_doll
 import scripts.misc as misc
 import scripts.creators as creators
 import scripts.main as main
