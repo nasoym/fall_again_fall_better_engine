@@ -2,7 +2,7 @@ import serial
 
 def init(Engine,EngineModule,objects):
 	try:
-		s = serial.Serial("COM3",9600)
+		s = serial.Serial("COM4",9600)
 		objects.get()["serial"] = s
 		objects.setUnsavable("serial")
 
