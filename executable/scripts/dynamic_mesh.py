@@ -138,6 +138,7 @@ def createBoneBody(Engine,EngineModule,mesh,boneName):
 		):
 		shape = boneBody.addBox(EngineModule.Vec3(1,1,1))
 	else:
+		#shape = boneBody.addBox(EngineModule.Vec3(1,1,1))
 		shape = boneBody.addCapsule(EngineModule.Vec3(1,1,1))
 	shape.setColour(0.5,0.5,0,0.5)
 
