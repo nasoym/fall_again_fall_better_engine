@@ -22,7 +22,7 @@ import saveload
 def reloadanim():
 	reload(anim_falling)
 	reload(anim_rising)
-	print("reloading external anim files")
+	#print("reloading external anim files")
 
 reloadanim()
 
@@ -140,7 +140,7 @@ def setMiddle(Engine,EngineModule,objects):
 	bodyAllGroups = ["feet","lleg","uleg","root","belly","breast","neck","head","shoulder","uarm","larm","hand"]
 	allBodies = animation_helper.getBodyListFromGroupNameList(objects,bodyAllGroups)
 	animation_helper.resetMasses(allBodies)
-	animation_helper.multiplyMasses(allBodies,0.01)
+	#animation_helper.multiplyMasses(allBodies,0.01)
 
 def keyPressed(Engine,EngineModule,key,selection,objects):
 
@@ -185,14 +185,15 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 				print("toggle animation: to falling")
 				objects.get()["anims"]["stand"] = {
 					"name":"falling","index":0,"starttime":Engine.getTime(),"done":False}
-				setHeavy(Engine,EngineModule,objects)
+				#setHeavy(Engine,EngineModule,objects)
 				anim_falling.addRandomFallingForce(Engine,EngineModule,objects)
+				setMiddle(Engine,EngineModule,objects)
 
-				Engine.setGravity(EngineModule.Vec3(0,-10,0))
-				Engine.setGravity(EngineModule.Vec3(0,-60,0))
-				#Engine.setGravity(EngineModule.Vec3(0,-150,0))
+				#Engine.setGravity(EngineModule.Vec3(0,-10,0))
+				#Engine.setGravity(EngineModule.Vec3(0,-60,0))
+				Engine.setGravity(EngineModule.Vec3(0,-150,0))
 
-				Engine.setTimingFactor(1.0)
+				#Engine.setTimingFactor(1.0)
 
 		else:
 			pass
@@ -210,11 +211,12 @@ def keyReleased(Engine,EngineModule,key,selection,objects):
 				print("toggle animation: to rising")
 				objects.get()["anims"]["stand"] = {
 					"name":"rising","index":0,"starttime":Engine.getTime(),"done":False}
-				setLight(Engine,EngineModule,objects)
-				setMiddleArms(Engine,EngineModule,objects)
+				#setLight(Engine,EngineModule,objects)
+				#setMiddleArms(Engine,EngineModule,objects)
 				#Engine.setGravity(EngineModule.Vec3(0,35,0))
+				setMiddle(Engine,EngineModule,objects)
 				Engine.setGravity(EngineModule.Vec3(0,-10,0))
-				Engine.setTimingFactor(2.0)
+				#Engine.setTimingFactor(2.0)
 
 		else:
 			print("set on done to true")

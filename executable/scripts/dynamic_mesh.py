@@ -110,6 +110,11 @@ def createBoneBody(Engine,EngineModule,mesh,boneName):
 		return
 	if "toes-" in boneName:
 		return
+	if "shoulder-" in boneName:
+		return
+
+	if "cheast" in boneName:
+		return
 
 	"""
 	if "root" in boneName:
@@ -128,18 +133,7 @@ def createBoneBody(Engine,EngineModule,mesh,boneName):
 	#shape = boneBody.addCapsule(EngineModule.Vec3(1,1,1))
 	#shape = boneBody.addBox(EngineModule.Vec3(1,1,1))
 
-	if (boneName == "root" 
-		or "hand" in boneName 
-		or "toes" in boneName 
-		or "foot" in boneName 
-		or "belly" in boneName 
-		or "cheast" in boneName 
-		or "breast" in boneName 
-		):
-		shape = boneBody.addBox(EngineModule.Vec3(1,1,1))
-	else:
-		#shape = boneBody.addBox(EngineModule.Vec3(1,1,1))
-		shape = boneBody.addCapsule(EngineModule.Vec3(1,1,1))
+	shape = boneBody.addBox(EngineModule.Vec3(1,1,1))
 	shape.setColour(0.5,0.5,0,0.5)
 
 	boneWidth = 0.5

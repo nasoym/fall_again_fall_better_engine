@@ -152,7 +152,7 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 			elif Engine.isKeyDown(EngineModule.Keys.K_5):
 				pass
 				createFigure(Engine,EngineModule,objects,EngineModule.Vec3(0,0,0),EngineModule.Quat())
-				saveload.save(Engine,EngineModule,"xmlscene/ragdoll_900.xml",objects)
+				#saveload.save(Engine,EngineModule,"xmlscene/ragdoll_900.xml",objects)
 
 def createFigure(Engine,EngineModule,objects,position,quaternion):
 	print("create character mesh")
@@ -167,11 +167,15 @@ def createFigure(Engine,EngineModule,objects,position,quaternion):
 	o.setOrientation(quaternion)
 
 	dyn_mesh.createBones(Engine,EngineModule,o)
+
+
+
 	#art_mesh.createBones(Engine,EngineModule,o)
 	o.setUnselectable()
 	o.calcLocalPosOfRootBone()
 
 	operations.runOperations(Engine,EngineModule)
+	operations.runOperations3(Engine,EngineModule)
 
 	ground = addMeshGround(Engine,EngineModule,objects,o)
 	ground.setPosition(position)

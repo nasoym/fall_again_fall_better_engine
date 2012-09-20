@@ -197,6 +197,7 @@ def runTestOperations(Engine,EngineModule):
 
 
 
+	"""
 	setLimits(Engine,EngineModule,jointName='finger-index-high-r-joint',y=40,z=0)
 	setLimits(Engine,EngineModule,jointName='finger-middle-high-r-joint',y=40,z=0)
 	setLimits(Engine,EngineModule,jointName='finger-ring-high-r-joint',y=40,z=0)
@@ -218,6 +219,33 @@ def runTestOperations(Engine,EngineModule):
 	bodyJointAbsoluteRotation(Engine,EngineModule,bodyName='finger-middle-high-l',jointName='finger-middle-high-l-joint',quaternion=EngineModule.Quat().fromAngles(0,-30,0))
 	bodyJointAbsoluteRotation(Engine,EngineModule,bodyName='finger-ring-high-l',jointName='finger-ring-high-l-joint',quaternion=EngineModule.Quat().fromAngles(0,-30,0))
 	bodyJointAbsoluteRotation(Engine,EngineModule,bodyName='finger-little-high-l',jointName='finger-little-high-l-joint',quaternion=EngineModule.Quat().fromAngles(0,-30,0))
+	"""
+
+	bodyJointScaleJointPos(Engine,EngineModule,bodyName='uarm-l',jointName='uarm-l-joint',vector=EngineModule.Vec3(-0.799999952,-0.000000119,-0.000005460))
+	bodyJointScaleBody(Engine,EngineModule,bodyName='uarm-l',jointName='uarm-l-joint',vector=EngineModule.Vec3(9.621381760,2.274512053,2.274512053))
+
+	bodyJointScaleBody(Engine,EngineModule,bodyName='head',jointName='head-joint',vector=EngineModule.Vec3(6.739046574,4.300734997,5.782099724))
+	bodyJointScaleJointPos(Engine,EngineModule,bodyName='head',jointName='head-joint',vector=EngineModule.Vec3(-0.650000393,-0.000000477,-0.100000001))
+
+	bodyJointScaleJointPos(Engine,EngineModule,bodyName='neck',jointName='neck-joint',vector=EngineModule.Vec3(-1.429821849,0.000000216,-0.200001255))
+	bodyJointScaleBody(Engine,EngineModule,bodyName='neck',jointName='neck-joint',vector=EngineModule.Vec3(3.867141247,2.659429073,2.659429073))
+
+	bodyJointScaleBody(Engine,EngineModule,bodyName='belly',jointName='belly-joint',vector=EngineModule.Vec3(6.503275394,6.334136963,3.933000565))
+
+	bodySize(Engine,EngineModule,bodyName='root',vector=EngineModule.Vec3(5.322949886,8.131996155,6.424556255))
+	movePhysicShape(Engine,EngineModule,bodyName='root',shapeName='1',position=EngineModule.Vec3(2.500000000,0.000000000,3.500000000))
+
+	rotatePhysicShape(Engine,EngineModule,bodyName='breast',shapeName='1',quaternion=EngineModule.Quat().fromAngles(0.000000000,-17.500181198,0.000000000))
+	movePhysicShape(Engine,EngineModule,bodyName='breast',shapeName='1',position=EngineModule.Vec3(-1.039790392,-0.000000000,-0.446986526))
+	scalePhysicShape(Engine,EngineModule,bodyName='breast',shapeName='1',size=EngineModule.Vec3(6.242649078,6.996340275,5.899499893))
+
+	bodyJointScaleBody(Engine,EngineModule,bodyName='uleg-l',jointName='uleg-l-joint',vector=EngineModule.Vec3(11.259112358,3.700126410,3.363751173))
+	bodyJointScaleBody(Engine,EngineModule,bodyName='lleg-l',jointName='lleg-l-joint',vector=EngineModule.Vec3(13.635429382,2.527235746,3.057955503))
+	bodyJointScaleJointPos(Engine,EngineModule,bodyName='lleg-l',jointName='lleg-l-joint',vector=EngineModule.Vec3(-0.999999940,0.000001907,-0.199999049))
+	scalePhysicShape(Engine,EngineModule,bodyName='foot-l',shapeName='1',size=EngineModule.Vec3(5.107838631,2.403376102,2.088624477))
+	movePhysicShape(Engine,EngineModule,bodyName='foot-l',shapeName='1',position=EngineModule.Vec3(-1.119883060,0.059902906,0.005035845))
+	bodyJointScaleBody(Engine,EngineModule,bodyName='foot-l',jointName='foot-l-joint',vector=EngineModule.Vec3(6.180485249,2.403376102,2.088624477))
+	bodyJointScaleJointPos(Engine,EngineModule,bodyName='foot-l',jointName='foot-l-joint',vector=EngineModule.Vec3(-0.709090650,0.000000562,-0.000000954))
 
 def runOperations(Engine,EngineModule):
 
@@ -282,16 +310,6 @@ def runOperations(Engine,EngineModule):
 	bodyJointScaleBody(Engine,EngineModule,bodyName='hand-r',jointName='hand-r-joint',vector=EngineModule.Vec3(2.313906908,1.815508246,0.636324406))
 
 
-	bodyJointScaleJointPos(Engine,EngineModule,bodyName='shoulder-l',jointName='uarm-l-joint',vector=EngineModule.Vec3(1.233332872,0.000000527,-0.000006907))
-	bodyJointScaleBody(Engine,EngineModule,bodyName='shoulder-l',jointName='uarm-l-joint',vector=EngineModule.Vec3(2.196150780,2.018250704,1.834773302))
-	setLimits(Engine,EngineModule,jointName='shoulder-l-joint',y=15,z=15)
-	bodyJointScaleBody(Engine,EngineModule,bodyName='shoulder-l',jointName='shoulder-l-joint',vector=EngineModule.Vec3(2.415766001,2.686291933,2.686291933))
-
-	bodyJointScaleJointPos(Engine,EngineModule,bodyName='shoulder-r',jointName='uarm-r-joint',vector=EngineModule.Vec3(1.233332872,0.000000527,-0.000006907))
-	bodyJointScaleBody(Engine,EngineModule,bodyName='shoulder-r',jointName='uarm-r-joint',vector=EngineModule.Vec3(2.196150780,2.018250704,1.834773302))
-	setLimits(Engine,EngineModule,jointName='shoulder-r-joint',y=15,z=15)
-	bodyJointScaleBody(Engine,EngineModule,bodyName='shoulder-r',jointName='shoulder-r-joint',vector=EngineModule.Vec3(2.415766001,2.686291933,2.686291933))
-
 
 	setLimits(Engine,EngineModule,jointName='uarm-l-joint',y=70,z=70)
 	bodyJointScaleBody(Engine,EngineModule,bodyName='uarm-l',jointName='uarm-l-joint',vector=EngineModule.Vec3(9.443709373,2.274512053,2.527235746))
@@ -322,10 +340,8 @@ def runOperations(Engine,EngineModule):
 
 
 	setMotorTarget(Engine,EngineModule,jointName='uarm-l-joint',quaternion=EngineModule.Quat().fromAngles(0,45,0))
-	setMotorTarget(Engine,EngineModule,jointName='shoulder-l-joint',quaternion=EngineModule.Quat().fromAngles(0,6,0))
 
 	setMotorTarget(Engine,EngineModule,jointName='uarm-r-joint',quaternion=EngineModule.Quat().fromAngles(0,45,0))
-	setMotorTarget(Engine,EngineModule,jointName='shoulder-r-joint',quaternion=EngineModule.Quat().fromAngles(0,6,0))
 
 
 
@@ -333,11 +349,6 @@ def runOperations(Engine,EngineModule):
 
 
 	movePhysicShape(Engine,EngineModule,bodyName='head',shapeName='1',position=EngineModule.Vec3(0.129410282,0.000000000,-0.482966751))
-	addCapsule(Engine,EngineModule,bodyName='head',shapeName='2',size=EngineModule.Vec3(1.000000000,1.000000000,1.000000000),r=0.5,g=0.5,b=0.0,a=0.5)
-
-	rotatePhysicShape(Engine,EngineModule,bodyName='head',shapeName='2',quaternion=EngineModule.Quat(0.996195555,0.000000000,-0.087155819,0.000000000))
-	scalePhysicShape(Engine,EngineModule,bodyName='head',shapeName='2',size=EngineModule.Vec3(2.357948065,4.594974041,4.177248955))
-	movePhysicShape(Engine,EngineModule,bodyName='head',shapeName='2',position=EngineModule.Vec3(0.781421125,0.000000000,2.568423510))
 
 	bodyJointScaleBody(Engine,EngineModule,bodyName='head',jointName='head-joint',vector=EngineModule.Vec3(2.282495260,5.959090710,5.959090710))
 	bodyJointScaleJointPos(Engine,EngineModule,bodyName='head',jointName='head-joint',vector=EngineModule.Vec3(-2.100000381,-0.000000477,0.100000001))
@@ -358,12 +369,6 @@ def runOperations(Engine,EngineModule):
 	scalePhysicShape(Engine,EngineModule,bodyName='breast',shapeName='1',size=EngineModule.Vec3(5.675136089,6.926376820,2.591103554))
 	movePhysicShape(Engine,EngineModule,bodyName='breast',shapeName='1',position=EngineModule.Vec3(-0.246501684,0.000000000,-2.817671299))
 
-	addBox(Engine,EngineModule,bodyName='breast',shapeName='2',size=EngineModule.Vec3(1.000000000,1.000000000,1.000000000),r=0.5,g=0.5,b=0.0,a=0.5)
-	scalePhysicShape(Engine,EngineModule,bodyName='breast',shapeName='2',size=EngineModule.Vec3(4.549024105,7.400252819,3.138428926))
-	movePhysicShape(Engine,EngineModule,bodyName='breast',shapeName='2',position=EngineModule.Vec3(0.000006653,-0.000000000,2.000099182))
-	rotatePhysicShape(Engine,EngineModule,bodyName='breast',shapeName='2',quaternion=EngineModule.Quat(0.999052584,0.000000000,-0.043619774,0.000000000))
-	movePhysicShape(Engine,EngineModule,bodyName='breast',shapeName='2',position=EngineModule.Vec3(0.043585222,-0.000000000,1.502009034))
-
 	bodyJointScaleBody(Engine,EngineModule,bodyName='breast',jointName='breast-joint',vector=EngineModule.Vec3(5.732460499,6.996340275,4.924868107))
 	bodyJointScaleJointPos(Engine,EngineModule,bodyName='breast',jointName='breast-joint',vector=EngineModule.Vec3(-1.000001788,0.000001907,0.199997157))
 	setLimits(Engine,EngineModule,jointName='breast-joint',y=25,z=15)
@@ -373,11 +378,6 @@ def runOperations(Engine,EngineModule):
 	movePhysicShape(Engine,EngineModule,bodyName='breast',shapeName='1',position=EngineModule.Vec3(-0.513549209,0.000000000,-2.115990400))
 
 
-
-	bodyJointScaleBody(Engine,EngineModule,bodyName='cheast',jointName='cheast-joint',vector=EngineModule.Vec3(4.065469742,7.931550026,4.432381153))
-	bodyJointScaleJointPos(Engine,EngineModule,bodyName='cheast',jointName='cheast-joint',vector=EngineModule.Vec3(-0.999999762,0.000001907,0.700000048))
-	rotatePhysicShape(Engine,EngineModule,bodyName='cheast',shapeName='1',quaternion=EngineModule.Quat(0.996194720,0.000000000,0.087155759,0.000000000))
-	setLimits(Engine,EngineModule,jointName='cheast-joint',y=25,z=15)
 
 
 
@@ -392,16 +392,6 @@ def runOperations(Engine,EngineModule):
 
 	movePhysicShape(Engine,EngineModule,bodyName='root',shapeName='1',position=EngineModule.Vec3(2.000000000,0.000000000,2.000000000))
 	bodySize(Engine,EngineModule,bodyName='root',vector=EngineModule.Vec3(4.399131775,8.297108650,5.840505600))
-
-	addCapsule(Engine,EngineModule,bodyName='root',shapeName='2',size=EngineModule.Vec3(1.000000000,1.000000000,1.000000000),r=0.5,g=0.5,b=0.0,a=0.5)
-	scalePhysicShape(Engine,EngineModule,bodyName='root',shapeName='2',size=EngineModule.Vec3(1.977985501,4.594974041,4.177248955))
-	movePhysicShape(Engine,EngineModule,bodyName='root',shapeName='2',position=EngineModule.Vec3(4.181388378,3.500116587,3.928447247))
-	rotatePhysicShape(Engine,EngineModule,bodyName='root',shapeName='2',quaternion=EngineModule.Quat(0.779888928,0.000000063,0.625927150,-0.000000022))
-
-	addCapsule(Engine,EngineModule,bodyName='root',shapeName='3',size=EngineModule.Vec3(1.000000000,1.000000000,1.000000000),r=0.5,g=0.5,b=0.0,a=0.5)
-	scalePhysicShape(Engine,EngineModule,bodyName='root',shapeName='3',size=EngineModule.Vec3(1.977985501,4.594974041,4.177248955))
-	movePhysicShape(Engine,EngineModule,bodyName='root',shapeName='3',position=EngineModule.Vec3(4.181388378,-3.500116587,3.928447247))
-	rotatePhysicShape(Engine,EngineModule,bodyName='root',shapeName='3',quaternion=EngineModule.Quat(0.779888928,0.000000063,0.625927150,-0.000000022))
 
 
 
@@ -437,6 +427,36 @@ def runOperations(Engine,EngineModule):
 	rotatePhysicShape(Engine,EngineModule,bodyName='foot-r',shapeName='1',quaternion=EngineModule.Quat(0.973933935,-0.007293154,0.043005541,0.222613454))
 
 
+def runOperations3(Engine,EngineModule):
+	bodyJointScaleJointPos(Engine,EngineModule,bodyName='uarm-l',jointName='uarm-l-joint',vector=EngineModule.Vec3(-0.799999952,-0.000000119,-0.000005460))
+	bodyJointScaleBody(Engine,EngineModule,bodyName='uarm-l',jointName='uarm-l-joint',vector=EngineModule.Vec3(9.621381760,2.274512053,2.274512053))
+
+	bodyJointScaleJointPos(Engine,EngineModule,bodyName='uarm-r',jointName='uarm-r-joint',vector=EngineModule.Vec3(-0.799999952,-0.000000119,-0.000005460))
+	bodyJointScaleBody(Engine,EngineModule,bodyName='uarm-r',jointName='uarm-r-joint',vector=EngineModule.Vec3(9.621381760,2.274512053,2.274512053))
+
+	bodyJointScaleBody(Engine,EngineModule,bodyName='head',jointName='head-joint',vector=EngineModule.Vec3(6.739046574,4.300734997,5.782099724))
+	bodyJointScaleJointPos(Engine,EngineModule,bodyName='head',jointName='head-joint',vector=EngineModule.Vec3(-0.650000393,-0.000000477,-0.100000001))
+
+	bodyJointScaleJointPos(Engine,EngineModule,bodyName='neck',jointName='neck-joint',vector=EngineModule.Vec3(-1.429821849,0.000000216,-0.200001255))
+	bodyJointScaleBody(Engine,EngineModule,bodyName='neck',jointName='neck-joint',vector=EngineModule.Vec3(3.867141247,2.659429073,2.659429073))
+
+	bodyJointScaleBody(Engine,EngineModule,bodyName='belly',jointName='belly-joint',vector=EngineModule.Vec3(6.503275394,6.334136963,3.933000565))
+
+	bodySize(Engine,EngineModule,bodyName='root',vector=EngineModule.Vec3(5.322949886,8.131996155,6.424556255))
+	movePhysicShape(Engine,EngineModule,bodyName='root',shapeName='1',position=EngineModule.Vec3(2.500000000,0.000000000,3.500000000))
+
+	rotatePhysicShape(Engine,EngineModule,bodyName='breast',shapeName='1',quaternion=EngineModule.Quat().fromAngles(0.000000000,-17.500181198,0.000000000))
+	movePhysicShape(Engine,EngineModule,bodyName='breast',shapeName='1',position=EngineModule.Vec3(-1.039790392,-0.000000000,-0.446986526))
+	scalePhysicShape(Engine,EngineModule,bodyName='breast',shapeName='1',size=EngineModule.Vec3(6.242649078,6.996340275,5.899499893))
+
+	bodyJointScaleBody(Engine,EngineModule,bodyName='uleg-l',jointName='uleg-l-joint',vector=EngineModule.Vec3(11.259112358,3.700126410,3.363751173))
+	bodyJointScaleBody(Engine,EngineModule,bodyName='lleg-l',jointName='lleg-l-joint',vector=EngineModule.Vec3(13.635429382,2.527235746,3.057955503))
+	bodyJointScaleJointPos(Engine,EngineModule,bodyName='lleg-l',jointName='lleg-l-joint',vector=EngineModule.Vec3(-0.999999940,0.000001907,-0.199999049))
+
+	bodyJointScaleBody(Engine,EngineModule,bodyName='uleg-r',jointName='uleg-r-joint',vector=EngineModule.Vec3(11.259112358,3.700126410,3.363751173))
+	bodyJointScaleBody(Engine,EngineModule,bodyName='lleg-r',jointName='lleg-r-joint',vector=EngineModule.Vec3(13.635429382,2.527235746,3.057955503))
+	bodyJointScaleJointPos(Engine,EngineModule,bodyName='lleg-r',jointName='lleg-r-joint',vector=EngineModule.Vec3(-0.999999940,0.000001907,-0.199999049))
+
 def runOperations2(Engine,EngineModule):
 
 	setBodyJointAnchorPos(Engine,EngineModule,bodyName='foot-r',jointName='foot-ground-r',vector=EngineModule.Vec3(4.643490314,1.399999857,0.000001907))
@@ -445,8 +465,8 @@ def runOperations2(Engine,EngineModule):
 	setBodyJointAnchorPos(Engine,EngineModule,bodyName='ground',jointName='foot-ground-l',vector=EngineModule.Vec3(3.708251953,1.290204048,-4.486923218))
 	setBodyJointAnchorPos(Engine,EngineModule,bodyName='ground',jointName='foot-ground-r',vector=EngineModule.Vec3(-3.713666916,1.294058800,-4.488095760))
 
-	setLimits(Engine,EngineModule,jointName='foot-ground-l',y=20,z=123.0)
-	setLimits(Engine,EngineModule,jointName='foot-ground-r',y=20,z=123.0)
+	setLimits(Engine,EngineModule,jointName='foot-ground-l',y=5,z=123.0)
+	setLimits(Engine,EngineModule,jointName='foot-ground-r',y=5,z=123.0)
 
 	setMotorTarget(Engine,EngineModule,jointName='foot-ground-l',quaternion=EngineModule.Quat(0.999847710,0.000000000,0.000000000,-0.017452408))
 	setMotorTarget(Engine,EngineModule,jointName='foot-ground-r',quaternion=EngineModule.Quat(0.999847710,0.000000000,0.000000000,0.017452408))
