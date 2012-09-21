@@ -191,9 +191,9 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 				"name":"falling","index":0,"starttime":Engine.getTime(),"done":False}
 			setHeavy(Engine,EngineModule,objects)
 
-			"""
 			animation_helper.multiplyMasses(animation_helper.getBodyListFromNameList(
 				Engine,EngineModule,["head"]),0.01)
+			"""
 			animation_helper.multiplyMasses(animation_helper.getBodyListFromNameList(
 				Engine,EngineModule,["neck"]),0.01)
 			animation_helper.multiplyMasses(animation_helper.getBodyListFromNameList(

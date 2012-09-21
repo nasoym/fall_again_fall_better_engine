@@ -9,7 +9,7 @@ SimpleAnimation = [
 		"breast-joint",
 		"shoulder-joint",
 		"neck-joint",
-		"head-joint",
+		#"head-joint",
 		"uarm-joint",
 		"larm-joint",
 		"hand-joint"
@@ -30,6 +30,9 @@ SimpleAnimation = [
 		[part.setMotorValues(0,0,True) for part in objects.get()["lleg-joint"]]),
 		(lambda Engine,EngineModule,objects:
 		[part.setMotorValues(0,0,True) for part in objects.get()["uleg-joint"]]),
+
+		(lambda Engine,EngineModule,objects:
+		[part.setMotorValues(0,100,True) for part in objects.get()["head-joint"]]),
 
 		(lambda Engine,EngineModule,objects:
 		[applyForce(Engine,EngineModule,objects,part) for part in objects.get()["breast"]]),
@@ -122,7 +125,7 @@ def findMiddlePos(Engine,EngineModule,objects):
 	finalY = highY - ((highY-lowY) * 0.5)
 	finalZ = highZ - ((highZ-lowZ) * 0.5)
 	middlePos = EngineModule.Vec3(finalX,finalY,finalZ)
-	middlePos = middlePos + EngineModule.Vec3(100,0,0)
+	middlePos = middlePos + EngineModule.Vec3(0,10,0)
 
 	if not "head-debug" in objects.get():
 		b = Engine.createGuiBox()
