@@ -7,11 +7,16 @@ def runMethods(Engine,EngineModule,objects,animList,index,methodName):
 			#print("group: " + str(groupName))
 			for part in partsList:
 				if part:
-					methods = animList[index][methodName]
-					for method in methods:
-						method(Engine,EngineModule,objects,part)
+					if methodName+"-groups" in animList[index]:
+						methods = animList[index][methodName+"-groups"]
+						for method in methods:
+							method(Engine,EngineModule,objects,part)
 				else:
 					print("anim part is none: " + str(part))
+	if methodName in animList[index]:
+		methods = animList[index][methodName]
+		for method in methods:
+			method(Engine,EngineModule,objects)
 
 def playAnimation(Engine,EngineModule,objects,animData,animList):
 	animName = animData["name"]

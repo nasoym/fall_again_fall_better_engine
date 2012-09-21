@@ -28,8 +28,8 @@ SimpleAnimation = [
 		"larm-joint",
 		"hand-joint"
 		],
-	'end':[], 'time':500,
-	'start':[(lambda Engine,EngineModule,objects,groupPart:
+	'time':500,
+	'start-groups':[(lambda Engine,EngineModule,objects,groupPart:
 		groupPart.setMotorValues( (10**35)*1.5 , (10**35)*1.0 ,angularForce))]
 	}
 ]

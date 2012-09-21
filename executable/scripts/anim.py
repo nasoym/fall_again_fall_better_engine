@@ -39,6 +39,7 @@ def init(Engine,EngineModule,objects):
 	random.seed()
 
 
+	"""
 	#saveload.load(Engine,EngineModule,"xmlscene/scene.xml",objects)
 	saveload.load(Engine,EngineModule,"xmlscene/test.xml",objects)
 	#saveload.load(Engine,EngineModule,"xmlscene/ragdoll.xml",objects)
@@ -48,6 +49,7 @@ def init(Engine,EngineModule,objects):
 		if o.isGuiShape():
 			if not o.isFinalShape():
 				o.hide()
+				"""
 	
 	objects.get()["anims"]["stand"] = {"name":"rising","index":0,"starttime":Engine.getTime(),"done":True}
 	setLight(Engine,EngineModule,objects)
@@ -111,10 +113,12 @@ def setLight(Engine,EngineModule,objects):
 	animation_helper.approachRelationToPrev(lHeadLine,relation,1.0)
 	animation_helper.approachRelationToPrev(rHandLine,relation,1.0)
 	animation_helper.approachRelationToPrev(lHandLine,relation,1.0)
-	animation_helper.setMasses(lFingers,
-		helpers.getBodyFromName(Engine,EngineModule,"hand-l").getMass()*relation)
-	animation_helper.setMasses(rFingers,
-		helpers.getBodyFromName(Engine,EngineModule,"hand-r").getMass()*relation)
+	hand_l = helpers.getBodyFromName(Engine,EngineModule,"hand-l")
+	if hand_l:
+		animation_helper.setMasses(lFingers,hand_l.getMass()*relation)
+	hand_r = helpers.getBodyFromName(Engine,EngineModule,"hand-r")
+	if hand_r:
+		animation_helper.setMasses(rFingers,hand_r.getMass()*relation)
 
 	#animation_helper.approachEqualMassDistribution(allBodies,0.5)
 
@@ -170,13 +174,16 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 	jointGroupNames = [ "foot-joint", "lleg-joint", "uleg-joint", "belly-joint", "breast-joint", "shoulder-joint", "neck-joint", "head-joint", "uarm-joint", "larm-joint", "hand-joint" ]
 	joints = animation_helper.getBodyListFromGroupNameList(objects,jointGroupNames)
 
+	if key == EngineModule.Keys.K_LBRACKET:
+		head_joints = objects.get()["head-joint"]
+		print("head joints: " + str(head_joints))
+
 
 	if key == EngineModule.Keys.K_SPACE:
 		if not "head" in objects.get():
 			return
-		print("hello")
-		print("now: " + str(datetime.datetime.now()))
-		print(str(objects.get()["anims"]["stand"]["done"]))
+		#print("now: " + str(datetime.datetime.now()))
+		#print(str(objects.get()["anims"]["stand"]["done"]))
 		#if objects.get()["anims"]["stand"]["done"]:
 		if objects.get()["anims"]["stand"]["name"] == "rising":
 			print("toggle animation: to falling")
@@ -184,21 +191,20 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 				"name":"falling","index":0,"starttime":Engine.getTime(),"done":False}
 			setHeavy(Engine,EngineModule,objects)
 
+			"""
 			animation_helper.multiplyMasses(animation_helper.getBodyListFromNameList(
 				Engine,EngineModule,["head"]),0.01)
 			animation_helper.multiplyMasses(animation_helper.getBodyListFromNameList(
 				Engine,EngineModule,["neck"]),0.01)
 			animation_helper.multiplyMasses(animation_helper.getBodyListFromNameList(
 				Engine,EngineModule,["breast"]),0.01)
+				"""
 
 			#setLight(Engine,EngineModule,objects)
 			#setMiddle(Engine,EngineModule,objects)
 
-			anim_falling.addRandomFallingForce(Engine,EngineModule,objects)
-			#setMiddle(Engine,EngineModule,objects)
-			#Engine.setGravity(EngineModule.Vec3(0,-10,0))
-			#Engine.setGravity(EngineModule.Vec3(0,-60,0))
-			#Engine.setGravity(EngineModule.Vec3(0,-150,0))
+			anim_falling.findMiddlePos(Engine,EngineModule,objects)
+
 			Engine.setGravity(EngineModule.Vec3(0,-250,0))
 
 			Engine.setTimingFactor(1.5)

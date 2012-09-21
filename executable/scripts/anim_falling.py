@@ -2,9 +2,9 @@ import random
 
 SimpleAnimation = [
 	{'groups':[
-		"foot-joint",
-		"lleg-joint",
-		"uleg-joint",
+		#"foot-joint",
+		#"lleg-joint",
+		#"uleg-joint",
 		"belly-joint",
 		"breast-joint",
 		"shoulder-joint",
@@ -14,54 +14,84 @@ SimpleAnimation = [
 		"larm-joint",
 		"hand-joint"
 		],
-		'end':[],'time':1800,
-		'start':[(lambda Engine,EngineModule,objects,groupPart:
-			#groupPart.setMotorValues(0,0,True))],
-			#groupPart.setMotorOff())],
-			#groupPart.setMotorValues(FallingSpring,FallingDamping,True))],
-			#groupPart.setMotorValues(25,50,True))]
-			groupPart.setMotorValues(50,130,True))]
-		}
-	]
-"""
-		,
-	{'groups':[
-		"foot-joint",
-		"lleg-joint",
-		"uleg-joint",
-		"belly-joint",
-		"breast-joint",
-		"shoulder-joint",
-		"neck-joint",
-		"head-joint",
-		"uarm-joint",
-		"larm-joint",
-		"hand-joint"
-		],
-		'end':[],'time':1500,
-		'start':[(lambda Engine,EngineModule,objects,groupPart:
-			#groupPart.setMotorValues(0,0,True))],
-			#groupPart.setMotorOff())],
-			#groupPart.setMotorValues(FallingSpring,FallingDamping,True))],
-			groupPart.setMotorValues(25,50,True))]
-		},
-	{'groups':[
-		"uarm-joint",
-		"larm-joint",
-		"hand-joint"
-		],
-		'end':[],'time':1500,
-		'start':[(lambda Engine,EngineModule,objects,groupPart:
-			#groupPart.setMotorValues(1,10,True))],
-			#groupPart.setMotorValues(0,0,True))],
-			#groupPart.setMotorOff())],
-			#groupPart.setMotorValues(FallingSpring,FallingDamping,True))],
-			groupPart.setMotorValues(500,5000,True))]
-		}
-"""
+	'time':300,
+	'start-groups':[(lambda Engine,EngineModule,objects,groupPart:
+		#groupPart.setMotorOff()
+		#groupPart.setMotorValues(25,50,True)
+		#groupPart.setMotorValues(50,130,True)
+		#groupPart.setMotorValues(5,1300,True)
+		#groupPart.setMotorValues(5,1000,True)
+		groupPart.setMotorValues(0,0,True)
+		)],
+	'start':[
+		(lambda Engine,EngineModule,objects:
+		[part.setMotorValues(0,0,True) for part in objects.get()["foot-joint"]]),
+		(lambda Engine,EngineModule,objects:
+		[part.setMotorValues(0,0,True) for part in objects.get()["lleg-joint"]]),
+		(lambda Engine,EngineModule,objects:
+		[part.setMotorValues(0,0,True) for part in objects.get()["uleg-joint"]]),
 
-def addRandomFallingForce(Engine,EngineModule,objects):
-	print("add random force")
+		(lambda Engine,EngineModule,objects:
+		[applyForce(Engine,EngineModule,objects,part) for part in objects.get()["breast"]]),
+		(lambda Engine,EngineModule,objects:
+		[applyForwardForce(Engine,EngineModule,objects,part) for part in objects.get()["root"]])
+		]
+	},
+	{'groups':[
+		"foot-joint",
+		"lleg-joint",
+		"uleg-joint",
+		"belly-joint",
+		"breast-joint",
+		"shoulder-joint",
+		"neck-joint",
+		"head-joint",
+		"uarm-joint",
+		"larm-joint",
+		"hand-joint"
+		],
+	'time':500,
+	'start-groups':[(lambda Engine,EngineModule,objects,groupPart:
+		#groupPart.setMotorOff()
+		#groupPart.setMotorValues(25,50,True)
+		#groupPart.setMotorValues(50,130,True)
+		#groupPart.setMotorValues(5,1300,True)
+		groupPart.setMotorValues(0,250,True)
+		)]
+	}
+	]
+
+def applyForce(Engine,EngineModule,objects,body):
+	if "head-debug" in objects.get():
+		debug = objects.get()["head-debug"]
+		debugPositioin = debug.getPosition()
+
+		angleRand = 40
+
+		relVec = debugPositioin - body.getPosition()
+		relVec.normalise()
+		relVec = EngineModule.Quat().fromAngles(0,random.uniform(-angleRand,angleRand),0) * relVec
+		relVec = relVec * 600000.0 * random.uniform(0.1,1.0)
+		relVec.y = 0
+		#relVec.y = -500000
+		body.addForce(relVec)
+
+def applyForwardForce(Engine,EngineModule,objects,body):
+	relVec = EngineModule.Vec3(-1,0,0)
+	relVec = body.getOrientation() * relVec
+	relVec.normalise()
+	relVec = relVec * 60000.0
+	body.addForce(relVec)
+
+def applyDownwardForce(Engine,EngineModule,objects,body):
+	relVec = EngineModule.Vec3(0,-1,0)
+	relVec = body.getOrientation() * relVec
+	relVec.normalise()
+	relVec = relVec * 600000.0
+	body.addForce(relVec)
+
+
+def findMiddlePos(Engine,EngineModule,objects):
 
 	partsList = objects.get()["head"]
 	pos = partsList[0].getPosition()
@@ -93,12 +123,7 @@ def addRandomFallingForce(Engine,EngineModule,objects):
 	finalZ = highZ - ((highZ-lowZ) * 0.5)
 	middlePos = EngineModule.Vec3(finalX,finalY,finalZ)
 	middlePos = middlePos + EngineModule.Vec3(100,0,0)
-	"""
-	if "head-debug" in objects.get():
-		debug = objects.get()["head-debug"]
-		debug.setPosition(middlePos)
-	else:
-	"""
+
 	if not "head-debug" in objects.get():
 		b = Engine.createGuiBox()
 		b.setColour(0,0,1,0.5)
@@ -108,44 +133,5 @@ def addRandomFallingForce(Engine,EngineModule,objects):
 
 	debug = objects.get()["head-debug"]
 	debug.setPosition(middlePos)
-
-	angleRand = 60
-	maxMult = 800
-	minMult = 200
-
-	partsList = objects.get()["root"]
-	for part in partsList:
-		part.addForce(EngineModule.Vec3(0,-90000,0))
-
-	partsList = objects.get()["belly"]
-	for part in partsList:
-		part.addForce(EngineModule.Vec3(0,-90000,0))
-
-	partsList = objects.get()["head"]
-	for part in partsList:
-		relVec = middlePos - part.getPosition()
-		relVec.normalise()
-		relVec = relVec * 60.0
-		relVec = EngineModule.Quat().fromAngles(
-			0,random.uniform(-angleRand,angleRand),0) * relVec
-		force = relVec * random.uniform(minMult,maxMult)
-		#print("add force to head: " + str(force))
-		#part.addForce(relVec * 100)
-		part.addForce(force)
-		#part.addForce(relVec * 0.5)
-
-	"""
-	partsList = objects.get()["breast"]
-	for part in partsList:
-		relVec = middlePos - part.getPosition()
-		relVec = EngineModule.Quat().fromAngles(
-			0,random.uniform(-angleRand,angleRand),0) * relVec
-		force = relVec * random.uniform(minMult,maxMult)
-		print("add force to breast: " + str(force))
-		#part.addForce(relVec * 100)
-		part.addForce(force)
-		#part.addForce(relVec * 0.5)
-		"""
-
 
 
