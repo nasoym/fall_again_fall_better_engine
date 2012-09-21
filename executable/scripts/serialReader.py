@@ -8,6 +8,7 @@ def init(Engine,EngineModule,objects):
 
 		objects.get()["serial_state"] = "0"
 		objects.setUnsavable("serial_state")
+		print("found serial port (4) device")
 
 	except serial.SerialException,e: 
 		print("serial exception: " + str(e))

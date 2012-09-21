@@ -457,6 +457,17 @@ def runOperations3(Engine,EngineModule):
 	bodyJointScaleBody(Engine,EngineModule,bodyName='lleg-r',jointName='lleg-r-joint',vector=EngineModule.Vec3(13.635429382,2.527235746,3.057955503))
 	bodyJointScaleJointPos(Engine,EngineModule,bodyName='lleg-r',jointName='lleg-r-joint',vector=EngineModule.Vec3(-0.999999940,0.000001907,-0.199999049))
 
+
+	bodyJointScaleBody(Engine,EngineModule,bodyName='uleg-l',jointName='uleg-l-joint',vector=EngineModule.Vec3(11.259112358,3.700126410,3.363751173))
+	bodyJointScaleBody(Engine,EngineModule,bodyName='lleg-l',jointName='lleg-l-joint',vector=EngineModule.Vec3(13.635429382,2.527235746,3.057955503))
+
+	bodyJointScaleJointPos(Engine,EngineModule,bodyName='lleg-l',jointName='lleg-l-joint',vector=EngineModule.Vec3(-0.999999940,0.000001907,-0.199999049))
+	scalePhysicShape(Engine,EngineModule,bodyName='foot-l',shapeName='1',size=EngineModule.Vec3(5.107838631,2.403376102,2.088624477))
+	movePhysicShape(Engine,EngineModule,bodyName='foot-l',shapeName='1',position=EngineModule.Vec3(-1.119883060,0.059902906,0.005035845))
+	bodyJointScaleBody(Engine,EngineModule,bodyName='foot-l',jointName='foot-l-joint',vector=EngineModule.Vec3(6.180485249,2.403376102,2.088624477))
+	bodyJointScaleJointPos(Engine,EngineModule,bodyName='foot-l',jointName='foot-l-joint',vector=EngineModule.Vec3(-0.709090650,0.000000562,-0.000000954))
+
+
 def runOperations2(Engine,EngineModule):
 
 	setBodyJointAnchorPos(Engine,EngineModule,bodyName='foot-r',jointName='foot-ground-r',vector=EngineModule.Vec3(4.643490314,1.399999857,0.000001907))

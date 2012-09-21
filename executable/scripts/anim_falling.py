@@ -2,25 +2,29 @@ import random
 
 SimpleAnimation = [
 	{'groups':[
-		#"foot-joint",
-		#"lleg-joint",
-		#"uleg-joint",
+		"foot-joint",
+		"lleg-joint",
+		"uleg-joint",
 		"belly-joint",
 		"breast-joint",
 		"shoulder-joint",
 		"neck-joint",
 		"head-joint",
-		#"uarm-joint",
-		#"larm-joint",
-		#"hand-joint"
+		"uarm-joint",
+		"larm-joint",
+		"hand-joint"
 		],
-		'end':[],'time':500,
+		'end':[],'time':1800,
 		'start':[(lambda Engine,EngineModule,objects,groupPart:
 			#groupPart.setMotorValues(0,0,True))],
 			#groupPart.setMotorOff())],
 			#groupPart.setMotorValues(FallingSpring,FallingDamping,True))],
-			groupPart.setMotorValues(25,50,True))]
-		},
+			#groupPart.setMotorValues(25,50,True))]
+			groupPart.setMotorValues(50,130,True))]
+		}
+	]
+"""
+		,
 	{'groups':[
 		"foot-joint",
 		"lleg-joint",
@@ -54,7 +58,7 @@ SimpleAnimation = [
 			#groupPart.setMotorValues(FallingSpring,FallingDamping,True))],
 			groupPart.setMotorValues(500,5000,True))]
 		}
-	]
+"""
 
 def addRandomFallingForce(Engine,EngineModule,objects):
 	print("add random force")
@@ -109,15 +113,13 @@ def addRandomFallingForce(Engine,EngineModule,objects):
 	maxMult = 800
 	minMult = 200
 
-	"""
 	partsList = objects.get()["root"]
 	for part in partsList:
-		part.addForce(EngineModule.Vec3(0,-3000,0))
+		part.addForce(EngineModule.Vec3(0,-90000,0))
 
 	partsList = objects.get()["belly"]
 	for part in partsList:
-		part.addForce(EngineModule.Vec3(0,-3000,0))
-		"""
+		part.addForce(EngineModule.Vec3(0,-90000,0))
 
 	partsList = objects.get()["head"]
 	for part in partsList:

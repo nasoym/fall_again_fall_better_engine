@@ -93,6 +93,7 @@ bool Engine::isKeyDown(Keys key){
 
 void	Engine::storePressedKey(Keys key){
 	mPressedKeys.push_back(key);
+	Logger::debug(format("storePressedKey:%1%") % key );
 }
 
 void	Engine::removePressedKey(Keys key){

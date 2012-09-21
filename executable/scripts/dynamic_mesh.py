@@ -130,10 +130,10 @@ def createBoneBody(Engine,EngineModule,mesh,boneName):
 	boneBody.setPosition(bonePosition)  
 	mesh.setBodyForBoneName(boneName,boneBody)
 
-	#shape = boneBody.addCapsule(EngineModule.Vec3(1,1,1))
+	shape = boneBody.addCapsule(EngineModule.Vec3(1,1,1))
 	#shape = boneBody.addBox(EngineModule.Vec3(1,1,1))
 
-	shape = boneBody.addBox(EngineModule.Vec3(1,1,1))
+	#shape = boneBody.addBox(EngineModule.Vec3(1,1,1))
 	shape.setColour(0.5,0.5,0,0.5)
 
 	boneWidth = 0.5

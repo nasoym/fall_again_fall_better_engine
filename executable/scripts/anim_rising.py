@@ -24,9 +24,9 @@ SimpleAnimation = [
 		"neck-joint",
 		"head-joint"
 		"shoulder-joint",
-		#"uarm-joint",
-		#"larm-joint",
-		#"hand-joint"
+		"uarm-joint",
+		"larm-joint",
+		"hand-joint"
 		],
 	'end':[], 'time':500,
 	'start':[(lambda Engine,EngineModule,objects,groupPart:
