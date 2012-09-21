@@ -196,6 +196,14 @@ void Engine::run(){
     }
 }
 
+void Engine::physicsPause(){
+	mPhysicPaused = true;
+}
+
+void Engine::physicsUnpause(){
+	mPhysicPaused = false;
+}
+
 void Engine::physicPauseToggle() {
 	if (mPhysicPaused) {
 		mPhysicPaused = false;

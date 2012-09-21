@@ -1,22 +1,24 @@
 import helpers
 
-def runMethods(Engine,EngineModule,objects,animList,index,methodName):
-	for groupName in animList[index]['groups']:
-		if groupName in objects.get():
-			partsList = objects.get()[groupName]
-			#print("group: " + str(groupName))
-			for part in partsList:
-				if part:
-					if methodName+"-groups" in animList[index]:
-						methods = animList[index][methodName+"-groups"]
-						for method in methods:
-							method(Engine,EngineModule,objects,part)
-				else:
-					print("anim part is none: " + str(part))
+def runMethods(Engine,EngineModule,objects,animList,index,methodName,timePos):
+	if "groups" in animList[index]:
+		for groupName in animList[index]['groups']:
+			if groupName in objects.get():
+				partsList = objects.get()[groupName]
+				#print("group: " + str(groupName))
+				for part in partsList:
+					if part:
+						if methodName+"-groups" in animList[index]:
+							methods = animList[index][methodName+"-groups"]
+							for method in methods:
+								method(Engine,EngineModule,objects,part)
+					else:
+						print("anim part is none: " + str(part))
+
 	if methodName in animList[index]:
 		methods = animList[index][methodName]
 		for method in methods:
-			method(Engine,EngineModule,objects)
+			method(Engine,EngineModule,objects,timePos)
 
 def playAnimation(Engine,EngineModule,objects,animData,animList):
 	animName = animData["name"]
@@ -31,18 +33,31 @@ def playAnimation(Engine,EngineModule,objects,animData,animList):
 			if animIndex != 0:
 				#print("run anim end: " + str(animName) + " index : " + str(animIndex-1))
 				runMethods(Engine,EngineModule,
-					objects,animList,animIndex-1,"end")
+					objects,animList,animIndex-1,"end",1.0)
 			#print("run anim start: " + str(animName) + " index : " + str(animIndex))
 			runMethods(Engine,EngineModule,
-				objects,animList,animIndex,"start")
+				objects,animList,animIndex,"start",0.0)
 			animData["index"] = animIndex + 1
 			#print("go to next anim index")
 			animData["starttime"] = endTime
+		else:
+			if animIndex != 0:
+				oldIndex = animIndex - 1
+				oldTime = animList[oldIndex]['time']
+				oldEndTime = startTime
+				oldStartTime = startTime - oldTime
+
+				oldTimePos = float(currentTime - oldStartTime) / float(oldTime)
+				#print(str(oldTimePos))
+				runMethods(Engine,EngineModule,
+					objects,animList,animIndex-1,"timePos",oldTimePos)
+
+
 	elif animIndex == animListSize:
 		if currentTime > startTime:
 			#print("run anim end: " + str(animName) + " index : " + str(animIndex-1))
 			runMethods(Engine,EngineModule,
-				objects,animList,animIndex-1,"end")
+				objects,animList,animIndex-1,"end",1.0)
 			animData["index"] = animIndex + 1
 
 			animData["done"] = True
@@ -52,6 +67,17 @@ def playAnimation(Engine,EngineModule,objects,animData,animList):
 					print("resend space key")
 					Engine.callPythonKeyReleased(EngineModule.Keys.K_SPACE)
 			#print("animation done")
+		else:
+			oldIndex = animIndex - 1
+			oldTime = animList[oldIndex]['time']
+			oldEndTime = startTime
+			oldStartTime = startTime - oldTime
+
+			oldTimePos = float(currentTime - oldStartTime) / float(oldTime)
+			#print(str(oldTimePos))
+			runMethods(Engine,EngineModule,
+				objects,animList,animIndex-1,"timePos",oldTimePos)
+
 
 
 

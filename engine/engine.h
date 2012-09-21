@@ -91,6 +91,8 @@ class Engine : public WindowEventListener,
 		void    guiUpdates();
 
 		void	physicPauseToggle();
+		void 	physicsPause();
+		void 	physicsUnpause();
 
 		void	setupSSAO();
 

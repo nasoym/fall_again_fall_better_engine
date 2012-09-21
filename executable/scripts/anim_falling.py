@@ -1,5 +1,12 @@
 import random
 
+def setTiming(Engine,EngineModule,objects,timePos):
+	factor = 1.0 - timePos
+	timing = 2.5 * factor * factor
+	Engine.setTimingFactor(timing)
+	#print(str(timing))
+	return True
+
 SimpleAnimation = [
 	{'groups':[
 		#"foot-joint",
@@ -24,19 +31,19 @@ SimpleAnimation = [
 		groupPart.setMotorValues(0,0,True)
 		)],
 	'start':[
-		(lambda Engine,EngineModule,objects:
+		(lambda Engine,EngineModule,objects,timePos:
 		[part.setMotorValues(0,0,True) for part in objects.get()["foot-joint"]]),
-		(lambda Engine,EngineModule,objects:
+		(lambda Engine,EngineModule,objects,timePos:
 		[part.setMotorValues(0,0,True) for part in objects.get()["lleg-joint"]]),
-		(lambda Engine,EngineModule,objects:
+		(lambda Engine,EngineModule,objects,timePos:
 		[part.setMotorValues(0,0,True) for part in objects.get()["uleg-joint"]]),
 
-		(lambda Engine,EngineModule,objects:
+		(lambda Engine,EngineModule,objects,timePos:
 		[part.setMotorValues(0,100,True) for part in objects.get()["head-joint"]]),
 
-		(lambda Engine,EngineModule,objects:
+		(lambda Engine,EngineModule,objects,timePos:
 		[applyForce(Engine,EngineModule,objects,part) for part in objects.get()["breast"]]),
-		(lambda Engine,EngineModule,objects:
+		(lambda Engine,EngineModule,objects,timePos:
 		[applyForwardForce(Engine,EngineModule,objects,part) for part in objects.get()["root"]])
 		]
 	},
@@ -53,16 +60,26 @@ SimpleAnimation = [
 		"larm-joint",
 		"hand-joint"
 		],
-	'time':500,
+	'time':1000,
 	'start-groups':[(lambda Engine,EngineModule,objects,groupPart:
 		#groupPart.setMotorOff()
 		#groupPart.setMotorValues(25,50,True)
 		#groupPart.setMotorValues(50,130,True)
 		#groupPart.setMotorValues(5,1300,True)
-		groupPart.setMotorValues(0,250,True)
+		groupPart.setMotorValues(0,350,True)
 		)]
 	}
+
 	]
+"""
+	'timePos':[(lambda Engine,EngineModule,objects,timePos:
+		setTiming(Engine,EngineModule,objects,timePos)
+		)],
+	'end':[(lambda Engine,EngineModule,objects,timePos:
+		#Engine.physicsPause()
+		Engine.setTimingFactor(0.0)
+		)]
+		"""
 
 def applyForce(Engine,EngineModule,objects,body):
 	if "head-debug" in objects.get():

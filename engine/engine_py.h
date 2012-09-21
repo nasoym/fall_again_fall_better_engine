@@ -379,6 +379,8 @@ BOOST_PYTHON_MODULE(EngineModule) {
 		.def("simulatePhysics",&Engine::simulatePhysics)
 
 		.def("physicPauseToggle",&Engine::physicPauseToggle)
+		.def("physicsPause",&Engine::physicsPause)
+		.def("physicsUnpause",&Engine::physicsUnpause)
 
         .def("howManyObjects",&Engine::howManyObjects)
         .def("getObject",&Engine::getObject,return_value_policy<reference_existing_object>() )

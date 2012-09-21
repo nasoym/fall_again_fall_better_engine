@@ -184,51 +184,54 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 			return
 		#print("now: " + str(datetime.datetime.now()))
 		#print(str(objects.get()["anims"]["stand"]["done"]))
-		#if objects.get()["anims"]["stand"]["done"]:
-		if objects.get()["anims"]["stand"]["name"] == "rising":
-			print("toggle animation: to falling")
-			objects.get()["anims"]["stand"] = {
-				"name":"falling","index":0,"starttime":Engine.getTime(),"done":False}
-			setHeavy(Engine,EngineModule,objects)
+		print("space is pressed")
+		if objects.get()["anims"]["stand"]["done"]:
+			if objects.get()["anims"]["stand"]["name"] == "rising":
+				print("toggle animation: to falling")
+				objects.get()["anims"]["stand"] = {
+					"name":"falling","index":0,"starttime":Engine.getTime(),"done":False}
+				setHeavy(Engine,EngineModule,objects)
 
-			animation_helper.multiplyMasses(animation_helper.getBodyListFromNameList(
-				Engine,EngineModule,["head"]),0.01)
-			"""
-			animation_helper.multiplyMasses(animation_helper.getBodyListFromNameList(
-				Engine,EngineModule,["neck"]),0.01)
-			animation_helper.multiplyMasses(animation_helper.getBodyListFromNameList(
-				Engine,EngineModule,["breast"]),0.01)
+				animation_helper.multiplyMasses(animation_helper.getBodyListFromNameList(
+					Engine,EngineModule,["head"]),0.01)
 				"""
+				animation_helper.multiplyMasses(animation_helper.getBodyListFromNameList(
+					Engine,EngineModule,["neck"]),0.01)
+				animation_helper.multiplyMasses(animation_helper.getBodyListFromNameList(
+					Engine,EngineModule,["breast"]),0.01)
+					"""
 
-			#setLight(Engine,EngineModule,objects)
-			#setMiddle(Engine,EngineModule,objects)
+				#setLight(Engine,EngineModule,objects)
+				#setMiddle(Engine,EngineModule,objects)
 
-			anim_falling.findMiddlePos(Engine,EngineModule,objects)
+				anim_falling.findMiddlePos(Engine,EngineModule,objects)
 
-			Engine.setGravity(EngineModule.Vec3(0,-250,0))
+				Engine.setGravity(EngineModule.Vec3(0,-250,0))
 
-			Engine.setTimingFactor(1.5)
+				Engine.setTimingFactor(2.0)
 
+
+				"""
 		elif objects.get()["anims"]["stand"]["name"] == "falling":
 			print("toggle animation: to rising")
 			objects.get()["anims"]["stand"] = {
 				"name":"rising","index":0,"starttime":Engine.getTime(),"done":False}
+			Engine.physicsUnpause()
 			setLight(Engine,EngineModule,objects)
 			#setMiddleArms(Engine,EngineModule,objects)
 			#Engine.setGravity(EngineModule.Vec3(0,35,0))
 			#setMiddle(Engine,EngineModule,objects)
 			Engine.setGravity(EngineModule.Vec3(0,-10,0))
 			Engine.setTimingFactor(2.5)
+			"""
 
 
 
 
-		"""
 		else:
 			pass
-			print("set on done to true")
+			#print("set on done to true")
 			#	objects.get()["anims"]["stand"]["ondone"] = True
-			"""
 
 def keyReleased(Engine,EngineModule,key,selection,objects):
 
@@ -236,24 +239,21 @@ def keyReleased(Engine,EngineModule,key,selection,objects):
 		if not "head" in objects.get():
 			return
 
-		"""
-		#if objects.get()["anims"]["stand"]["done"]:
-		if objects.get()["anims"]["stand"]["name"] == "falling":
-			print("toggle animation: to rising")
-			objects.get()["anims"]["stand"] = {
-				"name":"rising","index":0,"starttime":Engine.getTime(),"done":False}
-			setLight(Engine,EngineModule,objects)
-			#setMiddleArms(Engine,EngineModule,objects)
-			#Engine.setGravity(EngineModule.Vec3(0,35,0))
-			#setMiddle(Engine,EngineModule,objects)
-			Engine.setGravity(EngineModule.Vec3(0,-10,0))
-			Engine.setTimingFactor(2.5)
-			"""
+		print("space is released")
+		if objects.get()["anims"]["stand"]["done"]:
+			if objects.get()["anims"]["stand"]["name"] == "falling":
+				print("toggle animation: to rising")
+				objects.get()["anims"]["stand"] = {
+					"name":"rising","index":0,"starttime":Engine.getTime(),"done":False}
+				setLight(Engine,EngineModule,objects)
+				#setMiddleArms(Engine,EngineModule,objects)
+				#Engine.setGravity(EngineModule.Vec3(0,35,0))
+				#setMiddle(Engine,EngineModule,objects)
+				Engine.setGravity(EngineModule.Vec3(0,-10,0))
+				Engine.setTimingFactor(2.5)
 
-		"""
 		else:
 			print("set on done to true")
 			objects.get()["anims"]["stand"]["ondone"] = True
-			"""
 
 
