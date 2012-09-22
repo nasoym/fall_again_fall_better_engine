@@ -12,6 +12,14 @@ Actor::Actor(Engine* engine) :
 	mMass(1000)
 	{
 }
+		
+void	Actor::removeFromScene(){
+    (getEngine()->getPhysicsEngine()->getScene())->removeActor(*getActor());
+}
+
+void	Actor::moveBackToScene(){
+    (getEngine()->getPhysicsEngine()->getScene())->addActor(*getActor());
+}
 
 void	Actor::physicUpdate(){
 }

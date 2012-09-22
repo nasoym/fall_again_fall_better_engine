@@ -24,8 +24,8 @@ Engine::Engine() :
 	mTimeDifference(0),
 	mPhysicPaused(false),
 	mUseFirstRenderer(true),
-	//mHideMouse(false),
-	mHideMouse(true),
+	mHideMouse(false),
+	//mHideMouse(true),
 	mDefaultShadedMaterialName("")
 	{
     Logger::debug(format("creating engine: %p ") % this);
@@ -329,6 +329,10 @@ void Engine::setup(){
 	}
 
 	mWindow = mRoot->initialise(true);
+
+	if (mWindow->isFullScreen()){
+		mHideMouse = true;
+	}
 
 	//mRoot->initialise(false);
 	//mWindow = mRoot->createRenderWindow("main window",400,400,false);

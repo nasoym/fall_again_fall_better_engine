@@ -212,7 +212,12 @@ BOOST_PYTHON_MODULE(EngineModule) {
 		.def("howManyJoints",&Actor::howManyJoints)
 		.def("getJoint",&Actor::getJoint,return_value_policy<reference_existing_object>())
 
+		.def("removeFromScene",&Actor::removeFromScene)
+		.def("moveBackToScene",&Actor::moveBackToScene)
+
+
 		;
+
 	class_<DynamicActor,bases<Actor> >("DynamicActor", init<Engine*,Vec3&>())
 		.def("setSolverIterations",&DynamicActor::setSolverIterations)
 		;

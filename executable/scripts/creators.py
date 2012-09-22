@@ -133,6 +133,7 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 					loadingPosition=EngineModule.Vec3(40.076103210,yPos,-4.459388256),
 					loadingOrientation=EngineModule.Quat().fromAngles(0,180,0) * EngineModule.Quat(0.999048233,0.000000000,-0.043619387,0.000000000))
 
+				"""
 				saveload.load(Engine,EngineModule,"xmlscene/ragdoll_1050.xml",objects,
 					loadingPosition=EngineModule.Vec3(-92.474678040,yPos,-33.463573456),
 					loadingOrientation=EngineModule.Quat().fromAngles(0,180,0) * EngineModule.Quat(0.953717113,0.000000000,-0.300705880,0.000000000))
@@ -157,6 +158,7 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 				saveload.load(Engine,EngineModule,"xmlscene/ragdoll_850.xml",objects,
 					loadingPosition=EngineModule.Vec3(-4.641016006,yPos,-40.036834717),
 					loadingOrientation=EngineModule.Quat().fromAngles(0,180,0) * EngineModule.Quat(0.500000119,0.000000000,-0.866025686,0.000000000))
+					"""
 
 
 			elif Engine.isKeyDown(EngineModule.Keys.K_5):

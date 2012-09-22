@@ -73,6 +73,9 @@ class Actor : public EngineGuiContainer {
 		virtual EngineJoint*  getJoint(int index);
 
 
+		virtual	void	removeFromScene();
+		virtual	void	moveBackToScene();
+
 	private:
 		bool				mDoGuiUpdates;
 };
