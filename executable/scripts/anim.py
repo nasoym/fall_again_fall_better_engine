@@ -259,7 +259,7 @@ def keyReleased(Engine,EngineModule,key,selection,objects):
 				#Engine.setGravity(EngineModule.Vec3(0,35,0))
 				#setMiddle(Engine,EngineModule,objects)
 				Engine.setGravity(EngineModule.Vec3(0,-10,0))
-				Engine.setTimingFactor(2.5)
+				#Engine.setTimingFactor(2.5)
 
 		else:
 			print("set on done to true")

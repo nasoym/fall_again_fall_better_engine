@@ -3,18 +3,36 @@
 angularForce = True
 
 """
+	"""
+
+def removeFromScene(Engine,EngineModule,objects):
+	if "head" in objects.get():
+		for part in objects.get()["head"]:
+			part.removeFromScene() 
+
+def backIntoScene(Engine,EngineModule,objects):
+	if "head" in objects.get():
+		for part in objects.get()["head"]:
+			part.moveBackToScene() 
+
+def setTiming(Engine,EngineModule,objects,timePos,startFactor,endFactor):
+	timingDelta = endFactor - startFactor
+	timing = startFactor + (timingDelta * timePos)
+	Engine.setTimingFactor(timing)
+	#print("timing: " + str(timing))
+	return True
+	
+SimpleAnimation = [
 	{'groups':[
-		#"shoulder-joint",
+		"head-joint",
 		"uarm-joint",
 		"larm-joint",
 		"hand-joint"
 		],
-	'end':[], 'time':50,
-	'start':[(lambda Engine,EngineModule,objects,groupPart:
-		groupPart.setMotorValues(10,20,angularForce))]
+	'time':100,
+	'start-groups':[(lambda Engine,EngineModule,objects,groupPart:
+		groupPart.setMotorValues(0,0,angularForce))]
 	},
-	"""
-SimpleAnimation = [
 	{'groups':[
 		"foot-joint",
 		"lleg-joint",
@@ -22,16 +40,42 @@ SimpleAnimation = [
 		"belly-joint",
 		"breast-joint",
 		"neck-joint",
-		"head-joint"
-		"shoulder-joint",
+		#"head-joint",
+		"shoulder-joint"
+		#,
+		#"uarm-joint",
+		#"larm-joint",
+		#"hand-joint"
+		],
+	'time':1500,
+	'start-groups':[(lambda Engine,EngineModule,objects,groupPart:
+		groupPart.setMotorValues( (10**35)*1.5 , (10**35)*1.0 ,angularForce))],
+	'start':[
+		(lambda Engine,EngineModule,objects,timePos:
+			True
+			#removeFromScene(Engine,EngineModule,objects)
+		)
+		],
+	'end':[
+		(lambda Engine,EngineModule,objects,timePos:
+			True
+			#backIntoScene(Engine,EngineModule,objects)
+		)
+		],
+	'timePos':[(lambda Engine,EngineModule,objects,timePos:
+		setTiming(Engine,EngineModule,objects,timePos,1.0,2.5)
+		)],
+	},
+	{'groups':[
+		"head-joint",
 		"uarm-joint",
 		"larm-joint",
 		"hand-joint"
 		],
-	'time':500,
+	'time':100,
 	'start-groups':[(lambda Engine,EngineModule,objects,groupPart:
-		groupPart.setMotorValues( (10**35)*1.5 , (10**35)*1.0 ,angularForce))]
-	}
+		groupPart.setMotorValues( (10**35)*1.5 , (10**35)*1.0 ,angularForce))],
+	},
 ]
 """
 ,

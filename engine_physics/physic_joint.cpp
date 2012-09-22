@@ -69,6 +69,19 @@ void PhysicJoint::createJoint(){
     //mJoint->setTwistLimit(PxJointLimitPair(0,0,0));
     mJoint->setSwingLimit(PxJointLimitCone(0,0,mDContactDistance));
 
+
+	//mJoint->setConstraintFlag(PxConstraintFlag::ePROJECTION,true);
+
+    //Logger::debug(format("ProjectionLinearTolerance: %p ") % mJoint->getProjectionLinearTolerance());
+    //Logger::debug(format("ProjectionAngularTolerance: %p ") % mJoint->getProjectionAngularTolerance());
+
+
+	//mJoint->setProjectionLinearTolerance(0);
+	//mJoint->setProjectionAngularTolerance(0);
+
+
+
+
     updateBodies();
 }
 

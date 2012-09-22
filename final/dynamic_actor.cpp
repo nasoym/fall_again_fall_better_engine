@@ -12,6 +12,9 @@ DynamicActor::DynamicActor(Engine* engine, Vec3 & position) :
 
 	//setSolverIterations(16,4);
 	//setSolverIterations(16,2);
+	//setSolverIterations(32,16);
+	//setSolverIterations(64,32);
+	setSolverIterations(16,4);
 }
 
 DynamicActor::~DynamicActor( ){
