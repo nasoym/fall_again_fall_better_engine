@@ -24,7 +24,8 @@ Engine::Engine() :
 	mTimeDifference(0),
 	mPhysicPaused(false),
 	mUseFirstRenderer(true),
-	mHideMouse(false),
+	//mHideMouse(false),
+	mHideMouse(true),
 	mDefaultShadedMaterialName("")
 	{
     Logger::debug(format("creating engine: %p ") % this);
