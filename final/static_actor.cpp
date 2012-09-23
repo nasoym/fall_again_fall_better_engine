@@ -9,7 +9,6 @@ StaticActor::StaticActor(Engine* engine, Vec3 & position) :
 	{
     mBody = (getEngine()->getPhysicsEngine()->getPhysics())->createRigidStatic( 
 		PxTransform(position.toPhysx()) );
-    //(getEngine()->getPhysicsEngine()->getScene())->addActor(*mBody);
 }
 
 StaticActor::~StaticActor( ){
@@ -22,7 +21,6 @@ PhysicShape*		StaticActor::addBox(Vec3& vec3){
 	PhysicShape* shape = Actor::addBox(vec3);
 	if (!mAddedToScene){
 		(getEngine()->getPhysicsEngine()->getScene())->addActor(*mBody);
-		Logger::debug("adding to scene after adding Box");
 		mAddedToScene = true;
 	}
 	return shape;
@@ -31,7 +29,6 @@ PhysicShape*		StaticActor::addSphere(Vec3& vec3){
 	PhysicShape* shape = Actor::addSphere(vec3);
 	if (!mAddedToScene){
 		(getEngine()->getPhysicsEngine()->getScene())->addActor(*mBody);
-		Logger::debug("adding to scene after adding Sphere");
 		mAddedToScene = true;
 	}
 	return shape;
@@ -40,7 +37,6 @@ PhysicShape*		StaticActor::addCapsule(Vec3& vec3){
 	PhysicShape* shape = Actor::addCapsule(vec3);
 	if (!mAddedToScene){
 		(getEngine()->getPhysicsEngine()->getScene())->addActor(*mBody);
-		Logger::debug("adding to scene after adding Capsule");
 		mAddedToScene = true;
 	}
 	return shape;
@@ -57,7 +53,6 @@ void    StaticActor::setPosition(Vec3& vec3) {
     getActor()->setGlobalPose(t);
 	if (mAddedToScene){
 		(getEngine()->getPhysicsEngine()->getScene())->addActor(*mBody);
-		Logger::debug("adding to scene after set position");
 	}
 }
 
@@ -73,6 +68,5 @@ void    StaticActor::setOrientation(Quat& quat) {
     getActor()->setGlobalPose(t);
 	if (mAddedToScene){
 		(getEngine()->getPhysicsEngine()->getScene())->addActor(*mBody);
-		Logger::debug("adding to scene after set orientation");
 	}
 }

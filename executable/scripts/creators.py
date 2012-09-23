@@ -106,10 +106,16 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 			elif Engine.isKeyDown(EngineModule.Keys.K_8):
 				print("set camera pos")
 				Engine.setCameraPosition(
-					EngineModule.Vec3(-39.260421753,51.768470764,-253.214447021)
+					EngineModule.Vec3(
+					#-39.260421753,51.768470764,-253.214447021
+					-37.964317322,51.912330627,-246.827178955 
+					)
 					)
 				Engine.setCameraOrientation(
-					EngineModule.Quat(0.061658185,0.000627403,-0.998036027,0.011049764)
+					EngineModule.Quat(
+						#0.061658185,0.000627403,-0.998036027,0.011049764
+						0.061658185,0.000627403,-0.998036027,0.011049764
+						)
 					)
 				Engine.setCameraFOV(50)
 

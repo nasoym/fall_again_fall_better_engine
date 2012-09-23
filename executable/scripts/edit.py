@@ -186,7 +186,7 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 				elif body and not joint:
 					print("found single body")	
 					print("move globaly")
-					vector = helpers.getModifiedVector(Engine,EngineModule,20)
+					vector = helpers.getModifiedVector(Engine,EngineModule,1)
 					vector = body.getOrientation() * vector
 					newPosition = body.getPosition() + vector
 					if Engine.isKeyDown(EngineModule.Keys.K_0):
