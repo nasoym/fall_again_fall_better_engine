@@ -34,8 +34,11 @@ animLists["falling"] = anim_falling.SimpleAnimation
 animLists["rising"] = anim_rising.SimpleAnimation
 
 def init(Engine,EngineModule,objects):
-	objects.get()["anims"] = {}
-	objects.setUnsavable("anims")
+	if not "anims" in objects.get():
+		objects.get()["anims"] = {}
+		objects.setUnsavable("anims")
+	#objects.get()["anims"] = {}
+	#objects.setUnsavable("anims")
 	random.seed()
 
 

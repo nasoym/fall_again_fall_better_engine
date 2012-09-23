@@ -119,7 +119,7 @@ modules.append(operations)
 modules.append(anim)
 
 modules.append(serialReader)
-#modules.append(main)
+modules.append(main)
 
 guiUpdates=[]
 
