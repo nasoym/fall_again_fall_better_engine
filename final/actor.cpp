@@ -12,7 +12,26 @@ Actor::Actor(Engine* engine) :
 	mMass(1000)
 	{
 }
-		
+
+
+void	Actor::enableCollisions(){
+	std::vector<EngineGuiShape*>::iterator	iter;
+	for(iter=mShapes.begin();iter!=mShapes.end();++iter){
+		if ( (*iter)->isPhysicShape() ) {
+			(*iter)->isPhysicShape()->enableCollisions();
+		}
+	}
+}
+
+void	Actor::dissableCollisions(){
+	std::vector<EngineGuiShape*>::iterator	iter;
+	for(iter=mShapes.begin();iter!=mShapes.end();++iter){
+		if ( (*iter)->isPhysicShape() ) {
+			(*iter)->isPhysicShape()->dissableCollisions();
+		}
+	}
+}
+
 void	Actor::removeFromScene(){
     (getEngine()->getPhysicsEngine()->getScene())->removeActor(*getActor());
 }

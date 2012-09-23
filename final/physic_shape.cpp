@@ -17,6 +17,13 @@ PhysicShape::~PhysicShape() {
 
 }
 
+void	PhysicShape::enableCollisions(){
+	mShape->setFlag(PxShapeFlag::eSIMULATION_SHAPE,true);
+}
+
+void	PhysicShape::dissableCollisions(){
+	mShape->setFlag(PxShapeFlag::eSIMULATION_SHAPE,false);
+}
 
 bool	PhysicShape::isBoxShape(){
 	if (mShapeType == BOX) return true;

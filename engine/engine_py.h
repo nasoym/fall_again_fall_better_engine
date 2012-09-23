@@ -215,6 +215,8 @@ BOOST_PYTHON_MODULE(EngineModule) {
 		.def("removeFromScene",&Actor::removeFromScene)
 		.def("moveBackToScene",&Actor::moveBackToScene)
 
+		.def("enableCollisions",&Actor::enableCollisions)
+		.def("dissableCollisions",&Actor::dissableCollisions)
 
 		;
 
@@ -263,6 +265,9 @@ BOOST_PYTHON_MODULE(EngineModule) {
 		.def("isSphereShape",&PhysicShape::isSphereShape)
 		.def("isCapsuleShape",&PhysicShape::isCapsuleShape)
 		.def("getActor",&PhysicShape::getActor,return_value_policy<reference_existing_object>())
+
+		.def("enableCollisions",&PhysicShape::enableCollisions)
+		.def("dissableCollisions",&PhysicShape::dissableCollisions)
 		;
 
 

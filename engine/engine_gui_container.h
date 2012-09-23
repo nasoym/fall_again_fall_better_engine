@@ -39,8 +39,9 @@ class EngineGuiContainer : public EngineObject {
 		void				selectShow();
 		void				selectHide();
 
-	private:
+	protected:
 		std::vector<EngineGuiShape*>	mShapes;
+	private:
 
 		Vec3		mPosition;
 		Quat		mOrientation;

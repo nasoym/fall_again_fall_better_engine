@@ -76,6 +76,9 @@ class Actor : public EngineGuiContainer {
 		virtual	void	removeFromScene();
 		virtual	void	moveBackToScene();
 
+		void					enableCollisions();
+		void					dissableCollisions();
+
 	private:
 		bool				mDoGuiUpdates;
 };

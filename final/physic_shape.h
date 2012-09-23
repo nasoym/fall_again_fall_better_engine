@@ -53,6 +53,9 @@ class PhysicShape : public EngineGuiShape {
 
 		Actor*					getActor(){return mActor;}
 
+		void					enableCollisions();
+		void					dissableCollisions();
+
 	private:
         PxShape*            	mShape;
 		Actor*					mActor;

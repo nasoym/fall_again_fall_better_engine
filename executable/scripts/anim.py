@@ -185,7 +185,9 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 		for body in selection.get():
 			if body.isActor():
 				#body.removeFromScene()
-				body.moveBackToScene()
+				#body.moveBackToScene()
+				body.dissableCollisions()
+				#body.enableCollisions()
 
 
 	if key == EngineModule.Keys.K_SPACE:
