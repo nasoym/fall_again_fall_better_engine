@@ -24,18 +24,20 @@ def debug():
 
 LyingAnimation = [
 	{
-	'time':3000,
+	'time':2500,
 	'timePos':[
 		(lambda Engine,EngineModule,objects,timePos:
-		animation_helper.setTiming(Engine,EngineModule,objects,timePos,1.0,0.5))
-		],
-	'start':[
+		animation_helper.setTiming(Engine,EngineModule,objects,timePos,1.0,0.2))
+		]
+	},
+	{
+	'time':100,
+	'timePos':[
 		(lambda Engine,EngineModule,objects,timePos:
-		debug())
+		animation_helper.setTiming(Engine,EngineModule,objects,timePos,0.2,0.0))
 		],
 	'end':[
 		(lambda Engine,EngineModule,objects,timePos:
-		#debug()
 		Engine.physicsPause()
 		)
 		]
@@ -56,7 +58,7 @@ SimpleAnimation = [
 		"larm-joint",
 		"hand-joint"
 		],
-	'time':600,
+	'time':1000,
 	'start-groups':[(lambda Engine,EngineModule,objects,groupPart:
 		#groupPart.setMotorOff()
 		#groupPart.setMotorValues(25,50,True)
@@ -99,6 +101,7 @@ SimpleAnimation = [
 		#groupPart.setMotorValues(50,130,True)
 		#groupPart.setMotorValues(5,1300,True)
 		groupPart.setMotorValues(0,350,True)
+		#groupPart.setMotorValues(0,50,True)
 		)],
 
 	'end':[
@@ -130,6 +133,7 @@ def applyForce(Engine,EngineModule,objects,body):
 		relVec.normalise()
 		relVec = EngineModule.Quat().fromAngles(0,random.uniform(-angleRand,angleRand),0) * relVec
 		relVec = relVec * 600000.0 * random.uniform(0.1,1.0)
+		#relVec = relVec * 6000.0 * random.uniform(0.1,1.0)
 		relVec.y = 0
 		#relVec.y = -500000
 		body.addForce(relVec)
@@ -139,6 +143,7 @@ def applyForwardForce(Engine,EngineModule,objects,body):
 	relVec = body.getOrientation() * relVec
 	relVec.normalise()
 	relVec = relVec * 60000.0
+	#relVec = relVec * 600.0
 	body.addForce(relVec)
 
 def applyDownwardForce(Engine,EngineModule,objects,body):

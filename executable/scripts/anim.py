@@ -202,7 +202,7 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 
 				anim_falling.findMiddlePos(Engine,EngineModule,objects)
 
-				Engine.setGravity(EngineModule.Vec3(0,-250,0))
+				Engine.setGravity(EngineModule.Vec3(0,-350,0))
 
 				Engine.setTimingFactor(1.0)
 

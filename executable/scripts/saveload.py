@@ -12,6 +12,7 @@ def getFromUuidTable(Engine,uuidTable,uuid):
 		return uuidTable[uuid]
 
 def load(Engine,EngineModule,fileName,objects,loadingPosition=None,loadingOrientation=None):
+	print("loading xml file: " + str(fileName))
 	doc = libxml2.parseFile(fileName)
 	xctxt = doc.xpathNewContext()
 	res = xctxt.xpathEval("/scene/*")
@@ -592,6 +593,7 @@ def translateType(Engine,EngineModule,typeString,valueString,uuidTable):
 		return content
 
 def save(Engine,EngineModule,fileName,objects):
+	print("saving to xml file: " + str(fileName))
 	doc = libxml2.newDoc("1.0")
 	rootNode = libxml2.newNode("scene")
 	doc.addChild(rootNode)
