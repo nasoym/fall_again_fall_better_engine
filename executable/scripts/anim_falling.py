@@ -1,36 +1,7 @@
 import random
+import animation_helper
 
-def setTiming(Engine,EngineModule,objects,timePos):
-	factor = 1.0 - timePos
-	timing = 2.5 * factor * factor
-	Engine.setTimingFactor(timing)
-	#print(str(timing))
-	return True
-
-SimpleAnimation = [
-	{'groups':[
-		#"foot-joint",
-		#"lleg-joint",
-		#"uleg-joint",
-		"belly-joint",
-		"breast-joint",
-		"shoulder-joint",
-		"neck-joint",
-		#"head-joint",
-		"uarm-joint",
-		"larm-joint",
-		"hand-joint"
-		],
-	'time':300,
-	'start-groups':[(lambda Engine,EngineModule,objects,groupPart:
-		#groupPart.setMotorOff()
-		#groupPart.setMotorValues(25,50,True)
-		#groupPart.setMotorValues(50,130,True)
-		#groupPart.setMotorValues(5,1300,True)
-		#groupPart.setMotorValues(5,1000,True)
-		groupPart.setMotorValues(0,0,True)
-		)],
-	'start':[
+"""
 		(lambda Engine,EngineModule,objects,timePos:
 		[part.setMotorValues(0,0,True) for part in objects.get()["foot-joint"]]),
 		(lambda Engine,EngineModule,objects,timePos:
@@ -41,11 +12,72 @@ SimpleAnimation = [
 		(lambda Engine,EngineModule,objects,timePos:
 		[part.setMotorValues(0,100,True) for part in objects.get()["head-joint"]]),
 
+
+"""
+
+def setLyingAnimation(Engine,EngineModule,objects):
+	objects.get()["anims"]["stand"] = {"name":"lying","index":0,"starttime":Engine.getTime(),"done":True}
+	return True
+
+def debug():
+	print("starting lying anim")
+
+LyingAnimation = [
+	{
+	'time':3000,
+	'timePos':[
+		(lambda Engine,EngineModule,objects,timePos:
+		animation_helper.setTiming(Engine,EngineModule,objects,timePos,1.0,0.5))
+		],
+	'start':[
+		(lambda Engine,EngineModule,objects,timePos:
+		debug())
+		],
+	'end':[
+		(lambda Engine,EngineModule,objects,timePos:
+		#debug()
+		Engine.physicsPause()
+		)
+		]
+	}
+	]
+
+SimpleAnimation = [
+	{'groups':[
+		"foot-joint",
+		"lleg-joint",
+		"uleg-joint",
+		"belly-joint",
+		"breast-joint",
+		"shoulder-joint",
+		"neck-joint",
+		#"head-joint",
+		"uarm-joint",
+		"larm-joint",
+		"hand-joint"
+		],
+	'time':600,
+	'start-groups':[(lambda Engine,EngineModule,objects,groupPart:
+		#groupPart.setMotorOff()
+		#groupPart.setMotorValues(25,50,True)
+		#groupPart.setMotorValues(50,130,True)
+		#groupPart.setMotorValues(5,1300,True)
+		#groupPart.setMotorValues(5,1000,True)
+		#groupPart.setMotorValues(0,0,True)
+		groupPart.setMotorValues(0,0,True)
+		)],
+	'start':[
+		#(lambda Engine,EngineModule,objects,timePos:
+		#[part.setMotorValues(0,300,True) for part in objects.get()["head-joint"]]),
+
 		(lambda Engine,EngineModule,objects,timePos:
 		[applyForce(Engine,EngineModule,objects,part) for part in objects.get()["breast"]]),
 		(lambda Engine,EngineModule,objects,timePos:
 		[applyForwardForce(Engine,EngineModule,objects,part) for part in objects.get()["root"]])
-		]
+		],
+	'timePos':[(lambda Engine,EngineModule,objects,timePos:
+		animation_helper.setTiming(Engine,EngineModule,objects,timePos,0.8,1.2)
+		)]
 	},
 	{'groups':[
 		"foot-joint",
@@ -60,14 +92,20 @@ SimpleAnimation = [
 		"larm-joint",
 		"hand-joint"
 		],
-	'time':1000,
+	'time':800,
 	'start-groups':[(lambda Engine,EngineModule,objects,groupPart:
 		#groupPart.setMotorOff()
 		#groupPart.setMotorValues(25,50,True)
 		#groupPart.setMotorValues(50,130,True)
 		#groupPart.setMotorValues(5,1300,True)
 		groupPart.setMotorValues(0,350,True)
-		)]
+		)],
+
+	'end':[
+		(lambda Engine,EngineModule,objects,timePos:
+		setLyingAnimation(Engine,EngineModule,objects)
+		)
+		]
 	}
 
 	]

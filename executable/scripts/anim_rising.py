@@ -1,3 +1,4 @@
+import animation_helper
 
 #angularForce = False
 angularForce = True
@@ -24,6 +25,22 @@ def removeFromScene(Engine,EngineModule,objects):
 		for part in l:
 			part.dissableCollisions()
 
+def dissableCollisions(Engine,EngineModule,objects,bodyNames):
+	for name in bodyNames:
+		if name in objects.get():
+			bodyList = objects.get()[name]
+			for body in bodyList:
+				if body.isActor():
+					body.dissableCollisions()
+
+def enableCollisions(Engine,EngineModule,objects,bodyNames):
+	for name in bodyNames:
+		if name in objects.get():
+			bodyList = objects.get()[name]
+			for body in bodyList:
+				if body.isActor():
+					body.enableCollisions()
+
 def backIntoScene(Engine,EngineModule,objects):
 	if ("head" in objects.get() and
 		"uarm" in objects.get() and
@@ -46,13 +63,6 @@ def backIntoScene(Engine,EngineModule,objects):
 		for part in l:
 			part.enableCollisions()
 
-def setTiming(Engine,EngineModule,objects,timePos,startFactor,endFactor):
-	timingDelta = endFactor - startFactor
-	timing = startFactor + (timingDelta * timePos)
-	Engine.setTimingFactor(timing)
-	#print("timing: " + str(timing))
-	return True
-	
 SimpleAnimation = [
 	{'groups':[
 		"foot-joint",
@@ -71,13 +81,21 @@ SimpleAnimation = [
 	'start-groups':[(lambda Engine,EngineModule,objects,groupPart:
 		groupPart.setMotorValues( (10**35)*1.5 , (10**35)*1.0 ,angularForce))],
 	'start':[(lambda Engine,EngineModule,objects,timePos:
-			removeFromScene(Engine,EngineModule,objects))
+			#removeFromScene(Engine,EngineModule,objects)
+			dissableCollisions(Engine,EngineModule,objects,
+				["head", "uarm", "larm", "hand", "breast", "belly", "root", "uleg"]
+				)
+			)
 		],
 	'end':[(lambda Engine,EngineModule,objects,timePos:
-			backIntoScene(Engine,EngineModule,objects))
+			#backIntoScene(Engine,EngineModule,objects)
+			enableCollisions(Engine,EngineModule,objects,
+				["head", "uarm", "larm", "hand", "breast", "belly", "root", "uleg"]
+				)
+			)
 		],
 	'timePos':[(lambda Engine,EngineModule,objects,timePos:
-		setTiming(Engine,EngineModule,objects,timePos,0.1,5.0)
+		animation_helper.setTiming(Engine,EngineModule,objects,timePos,0.1,5.0)
 		)],
 	}
 ]

@@ -190,3 +190,10 @@ def approachEqualMassDistribution(bodyList,approachPercentage):
 		newMass = body.getMass() + (diffToActualMass * approachPercentage)
 		body.setMass(newMass)
 
+def setTiming(Engine,EngineModule,objects,timePos,startFactor,endFactor):
+	timingDelta = endFactor - startFactor
+	timing = startFactor + (timingDelta * timePos)
+	Engine.setTimingFactor(timing)
+	#print("timing: " + str(timing))
+	return True
+
