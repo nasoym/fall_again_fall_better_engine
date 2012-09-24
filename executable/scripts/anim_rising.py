@@ -1,67 +1,8 @@
 import animation_helper
+import anim_weight
 
 #angularForce = False
 angularForce = True
-
-def removeFromScene(Engine,EngineModule,objects):
-	if ("head" in objects.get() and
-		"uarm" in objects.get() and
-		"larm" in objects.get() and
-		"hand" in objects.get() and
-		"breast" in objects.get() and
-		"belly" in objects.get() and
-		"root" in objects.get() and
-		"uleg" in objects.get()
-	):
-		l =  []
-		l += objects.get()["head"] 
-		l += objects.get()["uarm"]
-		l += objects.get()["larm"]
-		l += objects.get()["hand"]
-		l += objects.get()["breast"]
-		l += objects.get()["belly"]
-		l += objects.get()["root"]
-		l += objects.get()["uleg"]
-		for part in l:
-			part.dissableCollisions()
-
-def dissableCollisions(Engine,EngineModule,objects,bodyNames):
-	for name in bodyNames:
-		if name in objects.get():
-			bodyList = objects.get()[name]
-			for body in bodyList:
-				if body.isActor():
-					body.dissableCollisions()
-
-def enableCollisions(Engine,EngineModule,objects,bodyNames):
-	for name in bodyNames:
-		if name in objects.get():
-			bodyList = objects.get()[name]
-			for body in bodyList:
-				if body.isActor():
-					body.enableCollisions()
-
-def backIntoScene(Engine,EngineModule,objects):
-	if ("head" in objects.get() and
-		"uarm" in objects.get() and
-		"larm" in objects.get() and
-		"hand" in objects.get() and
-		"breast" in objects.get() and
-		"belly" in objects.get() and
-		"root" in objects.get() and
-		"uleg" in objects.get()
-	):
-		l =  []
-		l += objects.get()["head"] 
-		l += objects.get()["uarm"]
-		l += objects.get()["larm"]
-		l += objects.get()["hand"]
-		l += objects.get()["breast"]
-		l += objects.get()["belly"]
-		l += objects.get()["root"]
-		l += objects.get()["uleg"]
-		for part in l:
-			part.enableCollisions()
 
 SimpleAnimation = [
 	{'groups':[
@@ -80,22 +21,28 @@ SimpleAnimation = [
 	'time':1000,
 	'start-groups':[(lambda Engine,EngineModule,objects,groupPart:
 		groupPart.setMotorValues( (10**35)*1.5 , (10**35)*1.0 ,angularForce))],
-	'start':[(lambda Engine,EngineModule,objects,timePos:
-			#removeFromScene(Engine,EngineModule,objects)
-			dissableCollisions(Engine,EngineModule,objects,
+	'start':[
+			(lambda Engine,EngineModule,objects,timePos:
+			anim_weight.lightMasses(Engine,EngineModule,objects)),
+
+			(lambda Engine,EngineModule,objects,timePos:
+			animation_helper.dissableCollisions(Engine,EngineModule,objects,
 				["head", "uarm", "larm", "hand", "breast", "belly", "root", "uleg"]
 				)
-			)
+			),
+
+			(lambda Engine,EngineModule,objects,timePos:
+			Engine.setGravity(EngineModule.Vec3(0,-10,0)))
 		],
 	'end':[(lambda Engine,EngineModule,objects,timePos:
-			#backIntoScene(Engine,EngineModule,objects)
-			enableCollisions(Engine,EngineModule,objects,
+			animation_helper.enableCollisions(Engine,EngineModule,objects,
 				["head", "uarm", "larm", "hand", "breast", "belly", "root", "uleg"]
 				)
 			)
 		],
 	'timePos':[(lambda Engine,EngineModule,objects,timePos:
-		animation_helper.setTiming(Engine,EngineModule,objects,timePos,0.1,5.0)
+		animation_helper.setTiming(Engine,EngineModule,objects,
+			timePos,0.1,5.0)
 		)],
 	}
 ]

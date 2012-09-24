@@ -1,3 +1,4 @@
+import random
 import helpers
 
 def runMethods(Engine,EngineModule,objects,animList,index,methodName,timePos):
@@ -196,4 +197,97 @@ def setTiming(Engine,EngineModule,objects,timePos,startFactor,endFactor):
 	Engine.setTimingFactor(timing)
 	#print("timing: " + str(timing))
 	return True
+
+def dissableCollisions(Engine,EngineModule,objects,bodyNames):
+	for name in bodyNames:
+		if name in objects.get():
+			bodyList = objects.get()[name]
+			for body in bodyList:
+				if body.isActor():
+					body.dissableCollisions()
+
+def enableCollisions(Engine,EngineModule,objects,bodyNames):
+	for name in bodyNames:
+		if name in objects.get():
+			bodyList = objects.get()[name]
+			for body in bodyList:
+				if body.isActor():
+					body.enableCollisions()
+
+def findMiddlePos(Engine,EngineModule,objects):
+
+	partsList = objects.get()["head"]
+	pos = partsList[0].getPosition()
+	lowX = pos.x
+	highX = pos.x
+	lowY = pos.y
+	highY = pos.y
+	lowZ = pos.z
+	highZ = pos.z
+	for part in partsList:
+		pos = part.getPosition()
+		if pos.x < lowX:
+			lowX = pos.x
+		if pos.x > highX:
+			highX = pos.x
+
+		if pos.y < lowY:
+			lowY = pos.y
+		if pos.y > highY:
+			highY = pos.y
+
+		if pos.z < lowZ:
+			lowZ = pos.z
+		if pos.z > highZ:
+			highZ = pos.z
+
+	finalX = highX - ((highX-lowX) * 0.5)
+	finalY = highY - ((highY-lowY) * 0.5)
+	finalZ = highZ - ((highZ-lowZ) * 0.5)
+	middlePos = EngineModule.Vec3(finalX,finalY,finalZ)
+	middlePos = middlePos + EngineModule.Vec3(0,10,0)
+
+	if not "head-debug" in objects.get():
+		b = Engine.createGuiBox()
+		b.setColour(0,0,1,0.5)
+		b.setSize(EngineModule.Vec3(10,10,10))
+		b.setPosition(EngineModule.Vec3(0,200,0))
+		objects.get()["head-debug"] = b
+
+	debug = objects.get()["head-debug"]
+	debug.setPosition(middlePos)
+
+
+def applyForce(Engine,EngineModule,objects,body):
+	if "head-debug" in objects.get():
+		debug = objects.get()["head-debug"]
+		debugPositioin = debug.getPosition()
+
+		angleRand = 40
+
+		relVec = debugPositioin - body.getPosition()
+		relVec.normalise()
+		relVec = EngineModule.Quat().fromAngles(0,random.uniform(-angleRand,angleRand),0) * relVec
+		relVec = relVec * 600000.0 * random.uniform(0.1,1.0)
+		#relVec = relVec * 6000.0 * random.uniform(0.1,1.0)
+		relVec.y = 0
+		#relVec.y = -500000
+		body.addForce(relVec)
+
+def applyForwardForce(Engine,EngineModule,objects,body):
+	relVec = EngineModule.Vec3(-1,0,0)
+	relVec = body.getOrientation() * relVec
+	relVec.normalise()
+	relVec = relVec * 60000.0
+	#relVec = relVec * 600.0
+	body.addForce(relVec)
+
+def applyDownwardForce(Engine,EngineModule,objects,body):
+	relVec = EngineModule.Vec3(0,-1,0)
+	relVec = body.getOrientation() * relVec
+	relVec.normalise()
+	relVec = relVec * 600000.0
+	body.addForce(relVec)
+
+
 

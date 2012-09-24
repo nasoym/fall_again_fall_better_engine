@@ -168,6 +168,7 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 				print("    position: " + str(o.getPosition()))
 				print("    size: " + str(o.getSize()))
 				print("    orientation: " + str(o.getOrientation().toAngles()))
+				print("    mass: " + str(o.getMass()))
 			if o.isJoint():
 				print("    yLimit: " + str(o.isJoint().getYLimit()))
 				print("    zLimit: " + str(o.isJoint().getZLimit()))
