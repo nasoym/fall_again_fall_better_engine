@@ -8,18 +8,18 @@ def setLyingAnimation(Engine,EngineModule,objects):
 	return True
 
 LyingAnimation = [
-	{
-	'time':2500,
+	{ 'time':2000,
 	'timePos':[
 		(lambda Engine,EngineModule,objects,timePos:
-		animation_helper.setTiming(Engine,EngineModule,objects,timePos,1.0,0.2))
+		animation_helper.setTiming(Engine,EngineModule,objects,
+			timePos,1.0,0.5))
 		]
 	},
-	{
-	'time':100,
+	{ 'time':100,
 	'timePos':[
 		(lambda Engine,EngineModule,objects,timePos:
-		animation_helper.setTiming(Engine,EngineModule,objects,timePos,0.2,0.0))
+		animation_helper.setTiming(Engine,EngineModule,objects,
+			timePos,0.5,0.0))
 		],
 	'end':[
 		(lambda Engine,EngineModule,objects,timePos:
@@ -45,20 +45,15 @@ SimpleAnimation = [
 		],
 	'time':1000,
 	'start-groups':[(lambda Engine,EngineModule,objects,groupPart:
-		#groupPart.setMotorOff()
-		#groupPart.setMotorValues(25,50,True)
-		#groupPart.setMotorValues(50,130,True)
-		#groupPart.setMotorValues(5,1300,True)
-		#groupPart.setMotorValues(5,1000,True)
 		#groupPart.setMotorValues(0,0,True)
-		groupPart.setMotorValues(0,0,True)
+		groupPart.setMotorValues(0,100,True)
 		)],
 	'start':[
 		#(lambda Engine,EngineModule,objects,timePos:
 		#[part.setMotorValues(0,300,True) for part in objects.get()["head-joint"]]),
 
-		(lambda Engine,EngineModule,objects,timePos:
-		Engine.setTimingFactor(1.0)),
+		#(lambda Engine,EngineModule,objects,timePos:
+		#Engine.setTimingFactor(1.0)),
 
 		(lambda Engine,EngineModule,objects,timePos:
 		Engine.setGravity(EngineModule.Vec3(0,-350,0))),
@@ -66,16 +61,27 @@ SimpleAnimation = [
 		(lambda Engine,EngineModule,objects,timePos:
 		anim_weight.resetAllMasses(Engine,EngineModule,objects)),
 
-
+		#(lambda Engine,EngineModule,objects,timePos:
+		#	anim_weight.multiplyAllMasses(Engine,EngineModule,objects,10.0)
+		#	),
 
 		(lambda Engine,EngineModule,objects,timePos:
-		[animation_helper.applyForce(Engine,EngineModule,objects,part) for part in objects.get()["breast"]]),
+		[animation_helper.applyForceToDebug(Engine,EngineModule,objects,
+			part,500000) for part in objects.get()["breast"]]),
 		(lambda Engine,EngineModule,objects,timePos:
-		[animation_helper.applyForwardForce(Engine,EngineModule,objects,part) for part in objects.get()["root"]])
+		[animation_helper.applyForwardForce(Engine,EngineModule,objects,
+			part,50000) for part in objects.get()["root"]])
 		],
-	'timePos':[(lambda Engine,EngineModule,objects,timePos:
-		animation_helper.setTiming(Engine,EngineModule,objects,timePos,0.8,1.2)
-		)]
+	'timePos':[
+		(lambda Engine,EngineModule,objects,timePos:
+			animation_helper.setTiming(Engine,EngineModule,objects,
+				timePos,0.8,1.2)
+			)
+		#,
+		#(lambda Engine,EngineModule,objects,timePos:
+		#	anim_weight.multiplyAllMasses(Engine,EngineModule,objects,1.02)
+		#	)
+		]
 	},
 	{'groups':[
 		"foot-joint",
@@ -92,12 +98,8 @@ SimpleAnimation = [
 		],
 	'time':800,
 	'start-groups':[(lambda Engine,EngineModule,objects,groupPart:
-		#groupPart.setMotorOff()
-		#groupPart.setMotorValues(25,50,True)
-		#groupPart.setMotorValues(50,130,True)
-		#groupPart.setMotorValues(5,1300,True)
-		groupPart.setMotorValues(0,350,True)
-		#groupPart.setMotorValues(0,50,True)
+		#groupPart.setMotorValues(0,350,True)
+		groupPart.setMotorValues(10,200,True)
 		)],
 
 	'end':[

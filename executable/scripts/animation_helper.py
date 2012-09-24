@@ -258,7 +258,7 @@ def findMiddlePos(Engine,EngineModule,objects):
 	debug.setPosition(middlePos)
 
 
-def applyForce(Engine,EngineModule,objects,body):
+def applyForceToDebug(Engine,EngineModule,objects,body,force=600000):
 	if "head-debug" in objects.get():
 		debug = objects.get()["head-debug"]
 		debugPositioin = debug.getPosition()
@@ -268,25 +268,22 @@ def applyForce(Engine,EngineModule,objects,body):
 		relVec = debugPositioin - body.getPosition()
 		relVec.normalise()
 		relVec = EngineModule.Quat().fromAngles(0,random.uniform(-angleRand,angleRand),0) * relVec
-		relVec = relVec * 600000.0 * random.uniform(0.1,1.0)
-		#relVec = relVec * 6000.0 * random.uniform(0.1,1.0)
+		relVec = relVec * force * random.uniform(0.1,1.0)
 		relVec.y = 0
-		#relVec.y = -500000
 		body.addForce(relVec)
 
-def applyForwardForce(Engine,EngineModule,objects,body):
+def applyForwardForce(Engine,EngineModule,objects,body,force=60000):
 	relVec = EngineModule.Vec3(-1,0,0)
 	relVec = body.getOrientation() * relVec
 	relVec.normalise()
-	relVec = relVec * 60000.0
-	#relVec = relVec * 600.0
+	relVec = relVec * force
 	body.addForce(relVec)
 
-def applyDownwardForce(Engine,EngineModule,objects,body):
+def applyDownwardForce(Engine,EngineModule,objects,body,force=60000):
 	relVec = EngineModule.Vec3(0,-1,0)
 	relVec = body.getOrientation() * relVec
 	relVec.normalise()
-	relVec = relVec * 600000.0
+	relVec = relVec * force
 	body.addForce(relVec)
 
 
