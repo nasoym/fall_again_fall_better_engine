@@ -316,6 +316,13 @@ EngineObject* Engine::getFromUuid(std::string uuidToFind){
 	}
 	return 0;
 }
+bool	Engine::isFullscreen(){
+	if (mWindow) {
+		return mWindow->isFullScreen();
+	} else {
+		return false;
+	}
+}
 
 void Engine::setup(){
 	//LogManager::getSingleton().logMessage("before",LML_CRITICAL);

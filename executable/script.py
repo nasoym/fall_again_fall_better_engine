@@ -1,7 +1,5 @@
 import random
 random.seed()
-#random.seed(12345)
-random.jumpahead(random.uniform(12345,9994949))
 
 import scripts.temp as temp
 import scripts.navigate as navigate
@@ -104,21 +102,29 @@ class Objects(object):
 objects = Objects()
 selectContainers = Selection() 
 
+runDebugMode = True
+
 modules = []
 #modules.append(powered_doll)
 #modules.append(test)
 
-modules.append(navigate)
-modules.append(select)
-modules.append(temp)
-modules.append(creators)
-modules.append(misc)
-modules.append(edit)
-modules.append(operations)
+if Engine.isFullscreen():
+	runDebugMode = False
+	Engine.log("running in fullscreen turn of script reloading")
+
+if runDebugMode:
+	modules.append(navigate)
+	modules.append(select)
+	modules.append(temp)
+	modules.append(creators)
+	modules.append(misc)
+	modules.append(edit)
+	modules.append(operations)
 
 modules.append(main)
 modules.append(anim)
 modules.append(serialReader)
+modules.append(test)
 
 guiUpdates=[]
 
@@ -131,18 +137,21 @@ def init():
 		if hasattr(m,"guiUpdate"):
 			#guiUpdates.append(m.guiUpdate)
 			guiUpdates.append(getattr(m,"guiUpdate"))
+
 	print("------------------------------------------------------------------ready")
 
 def keyDown(key):
 	for m in modules:
 		if hasattr(m,"keyDown"):
-			reload(m)
+			if runDebugMode:
+				reload(m)
 			m.keyDown(Engine,EngineModule,key,selectContainers,objects)
 
 def keyPressed(key):
 	for m in modules:
 		if hasattr(m,"keyPressed"):
-			reload(m)
+			if runDebugMode:
+				reload(m)
 			m.keyPressed(Engine,EngineModule,key,selectContainers,objects)
 
 	if key == EngineModule.Keys.K_P:
@@ -164,7 +173,8 @@ main:
 def keyReleased(key):
 	for m in modules:
 		if hasattr(m,"keyReleased"):
-			reload(m)
+			if runDebugMode:
+				reload(m)
 			m.keyReleased(Engine,EngineModule,key,selectContainers,objects)
 
 def guiUpdate():

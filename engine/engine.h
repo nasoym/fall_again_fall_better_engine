@@ -100,6 +100,8 @@ class Engine : public WindowEventListener,
 		void	closePython();
 		void    runPython();
 
+		bool	isFullscreen();
+
 		EngineObject*	createPhysicBox();
 		EngineObject*	createSpaceCage(Vec3&);
 		EngineObject*	createGuiBox();

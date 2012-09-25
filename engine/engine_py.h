@@ -426,6 +426,8 @@ BOOST_PYTHON_MODULE(EngineModule) {
 		.def("getMouseRelX",&Engine::getMouseRelX)
 		.def("getMouseRelY",&Engine::getMouseRelY)
 
+		.def("isFullscreen",&Engine::isFullscreen)
+
 
 		.def("getDefaultShadedMaterialName",&Engine::getDefaultShadedMaterialName)
 
