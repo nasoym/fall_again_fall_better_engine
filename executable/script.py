@@ -116,10 +116,9 @@ modules.append(misc)
 modules.append(edit)
 modules.append(operations)
 
-modules.append(anim)
-
-modules.append(serialReader)
 modules.append(main)
+modules.append(anim)
+modules.append(serialReader)
 
 guiUpdates=[]
 

@@ -12,21 +12,21 @@ LyingAnimation = [
 	'timePos':[
 		(lambda Engine,EngineModule,objects,timePos:
 		animation_helper.setTiming(Engine,EngineModule,objects,
-			timePos,1.0,0.5))
+			timePos,1.0,0.3))
 		]
 	},
-	{ 'time':100,
-	'timePos':[
-		(lambda Engine,EngineModule,objects,timePos:
-		animation_helper.setTiming(Engine,EngineModule,objects,
-			timePos,0.5,0.0))
-		],
-	'end':[
-		(lambda Engine,EngineModule,objects,timePos:
-		Engine.physicsPause()
-		)
-		]
-	}
+#	{ 'time':100,
+#	'timePos':[
+#		(lambda Engine,EngineModule,objects,timePos:
+#		animation_helper.setTiming(Engine,EngineModule,objects,
+#			timePos,0.5,0.0))
+#		],
+#	'end':[
+#		(lambda Engine,EngineModule,objects,timePos:
+#		Engine.physicsPause()
+#		)
+#		]
+#	}
 	]
 
 SimpleAnimation = [
@@ -43,7 +43,7 @@ SimpleAnimation = [
 		"larm-joint",
 		"hand-joint"
 		],
-	'time':1000,
+	'time':1500,
 	'start-groups':[(lambda Engine,EngineModule,objects,groupPart:
 		#groupPart.setMotorValues(0,0,True)
 		groupPart.setMotorValues(0,100,True)
@@ -83,7 +83,8 @@ SimpleAnimation = [
 		#	)
 		]
 	},
-	{'groups':[
+	{'time':500,
+	'groups':[
 		"foot-joint",
 		"lleg-joint",
 		"uleg-joint",
@@ -96,18 +97,41 @@ SimpleAnimation = [
 		"larm-joint",
 		"hand-joint"
 		],
-	'time':800,
 	'start-groups':[(lambda Engine,EngineModule,objects,groupPart:
 		#groupPart.setMotorValues(0,350,True)
 		groupPart.setMotorValues(10,200,True)
 		)],
 
-	'end':[
+#	'end':[
+#		(lambda Engine,EngineModule,objects,timePos:
+#		setLyingAnimation(Engine,EngineModule,objects)
+#		)
+#		]
+	},
+	{ 'time':2500,
+	'timePos':[
 		(lambda Engine,EngineModule,objects,timePos:
-		setLyingAnimation(Engine,EngineModule,objects)
-		)
-		]
-	}
+		animation_helper.setTiming(Engine,EngineModule,objects,
+			timePos,1.2,0.8))
+		],
+	'groups':[
+		#"foot-joint",
+		#"lleg-joint",
+		#"uleg-joint",
+		#"belly-joint",
+		#"breast-joint",
+		#"shoulder-joint",
+		"neck-joint",
+		"head-joint",
+		"uarm-joint",
+		"larm-joint",
+		"hand-joint",
+		],
+	'start-groups':[(lambda Engine,EngineModule,objects,groupPart:
+		groupPart.setMotorValues(0,1500,True)
+		#groupPart.setMotorValues(0,0,True)
+		)],
+	},
 
 	]
 

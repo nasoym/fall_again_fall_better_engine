@@ -32,7 +32,12 @@ SimpleAnimation = [
 			),
 
 			(lambda Engine,EngineModule,objects,timePos:
-			Engine.setGravity(EngineModule.Vec3(0,-10,0)))
+			Engine.setGravity(EngineModule.Vec3(0,-10,0))),
+
+			(lambda Engine,EngineModule,objects,timePos:
+			animation_helper.setRandomTarget(Engine,EngineModule,objects,["head-joint"],0,20,10)
+			),
+
 		],
 	'end':[(lambda Engine,EngineModule,objects,timePos:
 			animation_helper.enableCollisions(Engine,EngineModule,objects,

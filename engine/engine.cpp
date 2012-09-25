@@ -379,7 +379,8 @@ void Engine::setup(){
 	//mSceneMgr->setShadowTextureSettings( 1024, 3, Ogre::PF_FLOAT32_R );
 	//mSceneMgr->setShadowTextureSettings( 512, 2);
 	//mSceneMgr->setShadowTextureSettings( 1024, 4);
-	mSceneMgr->setShadowTextureSettings( 2048, 8);
+	//mSceneMgr->setShadowTextureSettings( 2048, 8);
+	mSceneMgr->setShadowTextureSettings( 4096, 1);
 	mSceneMgr->setShadowFarDistance(5000);
 
 	//DefaultShadowCameraSetup *camSetup = new DefaultShadowCameraSetup();

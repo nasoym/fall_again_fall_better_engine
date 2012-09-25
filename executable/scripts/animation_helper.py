@@ -40,6 +40,9 @@ def playAnimation(Engine,EngineModule,objects,animData,animList):
 			animData["index"] = animIndex + 1
 			#print("go to next anim index")
 			animData["starttime"] = endTime
+		elif currentTime > endTime:
+			Engine.log("time is bigger then endTime")
+			animData["index"] = animIndex + 1
 		else:
 			if animIndex != 0:
 				oldIndex = animIndex - 1
@@ -50,6 +53,7 @@ def playAnimation(Engine,EngineModule,objects,animData,animList):
 				oldTimePos = float(currentTime - oldStartTime) / float(oldTime)
 				runMethods(Engine,EngineModule,
 					objects,animList,animIndex-1,"timePos",oldTimePos)
+
 
 
 	elif animIndex == animListSize:
@@ -203,6 +207,24 @@ def enableCollisions(Engine,EngineModule,objects,bodyNames):
 			for body in bodyList:
 				if body.isActor():
 					body.enableCollisions()
+
+def setRandomTarget(Engine,EngineModule,objects,jointNames,freedomX,freedomY,freedomZ):
+	for name in jointNames:
+		if name in objects.get():
+			jointList = objects.get()[name]
+			for joint in jointList:
+				if joint.isJoint():
+					target = joint.getMotorTarget()
+					target = EngineModule.Quat()
+					angleRand = freedomX
+					randomOrientation = EngineModule.Quat().fromAngles(
+						random.uniform(-freedomX,freedomX),
+						random.uniform(-freedomY,freedomY),
+						random.uniform(-freedomZ,freedomZ)
+						)
+					#randomOrientation = EngineModule.Quat().fromAngles(0,0,20)
+					joint.setMotorTarget(randomOrientation * target)
+
 
 def findMiddlePos(Engine,EngineModule,objects):
 
