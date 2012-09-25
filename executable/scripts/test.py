@@ -43,7 +43,7 @@ def guiUpdate(Engine,EngineModule,selection,objects):
 			Engine.log("mem: " + str(memUsage) + "  diff: " + 
 				str(memUsageDifference) + 
 				" time: " + str(currentTime))
-
+			Engine.log("fps: " + str(float(1000.0 / Engine.getTimeDifference())))
 
 
 
