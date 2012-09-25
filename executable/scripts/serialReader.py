@@ -8,10 +8,10 @@ def init(Engine,EngineModule,objects):
 
 		objects.get()["serial_state"] = "0"
 		objects.setUnsavable("serial_state")
-		print("found serial port (4) device")
+		Engine.log("found serial port (4) device")
 
 	except serial.SerialException,e: 
-		print("serial exception: " + str(e))
+		Engine.log("serial exception: " + str(e))
 
 def guiUpdate(Engine,EngineModule,selection,objects):
 	if "serial" in objects.get():
@@ -27,10 +27,10 @@ def guiUpdate(Engine,EngineModule,selection,objects):
 			if serial_state != old_state:
 				if serial_state == "1":
 					objects.get()["serial_state"] = serial_state
-					print("state: " + str(serial_state))
+					Engine.log("state: " + str(serial_state))
 					Engine.callPythonKeyPressed(EngineModule.Keys.K_SPACE)
 				if serial_state == "0":
 					objects.get()["serial_state"] = serial_state
-					print("state: " + str(serial_state))
+					Engine.log("state: " + str(serial_state))
 					Engine.callPythonKeyReleased(EngineModule.Keys.K_SPACE)
 

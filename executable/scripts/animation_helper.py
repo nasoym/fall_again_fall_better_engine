@@ -6,7 +6,6 @@ def runMethods(Engine,EngineModule,objects,animList,index,methodName,timePos):
 		for groupName in animList[index]['groups']:
 			if groupName in objects.get():
 				partsList = objects.get()[groupName]
-				#print("group: " + str(groupName))
 				for part in partsList:
 					if part:
 						if methodName+"-groups" in animList[index]:
@@ -14,7 +13,7 @@ def runMethods(Engine,EngineModule,objects,animList,index,methodName,timePos):
 							for method in methods:
 								method(Engine,EngineModule,objects,part)
 					else:
-						print("anim part is none: " + str(part))
+						Engine.log("anim part is none: " + str(part))
 
 	if methodName in animList[index]:
 		methods = animList[index][methodName]
@@ -49,25 +48,24 @@ def playAnimation(Engine,EngineModule,objects,animData,animList):
 				oldStartTime = startTime - oldTime
 
 				oldTimePos = float(currentTime - oldStartTime) / float(oldTime)
-				#print(str(oldTimePos))
 				runMethods(Engine,EngineModule,
 					objects,animList,animIndex-1,"timePos",oldTimePos)
 
 
 	elif animIndex == animListSize:
 		if currentTime > startTime:
-			#print("run anim end: " + str(animName) + " index : " + str(animIndex-1))
 			runMethods(Engine,EngineModule,
 				objects,animList,animIndex-1,"end",1.0)
 			animData["index"] = animIndex + 1
 
 			animData["done"] = True
 
+			Engine.log("animation is done: " + str(animName))
+
 			if "ondone" in animData:
 				if animData["ondone"]:
-					print("resend space key")
+					Engine.log("ondone was true: so resend space key into engine")
 					Engine.callPythonKeyReleased(EngineModule.Keys.K_SPACE)
-			#print("animation done")
 		else:
 			oldIndex = animIndex - 1
 			oldTime = animList[oldIndex]['time']
@@ -75,7 +73,6 @@ def playAnimation(Engine,EngineModule,objects,animData,animList):
 			oldStartTime = startTime - oldTime
 
 			oldTimePos = float(currentTime - oldStartTime) / float(oldTime)
-			#print(str(oldTimePos))
 			runMethods(Engine,EngineModule,
 				objects,animList,animIndex-1,"timePos",oldTimePos)
 
@@ -87,7 +84,6 @@ def showBodyList(bodyList):
 	text = ""
 	for body in bodyList:
 		if body:
-			#print("body: " + body.getName() + " : " + str(body.getMass())[:5])
 			text += " " + body.getName() + ":"
 			if body.isDynamicActor():
 				text += str(body.getMass())[:5]
@@ -146,12 +142,9 @@ def showMassRelationToPrev(bodyList):
 		if i > 0:
 			prevBody = bodyList[i-1]
 			massRelation = body.getMass() / prevBody.getMass()
-			#print("body: " + body.getName() + " mass: " + str(body.getMass()) + 
-			#	" relation to prev: " + str(massRelation))
 			text += " " + body.getName() + ":" + str(body.getMass())[:5]
 			text += ":" + str(massRelation)[:5]
 		else:
-			#print("body: " + body.getName() + " mass: " + str(body.getMass())) 
 			text += " " + body.getName() + ":" + str(body.getMass())[:5]
 	print(text)
 
@@ -162,8 +155,6 @@ def showMassRelationToAll(bodyList):
 		totalMass += body.getMass()
 	for body in bodyList:
 		massRelation = body.getMass() / totalMass
-		#print("body: " + body.getName() + " mass: " + str(body.getMass()) + 
-		#	" relation to all: " + str(massRelation))
 		text += " " + body.getName() + ":" + str(body.getMass())[:5]
 		text += ":" + str(massRelation)[:5]
 	print(text)
@@ -195,7 +186,6 @@ def setTiming(Engine,EngineModule,objects,timePos,startFactor,endFactor):
 	timingDelta = endFactor - startFactor
 	timing = startFactor + (timingDelta * timePos)
 	Engine.setTimingFactor(timing)
-	#print("timing: " + str(timing))
 	return True
 
 def dissableCollisions(Engine,EngineModule,objects,bodyNames):

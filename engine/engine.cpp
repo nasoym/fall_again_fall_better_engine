@@ -11,6 +11,8 @@
 #include <vector>
 #include <string>
 
+#include <stdio.h>
+
 
 Engine::Engine() :
 	mLoopRendering(true),
@@ -28,9 +30,9 @@ Engine::Engine() :
 	//mHideMouse(true),
 	mDefaultShadedMaterialName("")
 	{
+    setup();
     Logger::debug(format("creating engine: %p ") % this);
     setupPhysics();
-    setup();
 	setupStereo();
 	//setupSSAO();
     setupOIS();
@@ -316,16 +318,46 @@ EngineObject* Engine::getFromUuid(std::string uuidToFind){
 }
 
 void Engine::setup(){
+	//LogManager::getSingleton().logMessage("before",LML_CRITICAL);
     mLogger = new Ogre::LogManager();
-    //mLogger->createLog("ogre.log",true,false,true);
-    mLogger->createLog("ogre.log",true,false,false);
+
+	bool	ogreLogSupressFileOutput = false;
+	bool	ogreLogDebuggerOutput = true;
+	bool	ogreLogDefaultLog = false;
+    mLogger->createLog("ogre.log",
+		ogreLogSupressFileOutput,
+		ogreLogDebuggerOutput,
+		ogreLogDefaultLog);
+
+	mLogger->setLogDetail(LL_LOW);
+	//mLogger->setLogDetail(LL_NORMAL);
+	//mLogger->setLogDetail(LL_BOREME);
+
+	//LogManager::getSingleton().logMessage("hello",LML_CRITICAL);
+//LML_TRIVIAL 	
+//LML_NORMAL 	
+//LML_CRITICAL
+
 
 	mRoot = new Root();
-	mRoot->restoreConfig();
+
+	if (mRoot->restoreConfig()){
+
+	} else {
+
+	}
     setupResources();
 
-	if (!mUseFirstRenderer){
+	//if (!mUseFirstRenderer){
+	//	mRoot->showConfigDialog();
+	//}
+	FILE * pFile;
+	pFile = fopen("ogre.cfg" , "r");
+	if (pFile == NULL) {
+		//Logger::debug("ogre.cfg does NOT exists");
 		mRoot->showConfigDialog();
+	} else {
+		//Logger::debug("ogre.cfg exists");
 	}
 
 	mWindow = mRoot->initialise(true);

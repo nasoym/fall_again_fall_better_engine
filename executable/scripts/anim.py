@@ -25,14 +25,10 @@ def reloadanim():
 	reload(anim_rising)
 	reload(anim_weight)
 	reload(animation_helper)
-	#print("reloading external anim files")
 
 reloadanim()
 
 animLists={}
-#animLists["falling"] = anim_falling.FallingAnim
-#animLists["rising"] = anim_rising.RisingAnim
-
 animLists["falling"] = anim_falling.SimpleAnimation
 animLists["lying"] = anim_falling.LyingAnimation
 animLists["rising"] = anim_rising.SimpleAnimation
@@ -44,6 +40,7 @@ def init(Engine,EngineModule,objects):
 	random.seed()
 
 	objects.get()["anims"]["stand"] = {"name":"rising","index":0,"starttime":Engine.getTime(),"done":True}
+	Engine.log("set current animation to rising and as done")
 	Engine.setGravity(EngineModule.Vec3(0,-10,0))
 	Engine.setTimingFactor(2.0)
 
@@ -74,18 +71,18 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 	if key == EngineModule.Keys.K_SPACE:
 		if not "head" in objects.get():
 			return
-		print("space is pressed")
+		Engine.log("space is pressed")
 		if objects.get()["anims"]["stand"]["done"]:
+			Engine.log("current animation is done")
 			if objects.get()["anims"]["stand"]["name"] == "rising":
-				print("toggle animation: to falling")
+				Engine.log("play animation: falling")
 				Engine.physicsUnpause()
 				objects.get()["anims"]["stand"] = {
 					"name":"falling","index":0,"starttime":Engine.getTime(),"done":False}
 				animation_helper.findMiddlePos(Engine,EngineModule,objects)
 		else:
 			pass
-			#print("set on done to true")
-			#	objects.get()["anims"]["stand"]["ondone"] = True
+			Engine.log("current animation is not yet done")
 
 def keyReleased(Engine,EngineModule,key,selection,objects):
 
@@ -93,18 +90,20 @@ def keyReleased(Engine,EngineModule,key,selection,objects):
 		if not "head" in objects.get():
 			return
 
-		print("space is released")
+		Engine.log("space is released")
 		if objects.get()["anims"]["stand"]["done"]:
+			Engine.log("current animation is done")
 			if ((objects.get()["anims"]["stand"]["name"] == "falling") or 
 				(objects.get()["anims"]["stand"]["name"] == "lying")
 			):
-				print("toggle animation: to rising")
+				Engine.log("play animation: rising")
 				Engine.physicsUnpause()
 				objects.get()["anims"]["stand"] = {
 					"name":"rising","index":0,"starttime":Engine.getTime(),"done":False}
 
 		else:
-			print("set on done to true")
+			Engine.log("current animation is not yet done")
+			Engine.log("set on done to true")
 			objects.get()["anims"]["stand"]["ondone"] = True
 
 

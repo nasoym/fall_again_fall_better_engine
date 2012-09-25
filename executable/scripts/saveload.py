@@ -12,7 +12,7 @@ def getFromUuidTable(Engine,uuidTable,uuid):
 		return uuidTable[uuid]
 
 def load(Engine,EngineModule,fileName,objects,loadingPosition=None,loadingOrientation=None):
-	print("loading xml file: " + str(fileName))
+	Engine.log("loading xml file: " + str(fileName))
 	doc = libxml2.parseFile(fileName)
 	xctxt = doc.xpathNewContext()
 	res = xctxt.xpathEval("/scene/*")
@@ -34,9 +34,9 @@ def load(Engine,EngineModule,fileName,objects,loadingPosition=None,loadingOrient
 	while(len(res)>0):
 
 		if len(res) == lastResultLength:
-			print("could not resolve dependencies:" + str(lastResultLength))
-			print(str(res))
-			print(lastUnresolved)
+			Engine.log("could not resolve dependencies:" + str(lastResultLength))
+			Engine.log(str(res))
+			Engine.log(lastUnresolved)
 			break
 		lastResultLength = len(res)
 		for node in res[:]:
@@ -508,13 +508,13 @@ def load(Engine,EngineModule,fileName,objects,loadingPosition=None,loadingOrient
 						contentType = contentList[0]
 						contentValue = contentList[1]
 						content = translateType(Engine,EngineModule,contentType,contentValue,uuidTable)
-						#print("name: " + name)
-						#print("content: " + str(content))
+						#Engine.log("name: " + name)
+						#Engine.log("content: " + str(content))
 						if content:
 							objects.append(name,content)
 						else:
 							pass
-							#print("not found")
+							#Engine.log("not found")
 						res.remove(node)
 				else:
 					res.remove(node)
@@ -526,9 +526,9 @@ def load(Engine,EngineModule,fileName,objects,loadingPosition=None,loadingOrient
 	while(len(objectsList)>0):
 
 		if len(objectsList) == lastResultLength:
-			print("could not resolve dependencies:" + str(lastResultLength))
-			print(str(objectsList))
-			print(lastUnresolved)
+			Engine.log("could not resolve dependencies:" + str(lastResultLength))
+			Engine.log(str(objectsList))
+			Engine.log(lastUnresolved)
 			break
 		lastResultLength = len(objectsList)
 		for node in objectsList[:]:
@@ -542,13 +542,13 @@ def load(Engine,EngineModule,fileName,objects,loadingPosition=None,loadingOrient
 						contentType = contentList[0]
 						contentValue = contentList[1]
 						content = translateType(Engine,EngineModule,contentType,contentValue,uuidTable)
-						#print("name: " + name)
-						#print("content: " + str(content))
+						#Engine.log("name: " + name)
+						#Engine.log("content: " + str(content))
 						if content:
 							objects.append(name,content)
 						else:
 							pass
-							print("not found")
+							Engine.log("not found")
 						objectsList.remove(node)
 				else:
 					objectsList.remove(node)
@@ -565,7 +565,7 @@ def translateType(Engine,EngineModule,typeString,valueString,uuidTable):
 		if Engine.getFromUuid(objectUuid):
 			return Engine.getFromUuid(objectUuid)
 		else:
-			print("object uuid was not found: " + str(objectUuid))
+			Engine.log("object uuid was not found: " + str(objectUuid))
 			objectsNumber = Engine.howManyObjects()
 			for i in range(0,objectsNumber):
 				o = Engine.getObject(i)
@@ -593,7 +593,7 @@ def translateType(Engine,EngineModule,typeString,valueString,uuidTable):
 		return content
 
 def save(Engine,EngineModule,fileName,objects):
-	print("saving to xml file: " + str(fileName))
+	Engine.log("saving to xml file: " + str(fileName))
 	doc = libxml2.newDoc("1.0")
 	rootNode = libxml2.newNode("scene")
 	doc.addChild(rootNode)

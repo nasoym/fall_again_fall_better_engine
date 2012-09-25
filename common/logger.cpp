@@ -32,8 +32,9 @@ void Logger::setPattern(std::string pattern) {
 }
 
 void Logger::default_print(std::string message) {
-    std::cout << message << std::endl;
+    //std::cout << message << std::endl;
 	//LogManager::getSingleton().logMessage(message);
+	LogManager::getSingleton().logMessage(message,LML_CRITICAL);
 }
 
 void Logger::debug(std::string message) {
