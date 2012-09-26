@@ -1,4 +1,5 @@
 import random
+import os
 
 lastEventTime = None
 lastMemReportTime = 0
@@ -7,6 +8,10 @@ lastMemUsage = 0
 #memReportTime = 1000 * 60 * 10
 memReportTime = 1000 * 60 * 1
 #memReportTime = 1000 * 5 
+
+
+watchDogFrequency = 1000 * 5
+lastWatchDogTime = 0
 
 def init(Engine,EngineModule,objects):
 	pass
@@ -20,6 +25,7 @@ def guiUpdate(Engine,EngineModule,selection,objects):
 	global guiFrameCounter
 	global lastMemUsage
 	global lastMemReportTime
+	global lastWatchDogTime
 
 	currentTime = Engine.getTime()
 
@@ -33,13 +39,18 @@ def guiUpdate(Engine,EngineModule,selection,objects):
 			Engine.callPythonKeyPressed(EngineModule.Keys.K_SPACE)
 			"""
 
+	timeSinceLastWatchDog = currentTime - lastWatchDogTime
+	if timeSinceLastWatchDog > watchDogFrequency:
+		lastWatchDogTime = currentTime
+		os.utime("watchdog.txt",None)
+
 	timeSinceLastReport = currentTime - lastMemReportTime
 	if timeSinceLastReport > memReportTime:
 		memUsage = Engine.getMemoryUsage()
 		memUsageDifference = memUsage - lastMemUsage
+		lastMemReportTime = currentTime
+		lastMemUsage = memUsage
 		if memUsageDifference > 0:
-			lastMemReportTime = currentTime
-			lastMemUsage = memUsage
 			Engine.log("mem: " + str(memUsage) + "  diff: " + 
 				str(memUsageDifference) + 
 				" time: " + str(currentTime))
