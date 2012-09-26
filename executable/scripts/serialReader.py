@@ -1,17 +1,25 @@
 import serial
 
 def init(Engine,EngineModule,objects):
-	try:
-		s = serial.Serial("COM4",9600)
-		objects.get()["serial"] = s
-		objects.setUnsavable("serial")
+	serialNum = range(1,25)
+	serialNum.reverse()
+	Engine.log("scanning serial ports 25-1 for a device:")
+	for serialPort in serialNum:
+		try:
+			#s = serial.Serial("COM4",9600)
+			s = serial.Serial("COM"+str(serialPort),9600)
+			objects.get()["serial"] = s
+			objects.setUnsavable("serial")
 
-		objects.get()["serial_state"] = "0"
-		objects.setUnsavable("serial_state")
-		Engine.log("found serial port (4) device")
+			objects.get()["serial_state"] = "0"
+			objects.setUnsavable("serial_state")
+			Engine.log("	found serial device on port: " + str(serialPort))
+			break
 
-	except serial.SerialException,e: 
-		Engine.log("serial exception: " + str(e))
+		except serial.SerialException,e: 
+			pass
+	if not "serial" in objects.get():
+		Engine.log("	could not find any device connected to a serial port")
 
 def guiUpdate(Engine,EngineModule,selection,objects):
 	if "serial" in objects.get():
@@ -27,10 +35,10 @@ def guiUpdate(Engine,EngineModule,selection,objects):
 			if serial_state != old_state:
 				if serial_state == "1":
 					objects.get()["serial_state"] = serial_state
-					Engine.log("state: " + str(serial_state))
+					Engine.log("serial device state: " + str(serial_state))
 					Engine.callPythonKeyPressed(EngineModule.Keys.K_SPACE)
 				if serial_state == "0":
 					objects.get()["serial_state"] = serial_state
-					Engine.log("state: " + str(serial_state))
+					Engine.log("serial device state: " + str(serial_state))
 					Engine.callPythonKeyReleased(EngineModule.Keys.K_SPACE)
 
