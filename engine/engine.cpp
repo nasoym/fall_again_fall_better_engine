@@ -12,6 +12,7 @@
 #include <string>
 
 #include <stdio.h>
+#include <time.h>
 
 
 Engine::Engine() :
@@ -324,14 +325,28 @@ bool	Engine::isFullscreen(){
 	}
 }
 
+
+
+
+
 void Engine::setup(){
+	time_t rawtime;
+	struct tm * timeinfo;
+
+	time(&rawtime);
+	timeinfo = localtime(&rawtime);
+
+	char buffer [35];
+	strftime(buffer,35,"logs/%Y_%m_%d_%H_%M_%S_ogre.log",timeinfo);
+
 	//LogManager::getSingleton().logMessage("before",LML_CRITICAL);
     mLogger = new Ogre::LogManager();
 
 	bool	ogreLogSupressFileOutput = false;
 	bool	ogreLogDebuggerOutput = true;
 	bool	ogreLogDefaultLog = false;
-    mLogger->createLog("ogre.log",
+    //mLogger->createLog("ogre.log",
+    mLogger->createLog(buffer,
 		ogreLogSupressFileOutput,
 		ogreLogDebuggerOutput,
 		ogreLogDefaultLog);
