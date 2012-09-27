@@ -7,7 +7,7 @@ lastMemUsage = 0
 
 memReportTime = 1000 * 60 * 10
 
-watchDogFrequency = 1000 * 60 * 3
+watchDogFrequency = 1000 * 60 * 2
 lastWatchDogTime = 0
 
 framesBelowMinimumFPS = 0
@@ -54,6 +54,7 @@ def guiUpdate(Engine,EngineModule,selection,objects):
 			framesBelowMinimumFPS -= 1
 		if framesBelowMinimumFPS > maximalFramesBelowMinimum:
 			Engine.log("fps: " + str(fps) + " is below minimum: " + str(minimalFPS))
+			Engine.quit()
 	
 	"""
 	timeSinceEvent = currentTime - lastEventTime
@@ -61,6 +62,7 @@ def guiUpdate(Engine,EngineModule,selection,objects):
 		lastEventTime = currentTime
 		if random.uniform(0,1) < 0.1:
 			#print("event")
+			Engine.log("create test event")
 			Engine.callPythonKeyPressed(EngineModule.Keys.K_SPACE)
 			"""
 

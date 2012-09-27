@@ -98,9 +98,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	int		readInterval = 60 * 3;
 
 	int		readError = 0;
-	int		maxReadError = 3;
+	int		maxReadError = 2;
 
-	//#int		initialWait = 60 * 10;
+	//int		initialWait = 60 * 5;
 	int		initialWait = 15;
 
 	Sleep(1000 * initialWait);
@@ -111,25 +111,33 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		secondsSinceLastWrite = getSecondsSinceLastWrite();
 		if (secondsSinceLastWrite == -1) {
 			if (errorCount > maxFileErrorCount ) {
-				shutdown();
 				errorCount = 0;
+				shutdown();
+				break;
 			}
 			log("get file time error");
 			errorCount += 1;
 			continue;
+		} else {
+			errorCount = 0;
 		}
 		log(format(": %1%") % secondsSinceLastWrite);
 		if (secondsSinceLastWrite > readInterval) {
+			log("got read error");
 			readError += 1;
+		} else {
+			readError = 0;
 		}
 
 		if (readError > maxReadError) {
 			// test if file contains exit reason
-			shutdown();
 			readError = 0;
+			shutdown();
+			break;
 		}
 	}
 
+	log("end watchdog");
 	return 0;
 }
 
