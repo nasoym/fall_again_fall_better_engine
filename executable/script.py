@@ -121,7 +121,7 @@ if runDebugMode:
 	modules.append(edit)
 	modules.append(operations)
 
-modules.append(main)
+#modules.append(main)
 modules.append(anim)
 modules.append(serialReader)
 modules.append(test)
@@ -153,6 +153,12 @@ def keyPressed(key):
 			if runDebugMode:
 				reload(m)
 			m.keyPressed(Engine,EngineModule,key,selectContainers,objects)
+	if key == EngineModule.Keys.K_ESCAPE:
+		Engine.log("shutdown by python key escape")
+		Engine.quit()
+
+	if key == EngineModule.Keys.K_FOCUS_CHANGE:
+		Engine.log("got focus change in python")
 
 	if key == EngineModule.Keys.K_P:
 		Engine.physicPauseToggle()

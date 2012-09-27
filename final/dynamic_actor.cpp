@@ -26,6 +26,11 @@ void    DynamicActor::wakeUp() {
     mBody->wakeUp();
 }
 
+Vec3	DynamicActor::getLinearVelocity(){
+    PxVec3 velocity = mBody->getLinearVelocity();
+	return Vec3(velocity.x,velocity.y,velocity.z);
+}
+
 void		DynamicActor::addForce(Vec3 force){
 	mBody->addForce(
 		force.toPhysx(),

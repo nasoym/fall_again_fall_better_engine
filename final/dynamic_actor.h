@@ -31,6 +31,8 @@ class DynamicActor : public Actor {
 
 		void 					setSolverIterations(int i1,int i2);
 
+		Vec3					getLinearVelocity();
+
 	private:
         PxRigidDynamic*     	mBody;
 };

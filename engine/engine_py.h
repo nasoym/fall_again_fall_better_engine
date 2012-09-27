@@ -92,6 +92,9 @@ BOOST_PYTHON_MODULE(EngineModule) {
 	.value("K_PGDOWN",K_PGDOWN) .value("K_PGUP",K_PGUP)
 
 	.value("K_MLEFT",K_MLEFT) .value("K_MRIGHT",K_MRIGHT) .value("K_MMIDDLE",K_MMIDDLE)
+
+	.value("K_FOCUS_CHANGE",K_FOCUS_CHANGE)
+
 	;
 
 
@@ -222,6 +225,7 @@ BOOST_PYTHON_MODULE(EngineModule) {
 
 	class_<DynamicActor,bases<Actor> >("DynamicActor", init<Engine*,Vec3&>())
 		.def("setSolverIterations",&DynamicActor::setSolverIterations)
+		.def("getLinearVelocity",&DynamicActor::getLinearVelocity)
 		;
 
 	class_<StaticActor,bases<Actor> >("StaticActor", init<Engine*,Vec3&>())

@@ -108,10 +108,12 @@ void	Engine::removePressedKey(Keys key){
 }
 
 bool Engine::keyPressed(const OIS::KeyEvent& evt){
+	/*
 	if (evt.key == OIS::KC_ESCAPE) {
 		Logger::debug("esc pressed");
 		quit();
 	}
+	*/
 	Keys key = keyEventToKeys(evt);
 	if (key != K_NOP) {
 		storePressedKey(key);

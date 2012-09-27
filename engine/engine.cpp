@@ -704,6 +704,7 @@ void Engine::windowClosed(RenderWindow* rw) {
 
 void Engine::windowFocusChange(RenderWindow* rw) {
     //Logger::debug("windowFocusChange");
+	pyFunctionKeyPressed(K_FOCUS_CHANGE);
 	releaseMouseKeys();
 }
 

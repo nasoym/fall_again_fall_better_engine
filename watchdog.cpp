@@ -1,7 +1,53 @@
 #include <stdio.h>
 #include <string>
-#include "math3d.h"
+
 #include <windows.h>
+
+#include <Ogre.h>
+using namespace Ogre;
+
+#include <time.h>
+
+#include "boost/format.hpp"
+using boost::format;
+
+void setupLogging(){
+	time_t rawtime;
+	struct tm * timeinfo;
+
+	time(&rawtime);
+	timeinfo = localtime(&rawtime);
+
+	char buffer [50];
+	strftime(buffer,50,"logs/%Y_%m_%d_%H_%M_%S_watchdog.log",timeinfo);
+
+	LogManager*     mLogger;
+    mLogger = new Ogre::LogManager();
+
+	bool	ogreLogSupressFileOutput = false;
+	bool	ogreLogDebuggerOutput = true;
+	bool	ogreLogDefaultLog = false;
+    mLogger->createLog(buffer,
+		ogreLogSupressFileOutput,
+		ogreLogDebuggerOutput,
+		ogreLogDefaultLog);
+
+	mLogger->setLogDetail(LL_LOW);
+	//mLogger->setLogDetail(LL_NORMAL);
+	//mLogger->setLogDetail(LL_BOREME);
+}
+
+void log(std::string message) {
+	LogManager::getSingleton().logMessage(message,LML_CRITICAL);
+}
+
+void log(format message) {
+    log(message.str());
+}
+
+void log(char * text) {
+	LogManager::getSingleton().logMessage(text,LML_CRITICAL);
+}
 
 int	getSecondsSinceLastWrite(){
 	HANDLE hFile1;
@@ -10,12 +56,12 @@ int	getSecondsSinceLastWrite(){
 
 	hFile1 = CreateFile(fname1, GENERIC_READ, FILE_SHARE_READ, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL); 
 	if(hFile1 == INVALID_HANDLE_VALUE) {
-		printf("Could not open file, error %d\n", GetLastError());
+		log( format("Could not open file, error %1%") % GetLastError() );
 		return -1;
 	}
 
 	if(!GetFileTime(hFile1, &ftCreate, &ftAccess, &ftWrite)) {
-		printf("Something wrong lol!\n");
+		log("Something wrong lol!");
 		return -1;
 	}
 
@@ -28,37 +74,35 @@ int	getSecondsSinceLastWrite(){
 	__int64 timeSinceLastWrite = intCurrentTime - intFileWriteTime;
 
 	if(CloseHandle(hFile1) == 0) {
-		printf("Can't close the file handle!\n");
+		log("Can't close the file handle!");
 		return -1;
 	}
 
 	return (int) (timeSinceLastWrite / 10000000);
 }
 
-
-
 void	shutdown(){
-	printf("shutdown \n");
+	log("shutdown");
+	sleep(100);
+	//system("shutdown -r");
 }
 
-
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nShowCmd) {
-//int main(int argc, char *argv[]) {
-	printf("TESTING:\n");
-	/*
-	Sleep(1000);
-	system("main.exe");
-	*/
+	setupLogging();
+	log("start watchdog");
 
 	int		secondsSinceLastWrite;
 	int		errorCount = 0;
 	int		maxFileErrorCount = 10;
 
-
 	int		readInterval = 5;
 
 	int		readError = 0;
 	int		maxReadError = 3;
+
+	int		initialWait = 2;
+
+	Sleep(1000 * initialWait);
 
 	while(true){
 		Sleep(1000 * readInterval);
@@ -69,16 +113,17 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 				shutdown();
 				errorCount = 0;
 			}
-			printf("get file time error\n");
+			log("get file time error");
 			errorCount += 1;
 			continue;
 		}
-		std::cout << ":" << secondsSinceLastWrite << "\n";
+		log(format(": %1%") % secondsSinceLastWrite);
 		if (secondsSinceLastWrite > readInterval) {
 			readError += 1;
 		}
 
 		if (readError > maxReadError) {
+			// test if file contains exit reason
 			shutdown();
 			readError = 0;
 		}
@@ -86,6 +131,4 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 	return 0;
 }
-
-
 

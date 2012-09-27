@@ -56,7 +56,7 @@ LIBFLAGS=
 LIBFLAGS+=-NOLOGO
 LIBFLAGS+=-NODEFAULTLIB:LIBCMT
 
-.PHONY: clean test
+.PHONY: clean test 
 
 show:
 	echo $(CFLAGS)
@@ -70,6 +70,10 @@ all: executable/main.exe
 test: 
 	$(CC) $(CFLAGS) -Fobuild/test.obj test.cpp 
 	$(LINK) $(LIBFLAGS) -OUT:test.exe build/test.obj $(LIBLIST)
+
+watchdog: 
+	$(CC) $(CFLAGS) -Fobuild/watchdog.obj watchdog.cpp 
+	$(LINK) $(LIBFLAGS) -OUT:executable/watchdog.exe build/watchdog.obj $(LIBLIST)
 
 executable/main.exe: $(OBJ)
 	echo "linking to:$@"
@@ -85,9 +89,11 @@ build/main.obj: main.cpp
 	$(CC) $(CFLAGS) -Fo$@ $<
 
 
-
 run: all
 	(cd executable ; ./main.exe)
+
+run-watch: watchdog
+	(cd executable ; ./watchdog.exe)
 
 clean:
 	rm build/*.obj
