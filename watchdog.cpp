@@ -95,12 +95,13 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	int		errorCount = 0;
 	int		maxFileErrorCount = 10;
 
-	int		readInterval = 5;
+	int		readInterval = 60 * 3;
 
 	int		readError = 0;
 	int		maxReadError = 3;
 
-	int		initialWait = 2;
+	//#int		initialWait = 60 * 10;
+	int		initialWait = 15;
 
 	Sleep(1000 * initialWait);
 

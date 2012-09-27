@@ -5,17 +5,16 @@ lastEventTime = None
 lastMemReportTime = 0
 lastMemUsage = 0
 
-#memReportTime = 1000 * 60 * 10
-memReportTime = 1000 * 60 * 1
-#memReportTime = 1000 * 5 
+memReportTime = 1000 * 60 * 10
 
-
-#watchDogFrequency = 1000 * 5
-watchDogFrequency = 500
+watchDogFrequency = 1000 * 60 * 3
 lastWatchDogTime = 0
 
+framesBelowMinimumFPS = 0
+maximalFramesBelowMinimum = 20 * 60 * 15
+minimalFPS = 20
+
 def init(Engine,EngineModule,objects):
-	pass
 	global lastEventTime,lastMemReportTime
 	lastEventTime = Engine.getTime()
 	lastMemReportTime = Engine.getTime()
@@ -23,18 +22,14 @@ def init(Engine,EngineModule,objects):
 def keyPressed(Engine,EngineModule,key,selection,objects):
 
 	if key == EngineModule.Keys.K_EXTREME_VELOCITY:
-		Engine.log("extreme velocity")
-		Engine.quit()
+		if Engine.isFullscreen():
+			Engine.log("extreme velocity")
+			Engine.quit()
 
 	if key == EngineModule.Keys.K_FOCUS_CHANGE:
 		if Engine.isFullscreen():
 			Engine.log("focus change in fullscreen")
 			Engine.quit()
-
-
-framesBelowMinimumFPS = 0
-maximalFramesBelowMinimum = 100
-minimalFPS = 100
 
 
 def guiUpdate(Engine,EngineModule,selection,objects):
@@ -58,9 +53,7 @@ def guiUpdate(Engine,EngineModule,selection,objects):
 		elif not framesBelowMinimumFPS <= 0:
 			framesBelowMinimumFPS -= 1
 		if framesBelowMinimumFPS > maximalFramesBelowMinimum:
-			pass
-			Engine.log("fps: " + str(fps) + " is below minimum")
-
+			Engine.log("fps: " + str(fps) + " is below minimum: " + str(minimalFPS))
 	
 	"""
 	timeSinceEvent = currentTime - lastEventTime
@@ -76,8 +69,6 @@ def guiUpdate(Engine,EngineModule,selection,objects):
 		lastWatchDogTime = currentTime
 		os.utime("watchdog.txt",None)
 
-
-
 	timeSinceLastReport = currentTime - lastMemReportTime
 	if timeSinceLastReport > memReportTime:
 		memUsage = Engine.getMemoryUsage()
@@ -85,10 +76,10 @@ def guiUpdate(Engine,EngineModule,selection,objects):
 		lastMemReportTime = currentTime
 		lastMemUsage = memUsage
 		if memUsageDifference > 0:
-			Engine.log("mem: " + str(memUsage) + "  diff: " + 
+			Engine.log("report mem: " + str(memUsage) + "  diff: " + 
 				str(memUsageDifference) + 
 				" time: " + str(currentTime))
-			Engine.log("fps: " + str(float(1000.0 / Engine.getTimeDifference())))
+		Engine.log("report fps: " + str(float(1000.0 / Engine.getTimeDifference())))
 
 
 

@@ -13,7 +13,7 @@ def runMethods(Engine,EngineModule,objects,animList,index,methodName,timePos):
 							for method in methods:
 								method(Engine,EngineModule,objects,part)
 					else:
-						Engine.log("anim part is none: " + str(part))
+						Engine.log("anim runMethod:" + str(methodName) + ": part is none: " + str(part))
 
 	if methodName in animList[index]:
 		methods = animList[index][methodName]
@@ -34,6 +34,9 @@ def playAnimation(Engine,EngineModule,objects,animData,animList):
 				#print("run anim end: " + str(animName) + " index : " + str(animIndex-1))
 				runMethods(Engine,EngineModule,
 					objects,animList,animIndex-1,"end",1.0)
+			else:
+				Engine.log("animation start: " + str(animName))
+
 			#print("run anim start: " + str(animName) + " index : " + str(animIndex))
 			runMethods(Engine,EngineModule,
 				objects,animList,animIndex,"start",0.0)
@@ -41,7 +44,7 @@ def playAnimation(Engine,EngineModule,objects,animData,animList):
 			#print("go to next anim index")
 			animData["starttime"] = endTime
 		elif currentTime > endTime:
-			Engine.log("time is bigger then endTime")
+			Engine.log("animation: currentTime is bigger then endTime")
 			animData["index"] = animIndex + 1
 		else:
 			if animIndex != 0:
@@ -68,7 +71,7 @@ def playAnimation(Engine,EngineModule,objects,animData,animList):
 
 			if "ondone" in animData:
 				if animData["ondone"]:
-					Engine.log("ondone was true: so resend space key into engine")
+					Engine.log("animation: ondone was true: resend space key")
 					Engine.callPythonKeyReleased(EngineModule.Keys.K_SPACE)
 		else:
 			oldIndex = animIndex - 1

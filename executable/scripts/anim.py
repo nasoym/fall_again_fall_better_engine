@@ -73,16 +73,13 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 			return
 		Engine.log("space is pressed")
 		if objects.get()["anims"]["stand"]["done"]:
-			Engine.log("current animation is done")
 			if objects.get()["anims"]["stand"]["name"] == "rising":
-				Engine.log("play animation: falling")
-				Engine.physicsUnpause()
 				objects.get()["anims"]["stand"] = {
 					"name":"falling","index":0,"starttime":Engine.getTime(),"done":False}
 				animation_helper.findMiddlePos(Engine,EngineModule,objects)
 		else:
 			pass
-			Engine.log("current animation is not yet done")
+			#Engine.log("current animation is not yet done")
 
 def keyReleased(Engine,EngineModule,key,selection,objects):
 
@@ -92,18 +89,14 @@ def keyReleased(Engine,EngineModule,key,selection,objects):
 
 		Engine.log("space is released")
 		if objects.get()["anims"]["stand"]["done"]:
-			Engine.log("current animation is done")
 			if ((objects.get()["anims"]["stand"]["name"] == "falling") or 
 				(objects.get()["anims"]["stand"]["name"] == "lying")
 			):
-				Engine.log("play animation: rising")
-				Engine.physicsUnpause()
 				objects.get()["anims"]["stand"] = {
 					"name":"rising","index":0,"starttime":Engine.getTime(),"done":False}
 
 		else:
-			Engine.log("current animation is not yet done")
-			Engine.log("set on done to true")
+			Engine.log("current animation is not yet done: save ondone: true")
 			objects.get()["anims"]["stand"]["ondone"] = True
 
 

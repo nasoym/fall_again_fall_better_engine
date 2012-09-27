@@ -157,9 +157,6 @@ def keyPressed(key):
 		Engine.log("shutdown by python key escape")
 		Engine.quit()
 
-	if key == EngineModule.Keys.K_FOCUS_CHANGE:
-		Engine.log("got focus change in python")
-
 	if key == EngineModule.Keys.K_P:
 		Engine.physicPauseToggle()
 
