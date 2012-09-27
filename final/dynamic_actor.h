@@ -16,6 +16,8 @@ class DynamicActor : public Actor {
         DynamicActor(Engine*,Vec3&);
         ~DynamicActor();
 
+		virtual void			physicUpdate();
+
 		virtual DynamicActor*	isDynamicActor(){return this;}
 		virtual ObjectType		getType(){return DYNAMIC_ACTOR;}
 

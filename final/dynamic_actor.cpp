@@ -1,6 +1,7 @@
 #include "dynamic_actor.h"
 #include "engine.h"
 #include "physic_engine.h"
+#include "engine_keys.h"
 
 
 DynamicActor::DynamicActor(Engine* engine, Vec3 & position) :
@@ -24,6 +25,13 @@ DynamicActor::~DynamicActor( ){
 
 void    DynamicActor::wakeUp() {
     mBody->wakeUp();
+}
+
+void	DynamicActor::physicUpdate(){
+	Actor::physicUpdate();
+	if (getLinearVelocity().length() > 3000 ) {
+		getEngine()->callPythonKeyPressed(K_EXTREME_VELOCITY);
+	}
 }
 
 Vec3	DynamicActor::getLinearVelocity(){
