@@ -25,6 +25,8 @@ class PhysicsEngine;
 
 #include <boost/python/list.hpp>
 
+//#include "StereoManager.h"
+
 class Engine : public WindowEventListener, 
 		public OIS::KeyListener, public OIS::MouseListener {
 

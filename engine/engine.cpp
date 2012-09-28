@@ -34,10 +34,10 @@ Engine::Engine() :
     setup();
     Logger::debug(format("creating engine: %p ") % this);
     setupPhysics();
-	setupStereo();
 	//setupSSAO();
     setupOIS();
     setupWindowEventListener();
+	setupStereo();
 }
 
 Engine::~Engine(){

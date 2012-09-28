@@ -95,7 +95,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	int		errorCount = 0;
 	int		maxFileErrorCount = 10;
 
-	int		readInterval = 60 * 3;
+	int		readInterval = 60 * 5;
 
 	int		readError = 0;
 	int		maxReadError = 2;
