@@ -1,7 +1,5 @@
-import random
 import os
 
-lastEventTime = None
 lastMemReportTime = 0
 lastMemUsage = 0
 
@@ -14,9 +12,10 @@ framesBelowMinimumFPS = 0
 maximalFramesBelowMinimum = 20 * 60 * 15
 minimalFPS = 20
 
+
+
 def init(Engine,EngineModule,objects):
-	global lastEventTime,lastMemReportTime
-	lastEventTime = Engine.getTime()
+	global lastMemReportTime
 	lastMemReportTime = Engine.getTime()
 
 def keyPressed(Engine,EngineModule,key,selection,objects):
@@ -24,17 +23,15 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 	if key == EngineModule.Keys.K_EXTREME_VELOCITY:
 		if Engine.isFullscreen():
 			Engine.log("extreme velocity")
-			Engine.quit()
+			#Engine.quit()
 
 	if key == EngineModule.Keys.K_FOCUS_CHANGE:
 		if Engine.isFullscreen():
 			Engine.log("focus change in fullscreen")
-			Engine.quit()
-
+			#Engine.quit()
 
 def guiUpdate(Engine,EngineModule,selection,objects):
 
-	global lastEventTime
 	global guiFrameCounter
 	global lastMemUsage
 	global lastMemReportTime
@@ -54,25 +51,17 @@ def guiUpdate(Engine,EngineModule,selection,objects):
 			framesBelowMinimumFPS -= 1
 		if framesBelowMinimumFPS > maximalFramesBelowMinimum:
 			Engine.log("fps: " + str(fps) + " is below minimum: " + str(minimalFPS))
-			Engine.quit()
+			#Engine.quit()
 	
-	"""
-	timeSinceEvent = currentTime - lastEventTime
-	if timeSinceEvent > 100:
-		lastEventTime = currentTime
-		if random.uniform(0,1) < 0.1:
-			#print("event")
-			Engine.log("create test event")
-			Engine.callPythonKeyPressed(EngineModule.Keys.K_SPACE)
-			"""
-
 	timeSinceLastWatchDog = currentTime - lastWatchDogTime
 	if timeSinceLastWatchDog > watchDogFrequency:
+		print("watchdog update")
 		lastWatchDogTime = currentTime
 		os.utime("watchdog.txt",None)
 
 	timeSinceLastReport = currentTime - lastMemReportTime
 	if timeSinceLastReport > memReportTime:
+		print("mem,fps report")
 		memUsage = Engine.getMemoryUsage()
 		memUsageDifference = memUsage - lastMemUsage
 		lastMemReportTime = currentTime

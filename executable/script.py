@@ -12,6 +12,7 @@ import scripts.serialReader as serialReader
 import scripts.test as test
 import scripts.edit as edit
 import scripts.operations as operations
+import scripts.test_input as test_input
 
 class Selection(object):
 	def __init__(self):
@@ -121,7 +122,8 @@ if runDebugMode:
 	modules.append(edit)
 	modules.append(operations)
 
-#modules.append(main)
+modules.append(main)
+modules.append(test_input)
 modules.append(anim)
 modules.append(serialReader)
 modules.append(test)

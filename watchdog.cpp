@@ -113,7 +113,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 			if (errorCount > maxFileErrorCount ) {
 				errorCount = 0;
 				shutdown();
-				break;
+				//break;
 			}
 			log("get file time error");
 			errorCount += 1;
@@ -133,7 +133,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 			// test if file contains exit reason
 			readError = 0;
 			shutdown();
-			break;
+			//break;
 		}
 	}
 
