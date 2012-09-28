@@ -35,7 +35,8 @@ SimpleAnimation = [
 			Engine.setGravity(EngineModule.Vec3(0,-10,0))),
 
 			(lambda Engine,EngineModule,objects,timePos:
-			animation_helper.setRandomTarget(Engine,EngineModule,objects,["head-joint"],0,20,10)
+			animation_helper.setRandomTarget(Engine,EngineModule,objects,["head-joint"],
+				0,0, 0,10, -10,10)
 			),
 
 		],

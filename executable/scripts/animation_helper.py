@@ -211,7 +211,8 @@ def enableCollisions(Engine,EngineModule,objects,bodyNames):
 				if body.isActor():
 					body.enableCollisions()
 
-def setRandomTarget(Engine,EngineModule,objects,jointNames,freedomX,freedomY,freedomZ):
+def setRandomTarget(Engine,EngineModule,objects,jointNames,
+	freedomXmin, freedomXmax, freedomYmin, freedomYmax, freedomZmin, freedomZmax):
 	for name in jointNames:
 		if name in objects.get():
 			jointList = objects.get()[name]
@@ -219,13 +220,12 @@ def setRandomTarget(Engine,EngineModule,objects,jointNames,freedomX,freedomY,fre
 				if joint.isJoint():
 					target = joint.getMotorTarget()
 					target = EngineModule.Quat()
-					angleRand = freedomX
 					randomOrientation = EngineModule.Quat().fromAngles(
-						random.uniform(-freedomX,freedomX),
-						random.uniform(-freedomY,freedomY),
-						random.uniform(-freedomZ,freedomZ)
+						random.uniform(freedomXmin,freedomXmax),
+						random.uniform(freedomYmin,freedomYmax),
+						random.uniform(freedomZmin,freedomZmax)
 						)
-					#randomOrientation = EngineModule.Quat().fromAngles(0,0,20)
+					#randomOrientation = EngineModule.Quat().fromAngles(0,20,0)
 					joint.setMotorTarget(randomOrientation * target)
 
 

@@ -108,7 +108,7 @@ SimpleAnimation = [
 #		)
 #		]
 	},
-	{ 'time':2500,
+	{ 'time':500,
 	'timePos':[
 		(lambda Engine,EngineModule,objects,timePos:
 		animation_helper.setTiming(Engine,EngineModule,objects,

@@ -123,7 +123,7 @@ if runDebugMode:
 	modules.append(operations)
 
 modules.append(main)
-modules.append(test_input)
+#modules.append(test_input)
 modules.append(anim)
 modules.append(serialReader)
 modules.append(test)
