@@ -66,6 +66,8 @@ dll:
 
 all: executable/main.exe
 	echo "main"
+	echo `git log -n 1 --pretty=format:%h` > executable/git_version.txt
+	#> executable/git_version.txt
 
 test: 
 	$(CC) $(CFLAGS) -Fobuild/test.obj test.cpp 

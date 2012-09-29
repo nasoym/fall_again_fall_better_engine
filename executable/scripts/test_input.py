@@ -19,10 +19,10 @@ def guiUpdate(Engine,EngineModule,selection,objects):
 		if random.uniform(0,1) < 0.1:
 			if buttonstate == 0:
 				buttonstate = 1
-				Engine.log("create test event: space pressed")
+				#Engine.log("create test event: space pressed")
 				Engine.callPythonKeyPressed(EngineModule.Keys.K_SPACE)
 			elif buttonstate == 1:
 				buttonstate = 0
-				Engine.log("create test event: space released")
+				#Engine.log("create test event: space released")
 				Engine.callPythonKeyReleased(EngineModule.Keys.K_SPACE)
 

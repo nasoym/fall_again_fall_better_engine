@@ -83,7 +83,7 @@ int	getSecondsSinceLastWrite(){
 
 void	shutdown(){
 	log("shutdown");
-	sleep(100);
+	Sleep(100);
 	system("shutdown -r");
 }
 
@@ -93,17 +93,17 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 	int		secondsSinceLastWrite;
 	int		errorCount = 0;
-	int		maxFileErrorCount = 10;
-
-	int		readInterval = 60 * 5;
-
 	int		readError = 0;
+
+	int		maxFileErrorCount = 10;
 	int		maxReadError = 2;
+	//int		readInterval = 60 * 1;
+	int		readInterval = 30;
+	int		initialWait = 60 * 3;
 
-	//int		initialWait = 60 * 5;
-	int		initialWait = 15;
-
+	log("initial wait:");
 	Sleep(1000 * initialWait);
+	log("initial is done");
 
 	while(true){
 		Sleep(1000 * readInterval);
@@ -121,16 +121,15 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		} else {
 			errorCount = 0;
 		}
-		log(format(": %1%") % secondsSinceLastWrite);
 		if (secondsSinceLastWrite > readInterval) {
-			log("got read error");
 			readError += 1;
+			log(format("got read error: %1%") % readError);
+			log(format("seconds since last write: %1%") % secondsSinceLastWrite);
 		} else {
 			readError = 0;
 		}
 
 		if (readError > maxReadError) {
-			// test if file contains exit reason
 			readError = 0;
 			shutdown();
 			break;

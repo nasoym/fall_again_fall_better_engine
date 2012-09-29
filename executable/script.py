@@ -122,8 +122,10 @@ if runDebugMode:
 	modules.append(edit)
 	modules.append(operations)
 
+runDebugMode = False
+
 modules.append(main)
-#modules.append(test_input)
+modules.append(test_input)
 modules.append(anim)
 modules.append(serialReader)
 modules.append(test)
@@ -140,7 +142,7 @@ def init():
 			#guiUpdates.append(m.guiUpdate)
 			guiUpdates.append(getattr(m,"guiUpdate"))
 
-	print("------------------------------------------------------------------ready")
+	#print("------------------------------------------------------------------ready")
 
 def keyDown(key):
 	for m in modules:
@@ -155,6 +157,7 @@ def keyPressed(key):
 			if runDebugMode:
 				reload(m)
 			m.keyPressed(Engine,EngineModule,key,selectContainers,objects)
+
 	if key == EngineModule.Keys.K_ESCAPE:
 		Engine.log("shutdown by python key escape")
 		Engine.quit()

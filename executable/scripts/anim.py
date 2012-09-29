@@ -40,7 +40,7 @@ def init(Engine,EngineModule,objects):
 	random.seed()
 
 	objects.get()["anims"]["stand"] = {"name":"rising","index":0,"starttime":Engine.getTime(),"done":True}
-	Engine.log("set current animation to rising and as done")
+	#Engine.log("set current animation to rising and as done")
 	Engine.setGravity(EngineModule.Vec3(0,-10,0))
 	Engine.setTimingFactor(2.0)
 
@@ -54,6 +54,7 @@ def guiUpdate(Engine,EngineModule,selection,objects):
 
 def keyPressed(Engine,EngineModule,key,selection,objects):
 
+	"""
 	if key == EngineModule.Keys.K_LBRACKET:
 		pass
 		#head_joints = objects.get()["head-joint"]
@@ -66,12 +67,13 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 				#body.moveBackToScene()
 				body.dissableCollisions()
 				#body.enableCollisions()
+				"""
 
 
 	if key == EngineModule.Keys.K_SPACE:
 		if not "head" in objects.get():
 			return
-		Engine.log("space is pressed")
+		Engine.log("space: pressed")
 		if objects.get()["anims"]["stand"]["done"]:
 			if objects.get()["anims"]["stand"]["name"] == "rising":
 				objects.get()["anims"]["stand"] = {
@@ -87,7 +89,7 @@ def keyReleased(Engine,EngineModule,key,selection,objects):
 		if not "head" in objects.get():
 			return
 
-		Engine.log("space is released")
+		Engine.log("space: released")
 		if objects.get()["anims"]["stand"]["done"]:
 			if ((objects.get()["anims"]["stand"]["name"] == "falling") or 
 				(objects.get()["anims"]["stand"]["name"] == "lying")
@@ -96,7 +98,7 @@ def keyReleased(Engine,EngineModule,key,selection,objects):
 					"name":"rising","index":0,"starttime":Engine.getTime(),"done":False}
 
 		else:
-			Engine.log("current animation is not yet done: save ondone: true")
+			Engine.log("current animation not yet done")
 			objects.get()["anims"]["stand"]["ondone"] = True
 
 

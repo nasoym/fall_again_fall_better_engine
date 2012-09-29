@@ -2,13 +2,14 @@ import os
 
 lastMemReportTime = 0
 lastMemUsage = 0
-
-memReportTime = 1000 * 60 * 5
-
-watchDogFrequency = 1000 * 60 * 3
 lastWatchDogTime = 0
-
 framesBelowMinimumFPS = 0
+
+memReportTime = 1000 * 60 * 1
+memReportTime = 1000 * 10
+watchDogFrequency = 1000 * 60 * 1
+watchDogFrequency = 1000 * 10
+
 maximalFramesBelowMinimum = 20 * 60 * 10
 minimalFPS = 20
 
@@ -53,23 +54,18 @@ def guiUpdate(Engine,EngineModule,selection,objects):
 	
 	timeSinceLastWatchDog = currentTime - lastWatchDogTime
 	if timeSinceLastWatchDog > watchDogFrequency:
-		#print("watchdog update")
 		lastWatchDogTime = currentTime
 		os.utime("watchdog.txt",None)
 
 	timeSinceLastReport = currentTime - lastMemReportTime
 	if timeSinceLastReport > memReportTime:
-		#print("mem,fps report")
+		lastMemReportTime = currentTime
 		memUsage = Engine.getMemoryUsage()
 		memUsageDifference = memUsage - lastMemUsage
-		lastMemReportTime = currentTime
 		lastMemUsage = memUsage
 		if memUsageDifference > 0:
 			Engine.log("report mem: " + str(memUsage) + "  diff: " + 
 				str(memUsageDifference) + 
 				" time: " + str(currentTime))
 		Engine.log("report fps: " + str(float(1000.0 / Engine.getTimeDifference())))
-
-
-
 

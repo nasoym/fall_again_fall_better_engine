@@ -35,7 +35,8 @@ def playAnimation(Engine,EngineModule,objects,animData,animList):
 				runMethods(Engine,EngineModule,
 					objects,animList,animIndex-1,"end",1.0)
 			else:
-				Engine.log("animation start: " + str(animName))
+				pass
+				#Engine.log("animation start: " + str(animName))
 
 			#print("run anim start: " + str(animName) + " index : " + str(animIndex))
 			runMethods(Engine,EngineModule,
@@ -44,8 +45,11 @@ def playAnimation(Engine,EngineModule,objects,animData,animList):
 			#print("go to next anim index")
 			animData["starttime"] = endTime
 		elif currentTime > endTime:
-			Engine.log("animation: currentTime is bigger then endTime")
+			#Engine.log("animation: currentTime is bigger then endTime")
+			runMethods(Engine,EngineModule,
+				objects,animList,animIndex,"start",0.0)
 			animData["index"] = animIndex + 1
+			animData["starttime"] = endTime
 		else:
 			if animIndex != 0:
 				oldIndex = animIndex - 1
@@ -58,20 +62,16 @@ def playAnimation(Engine,EngineModule,objects,animData,animList):
 					objects,animList,animIndex-1,"timePos",oldTimePos)
 
 
-
 	elif animIndex == animListSize:
 		if currentTime > startTime:
 			runMethods(Engine,EngineModule,
 				objects,animList,animIndex-1,"end",1.0)
 			animData["index"] = animIndex + 1
-
 			animData["done"] = True
-
-			Engine.log("animation is done: " + str(animName))
-
+			#Engine.log("animation is done: " + str(animName))
 			if "ondone" in animData:
 				if animData["ondone"]:
-					Engine.log("animation: ondone was true: resend space key")
+					Engine.log("animation done: resend space release")
 					Engine.callPythonKeyReleased(EngineModule.Keys.K_SPACE)
 		else:
 			oldIndex = animIndex - 1
