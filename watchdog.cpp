@@ -83,8 +83,10 @@ int	getSecondsSinceLastWrite(){
 
 void	shutdown(){
 	log("shutdown");
-	Sleep(100);
-	system("shutdown -r");
+	log("wait 20 seconds:");
+	Sleep(1000 * 20);
+	//system("shutdown -r");
+	system("shutdown -l");
 }
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nShowCmd) {
@@ -96,10 +98,11 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	int		readError = 0;
 
 	int		maxFileErrorCount = 10;
-	int		maxReadError = 2;
-	//int		readInterval = 60 * 1;
-	int		readInterval = 30;
-	int		initialWait = 60 * 3;
+	int		maxReadError = 3;
+
+	int		readInterval = 60 * 1;
+
+	int		initialWait = 60 * 5;
 
 	log("initial wait:");
 	Sleep(1000 * initialWait);

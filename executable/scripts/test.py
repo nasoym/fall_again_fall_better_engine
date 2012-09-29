@@ -5,13 +5,11 @@ lastMemUsage = 0
 lastWatchDogTime = 0
 framesBelowMinimumFPS = 0
 
-memReportTime = 1000 * 60 * 1
-memReportTime = 1000 * 10
+memReportTime = 1000 * 60 * 5
 watchDogFrequency = 1000 * 60 * 1
-watchDogFrequency = 1000 * 10
 
-maximalFramesBelowMinimum = 20 * 60 * 10
-minimalFPS = 20
+minimalFPS = 40
+maximalFramesBelowMinimum = minimalFPS * 60
 
 def init(Engine,EngineModule,objects):
 	global lastMemReportTime
@@ -46,6 +44,7 @@ def guiUpdate(Engine,EngineModule,selection,objects):
 		fps = float(1000.0 / Engine.getTimeDifference())
 		if fps < minimalFPS:
 			framesBelowMinimumFPS += 1
+			framesBelowMinimumFPS += int(minimalFPS - fps)
 		elif not framesBelowMinimumFPS <= 0:
 			framesBelowMinimumFPS -= 1
 		if framesBelowMinimumFPS > maximalFramesBelowMinimum:

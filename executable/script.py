@@ -106,8 +106,6 @@ selectContainers = Selection()
 runDebugMode = True
 
 modules = []
-#modules.append(powered_doll)
-#modules.append(test)
 
 if Engine.isFullscreen():
 	runDebugMode = False

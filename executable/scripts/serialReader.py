@@ -6,7 +6,6 @@ def init(Engine,EngineModule,objects):
 	Engine.log("scanning serial ports 25-1 for a device:")
 	for serialPort in serialNum:
 		try:
-			#s = serial.Serial("COM4",9600)
 			s = serial.Serial("COM"+str(serialPort),9600)
 			objects.get()["serial"] = s
 			objects.setUnsavable("serial")
@@ -20,6 +19,7 @@ def init(Engine,EngineModule,objects):
 			pass
 	if not "serial" in objects.get():
 		Engine.log("	could not find any device connected to a serial port")
+		#Engine.quit()
 
 def guiUpdate(Engine,EngineModule,selection,objects):
 	if "serial" in objects.get():
