@@ -85,8 +85,8 @@ void	shutdown(){
 	log("shutdown");
 	log("wait 20 seconds:");
 	Sleep(1000 * 20);
-	//system("shutdown -r");
-	system("shutdown -l");
+	system("shutdown -r");
+	//system("shutdown -l");
 }
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nShowCmd) {

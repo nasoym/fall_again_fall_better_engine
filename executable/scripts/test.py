@@ -11,16 +11,32 @@ watchDogFrequency = 1000 * 60 * 1
 minimalFPS = 40
 maximalFramesBelowMinimum = minimalFPS * 60
 
+extremeVelocityFrames = 0
+maximalExtremeVelocityFrames = 2.0
+extremeVelocityTime = 0
+
 def init(Engine,EngineModule,objects):
 	global lastMemReportTime
 	lastMemReportTime = Engine.getTime()
 
 def keyPressed(Engine,EngineModule,key,selection,objects):
 
+	global extremeVelocityFrames
+	global maximalExtremeVelocityFrames
+	global extremeVelocityTime
+
 	if key == EngineModule.Keys.K_EXTREME_VELOCITY:
 		if Engine.isFullscreen():
-			Engine.log("extreme velocity")
-			Engine.quit()
+
+			if extremeVelocityTime != Engine.getTime():
+				extremeVelocityTime = Engine.getTime()
+				extremeVelocityFrames += 1
+
+				if Engine.getTimeDifference() > 0:
+					fps = float(1000.0 / Engine.getTimeDifference())
+					if extremeVelocityFrames > (maximalExtremeVelocityFrames*fps):
+						Engine.log("extreme velocity")
+						Engine.quit()
 
 	if key == EngineModule.Keys.K_FOCUS_CHANGE:
 		if Engine.isFullscreen():
@@ -38,7 +54,14 @@ def guiUpdate(Engine,EngineModule,selection,objects):
 	global maximalFramesBelowMinimum
 	global minimalFPS
 
+	global extremeVelocityFrames
+	global extremeVelocityTime
+
 	currentTime = Engine.getTime()
+
+	if extremeVelocityTime < currentTime:
+		if extremeVelocityFrames > 0:
+			extremeVelocityFrames -= 1
 
 	if Engine.getTimeDifference() > 0:
 		fps = float(1000.0 / Engine.getTimeDifference())

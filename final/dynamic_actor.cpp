@@ -1,3 +1,4 @@
+#include "logger.h"
 #include "dynamic_actor.h"
 #include "engine.h"
 #include "physic_engine.h"
@@ -29,7 +30,9 @@ void    DynamicActor::wakeUp() {
 
 void	DynamicActor::physicUpdate(){
 	Actor::physicUpdate();
-	if (getLinearVelocity().length() > 3000 ) {
+	float length = getLinearVelocity().length();
+	if (length > 3000 ) {
+		//Logger::debug(format("extreme velocity: %1%") % length );
 		getEngine()->callPythonKeyPressed(K_EXTREME_VELOCITY);
 	}
 }
