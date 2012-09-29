@@ -19,6 +19,8 @@ import saveload
 
 import operations
 def keyDown(Engine,EngineModule,key,selection,objects):
+	pass
+	"""
 	if key == EngineModule.Keys.K_C:
 		size = EngineModule.Vec3(10,10,10)
 		o = Engine.createDynamicActor()
@@ -26,6 +28,7 @@ def keyDown(Engine,EngineModule,key,selection,objects):
 		shape.setMaterialName(Engine.getDefaultShadedMaterialName())
 		shape.setName("1")
 		o.setPosition(EngineModule.Vec3(0,200,0))
+		"""
 
 def keyPressed(Engine,EngineModule,key,selection,objects):
 	pass
