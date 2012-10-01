@@ -6,12 +6,12 @@ Engine* mEngine = 0;
 
 int main(int argc, char *argv[]) {
 
-
-	printf("before initial wait of 20 seconds\n");
-	Sleep(1000 * 20);
-	printf("after initial wait\n");
-
     mEngine = new Engine();
+
+	//printf("before initial wait of 20 seconds\n");
+	//Sleep(1000 * 20);
+	//printf("after initial wait\n");
+
 	mEngine->runPython();
     mEngine->run();
     delete mEngine;

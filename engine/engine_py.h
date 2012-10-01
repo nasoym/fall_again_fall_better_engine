@@ -434,9 +434,11 @@ BOOST_PYTHON_MODULE(EngineModule) {
 
 		.def("isFullscreen",&Engine::isFullscreen)
 
+		.def("lightsOff",&Engine::lightsOff)
+		.def("lightsOn",&Engine::lightsOn)
+		.def("getExactTime",&Engine::getExactTime)
 
 		.def("getDefaultShadedMaterialName",&Engine::getDefaultShadedMaterialName)
-
 
         ;
 

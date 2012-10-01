@@ -432,7 +432,7 @@ void Engine::setup(){
 	mMainLight->setType(Light::LT_DIRECTIONAL);
 	mMainLight->setDirection(Vector3(0,-1,1));
 
-    Light* mSecondLight = mSceneMgr->createLight("SecondLight");
+    mSecondLight = mSceneMgr->createLight("SecondLight");
 	mSecondLight->setType(Light::LT_DIRECTIONAL);
 	mSecondLight->setDirection(Vector3(0,-1,-1));
 	mSecondLight->setCastShadows(false);
@@ -507,6 +507,62 @@ void Engine::setup(){
 	mat->getTechnique(0)->getPass(0)->setShininess(2.0f);
 
 	setupDefaultMaterial();
+}
+
+
+void		Engine::lightsOff(){
+	ColourValue	col0 = ColourValue(0.00,0.00,0.00,1.0);
+	ColourValue	col1 = ColourValue(0.14,0.09,0.06,1.0);
+	ColourValue	col2 = ColourValue(0.30,0.15,0.02,1.0);
+	ColourValue	col3 = ColourValue(0.69,0.62,0.53,1.0);
+	ColourValue	col4 = ColourValue(0.86,0.78,0.68,1.0);
+	ColourValue	col5 = ColourValue(0.30,0.15,0.02,1.0);
+	ColourValue	col6 = ColourValue(0.30,0.15,0.02,1.0);
+	ColourValue	col7 = ColourValue(0.30,0.15,0.02,1.0);
+
+    mSceneMgr->setAmbientLight(col0);
+
+    mSceneMgr->setShadowColour(col0);
+    mViewport->setBackgroundColour(col0);
+	mMainLight->setDiffuseColour(col0);
+	mMainLight->setSpecularColour(col0);
+
+	mSecondLight->setDiffuseColour(col0);
+	mSecondLight->setSpecularColour(col0);
+
+	MaterialPtr mat = MaterialManager::getSingleton().getByName("Body");
+	mat->getTechnique(0)->getPass(0)->setAmbient(col0);
+	mat->getTechnique(0)->getPass(0)->setDiffuse(col0);
+	mat->getTechnique(0)->getPass(0)->setSpecular(col0);
+
+}
+
+void		Engine::lightsOn(){
+	ColourValue	col0 = ColourValue(0.00,0.00,0.00,1.0);
+	ColourValue	col1 = ColourValue(0.14,0.09,0.06,1.0);
+	ColourValue	col2 = ColourValue(0.30,0.15,0.02,1.0);
+	ColourValue	col3 = ColourValue(0.69,0.62,0.53,1.0);
+	ColourValue	col4 = ColourValue(0.86,0.78,0.68,1.0);
+	ColourValue	col5 = ColourValue(0.30,0.15,0.02,1.0);
+	ColourValue	col6 = ColourValue(0.30,0.15,0.02,1.0);
+	ColourValue	col7 = ColourValue(0.30,0.15,0.02,1.0);
+
+    mSceneMgr->setAmbientLight(col1);
+
+    mSceneMgr->setShadowColour(col2);
+    mViewport->setBackgroundColour(col0);
+	mMainLight->setDiffuseColour(col3);
+	mMainLight->setSpecularColour(col4);
+
+	mSecondLight->setDiffuseColour(col0);
+	mSecondLight->setSpecularColour(col1);
+
+	MaterialPtr mat = MaterialManager::getSingleton().getByName("Body");
+	mat->getTechnique(0)->getPass(0)->setAmbient(col1);
+	mat->getTechnique(0)->getPass(0)->setDiffuse(col2);
+	mat->getTechnique(0)->getPass(0)->setSpecular(col3);
+	mat->getTechnique(0)->getPass(0)->setShininess(2.0f);
+
 }
 
 void			Engine::setupDefaultMaterial(){

@@ -8,11 +8,11 @@ framesBelowMinimumFPS = 0
 memReportTime = 1000 * 60 * 5
 watchDogFrequency = 1000 * 60 * 1
 
-minimalFPS = 40
+minimalFPS = 30
 maximalFramesBelowMinimum = minimalFPS * 60
 
 extremeVelocityFrames = 0
-maximalExtremeVelocityFrames = 2.0
+maximalExtremeVelocityFrames = 5.0
 extremeVelocityTime = 0
 
 def init(Engine,EngineModule,objects):
@@ -31,6 +31,7 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 			if extremeVelocityTime != Engine.getTime():
 				extremeVelocityTime = Engine.getTime()
 				extremeVelocityFrames += 1
+				Engine.log("extremeVelocityFrames: " + str(extremeVelocityFrames))
 
 				if Engine.getTimeDifference() > 0:
 					fps = float(1000.0 / Engine.getTimeDifference())

@@ -85,8 +85,8 @@ void	shutdown(){
 	log("shutdown");
 	log("wait 20 seconds:");
 	Sleep(1000 * 20);
-	system("shutdown -r");
-	//system("shutdown -l");
+	//system("shutdown -r");
+	system("shutdown -l");
 }
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nShowCmd) {
@@ -98,7 +98,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	int		readError = 0;
 
 	int		maxFileErrorCount = 10;
-	int		maxReadError = 3;
+	int		maxReadError = 2;
 
 	int		readInterval = 60 * 1;
 

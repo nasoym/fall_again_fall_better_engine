@@ -147,6 +147,8 @@ class Engine : public WindowEventListener,
 
 
 		void			test();
+		void		lightsOff();
+		void		lightsOn();
 
 
     private:
@@ -207,6 +209,8 @@ class Engine : public WindowEventListener,
 		unsigned long			getTime(){return mCurrentTime;}
 		unsigned long			getTimeDifference(){return mTimeDifference;}
 
+		unsigned long			getExactTime(){ return mTimer.getMilliseconds();}
+
     private:
         void    setup();
         void    close();
@@ -226,6 +230,7 @@ class Engine : public WindowEventListener,
 		Timer			mTimer;
 
 		Light*			mMainLight;
+		Light* 			mSecondLight;
 
 		unsigned long mCurrentTime;
 		unsigned long mLastTime;
