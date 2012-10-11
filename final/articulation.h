@@ -6,7 +6,6 @@ using namespace physx;
 
 class Engine;
 
-//#include "engine_gui_container.h"
 #include "actor.h"
 #include "logger.h"
 class Articulation : public Actor {

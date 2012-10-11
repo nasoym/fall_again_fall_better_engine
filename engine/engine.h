@@ -104,11 +104,9 @@ class Engine : public WindowEventListener,
 
 		bool	isFullscreen();
 
-		EngineObject*	createPhysicBox();
 		EngineObject*	createSpaceCage(Vec3&);
 		EngineObject*	createGuiBox();
 		EngineObject*	createJoint(EngineObject* obj1,EngineObject* obj2);
-		EngineObject*	createPhysicStatic();
 		EngineObject*	createMesh(const char*);
 		Articulation*	createArticulation();
 		DynamicActor*	createDynamicActor();

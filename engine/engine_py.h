@@ -24,8 +24,6 @@ using namespace boost::python;
 #include "engine_box.h"
 
 #include "engine_spacecage.h"
-#include "engine_body.h"
-#include "engine_static_body.h"
 #include "engine_joint.h"
 #include "engine_mesh.h"
 
@@ -111,8 +109,6 @@ BOOST_PYTHON_MODULE(EngineModule) {
 
 		.def("isGuiShape",&EngineObject::isGuiShape,return_value_policy<reference_existing_object>())
 		.def("isGuiContainer",&EngineObject::isGuiContainer,return_value_policy<reference_existing_object>())
-		.def("isBody",&EngineObject::isBody,return_value_policy<reference_existing_object>())
-		.def("isStaticBody",&EngineObject::isStaticBody,return_value_policy<reference_existing_object>())
 		.def("isJoint",&EngineObject::isJoint,return_value_policy<reference_existing_object>())
 		.def("isSpaceCage",&EngineObject::isSpaceCage,return_value_policy<reference_existing_object>())
 		.def("isMesh",&EngineObject::isMesh,return_value_policy<reference_existing_object>())
@@ -283,21 +279,6 @@ BOOST_PYTHON_MODULE(EngineModule) {
 	class_<EngineSpaceCage,bases<EngineGuiContainer> >("EngineSpaceCage", init<Engine*,Vec3&>())
 		;
 
-	class_<EngineBody,bases<EngineGuiContainer> >("EngineBody", init<Engine*>())
-		.def("addForce",&EngineBody::addForce)
-		.def("howManyJoints",&EngineBody::howManyJoints)
-		.def("getJoint",&EngineBody::getJoint,return_value_policy<reference_existing_object>())
-
-		.def("dsetSolverIterations",&EngineBody::dsetSolverIterations)
-		.def("setMass",&EngineBody::setMass)
-		.def("resetMass",&EngineBody::resetMass)
-		.def("getMass",&EngineBody::getMass)
-
-		;
-
-	class_<EngineStaticBody,bases<EngineBody> >("EngineStaticBody", init<Engine*>())
-		;
-
 	class_<EngineMesh,bases<EngineGuiShape> >("EngineMesh", init<Engine*,const char*>())
 		.def("getFileName",&EngineMesh::getFileName)
 		.def("getNumberOfBones",&EngineMesh::getNumberOfBones)
@@ -374,9 +355,7 @@ BOOST_PYTHON_MODULE(EngineModule) {
     class_<Engine>("Engine")
         .def("createGuiBox",&Engine::createGuiBox,return_value_policy<reference_existing_object>() )
         .def("createSpaceCage",&Engine::createSpaceCage,return_value_policy<reference_existing_object>() )
-        .def("createPhysicBox",&Engine::createPhysicBox,return_value_policy<reference_existing_object>() )
         .def("createJoint",&Engine::createJoint,return_value_policy<reference_existing_object>() )
-        .def("createPhysicStatic",&Engine::createPhysicStatic,return_value_policy<reference_existing_object>() )
 		.def("createMesh",&Engine::createMesh,return_value_policy<reference_existing_object>() )
 		.def("createArticulation",&Engine::createArticulation,return_value_policy<reference_existing_object>() )
 		.def("createDynamicActor",&Engine::createDynamicActor,return_value_policy<reference_existing_object>() )

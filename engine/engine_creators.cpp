@@ -1,13 +1,8 @@
 #include "logger.h"
 #include "engine.h"
 
-#include "physic_box.h"
-#include "physic_static.h"
-
 #include "engine_gui_shape.h"
 #include "engine_spacecage.h"
-#include "engine_body.h"
-#include "engine_static_body.h"
 #include "engine_joint.h"
 #include "engine_object.h"
 #include "engine_mesh.h"
@@ -37,24 +32,8 @@ EngineObject*	Engine::createSpaceCage(Vec3& size){
 	return new EngineSpaceCage(this,size);
 }
 
-EngineObject*	Engine::createPhysicBox(){
-	EngineBody* engineObject = new EngineBody(this);
-	engineObject->setPhysicBody(
-		new PhysicBox(getPhysicsEngine(),
-			Vec3(0,0,0), Vec3(1,1,1) ) );
-	return engineObject;
-}
-
 EngineObject*	Engine::createMesh(const char* meshName){
 	return new EngineMesh(this,meshName);
-}
-
-EngineObject*	Engine::createPhysicStatic(){
-	EngineStaticBody* engineObject = new EngineStaticBody(this);
-	engineObject->setPhysicBody(
-		new PhysicStatic( getPhysicsEngine(),
-			Vec3(0,0,0), Vec3(1,1,1) ) );
-	return engineObject;
 }
 
 EngineObject*	Engine::createJoint(EngineObject* obj1,EngineObject* obj2){

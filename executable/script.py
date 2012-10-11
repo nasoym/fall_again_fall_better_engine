@@ -122,11 +122,11 @@ if runDebugMode:
 
 runDebugMode = False
 
-modules.append(main)
-modules.append(test_input)
-modules.append(anim)
-modules.append(serialReader)
-modules.append(test)
+#modules.append(main)
+#modules.append(test_input)
+#modules.append(anim)
+#modules.append(serialReader)
+#modules.append(test)
 
 guiUpdates=[]
 
