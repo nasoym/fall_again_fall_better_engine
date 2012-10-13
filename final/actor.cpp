@@ -134,6 +134,15 @@ PhysicShape*		Actor::addCapsule(Vec3& vec3){
 	return physicShape;
 }
 
+PhysicShape*		Actor::addPlane(){
+	PxShape* shape = getActor()->createShape( 
+        PxPlaneGeometry(), 
+		*(getEngine()->getPhysicsEngine()->getMaterial()) 
+		);
+	PhysicShape* physicShape = new PhysicShape(getEngine(),this,shape);
+	addShape(physicShape);
+	return physicShape;
+}
 
 void    Actor::deleteAllJoints() {
 	std::vector<EngineJoint*>::iterator  mJointsIterator;

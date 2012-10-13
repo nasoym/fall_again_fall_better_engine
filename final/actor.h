@@ -38,6 +38,7 @@ class Actor : public EngineGuiContainer {
 		virtual PhysicShape*		addBox(Vec3&);
 		virtual PhysicShape*		addSphere(Vec3&);
 		virtual PhysicShape*		addCapsule(Vec3&);
+		virtual PhysicShape*		addPlane();
 
 		int					howManyPhysicShapes();
 		PhysicShape*		getPhysicShapeByIndex(int);	

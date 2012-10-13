@@ -230,12 +230,14 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 		"""
 
 	if key == EngineModule.Keys.K_SLASH:
+		"""
 		parts = ["feet","lleg","uleg","root","belly",
 			"breast","shoulder","neck","uarm","larm","head","hand"]
 		for p in parts:
 			bodyList = objects.get()[p]
 			for b in bodyList:
 				b.resetMass()
+				"""
 
 		"""
 		print("set Solver Iterations")
@@ -253,5 +255,19 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 				#b.dsetSolverIterations(16,1)
 				"""
 
+		o = Engine.createStaticActor()
+		b = o.addPlane()
+		o.setPosition(EngineModule.Vec3(0,0,0))
+		o.setOrientation(EngineModule.Quat().fromAngles(0,0,90))
+
+
+
+		o = Engine.createDynamicActor()
+		b = o.addBox(EngineModule.Vec3(10,10,10))
+		#b = o.addCapsule(EngineModule.Vec3(1,1,1))
+		b.setMaterialName(Engine.getDefaultShadedMaterialName())
+		b.setScaling1To1()
+		o.setPosition(EngineModule.Vec3(0,150,0))
+		o.setSize(EngineModule.Vec3(20,20,20))
 
 

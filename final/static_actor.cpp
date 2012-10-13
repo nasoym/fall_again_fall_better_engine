@@ -42,6 +42,16 @@ PhysicShape*		StaticActor::addCapsule(Vec3& vec3){
 	return shape;
 }
 
+PhysicShape*		StaticActor::addPlane(){
+	PhysicShape* shape = Actor::addPlane();
+	if (!mAddedToScene){
+		(getEngine()->getPhysicsEngine()->getScene())->addActor(*mBody);
+		mAddedToScene = true;
+	}
+	return shape;
+}
+
+
 void    StaticActor::setPosition(Vec3& vec3) {
 	if (mAddedToScene){
 		(getEngine()->getPhysicsEngine()->getScene())->removeActor(*mBody);
