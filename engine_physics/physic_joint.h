@@ -5,8 +5,6 @@
 #include "PxPhysicsAPI.h"
 using namespace physx;
 
-#include "physic_basejoint.h"
-
 #include "physic_engine.h"
 
 #include "math3d.h"
@@ -25,7 +23,7 @@ using namespace physx;
 class Actor;
 class Engine;
 
-class PhysicJoint : public BaseJoint {
+class PhysicJoint {
     private:
         PhysicsEngine*         mEngine;
 

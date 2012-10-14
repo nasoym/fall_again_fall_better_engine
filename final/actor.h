@@ -12,8 +12,6 @@ class Engine;
 class PhysicShape;
 class Joint;
 
-#include "physic_basejoint.h"
-
 class Actor : public EngineGuiContainer {
 
 	protected:
