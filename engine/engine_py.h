@@ -23,10 +23,8 @@ using namespace boost::python;
 
 #include "engine_box.h"
 
-#include "engine_spacecage.h"
 #include "engine_joint.h"
 #include "engine_mesh.h"
-
 
 #include "actor.h"
 #include "dynamic_actor.h"
@@ -110,7 +108,6 @@ BOOST_PYTHON_MODULE(EngineModule) {
 		.def("isGuiShape",&EngineObject::isGuiShape,return_value_policy<reference_existing_object>())
 		.def("isGuiContainer",&EngineObject::isGuiContainer,return_value_policy<reference_existing_object>())
 		.def("isJoint",&EngineObject::isJoint,return_value_policy<reference_existing_object>())
-		.def("isSpaceCage",&EngineObject::isSpaceCage,return_value_policy<reference_existing_object>())
 		.def("isMesh",&EngineObject::isMesh,return_value_policy<reference_existing_object>())
 		.def("isActor",&EngineObject::isActor,return_value_policy<reference_existing_object>())
 		.def("isDynamicActor",&EngineObject::isDynamicActor,return_value_policy<reference_existing_object>())
@@ -267,6 +264,8 @@ BOOST_PYTHON_MODULE(EngineModule) {
 		.def("isBoxShape",&PhysicShape::isBoxShape)
 		.def("isSphereShape",&PhysicShape::isSphereShape)
 		.def("isCapsuleShape",&PhysicShape::isCapsuleShape)
+		.def("isPlaneShape",&PhysicShape::isPlaneShape)
+
 		.def("getActor",&PhysicShape::getActor,return_value_policy<reference_existing_object>())
 
 		.def("enableCollisions",&PhysicShape::enableCollisions)
@@ -275,9 +274,6 @@ BOOST_PYTHON_MODULE(EngineModule) {
 
 
 	class_<EngineBox,bases<EngineGuiShape> >("EngineBox", init<Engine*>())
-		;
-
-	class_<EngineSpaceCage,bases<EngineGuiContainer> >("EngineSpaceCage", init<Engine*,Vec3&>())
 		;
 
 	class_<EngineMesh,bases<EngineGuiShape> >("EngineMesh", init<Engine*,const char*>())
@@ -355,7 +351,6 @@ BOOST_PYTHON_MODULE(EngineModule) {
 
     class_<Engine>("Engine")
         .def("createGuiBox",&Engine::createGuiBox,return_value_policy<reference_existing_object>() )
-        .def("createSpaceCage",&Engine::createSpaceCage,return_value_policy<reference_existing_object>() )
         .def("createJoint",&Engine::createJoint,return_value_policy<reference_existing_object>() )
 		.def("createMesh",&Engine::createMesh,return_value_policy<reference_existing_object>() )
 		.def("createArticulation",&Engine::createArticulation,return_value_policy<reference_existing_object>() )

@@ -22,7 +22,8 @@ class PhysicShape : public EngineGuiShape {
 			NOP,
 			BOX,
 			SPHERE,
-			CAPSULE
+			CAPSULE,
+			PLANE
 		};
 	
 	public:
@@ -50,6 +51,12 @@ class PhysicShape : public EngineGuiShape {
 		bool					isBoxShape();
 		bool					isSphereShape();
 		bool					isCapsuleShape();
+		bool					isPlaneShape();
+
+		void					setBoxShape();
+		void					setSphereShape();
+		void					setCapsuleShape();
+		void					setPlaneShape();
 
 		Actor*					getActor(){return mActor;}
 

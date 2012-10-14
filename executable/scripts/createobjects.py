@@ -49,6 +49,32 @@ def createSpaceCage(Engine,EngineModule,size):
 	o = Engine.createSpaceCage(size)
 	o.setUnselectable()
 
+	#TODO create all planes
+	#TODO save load xml
+	"""
+	float xSize = size.X();
+	float ySize = size.Y();
+	float zSize = size.Z();
+
+	mBottomPlane = new PhysicPlane( getEngine()->getPhysicsEngine(),
+		PxVec3(0,0,0), Quat().fromAngles(0,0,90).toPhysx() );
+
+	mTopPlane = new PhysicPlane( getEngine()->getPhysicsEngine(),
+		PxVec3(0,ySize,0), Quat().fromAngles(0,0,-90).toPhysx() );
+
+	mFrontPlane = new PhysicPlane( getEngine()->getPhysicsEngine(),
+		PxVec3(0,0,zSize), Quat().fromAngles(0,90,0).toPhysx() );
+
+	mBackPlane = new PhysicPlane( getEngine()->getPhysicsEngine(),
+		PxVec3(0,0,-zSize), Quat().fromAngles(0,-90,0).toPhysx() );
+
+	mLeftPlane = new PhysicPlane( getEngine()->getPhysicsEngine(),
+		PxVec3(xSize,0,0), Quat().fromAngles(0,0,180).toPhysx() );
+
+	mRightPlane = new PhysicPlane( getEngine()->getPhysicsEngine(),
+		PxVec3(-xSize,0,0), Quat().fromAngles(0,0,0).toPhysx() );
+		"""
+
 	wall = 1.0;
 	ground_opacity = 1.0;
 	ceiling_opacity = 0.25;

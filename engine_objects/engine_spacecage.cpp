@@ -1,9 +1,8 @@
 #include "logger.h"
 #include "math3d.h"
 
-#include "engine_spacecage.h"
 #include "engine.h"
-
+#include "engine_spacecage.h"
 #include "physic_plane.h"
 
 EngineSpaceCage::EngineSpaceCage(Engine* engine,Vec3& size) :

@@ -100,6 +100,7 @@ PhysicShape*		Actor::addBox(Vec3& vec3){
 		);
 	PhysicShape* physicShape = new PhysicShape(getEngine(),this,shape);
 	physicShape->createGuiBox(vec3);
+	physicShape->setBoxShape();
 	addShape(physicShape);
 	resetMass();
 	wakeUp();	
@@ -113,6 +114,7 @@ PhysicShape*		Actor::addSphere(Vec3& vec3){
 		);
 	PhysicShape* physicShape = new PhysicShape(getEngine(),this,shape);
 	physicShape->createGuiSphere(vec3);
+	physicShape->setSphereShape();
 	addShape(physicShape);
 	resetMass();
     wakeUp();
@@ -128,6 +130,7 @@ PhysicShape*		Actor::addCapsule(Vec3& vec3){
 	PhysicShape* physicShape = new PhysicShape(getEngine(),this,shape);
 	//physicShape->createGuiCapsule(60,5);
 	physicShape->createGuiCapsule(vec3);
+	physicShape->setCapsuleShape();
 	addShape(physicShape);
 	resetMass();
     wakeUp();
@@ -140,6 +143,7 @@ PhysicShape*		Actor::addPlane(){
 		*(getEngine()->getPhysicsEngine()->getMaterial()) 
 		);
 	PhysicShape* physicShape = new PhysicShape(getEngine(),this,shape);
+	physicShape->setPlaneShape();
 	addShape(physicShape);
 	return physicShape;
 }

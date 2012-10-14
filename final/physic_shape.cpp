@@ -25,6 +25,23 @@ void	PhysicShape::dissableCollisions(){
 	mShape->setFlag(PxShapeFlag::eSIMULATION_SHAPE,false);
 }
 
+void	PhysicShape::setBoxShape(){
+	mShapeType = BOX;
+}
+
+void	PhysicShape::setSphereShape(){
+	mShapeType = SPHERE;
+}
+
+void	PhysicShape::setCapsuleShape(){
+	mShapeType = CAPSULE;
+}
+
+void	PhysicShape::setPlaneShape(){
+	mShapeType = PLANE;
+}
+
+
 bool	PhysicShape::isBoxShape(){
 	if (mShapeType == BOX) return true;
 	return false;
@@ -40,19 +57,21 @@ bool	PhysicShape::isCapsuleShape(){
 	return false;
 }
 
+bool	PhysicShape::isPlaneShape(){
+	if (mShapeType == PLANE) return true;
+	return false;
+}
 
 void PhysicShape::createGuiBox(Vec3& vec3) {
     setEntity(getEngine()->getSceneManager()->createEntity("Prefab_Cube"));
     getNode()->attachObject(getEntity());
 	setLocalSize(vec3);
-	mShapeType = BOX;
 }
 
 void PhysicShape::createGuiSphere(Vec3& vec3) {
     setEntity(getEngine()->getSceneManager()->createEntity("Prefab_Sphere"));
     getNode()->attachObject(getEntity());
 	setLocalSize(vec3);
-	mShapeType = SPHERE;
 }
 
 void PhysicShape::createGuiCapsule(Vec3& vec3) {
@@ -80,7 +99,6 @@ void PhysicShape::createGuiCapsule(Vec3& vec3) {
     getEntity()->setMaterialName("Body");
     getNode()->attachObject(getEntity());
 	mMesh = meshPtr.get();
-	mShapeType = CAPSULE;
 
 	if (hasColour()) {
 		setCustomMaterial();

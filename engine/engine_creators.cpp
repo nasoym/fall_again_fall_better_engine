@@ -2,7 +2,6 @@
 #include "engine.h"
 
 #include "engine_gui_shape.h"
-#include "engine_spacecage.h"
 #include "engine_joint.h"
 #include "engine_object.h"
 #include "engine_mesh.h"
@@ -26,10 +25,6 @@ DynamicActor*	Engine::createDynamicActor(){
 
 StaticActor*	Engine::createStaticActor(){
 	return new StaticActor(this,Vec3(1,1,1));
-}
-
-EngineObject*	Engine::createSpaceCage(Vec3& size){
-	return new EngineSpaceCage(this,size);
 }
 
 EngineObject*	Engine::createMesh(const char* meshName){
