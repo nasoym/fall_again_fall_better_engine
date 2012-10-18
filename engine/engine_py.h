@@ -266,6 +266,12 @@ BOOST_PYTHON_MODULE(EngineModule) {
 		.def("isCapsuleShape",&PhysicShape::isCapsuleShape)
 		.def("isPlaneShape",&PhysicShape::isPlaneShape)
 
+
+		.def("createGuiBox",&PhysicShape::createGuiBox)
+		.def("createGuiSphere",&PhysicShape::createGuiSphere)
+		.def("createGuiCapsule",&PhysicShape::createGuiCapsule)
+
+
 		.def("getActor",&PhysicShape::getActor,return_value_policy<reference_existing_object>())
 
 		.def("enableCollisions",&PhysicShape::enableCollisions)

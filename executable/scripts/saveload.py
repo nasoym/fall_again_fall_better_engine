@@ -256,6 +256,8 @@ def load(Engine,EngineModule,fileName,objects,loadingPosition=None,loadingOrient
 							o = actorEntity.addSphere(size)
 						elif shapeType == "capsule":
 							o = actorEntity.addCapsule(size)
+						elif shapeType == "plane":
+							o = actorEntity.addPlane()
 
 						#o = Engine.createPhysic()
 
@@ -722,6 +724,7 @@ def save(Engine,EngineModule,fileName,objects):
 			node.setProp("local_size",str(o.getLocalSize()))
 			node.setProp("local_orientation",str(o.getLocalOrientation()))
 
+
 			scalingType = "1To1"
 			if o.isScalingFixed():
 				scalingType = "Fixed"
@@ -749,9 +752,10 @@ def save(Engine,EngineModule,fileName,objects):
 				node.setProp("shape","sphere")
 			elif o.isCapsuleShape():
 				node.setProp("shape","capsule")
+			elif o.isPlaneShape():
+				node.setProp("shape","plane")
 
 			node.setProp("actor",str(o.getActor().readUuid()))
-
 
 		doc.getRootElement().addChild(node)
 

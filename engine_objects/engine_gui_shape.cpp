@@ -6,6 +6,8 @@
 EngineGuiShape::EngineGuiShape(Engine* engine) :
 	EngineObject(engine),
 	mMaterial(0),
+	mEntity(0),
+	mNode(0),
 	mLocalPosition(Vec3()),
 	mLocalOrientation(Quat()),
 	mLocalSize(Vec3(1,1,1)),
@@ -18,9 +20,11 @@ EngineGuiShape::EngineGuiShape(Engine* engine) :
 EngineGuiShape::~EngineGuiShape(){
 	Logger::debug("guiShape delete");
 
-	getNode()->detachObject(mEntity);
-	getEngine()->getSceneManager()->destroyEntity(mEntity);
-	mEntity = 0;
+	if(mEntity && getNode()){
+		getNode()->detachObject(mEntity);
+		getEngine()->getSceneManager()->destroyEntity(mEntity);
+		mEntity = 0;
+	}
 
     SceneNode*  parentNode = mNode->getParentSceneNode();
     mNode->removeAndDestroyAllChildren();
@@ -33,11 +37,15 @@ EngineGuiShape::~EngineGuiShape(){
 }
 
 void	EngineGuiShape::selectShow(){
-	getNode()->showBoundingBox(true);
+	if (getNode()){
+		getNode()->showBoundingBox(true);
+	}
 }
 
 void	EngineGuiShape::selectHide(){
-	getNode()->showBoundingBox(false);
+	if (getNode()){
+		getNode()->showBoundingBox(false);
+	}
 }
 
 void	EngineGuiShape::setContainer(EngineGuiContainer* container){

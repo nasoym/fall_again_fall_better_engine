@@ -88,12 +88,22 @@ class EngineGuiShape : public EngineObject {
 		void				show(){mNode->setVisible(true);}
 
 		void				turnOffShadows(){
-								mEntity->setCastShadows(false);
-								}
+				if (mEntity) { 
+					mEntity->setCastShadows(false);
+					}
+				}
 		void				turnOnShadows(){
-								mEntity->setCastShadows(true);
-								}
-		bool				getCastShadows(){return mEntity->getCastShadows();}
+				if (mEntity) { 
+					mEntity->setCastShadows(true);
+					}
+				}
+		bool				getCastShadows(){
+				if (mEntity) { 
+					return mEntity->getCastShadows();
+				} else {
+					return false;
+				}
+			}
 
 
 	private:

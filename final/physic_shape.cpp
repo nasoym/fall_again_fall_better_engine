@@ -158,6 +158,9 @@ void        PhysicShape::setLocalSize(Vec3& vec3){
 			updateGuiCapsule(vec3);
 			mLocalSize = vec3;
 			break;
+		case PxGeometryType::ePLANE:
+			EngineGuiShape::setLocalSize(vec3);
+			break;
 	}
 	mActor->resetMass();
 	mActor->wakeUp();
@@ -191,6 +194,8 @@ Vec3    	PhysicShape::getLocalSize(){
 					);
 			}
 			break;
+		case PxGeometryType::ePLANE:
+			return EngineGuiShape::getLocalSize();
 	}
 	return Vec3();
 }
