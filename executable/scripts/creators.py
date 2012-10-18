@@ -83,7 +83,7 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 				or Engine.isKeyDown(EngineModule.Keys.K_3) ):
 
 				size = EngineModule.Vec3(10,10,10)
-				size = EngineModule.Vec3(15,5,1)
+				#size = EngineModule.Vec3(15,5,1)
 
 				if Engine.isKeyDown(EngineModule.Keys.K_0):
 					o = Engine.createStaticActor()
@@ -98,11 +98,13 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 					shape = o.addSphere(size)
 				shape.setMaterialName(Engine.getDefaultShadedMaterialName())
 				shape.setName("1")
-				o.setPosition(EngineModule.Vec3(0,200,0))
+				o.setPosition(EngineModule.Vec3(0,150,0))
 
 			if Engine.isKeyDown(EngineModule.Keys.K_4):
 				print("create spacecage")
-				create.createSpaceCage(Engine,EngineModule,EngineModule.Vec3(6000,600,600))
+				create.createSpaceCage(Engine,EngineModule,EngineModule.Vec3(
+					100,200,300))
+				#		200,200,200))
 
 			elif Engine.isKeyDown(EngineModule.Keys.K_6):
 				print("create ragdoll")
