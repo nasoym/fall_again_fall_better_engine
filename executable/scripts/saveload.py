@@ -246,9 +246,6 @@ def load(Engine,EngineModule,fileName,objects,loadingPosition=None,loadingOrient
 						shapeType = node.prop("shape")
 						actorEntity = Engine.getFromUuid(actor)
 
-						if node.hasProp("local_size"):
-							a = (node.prop("local_size").split(","))
-							size = EngineModule.Vec3( float(a[0]),float(a[1]),float(a[2]))
 
 						if shapeType == "box":
 							o = actorEntity.addBox(size)
@@ -260,6 +257,10 @@ def load(Engine,EngineModule,fileName,objects,loadingPosition=None,loadingOrient
 							o = actorEntity.addPlane()
 
 						#o = Engine.createPhysic()
+
+						#if node.hasProp("local_size"):
+						#a = (node.prop("local_size").split(","))
+						#size = EngineModule.Vec3( float(a[0]),float(a[1]),float(a[2]))
 
 						if node.hasProp("uuid"):
 							uuid = node.prop("uuid")
@@ -290,10 +291,10 @@ def load(Engine,EngineModule,fileName,objects,loadingPosition=None,loadingOrient
 							materialName = node.prop("material")
 							o.setMaterialName(materialName)
 
-						#if node.hasProp("local_size"):
-						#	a = (node.prop("local_size").split(","))
-						#	size = EngineModule.Vec3( float(a[0]),float(a[1]),float(a[2]))
-						#	o.setLocalSize(size)
+						if node.hasProp("local_size"):
+							a = (node.prop("local_size").split(","))
+							size = EngineModule.Vec3( float(a[0]),float(a[1]),float(a[2]))
+							o.setLocalSize(size)
 						if node.hasProp("local_position"):
 							a = (node.prop("local_position").split(","))
 							pos = EngineModule.Vec3( float(a[0]),float(a[1]),float(a[2]))

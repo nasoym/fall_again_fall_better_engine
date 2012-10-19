@@ -143,6 +143,7 @@ PhysicShape*		Actor::addPlane(){
 		*(getEngine()->getPhysicsEngine()->getMaterial()) 
 		);
 	PhysicShape* physicShape = new PhysicShape(getEngine(),this,shape);
+	physicShape->createGuiBox(Vec3(1,1,1));
 	physicShape->setPlaneShape();
 	addShape(physicShape);
 	return physicShape;
