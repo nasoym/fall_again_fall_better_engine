@@ -1,6 +1,6 @@
 
 #VPATH=common:engine:engine_objects:final:engine_physics:stereoManager
-VPATH=common:engine:engine_objects:final:engine_physics
+VPATH=common:engine:engine_objects:final
 ALLPATHES=$(subst :, ,$(VPATH))
 
 OBJ=build/main.obj
