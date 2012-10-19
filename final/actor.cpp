@@ -4,7 +4,7 @@
 #include "engine.h"
 #include "physic_engine.h"
 #include "physic_shape.h"
-#include "engine_joint.h"
+#include "joint.h"
 
 Actor::Actor(Engine* engine) :
 	EngineGuiContainer(engine),
@@ -150,7 +150,7 @@ PhysicShape*		Actor::addPlane(){
 }
 
 void    Actor::deleteAllJoints() {
-	std::vector<EngineJoint*>::iterator  mJointsIterator;
+	std::vector<Joint*>::iterator  mJointsIterator;
 	for (mJointsIterator = mJoints.begin(); 
 		mJointsIterator != mJoints.end(); ++mJointsIterator) {
 		delete (*mJointsIterator);
@@ -158,8 +158,8 @@ void    Actor::deleteAllJoints() {
 	mJoints.clear();
 }
 
-void    Actor::deleteJoint(EngineJoint* joint) {
-	std::vector<EngineJoint*>::iterator  mJointsIterator;
+void    Actor::deleteJoint(Joint* joint) {
+	std::vector<Joint*>::iterator  mJointsIterator;
 	for (mJointsIterator = mJoints.begin(); 
 		mJointsIterator != mJoints.end(); ++mJointsIterator) {
 		if ( (*mJointsIterator) == joint ){
@@ -174,11 +174,11 @@ int     Actor::howManyJoints() {
 	return mJoints.size();
 }
 
-void    Actor::addJoint(EngineJoint* joint){
+void    Actor::addJoint(Joint* joint){
 	mJoints.push_back(joint);
 }
 
-EngineJoint*  Actor::getJoint(int index) {
+Joint*  Actor::getJoint(int index) {
 	return mJoints[index];
 }
 

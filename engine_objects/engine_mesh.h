@@ -16,7 +16,7 @@ class Actor;
 struct BoneBody {
 	Bone*		bone;
 	Actor*	body;
-	EngineJoint*joint;
+	Joint*joint;
 	EngineGuiContainer* container;
 	BoneBody(Bone* b) : bone(b),body(0),joint(0), container(0) {}
 };
@@ -40,10 +40,10 @@ class EngineMesh : public EngineGuiShape {
 		void			boneSetOrientation(Bone* bone,Quat quat,bool rotated=true);
 
 		Actor*		getBodyOfBone(Bone* bone);
-		EngineJoint*	getJointOfBone(Bone* bone);
+		Joint*	getJointOfBone(Bone* bone);
 		Bone*			getBoneOfBody(Actor* body);
 		void			setBodyForBone(Bone* bone,Actor* body);
-		void			setJointForBone(Bone* bone,EngineJoint* joint);
+		void			setJointForBone(Bone* bone,Joint* joint);
 		Bone*			getBoneFromName(std::string boneName);
 		Bone*			getRootBone(){return mRootBone;}
 
@@ -58,14 +58,14 @@ class EngineMesh : public EngineGuiShape {
 		std::string		getFileName(){return mMeshFileName;}
 		int				getNumberOfBones();
 		Actor*		getBodyByIndex(int);
-		EngineJoint*	getJointByIndex(int);
+		Joint*	getJointByIndex(int);
 		std::string		getBoneNameByIndex(int);	
 
 		Actor*		getBodyOfBoneName(std::string);
-		EngineJoint*	getJointOfBoneName(std::string);
+		Joint*	getJointOfBoneName(std::string);
 
 		void			setBodyForBoneName(std::string,Actor*);
-		void			setJointForBoneName(std::string,EngineJoint*);
+		void			setJointForBoneName(std::string,Joint*);
 
 		Vec3			getBoneNamePosition(std::string);
 		Quat			getBoneNameOrientation(std::string,bool rotated=true);

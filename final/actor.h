@@ -15,7 +15,7 @@ class Joint;
 class Actor : public EngineGuiContainer {
 
 	protected:
-		std::vector<EngineJoint*>    mJoints;
+		std::vector<Joint*>    mJoints;
 
     public:
         Actor(Engine*);
@@ -66,10 +66,10 @@ class Actor : public EngineGuiContainer {
 
 
 		virtual void    deleteAllJoints();
-		virtual void    deleteJoint(EngineJoint* joint);
+		virtual void    deleteJoint(Joint* joint);
 		virtual int     howManyJoints();
-		virtual void    addJoint(EngineJoint* joint);
-		virtual EngineJoint*  getJoint(int index);
+		virtual void    addJoint(Joint* joint);
+		virtual Joint*  getJoint(int index);
 
 
 		virtual	void	removeFromScene();

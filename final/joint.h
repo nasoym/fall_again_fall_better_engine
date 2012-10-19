@@ -58,7 +58,7 @@ class Joint : public EngineGuiContainer {
         Vec3        getAnchor1Size();
         Vec3        getAnchor2Size();
         
-		//virtual Joint*			isJoint(){return this;}
+		virtual Joint*			isJoint(){return this;}
 		virtual ObjectType		getType(){ return JOINT;}
 
     protected:

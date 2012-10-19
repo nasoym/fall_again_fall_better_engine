@@ -23,7 +23,7 @@ using namespace boost::python;
 
 #include "engine_box.h"
 
-#include "engine_joint.h"
+#include "joint.h"
 #include "engine_mesh.h"
 
 #include "actor.h"
@@ -318,37 +318,37 @@ BOOST_PYTHON_MODULE(EngineModule) {
 
 		;
 
-	class_<EngineJoint,bases<EngineGuiContainer> >("EngineJoint", init<Engine*,Actor*,Actor*>())
-		.def("setAnchor1Size",&EngineJoint::setAnchor1Size)
-		.def("setAnchor2Size",&EngineJoint::setAnchor2Size)
-		.def("setAnchor1",&EngineJoint::setAnchor1)
-		.def("setAnchor2",&EngineJoint::setAnchor2)
-		.def("setAnchor1Orientation",&EngineJoint::setAnchor1Orientation)
-		.def("setAnchor2Orientation",&EngineJoint::setAnchor2Orientation)
-		.def("getAnchor1",&EngineJoint::getAnchor1)
-		.def("getAnchor2",&EngineJoint::getAnchor2)
-		.def("getAnchor1Size",&EngineJoint::getAnchor1Size)
-		.def("getAnchor2Size",&EngineJoint::getAnchor2Size)
-		.def("getAnchor1Orientation",&EngineJoint::getAnchor1Orientation)
-		.def("getAnchor2Orientation",&EngineJoint::getAnchor2Orientation)
-		.def("setLimits",&EngineJoint::setLimits)
-		.def("getYLimit",&EngineJoint::getYLimit)
-		.def("getZLimit",&EngineJoint::getZLimit)
-		.def("setMotorOn",&EngineJoint::setMotorOn)
-		.def("setMotorOff",&EngineJoint::setMotorOff)
-		.def("isMotorOn",&EngineJoint::isMotorOn)
-		.def("setMotorTarget",&EngineJoint::setMotorTarget)
-		.def("getMotorTarget",&EngineJoint::getMotorTarget)
-		.def("getBody1",&EngineJoint::getBody1,return_value_policy<reference_existing_object>() )
-		.def("getBody2",&EngineJoint::getBody2,return_value_policy<reference_existing_object>() )
+	class_<Joint,bases<EngineGuiContainer> >("Joint", init<Engine*,Actor*,Actor*>())
+		.def("setAnchor1Size",&Joint::setAnchor1Size)
+		.def("setAnchor2Size",&Joint::setAnchor2Size)
+		.def("setAnchor1",&Joint::setAnchor1)
+		.def("setAnchor2",&Joint::setAnchor2)
+		.def("setAnchor1Orientation",&Joint::setAnchor1Orientation)
+		.def("setAnchor2Orientation",&Joint::setAnchor2Orientation)
+		.def("getAnchor1",&Joint::getAnchor1)
+		.def("getAnchor2",&Joint::getAnchor2)
+		.def("getAnchor1Size",&Joint::getAnchor1Size)
+		.def("getAnchor2Size",&Joint::getAnchor2Size)
+		.def("getAnchor1Orientation",&Joint::getAnchor1Orientation)
+		.def("getAnchor2Orientation",&Joint::getAnchor2Orientation)
+		.def("setLimits",&Joint::setLimits)
+		.def("getYLimit",&Joint::getYLimit)
+		.def("getZLimit",&Joint::getZLimit)
+		.def("setMotorOn",&Joint::setMotorOn)
+		.def("setMotorOff",&Joint::setMotorOff)
+		.def("isMotorOn",&Joint::isMotorOn)
+		.def("setMotorTarget",&Joint::setMotorTarget)
+		.def("getMotorTarget",&Joint::getMotorTarget)
+		.def("getBody1",&Joint::getBody1,return_value_policy<reference_existing_object>() )
+		.def("getBody2",&Joint::getBody2,return_value_policy<reference_existing_object>() )
 
-		.def("setMotorValues",&EngineJoint::setMotorValues)
+		.def("setMotorValues",&Joint::setMotorValues)
 
 
-		.def("dsetMotorSpring",&EngineJoint::dsetMotorSpring)
-		.def("dsetMotorDamping",&EngineJoint::dsetMotorDamping)
-		.def("dsetMotorAccel",&EngineJoint::dsetMotorAccel)
-		.def("dsetContactDistance",&EngineJoint::dsetContactDistance)
+		.def("dsetMotorSpring",&Joint::dsetMotorSpring)
+		.def("dsetMotorDamping",&Joint::dsetMotorDamping)
+		.def("dsetMotorAccel",&Joint::dsetMotorAccel)
+		.def("dsetContactDistance",&Joint::dsetContactDistance)
 
 		;
 

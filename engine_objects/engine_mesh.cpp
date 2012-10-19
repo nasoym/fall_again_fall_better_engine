@@ -3,7 +3,7 @@
 #include "engine_mesh.h"
 #include "engine.h"
 
-#include "engine_joint.h"
+#include "joint.h"
 #include "engine_gui_shape.h"
 #include "engine_gui_container.h"
 
@@ -40,7 +40,7 @@ Actor*		EngineMesh::getBodyByIndex(int index){
 	return mBoneBodies[index].body;
 }
 
-EngineJoint*	EngineMesh::getJointByIndex(int index){
+Joint*	EngineMesh::getJointByIndex(int index){
 	return mBoneBodies[index].joint;
 }
 
@@ -82,7 +82,7 @@ void	EngineMesh::updateBone(Bone* bone){
 	if (body) {
 		boneSetOrientation(bone, body->getOrientation());
 		Vec3	localPos = Vec3();
-		EngineJoint* joint = getJointOfBone(bone);
+		Joint* joint = getJointOfBone(bone);
 		if (joint) {
 			localPos = body->getOrientation() * joint->getAnchor2();
 		} else {
@@ -175,7 +175,7 @@ void	EngineMesh::setBodyForBone(Bone* bone,Actor* body){
 	}
 }
 
-void	EngineMesh::setJointForBone(Bone* bone,EngineJoint* joint){
+void	EngineMesh::setJointForBone(Bone* bone,Joint* joint){
 	std::vector<BoneBody>::iterator	iter;
 	for(iter=mBoneBodies.begin();iter!=mBoneBodies.end();++iter){
 		if ((*iter).bone == bone) {
@@ -275,7 +275,7 @@ EngineGuiContainer*	EngineMesh::getContainerOfBone(Bone* bone) {
 	return 0;
 }
 
-EngineJoint*	EngineMesh::getJointOfBone(Bone* bone) {
+Joint*	EngineMesh::getJointOfBone(Bone* bone) {
 	std::vector<BoneBody>::iterator	iter;
 	for(iter=mBoneBodies.begin();iter!=mBoneBodies.end();++iter){
 		if ( (*iter).bone == bone) {
@@ -350,7 +350,7 @@ void			EngineMesh::setBodyForBoneName(std::string boneName,Actor* body){
 	}
 }
 
-void			EngineMesh::setJointForBoneName(std::string boneName,EngineJoint* joint){
+void			EngineMesh::setJointForBoneName(std::string boneName,Joint* joint){
 	std::vector<BoneBody>::iterator	iter;
 	for(iter=mBoneBodies.begin();iter!=mBoneBodies.end();++iter){
 	    if( (*iter).bone->getName().compare(boneName) == 0 ) {
@@ -368,7 +368,7 @@ Actor*		EngineMesh::getBodyOfBoneName(std::string boneName){
 	return 0;
 }
 
-EngineJoint*	EngineMesh::getJointOfBoneName(std::string boneName){
+Joint*	EngineMesh::getJointOfBoneName(std::string boneName){
 	Bone* bone = getBoneFromName(boneName);	
 	if (bone) {
 		return getJointOfBone(bone);

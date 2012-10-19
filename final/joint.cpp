@@ -15,8 +15,8 @@ Joint::Joint(Engine* engine,Actor* actor1,Actor* actor2):
     {
     createJoint();
 
-    //mActor1->addJoint(this);
-    //mActor2->addJoint(this);
+    mActor1->addJoint(this);
+    mActor2->addJoint(this);
 	//body1->addJoint(this);
 	//body2->addJoint(this);
 }

@@ -9,7 +9,6 @@ class Engine;
 
 class EngineGuiShape;
 class EngineGuiContainer;
-class EngineJoint;
 class EngineMesh;
 class EngineBox;
 class Actor;
@@ -58,7 +57,6 @@ class EngineObject {
 
 		virtual EngineGuiShape*			isGuiShape(){return 0;}
 		virtual EngineGuiContainer*		isGuiContainer(){return 0;}
-		virtual EngineJoint*			isJoint(){return 0;}
 		virtual EngineMesh*				isMesh(){return 0;}
 		virtual EngineBox*				isBox(){return 0;}
 		virtual Actor*					isActor(){return 0;}
@@ -66,7 +64,7 @@ class EngineObject {
 		virtual PhysicShape*			isPhysicShape(){return 0;}
 		virtual Articulation*			isArticulation(){return 0;}
 		virtual StaticActor*			isStaticActor(){return 0;}
-		//virtual Joint*					isJoint(){return 0;}
+		virtual Joint*					isJoint(){return 0;}
 
 		void			setSelectable(){mSelectable=true;}
 		void			setUnselectable(){mSelectable=false;}

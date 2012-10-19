@@ -2,7 +2,7 @@
 #include "engine.h"
 
 #include "engine_gui_shape.h"
-#include "engine_joint.h"
+#include "joint.h"
 #include "engine_object.h"
 #include "engine_mesh.h"
 #include "engine_box.h"
@@ -33,7 +33,7 @@ EngineObject*	Engine::createMesh(const char* meshName){
 
 EngineObject*	Engine::createJoint(EngineObject* obj1,EngineObject* obj2){
 	if (obj1->isActor() && obj2->isActor() ) {
-		EngineJoint* engineObject = new EngineJoint(this,obj1->isActor(),obj2->isActor());
+		Joint* engineObject = new Joint(this,obj1->isActor(),obj2->isActor());
 		return engineObject;
 	}
 	return 0;

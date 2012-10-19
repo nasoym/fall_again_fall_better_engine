@@ -1,3 +1,4 @@
+/*
 #ifndef _ENGINE_JOINT_H
 #define _ENGINE_JOINT_H
 
@@ -67,4 +68,4 @@ class EngineJoint : public EngineGuiContainer {
 		Actor*		mBody2;
 };
 #endif
-
+*/
