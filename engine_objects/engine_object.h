@@ -7,10 +7,10 @@
 
 class Engine;
 
-class EngineGuiShape;
-class EngineGuiContainer;
-class EngineMesh;
-class EngineBox;
+class GuiShape;
+class GuiContainer;
+class MeshObject;
+class GuiCube;
 class Actor;
 class PhysicShape;
 class DynamicActor;
@@ -55,10 +55,10 @@ class EngineObject {
 		virtual void	guiUpdate(){}
 		virtual void	physicUpdate(){}
 
-		virtual EngineGuiShape*			isGuiShape(){return 0;}
-		virtual EngineGuiContainer*		isGuiContainer(){return 0;}
-		virtual EngineMesh*				isMesh(){return 0;}
-		virtual EngineBox*				isBox(){return 0;}
+		virtual GuiShape*			isGuiShape(){return 0;}
+		virtual GuiContainer*		isGuiContainer(){return 0;}
+		virtual MeshObject*				isMesh(){return 0;}
+		virtual GuiCube*				isBox(){return 0;}
 		virtual Actor*					isActor(){return 0;}
 		virtual DynamicActor*			isDynamicActor(){return 0;}
 		virtual PhysicShape*			isPhysicShape(){return 0;}

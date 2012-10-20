@@ -3,11 +3,11 @@
 #include <Ogre.h>
 using namespace Ogre;
 
-#include "engine_box.h"
+#include "gui_cube.h"
 #include "engine.h"
 
-EngineBox::EngineBox(Engine* engine) :
-	EngineGuiShape(engine)
+GuiCube::GuiCube(Engine* engine) :
+	GuiShape(engine)
 	{
 
     setEntity(getEngine()->getSceneManager()->createEntity("Prefab_Cube"));

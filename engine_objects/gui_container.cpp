@@ -1,10 +1,10 @@
 #include "logger.h"
 
 #include "engine.h"
-#include "engine_gui_container.h"
-#include "engine_gui_shape.h"
+#include "gui_container.h"
+#include "gui_shape.h"
 
-EngineGuiContainer::EngineGuiContainer(Engine* engine) :
+GuiContainer::GuiContainer(Engine* engine) :
 	EngineObject(engine),
 	mPosition(Vec3()),
 	mOrientation(Quat()),
@@ -12,32 +12,32 @@ EngineGuiContainer::EngineGuiContainer(Engine* engine) :
 	{
 }
 
-EngineGuiContainer::~EngineGuiContainer(){
+GuiContainer::~GuiContainer(){
 
 }
 
-EngineGuiShape*		EngineGuiContainer::getShapeByIndex(int index){
+GuiShape*		GuiContainer::getShapeByIndex(int index){
 	//Logger::debug(format("get shape by index : %1%") % index);
 	return mShapes[index];
 }
 
-void				EngineGuiContainer::selectShow(){
-	std::vector<EngineGuiShape*>::iterator	iter;
+void				GuiContainer::selectShow(){
+	std::vector<GuiShape*>::iterator	iter;
 	for(iter=mShapes.begin();iter!=mShapes.end();++iter){
 		(*iter)->selectShow();
 	}
 }
 
-void				EngineGuiContainer::selectHide(){
-	std::vector<EngineGuiShape*>::iterator	iter;
+void				GuiContainer::selectHide(){
+	std::vector<GuiShape*>::iterator	iter;
 	for(iter=mShapes.begin();iter!=mShapes.end();++iter){
 		(*iter)->selectHide();
 	}
 }
 
-bool				EngineGuiContainer::hasShape(EngineGuiShape* shape){
+bool				GuiContainer::hasShape(GuiShape* shape){
 	bool hasShape = false;
-	std::vector<EngineGuiShape*>::iterator	iter;
+	std::vector<GuiShape*>::iterator	iter;
 	for(iter=mShapes.begin();iter!=mShapes.end();++iter){
 		if ( (*iter) == shape ) {
 			hasShape = true;
@@ -47,9 +47,9 @@ bool				EngineGuiContainer::hasShape(EngineGuiShape* shape){
 	return hasShape;
 }
 
-EngineGuiShape*		EngineGuiContainer::getShapeByName(const char* name){
-	EngineGuiShape*	foundShape = 0;
-	std::vector<EngineGuiShape*>::iterator	iter;
+GuiShape*		GuiContainer::getShapeByName(const char* name){
+	GuiShape*	foundShape = 0;
+	std::vector<GuiShape*>::iterator	iter;
 	for(iter=mShapes.begin();iter!=mShapes.end();++iter){
 		//TODO right comparison 
 		//if ( (*iter)->getName() ) {
@@ -60,13 +60,13 @@ EngineGuiShape*		EngineGuiContainer::getShapeByName(const char* name){
 	return foundShape;
 }
 
-void	EngineGuiContainer::addShape(EngineGuiShape* shape){
+void	GuiContainer::addShape(GuiShape* shape){
 	mShapes.push_back(shape);
 	shape->setContainer(this);
 }
 
-void	EngineGuiContainer::removeShape(EngineGuiShape* shape){
-	std::vector<EngineGuiShape*>::iterator	iter;
+void	GuiContainer::removeShape(GuiShape* shape){
+	std::vector<GuiShape*>::iterator	iter;
 	for(iter=mShapes.begin();iter!=mShapes.end();++iter){
 		if ( (*iter) == shape ) {
 			//TODO erase iter
@@ -75,36 +75,36 @@ void	EngineGuiContainer::removeShape(EngineGuiShape* shape){
 	}
 }
 
-int     EngineGuiContainer::howManyShapes() {
+int     GuiContainer::howManyShapes() {
 	return mShapes.size();
 }
 
-void        EngineGuiContainer::setPosition(Vec3& vec3){
-	std::vector<EngineGuiShape*>::iterator	iter;
+void        GuiContainer::setPosition(Vec3& vec3){
+	std::vector<GuiShape*>::iterator	iter;
 	for(iter=mShapes.begin();iter!=mShapes.end();++iter){
 		(*iter)->setPosition(vec3);
 	}
 	mPosition = vec3;
 }
 
-void        EngineGuiContainer::setOrientation(Quat& quat){
-	std::vector<EngineGuiShape*>::iterator	iter;
+void        GuiContainer::setOrientation(Quat& quat){
+	std::vector<GuiShape*>::iterator	iter;
 	for(iter=mShapes.begin();iter!=mShapes.end();++iter){
 		(*iter)->setOrientation(quat);
 	}
 	mOrientation = quat;
 }
 
-void        EngineGuiContainer::setSize(Vec3& vec3){
-	std::vector<EngineGuiShape*>::iterator	iter;
+void        GuiContainer::setSize(Vec3& vec3){
+	std::vector<GuiShape*>::iterator	iter;
 	for(iter=mShapes.begin();iter!=mShapes.end();++iter){
 		(*iter)->setSize(vec3);
 	}
 	mSize = vec3;
 }
 
-void	EngineGuiContainer::addDebugAxises(float debugSize, float debugWidth){
-	EngineGuiShape* shape;
+void	GuiContainer::addDebugAxises(float debugSize, float debugWidth){
+	GuiShape* shape;
 	shape = getEngine()->createGuiBox()->isGuiShape();
 	shape->setColour(1,0,0,0.5f);
 	shape->setLocalSize(Vec3(debugSize,debugWidth,debugWidth));

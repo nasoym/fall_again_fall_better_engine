@@ -1,5 +1,5 @@
-#ifndef _ENGINE_GUI_CONTAINER_H
-#define _ENGINE_GUI_CONTAINER_H
+#ifndef _GUI_CONTAINER_H
+#define _GUI_CONTAINER_H
 
 class Engine;
 
@@ -9,10 +9,10 @@ class Engine;
 
 #include <vector>
 
-class EngineGuiContainer : public EngineObject {
+class GuiContainer : public EngineObject {
     public:
-        EngineGuiContainer(Engine*);
-        ~EngineGuiContainer();
+        GuiContainer(Engine*);
+        ~GuiContainer();
 
 		virtual void        setPosition(Vec3& vec3);
 		virtual Vec3    	getPosition(){return mPosition;}
@@ -23,24 +23,24 @@ class EngineGuiContainer : public EngineObject {
 		virtual void        setSize(Vec3& vec3);
 		virtual Vec3    	getSize(){return mSize;}
 
-		EngineGuiShape*		getShapeByIndex(int);
-		EngineGuiShape*		getShapeByName(const char*);
-		void				addShape(EngineGuiShape*);
-		void				removeShape(EngineGuiShape*);
-		bool				hasShape(EngineGuiShape*);
+		GuiShape*		getShapeByIndex(int);
+		GuiShape*		getShapeByName(const char*);
+		void				addShape(GuiShape*);
+		void				removeShape(GuiShape*);
+		bool				hasShape(GuiShape*);
 		int     			howManyShapes();
 
 		void				addDebugAxises(float debugSize=5.0, float debugWidth=0.5);
 		//void				addDebugAxises(float,float);
 
-		virtual EngineGuiContainer*		isGuiContainer(){return this;}
+		virtual GuiContainer*		isGuiContainer(){return this;}
 		virtual ObjectType		getType(){ return GUICONTAINER;}
 
 		void				selectShow();
 		void				selectHide();
 
 	protected:
-		std::vector<EngineGuiShape*>	mShapes;
+		std::vector<GuiShape*>	mShapes;
 	private:
 
 		Vec3		mPosition;

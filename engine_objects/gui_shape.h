@@ -1,12 +1,12 @@
 
-#ifndef _ENGINE_GUI_SHAPE_H
-#define _ENGINE_GUI_SHAPE_H
+#ifndef _GUI_SHAPE_H
+#define _GUI_SHAPE_H
 
 #include <Ogre.h>
 using namespace Ogre;
 
 class Engine;
-class EngineGuiContainer;
+class GuiContainer;
 
 #include "engine_object.h"
 
@@ -21,10 +21,10 @@ enum GuiScaling {
 	SCALING
 };
 
-class EngineGuiShape : public EngineObject {
+class GuiShape : public EngineObject {
     public:
-        EngineGuiShape(Engine* engine);
-        virtual ~EngineGuiShape();
+        GuiShape(Engine* engine);
+        virtual ~GuiShape();
 
 		virtual void        setPosition(Vec3& vec3);
 		virtual Vec3    	getPosition();
@@ -35,7 +35,7 @@ class EngineGuiShape : public EngineObject {
 		virtual void        setSize(Vec3& vec3);
 		virtual Vec3    	getSize();
 
-		virtual EngineGuiShape*			isGuiShape(){return this;}
+		virtual GuiShape*			isGuiShape(){return this;}
 		virtual ObjectType		getType(){ return GUISHAPE;}
 
 		void	setMaterialName(const char* name);
@@ -56,8 +56,8 @@ class EngineGuiShape : public EngineObject {
 		virtual void        setLocalSize(Vec3& vec3); //{mLocalSize = vec3;}
 		virtual Vec3    	getLocalSize(){return mLocalSize;}
 
-		void				setContainer(EngineGuiContainer* container);
-		EngineGuiContainer* getContainer();
+		void				setContainer(GuiContainer* container);
+		GuiContainer* getContainer();
 
 		void			setScalingFixed(){mScalingType=FIX;}
 		void			setScalingNone(){mScalingType=NONE;}
@@ -114,7 +114,7 @@ class EngineGuiShape : public EngineObject {
 		Vec3				mLocalPosition;
 		Quat				mLocalOrientation;
 
-		EngineGuiContainer*	mContainer;
+		GuiContainer*	mContainer;
 		GuiScaling			mScalingType;
 
 		std::string			mMaterialName;

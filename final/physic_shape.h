@@ -7,7 +7,7 @@ using namespace physx;
 class Engine;
 class Actor;
 
-#include "engine_gui_shape.h"
+#include "gui_shape.h"
 
 #include <Ogre.h>
 using namespace Ogre;
@@ -16,7 +16,7 @@ using namespace Ogre;
 #include "Procedural.h"
 
 
-class PhysicShape : public EngineGuiShape {
+class PhysicShape : public GuiShape {
 	private:
 		enum ShapeType {
 			NOP,

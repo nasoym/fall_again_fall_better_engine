@@ -6,7 +6,7 @@
 #include <vector>
 #include "boost/assign.hpp"
 
-#include "engine_gui_shape.h"
+#include "gui_shape.h"
 
 //OIS::MouseButtonID
 //std::map<int,Keys> keyList = 

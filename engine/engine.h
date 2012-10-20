@@ -198,9 +198,9 @@ class Engine : public WindowEventListener,
 		//TODO set windows params
 		void 		setupStereo();
 		void 		closeStereo();
-		EngineGuiShape*			getGuiShapeOfMovable(MovableObject* movable);
+		GuiShape*			getGuiShapeOfMovable(MovableObject* movable);
 		boost::python::list		getMouseQuery();
-		EngineObject*			getObjectOfShape(EngineGuiShape* shape);
+		EngineObject*			getObjectOfShape(GuiShape* shape);
 
 		std::string				createUuid();
 		unsigned long			getTime(){return mCurrentTime;}

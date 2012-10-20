@@ -1,18 +1,18 @@
 #include "logger.h"
 #include "engine.h"
 
-#include "engine_gui_shape.h"
+#include "gui_shape.h"
 #include "joint.h"
 #include "engine_object.h"
-#include "engine_mesh.h"
-#include "engine_box.h"
+#include "mesh.h"
+#include "gui_cube.h"
 
 #include "articulation.h"
 #include "dynamic_actor.h"
 #include "static_actor.h"
 
 EngineObject*	Engine::createGuiBox(){
-	return new EngineBox(this);
+	return new GuiCube(this);
 }
 
 Articulation*	Engine::createArticulation(){
@@ -28,7 +28,7 @@ StaticActor*	Engine::createStaticActor(){
 }
 
 EngineObject*	Engine::createMesh(const char* meshName){
-	return new EngineMesh(this,meshName);
+	return new MeshObject(this,meshName);
 }
 
 EngineObject*	Engine::createJoint(EngineObject* obj1,EngineObject* obj2){

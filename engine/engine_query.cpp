@@ -2,15 +2,15 @@
 #include "engine_keys.h"
 #include "engine.h"
 
-#include "engine_gui_shape.h"
-#include "engine_gui_container.h"
+#include "gui_shape.h"
+#include "gui_container.h"
 
 #include <boost/python/list.hpp>
 #include <boost/python/tuple.hpp>
 
-EngineObject*	Engine::getObjectOfShape(EngineGuiShape* shape) {
+EngineObject*	Engine::getObjectOfShape(GuiShape* shape) {
 	EngineObject*	engineObject;
-	EngineGuiContainer*	engineGuiContainer;
+	GuiContainer*	engineGuiContainer;
 	std::vector<EngineObject*>::iterator  mIterator;
 	for (mIterator = mObjects.begin(); 
 		mIterator != mObjects.end(); ++mIterator) {
@@ -25,9 +25,9 @@ EngineObject*	Engine::getObjectOfShape(EngineGuiShape* shape) {
 	return shape;
 }
 
-EngineGuiShape*	Engine::getGuiShapeOfMovable(MovableObject* movable) {
+GuiShape*	Engine::getGuiShapeOfMovable(MovableObject* movable) {
 	EngineObject*	engineObject;
-	EngineGuiShape*	engineGuiShape;
+	GuiShape*	engineGuiShape;
 	std::vector<EngineObject*>::iterator  mIterator;
 	for (mIterator = mObjects.begin(); 
 		mIterator != mObjects.end(); ++mIterator) {
@@ -55,7 +55,7 @@ boost::python::list	Engine::getMouseQuery(){
 	RaySceneQueryResult::iterator rayIterator;
 
 	boost::python::list		queryList;
-	EngineGuiShape*	shape;
+	GuiShape*	shape;
  
 	for(rayIterator = result.begin(); rayIterator != result.end(); rayIterator++ ) {
 		RaySceneQueryResultEntry& curEntry = *rayIterator;

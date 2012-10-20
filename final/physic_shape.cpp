@@ -5,7 +5,7 @@
 #include "actor.h"
 
 PhysicShape::PhysicShape(Engine* engine,Actor* actor,PxShape* shape) :
-	EngineGuiShape(engine),
+	GuiShape(engine),
 	mShape(shape),
 	mActor(actor),
 	mMesh(0),
@@ -115,7 +115,7 @@ void        PhysicShape::setLocalPosition(Vec3& vec3){
     t.p.y = vec3.Y();
     t.p.z = vec3.Z();
     mShape->setLocalPose(t);
-	EngineGuiShape::setLocalPosition(vec3);
+	GuiShape::setLocalPosition(vec3);
 	mActor->resetMass();
 	mActor->wakeUp();
 }
@@ -132,7 +132,7 @@ void        PhysicShape::setLocalOrientation(Quat& quat){
     t.q.z = quat.Z();
     t.q.w = quat.W();
     mShape->setLocalPose(t);
-	EngineGuiShape::setLocalOrientation(quat);
+	GuiShape::setLocalOrientation(quat);
 	mActor->resetMass();
 	mActor->wakeUp();
 }
@@ -146,11 +146,11 @@ void        PhysicShape::setLocalSize(Vec3& vec3){
 	switch(mShape->getGeometryType()){
 		case PxGeometryType::eBOX:
 			mShape->setGeometry(PxBoxGeometry(vec3.toPhysx()));
-			EngineGuiShape::setLocalSize(vec3);
+			GuiShape::setLocalSize(vec3);
 			break;
 		case PxGeometryType::eSPHERE:
 			mShape->setGeometry(PxSphereGeometry(vec3.x));
-			EngineGuiShape::setLocalSize(vec3);
+			GuiShape::setLocalSize(vec3);
 			break;
 		case PxGeometryType::eCAPSULE:
 			mShape->setGeometry(PxCapsuleGeometry(vec3.y,vec3.x));
@@ -159,7 +159,7 @@ void        PhysicShape::setLocalSize(Vec3& vec3){
 			mLocalSize = vec3;
 			break;
 		case PxGeometryType::ePLANE:
-			EngineGuiShape::setLocalSize(vec3);
+			GuiShape::setLocalSize(vec3);
 			break;
 	}
 	mActor->resetMass();
@@ -195,7 +195,7 @@ Vec3    	PhysicShape::getLocalSize(){
 			}
 			break;
 		case PxGeometryType::ePLANE:
-			return EngineGuiShape::getLocalSize();
+			return GuiShape::getLocalSize();
 	}
 	return Vec3();
 }

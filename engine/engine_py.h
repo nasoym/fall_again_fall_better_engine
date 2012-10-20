@@ -18,13 +18,13 @@ using namespace boost::python;
 #include "engine.h"
 
 #include "engine_object.h"
-#include "engine_gui_shape.h"
-#include "engine_gui_container.h"
+#include "gui_shape.h"
+#include "gui_container.h"
 
-#include "engine_box.h"
+#include "gui_cube.h"
 
 #include "joint.h"
-#include "engine_mesh.h"
+#include "mesh.h"
 
 #include "actor.h"
 #include "dynamic_actor.h"
@@ -121,77 +121,77 @@ BOOST_PYTHON_MODULE(EngineModule) {
 		.def("isSelectable",&EngineObject::isSelectable)
 		;
 
-    class_<EngineGuiShape, bases<EngineObject> >("EngineGuiShape", init<Engine*>())
-		.def("setPosition",&EngineGuiShape::setPosition)
-		.def("getPosition",&EngineGuiShape::getPosition)
-		.def("setOrientation",&EngineGuiShape::setOrientation)
-		.def("getOrientation",&EngineGuiShape::getOrientation)
-		.def("setSize",&EngineGuiShape::setSize)
-		.def("getSize",&EngineGuiShape::getSize)
+    class_<GuiShape, bases<EngineObject> >("GuiShape", init<Engine*>())
+		.def("setPosition",&GuiShape::setPosition)
+		.def("getPosition",&GuiShape::getPosition)
+		.def("setOrientation",&GuiShape::setOrientation)
+		.def("getOrientation",&GuiShape::getOrientation)
+		.def("setSize",&GuiShape::setSize)
+		.def("getSize",&GuiShape::getSize)
 
-		.def("setMaterialName",&EngineGuiShape::setMaterialName)
-		.def("setColour",&EngineGuiShape::setColour)
+		.def("setMaterialName",&GuiShape::setMaterialName)
+		.def("setColour",&GuiShape::setColour)
 
-		.def("setScalingNone",&EngineGuiShape::setScalingNone)
-		.def("setScaling1To1",&EngineGuiShape::setScaling1To1)
-		.def("setScalingScaling",&EngineGuiShape::setScalingScaling)
-		.def("setScalingFixed",&EngineGuiShape::setScalingFixed)
+		.def("setScalingNone",&GuiShape::setScalingNone)
+		.def("setScaling1To1",&GuiShape::setScaling1To1)
+		.def("setScalingScaling",&GuiShape::setScalingScaling)
+		.def("setScalingFixed",&GuiShape::setScalingFixed)
 
-		.def("isScalingFixed",&EngineGuiShape::isScalingFixed)
-		.def("isScalingNone",&EngineGuiShape::isScalingNone)
-		.def("isScaling1To1",&EngineGuiShape::isScaling1To1)
-		.def("isScalingScaling",&EngineGuiShape::isScalingScaling)
+		.def("isScalingFixed",&GuiShape::isScalingFixed)
+		.def("isScalingNone",&GuiShape::isScalingNone)
+		.def("isScaling1To1",&GuiShape::isScaling1To1)
+		.def("isScalingScaling",&GuiShape::isScalingScaling)
 
-		.def("setLocalPosition",&EngineGuiShape::setLocalPosition)
-		.def("getLocalPosition",&EngineGuiShape::getLocalPosition)
-		.def("setLocalOrientation",&EngineGuiShape::setLocalOrientation)
-		.def("getLocalOrientation",&EngineGuiShape::getLocalOrientation)
-		.def("setLocalSize",&EngineGuiShape::setLocalSize)
-		.def("getLocalSize",&EngineGuiShape::getLocalSize)
+		.def("setLocalPosition",&GuiShape::setLocalPosition)
+		.def("getLocalPosition",&GuiShape::getLocalPosition)
+		.def("setLocalOrientation",&GuiShape::setLocalOrientation)
+		.def("getLocalOrientation",&GuiShape::getLocalOrientation)
+		.def("setLocalSize",&GuiShape::setLocalSize)
+		.def("getLocalSize",&GuiShape::getLocalSize)
 
-		.def("getMaterialName",&EngineGuiShape::getMaterialName)
-		.def("hasColour",&EngineGuiShape::hasColour)
-		.def("getAlpha",&EngineGuiShape::getAlpha)
-		.def("getColour",&EngineGuiShape::getColour)
+		.def("getMaterialName",&GuiShape::getMaterialName)
+		.def("hasColour",&GuiShape::hasColour)
+		.def("getAlpha",&GuiShape::getAlpha)
+		.def("getColour",&GuiShape::getColour)
 
-		.def("selectShow",&EngineGuiShape::selectShow)
-		.def("selectHide",&EngineGuiShape::selectHide)
-		.def("setCustomMaterial",&EngineGuiShape::setCustomMaterial)
+		.def("selectShow",&GuiShape::selectShow)
+		.def("selectHide",&GuiShape::selectHide)
+		.def("setCustomMaterial",&GuiShape::setCustomMaterial)
 
-		.def("isFinalShape",&EngineGuiShape::isFinalShape)
-		.def("setFinalShape",&EngineGuiShape::setFinalShape)
-		.def("setNonFinalShape",&EngineGuiShape::setNonFinalShape)
+		.def("isFinalShape",&GuiShape::isFinalShape)
+		.def("setFinalShape",&GuiShape::setFinalShape)
+		.def("setNonFinalShape",&GuiShape::setNonFinalShape)
 
-		.def("hide",&EngineGuiShape::hide)
-		.def("show",&EngineGuiShape::show)
+		.def("hide",&GuiShape::hide)
+		.def("show",&GuiShape::show)
 
-		.def("turnOffShadows",&EngineGuiShape::turnOffShadows)
-		.def("turnOnShadows",&EngineGuiShape::turnOnShadows)
-		.def("getCastShadows",&EngineGuiShape::getCastShadows)
+		.def("turnOffShadows",&GuiShape::turnOffShadows)
+		.def("turnOnShadows",&GuiShape::turnOnShadows)
+		.def("getCastShadows",&GuiShape::getCastShadows)
 
 
 		;
 
-    class_<EngineGuiContainer, bases<EngineObject> >("EngineGuiContainer", init<Engine*>())
-		.def("setPosition",&EngineGuiContainer::setPosition)
-		.def("getPosition",&EngineGuiContainer::getPosition)
-		.def("setOrientation",&EngineGuiContainer::setOrientation)
-		.def("getOrientation",&EngineGuiContainer::getOrientation)
-		.def("setSize",&EngineGuiContainer::setSize)
-		.def("getSize",&EngineGuiContainer::getSize)
+    class_<GuiContainer, bases<EngineObject> >("GuiContainer", init<Engine*>())
+		.def("setPosition",&GuiContainer::setPosition)
+		.def("getPosition",&GuiContainer::getPosition)
+		.def("setOrientation",&GuiContainer::setOrientation)
+		.def("getOrientation",&GuiContainer::getOrientation)
+		.def("setSize",&GuiContainer::setSize)
+		.def("getSize",&GuiContainer::getSize)
 
-		.def("getShapeByIndex",&EngineGuiContainer::getShapeByIndex,return_value_policy<reference_existing_object>() )
-		.def("getShapeByName",&EngineGuiContainer::getShapeByName,return_value_policy<reference_existing_object>() )
-		.def("addShape",&EngineGuiContainer::addShape)
-		.def("removeShape",&EngineGuiContainer::removeShape)
-		.def("howManyShapes",&EngineGuiContainer::howManyShapes)
-		.def("addDebugAxises",&EngineGuiContainer::addDebugAxises)
+		.def("getShapeByIndex",&GuiContainer::getShapeByIndex,return_value_policy<reference_existing_object>() )
+		.def("getShapeByName",&GuiContainer::getShapeByName,return_value_policy<reference_existing_object>() )
+		.def("addShape",&GuiContainer::addShape)
+		.def("removeShape",&GuiContainer::removeShape)
+		.def("howManyShapes",&GuiContainer::howManyShapes)
+		.def("addDebugAxises",&GuiContainer::addDebugAxises)
 
-		.def("selectShow",&EngineGuiContainer::selectShow)
-		.def("selectHide",&EngineGuiContainer::selectHide)
+		.def("selectShow",&GuiContainer::selectShow)
+		.def("selectHide",&GuiContainer::selectHide)
 		;
 
-	class_<Actor,bases<EngineGuiContainer> >("Actor", init<Engine*>())
+	class_<Actor,bases<GuiContainer> >("Actor", init<Engine*>())
 		//.def("x",&Actor::x,return_value_policy<reference_existing_object>())
 		//.def("x",&Actor::x)
 		.def("addBox",&Actor::addBox,return_value_policy<reference_existing_object>())
@@ -260,7 +260,7 @@ BOOST_PYTHON_MODULE(EngineModule) {
 		.def("setTwistLimitDisabled",&Articulation::setTwistLimitDisabled)
 		;
 
-	class_<PhysicShape,bases<EngineGuiShape> >("PhysicShape",no_init)
+	class_<PhysicShape,bases<GuiShape> >("PhysicShape",no_init)
 		.def("isBoxShape",&PhysicShape::isBoxShape)
 		.def("isSphereShape",&PhysicShape::isSphereShape)
 		.def("isCapsuleShape",&PhysicShape::isCapsuleShape)
@@ -279,46 +279,46 @@ BOOST_PYTHON_MODULE(EngineModule) {
 		;
 
 
-	class_<EngineBox,bases<EngineGuiShape> >("EngineBox", init<Engine*>())
+	class_<GuiCube,bases<GuiShape> >("GuiCube", init<Engine*>())
 		;
 
-	class_<EngineMesh,bases<EngineGuiShape> >("EngineMesh", init<Engine*,const char*>())
-		.def("getFileName",&EngineMesh::getFileName)
-		.def("getNumberOfBones",&EngineMesh::getNumberOfBones)
-		.def("getBodyByIndex",&EngineMesh::getBodyByIndex,return_value_policy<reference_existing_object>())
-		.def("getJointByIndex",&EngineMesh::getJointByIndex,return_value_policy<reference_existing_object>())
-		.def("getBoneNameByIndex",&EngineMesh::getBoneNameByIndex)
-		.def("setBodyForBoneName",&EngineMesh::setBodyForBoneName)
-		.def("setJointForBoneName",&EngineMesh::setJointForBoneName)
+	class_<MeshObject,bases<GuiShape> >("MeshObject", init<Engine*,const char*>())
+		.def("getFileName",&MeshObject::getFileName)
+		.def("getNumberOfBones",&MeshObject::getNumberOfBones)
+		.def("getBodyByIndex",&MeshObject::getBodyByIndex,return_value_policy<reference_existing_object>())
+		.def("getJointByIndex",&MeshObject::getJointByIndex,return_value_policy<reference_existing_object>())
+		.def("getBoneNameByIndex",&MeshObject::getBoneNameByIndex)
+		.def("setBodyForBoneName",&MeshObject::setBodyForBoneName)
+		.def("setJointForBoneName",&MeshObject::setJointForBoneName)
 
-		.def("getBodyOfBoneName",&EngineMesh::getBodyOfBoneName,return_value_policy<reference_existing_object>())
-		.def("getJointOfBoneName",&EngineMesh::getJointOfBoneName,return_value_policy<reference_existing_object>())
-		.def("getBoneNamePosition",&EngineMesh::getBoneNamePosition)
-		.def("getBoneNameOrientation",&EngineMesh::getBoneNameOrientation)
-		.def("getBoneNameSize",&EngineMesh::getBoneNameSize)
-		.def("getBoneNameParentName",&EngineMesh::getBoneNameParentName)
-		.def("getBoneNameLocalPosition",&EngineMesh::getBoneNameLocalPosition)
-		.def("getBoneNameLocalOrientation",&EngineMesh::getBoneNameLocalOrientation)
-		.def("getMeshScale",&EngineMesh::getMeshScale)
+		.def("getBodyOfBoneName",&MeshObject::getBodyOfBoneName,return_value_policy<reference_existing_object>())
+		.def("getJointOfBoneName",&MeshObject::getJointOfBoneName,return_value_policy<reference_existing_object>())
+		.def("getBoneNamePosition",&MeshObject::getBoneNamePosition)
+		.def("getBoneNameOrientation",&MeshObject::getBoneNameOrientation)
+		.def("getBoneNameSize",&MeshObject::getBoneNameSize)
+		.def("getBoneNameParentName",&MeshObject::getBoneNameParentName)
+		.def("getBoneNameLocalPosition",&MeshObject::getBoneNameLocalPosition)
+		.def("getBoneNameLocalOrientation",&MeshObject::getBoneNameLocalOrientation)
+		.def("getMeshScale",&MeshObject::getMeshScale)
 
-		.def("getBoneNameChildren",&EngineMesh::getBoneNameChildren)
-		.def("getBoneNameChildName",&EngineMesh::getBoneNameChildName)
-		.def("getRootBoneName",&EngineMesh::getRootBoneName)
-		.def("calcLocalPosOfRootBone",&EngineMesh::calcLocalPosOfRootBone)
+		.def("getBoneNameChildren",&MeshObject::getBoneNameChildren)
+		.def("getBoneNameChildName",&MeshObject::getBoneNameChildName)
+		.def("getRootBoneName",&MeshObject::getRootBoneName)
+		.def("calcLocalPosOfRootBone",&MeshObject::calcLocalPosOfRootBone)
 
-		.def("setRotationX",&EngineMesh::setRotationX)
-		.def("setRotationY",&EngineMesh::setRotationY)
-		.def("setRotationZ",&EngineMesh::setRotationZ)
+		.def("setRotationX",&MeshObject::setRotationX)
+		.def("setRotationY",&MeshObject::setRotationY)
+		.def("setRotationZ",&MeshObject::setRotationZ)
 
-		.def("setLocalPos",&EngineMesh::setLocalPos)
-		.def("setLocalQuat",&EngineMesh::setLocalQuat) 
+		.def("setLocalPos",&MeshObject::setLocalPos)
+		.def("setLocalQuat",&MeshObject::setLocalQuat) 
 
-		.def("getLocalPos",&EngineMesh::getLocalPos)
-		.def("getLocalQuat",&EngineMesh::getLocalQuat) 
+		.def("getLocalPos",&MeshObject::getLocalPos)
+		.def("getLocalQuat",&MeshObject::getLocalQuat) 
 
 		;
 
-	class_<Joint,bases<EngineGuiContainer> >("Joint", init<Engine*,Actor*,Actor*>())
+	class_<Joint,bases<GuiContainer> >("Joint", init<Engine*,Actor*,Actor*>())
 		.def("setAnchor1Size",&Joint::setAnchor1Size)
 		.def("setAnchor2Size",&Joint::setAnchor2Size)
 		.def("setAnchor1",&Joint::setAnchor1)

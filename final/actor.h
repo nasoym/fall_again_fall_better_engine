@@ -4,15 +4,15 @@
 #include "PxPhysicsAPI.h"
 using namespace physx;
 
-#include "engine_gui_container.h"
-#include "engine_gui_shape.h"
+#include "gui_container.h"
+#include "gui_shape.h"
 #include <vector>
 
 class Engine;
 class PhysicShape;
 class Joint;
 
-class Actor : public EngineGuiContainer {
+class Actor : public GuiContainer {
 
 	protected:
 		std::vector<Joint*>    mJoints;

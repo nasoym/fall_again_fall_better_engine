@@ -7,7 +7,7 @@
 #include "joint.h"
 
 Actor::Actor(Engine* engine) :
-	EngineGuiContainer(engine),
+	GuiContainer(engine),
 	mDoGuiUpdates(true),
 	mMass(1000)
 	{
@@ -15,7 +15,7 @@ Actor::Actor(Engine* engine) :
 
 
 void	Actor::enableCollisions(){
-	std::vector<EngineGuiShape*>::iterator	iter;
+	std::vector<GuiShape*>::iterator	iter;
 	for(iter=mShapes.begin();iter!=mShapes.end();++iter){
 		if ( (*iter)->isPhysicShape() ) {
 			(*iter)->isPhysicShape()->enableCollisions();
@@ -24,7 +24,7 @@ void	Actor::enableCollisions(){
 }
 
 void	Actor::dissableCollisions(){
-	std::vector<EngineGuiShape*>::iterator	iter;
+	std::vector<GuiShape*>::iterator	iter;
 	for(iter=mShapes.begin();iter!=mShapes.end();++iter){
 		if ( (*iter)->isPhysicShape() ) {
 			(*iter)->isPhysicShape()->dissableCollisions();
@@ -48,7 +48,7 @@ int					Actor::howManyPhysicShapes(){
 }
 
 PhysicShape*		Actor::getPhysicShapeByIndex(int index){
-	EngineGuiShape* shape = getShapeByIndex(index);
+	GuiShape* shape = getShapeByIndex(index);
 	if (shape->isPhysicShape()) {
 		return shape->isPhysicShape();
 	}
@@ -57,8 +57,8 @@ PhysicShape*		Actor::getPhysicShapeByIndex(int index){
 
 void	Actor::guiUpdate(){
 	if (mDoGuiUpdates) {
-		EngineGuiContainer::setPosition(getPosition());
-		EngineGuiContainer::setOrientation(getOrientation());
+		GuiContainer::setPosition(getPosition());
+		GuiContainer::setOrientation(getOrientation());
 	}
 }
 
@@ -79,7 +79,7 @@ void    Actor::setPosition(Vec3& vec3) {
     t.p.z = vec3.Z();
     getActor()->setGlobalPose(t);
     wakeUp();
-	EngineGuiContainer::setPosition(vec3);
+	GuiContainer::setPosition(vec3);
 }
 
 void    Actor::setOrientation(Quat& quat) {
@@ -90,7 +90,7 @@ void    Actor::setOrientation(Quat& quat) {
     t.q.w = quat.W();
     getActor()->setGlobalPose(t);
     wakeUp();
-	EngineGuiContainer::setOrientation(quat);
+	GuiContainer::setOrientation(quat);
 }
 
 PhysicShape*		Actor::addBox(Vec3& vec3){

@@ -1,16 +1,16 @@
 #include "logger.h"
 
-#include "engine_mesh.h"
+#include "mesh.h"
 #include "engine.h"
 
 #include "joint.h"
-#include "engine_gui_shape.h"
-#include "engine_gui_container.h"
+#include "gui_shape.h"
+#include "gui_container.h"
 
 #include "actor.h"
 
-EngineMesh::EngineMesh(Engine* engine,const char* meshName) :
-	EngineGuiShape(engine),
+MeshObject::MeshObject(Engine* engine,const char* meshName) :
+	GuiShape(engine),
 	mRootBone(0),
 	mLocalPos(Vec3()),
 	mLocalQuat(Quat()),
@@ -26,29 +26,29 @@ EngineMesh::EngineMesh(Engine* engine,const char* meshName) :
 	mRootBone = findRootBone();
 	setFinalShape();
 
-	//mRootShape = new EngineGuiContainer(getEngine());
+	//mRootShape = new GuiContainer(getEngine());
 	//mRootShape->addDebugAxises(15,1);
 	//mRootShape->setPosition(getPosition());
 	//mRootShape->setOrientation(getOrientation());
 }
 
-int				EngineMesh::getNumberOfBones(){
+int				MeshObject::getNumberOfBones(){
 	return mBoneBodies.size();
 }
 
-Actor*		EngineMesh::getBodyByIndex(int index){
+Actor*		MeshObject::getBodyByIndex(int index){
 	return mBoneBodies[index].body;
 }
 
-Joint*	EngineMesh::getJointByIndex(int index){
+Joint*	MeshObject::getJointByIndex(int index){
 	return mBoneBodies[index].joint;
 }
 
-std::string		EngineMesh::getBoneNameByIndex(int index){
+std::string		MeshObject::getBoneNameByIndex(int index){
 	return mBoneBodies[index].bone->getName();
 }
 
-void		EngineMesh::setupAllBones(){
+void		MeshObject::setupAllBones(){
 	SkeletonInstance*		skeleton = getEntity()->getSkeleton();
 	Skeleton::BoneIterator	boneIter = skeleton->getBoneIterator();
 	Bone*					bonePtr;
@@ -60,7 +60,7 @@ void		EngineMesh::setupAllBones(){
 	}
 }
 
-void	EngineMesh::guiUpdate(){
+void	MeshObject::guiUpdate(){
 	Actor* rootBody = getBodyOfBone(mRootBone);
 	if (rootBody) {
 	//if (false) {
@@ -77,7 +77,7 @@ void	EngineMesh::guiUpdate(){
 	updateBone(mRootBone);
 }
 
-void	EngineMesh::updateBone(Bone* bone){
+void	MeshObject::updateBone(Bone* bone){
 	Actor* body = getBodyOfBone(bone);
 	if (body) {
 		boneSetOrientation(bone, body->getOrientation());
@@ -90,7 +90,7 @@ void	EngineMesh::updateBone(Bone* bone){
 		}
 		boneSetPosition(bone, body->getPosition() + localPos);
 	}
-	EngineGuiContainer* container = getContainerOfBone(bone);
+	GuiContainer* container = getContainerOfBone(bone);
 	if (container) {
 		container->setPosition(getBonePosition(bone));
 		container->setOrientation(getBoneOrientation(bone,false)); //Y
@@ -103,7 +103,7 @@ void	EngineMesh::updateBone(Bone* bone){
 	}
 }
 
-void 	EngineMesh::calcLocalPosOfRootBone() {
+void 	MeshObject::calcLocalPosOfRootBone() {
 	Actor* rootBody = getBodyOfBone(mRootBone);
 	if (rootBody) {
 		//Logger::debug("calc local pos of root bone");
@@ -120,22 +120,22 @@ void 	EngineMesh::calcLocalPosOfRootBone() {
 	}
 }
 
-void	EngineMesh::createAllDebugObjects(){
-	EngineGuiContainer* container;
+void	MeshObject::createAllDebugObjects(){
+	GuiContainer* container;
 	std::vector<BoneBody>::iterator	iter;
 	for(iter=mBoneBodies.begin();iter!=mBoneBodies.end();++iter){
 		createDebugForBone( (*iter).bone );
 	}
 }
 
-void	EngineMesh::createDebugForBone(Bone* bone) {
-	EngineGuiContainer* container;
-	container = new EngineGuiContainer(getEngine());
+void	MeshObject::createDebugForBone(Bone* bone) {
+	GuiContainer* container;
+	container = new GuiContainer(getEngine());
 	setContainerForBone(bone,container);
 	container->addDebugAxises(5,0.3);
 }
 
-Vec3			EngineMesh::getBoneNameLocalPosition(std::string boneName){
+Vec3			MeshObject::getBoneNameLocalPosition(std::string boneName){
 	Bone* bone = getBoneFromName(boneName);	
 	if (bone) {
 		return Vec3(bone->getPosition());
@@ -143,7 +143,7 @@ Vec3			EngineMesh::getBoneNameLocalPosition(std::string boneName){
 	return Vec3();
 }
 
-Quat			EngineMesh::getBoneNameLocalOrientation(std::string boneName){
+Quat			MeshObject::getBoneNameLocalOrientation(std::string boneName){
 	Bone* bone = getBoneFromName(boneName);	
 	if (bone) {
 		return Quat(bone->getOrientation());
@@ -151,11 +151,11 @@ Quat			EngineMesh::getBoneNameLocalOrientation(std::string boneName){
 	return Quat();
 }
 
-Vec3			EngineMesh::getMeshScale(){
+Vec3			MeshObject::getMeshScale(){
 	return Vec3(getNode()->getScale());
 }
 
-void	EngineMesh::setContainerForBone(Bone* bone,EngineGuiContainer* container){
+void	MeshObject::setContainerForBone(Bone* bone,GuiContainer* container){
 	std::vector<BoneBody>::iterator	iter;
 	for(iter=mBoneBodies.begin();iter!=mBoneBodies.end();++iter){
 		if ((*iter).bone == bone) {
@@ -165,7 +165,7 @@ void	EngineMesh::setContainerForBone(Bone* bone,EngineGuiContainer* container){
 	}
 }
 
-void	EngineMesh::setBodyForBone(Bone* bone,Actor* body){
+void	MeshObject::setBodyForBone(Bone* bone,Actor* body){
 	std::vector<BoneBody>::iterator	iter;
 	for(iter=mBoneBodies.begin();iter!=mBoneBodies.end();++iter){
 		if ((*iter).bone == bone) {
@@ -175,7 +175,7 @@ void	EngineMesh::setBodyForBone(Bone* bone,Actor* body){
 	}
 }
 
-void	EngineMesh::setJointForBone(Bone* bone,Joint* joint){
+void	MeshObject::setJointForBone(Bone* bone,Joint* joint){
 	std::vector<BoneBody>::iterator	iter;
 	for(iter=mBoneBodies.begin();iter!=mBoneBodies.end();++iter){
 		if ((*iter).bone == bone) {
@@ -185,7 +185,7 @@ void	EngineMesh::setJointForBone(Bone* bone,Joint* joint){
 	}
 }
 
-Bone*	EngineMesh::findRootBone() {
+Bone*	MeshObject::findRootBone() {
 	std::vector<BoneBody>::iterator	iter;
 	for(iter=mBoneBodies.begin();iter!=mBoneBodies.end();++iter){
 		if (!getBoneParent((*iter).bone)) {
@@ -195,11 +195,11 @@ Bone*	EngineMesh::findRootBone() {
 	return 0;
 }
 
-Bone*	EngineMesh::getBoneParent(Bone* bone){
+Bone*	MeshObject::getBoneParent(Bone* bone){
 	return (Bone*) bone->getParent();
 }
 
-Quat	EngineMesh::getBoneOrientation(Bone* bone,bool rotated){
+Quat	MeshObject::getBoneOrientation(Bone* bone,bool rotated){
 	Quat boneQuat = Quat(getOrientation() * bone->_getDerivedOrientation());
 	if (rotated) {
 		return Quat(boneQuat * Quat().fromAngles(mRotationX,mRotationY,mRotationZ) );
@@ -208,7 +208,7 @@ Quat	EngineMesh::getBoneOrientation(Bone* bone,bool rotated){
 	}
 }
 
-void	EngineMesh::boneSetOrientation(Bone* bone,Quat quat,bool rotated){
+void	MeshObject::boneSetOrientation(Bone* bone,Quat quat,bool rotated){
 	if (rotated) {
 		if (bone == mRootBone) {
 			bone->setOrientation(
@@ -248,13 +248,13 @@ void	EngineMesh::boneSetOrientation(Bone* bone,Quat quat,bool rotated){
 	}
 }
 
-Vec3	EngineMesh::getBonePosition(Bone* bone) {
+Vec3	MeshObject::getBonePosition(Bone* bone) {
 	Vec3 bonePos = Quat(getNode()->getOrientation()) * Vec3(bone->_getDerivedPosition());
 	Vec3 scaledPos = Vec3(getNode()->getScale()) * bonePos;
 	return Vec3(scaledPos + Vec3(getNode()->getPosition()));
 }
 
-void	EngineMesh::boneSetPosition(Bone* bone,Vec3 vec3){
+void	MeshObject::boneSetPosition(Bone* bone,Vec3 vec3){
 	Vec3 localPos = vec3 - getPosition();
 	localPos = localPos / getNode()->getScale();
 	Vec3 bonePos = getOrientation().inverse() * localPos;
@@ -265,7 +265,7 @@ void	EngineMesh::boneSetPosition(Bone* bone,Vec3 vec3){
 	}
 }
 
-EngineGuiContainer*	EngineMesh::getContainerOfBone(Bone* bone) {
+GuiContainer*	MeshObject::getContainerOfBone(Bone* bone) {
 	std::vector<BoneBody>::iterator	iter;
 	for(iter=mBoneBodies.begin();iter!=mBoneBodies.end();++iter){
 		if ( (*iter).bone == bone) {
@@ -275,7 +275,7 @@ EngineGuiContainer*	EngineMesh::getContainerOfBone(Bone* bone) {
 	return 0;
 }
 
-Joint*	EngineMesh::getJointOfBone(Bone* bone) {
+Joint*	MeshObject::getJointOfBone(Bone* bone) {
 	std::vector<BoneBody>::iterator	iter;
 	for(iter=mBoneBodies.begin();iter!=mBoneBodies.end();++iter){
 		if ( (*iter).bone == bone) {
@@ -285,7 +285,7 @@ Joint*	EngineMesh::getJointOfBone(Bone* bone) {
 	return 0;
 }
 
-Actor*	EngineMesh::getBodyOfBone(Bone* bone) {
+Actor*	MeshObject::getBodyOfBone(Bone* bone) {
 	std::vector<BoneBody>::iterator	iter;
 	for(iter=mBoneBodies.begin();iter!=mBoneBodies.end();++iter){
 		if ( (*iter).bone == bone) {
@@ -295,7 +295,7 @@ Actor*	EngineMesh::getBodyOfBone(Bone* bone) {
 	return 0;
 }
 
-Bone*	EngineMesh::getBoneOfBody(Actor* body) {
+Bone*	MeshObject::getBoneOfBody(Actor* body) {
 	std::vector<BoneBody>::iterator	iter;
 	for(iter=mBoneBodies.begin();iter!=mBoneBodies.end();++iter){
 		if ( (*iter).body == body) {
@@ -305,7 +305,7 @@ Bone*	EngineMesh::getBoneOfBody(Actor* body) {
 	return 0;
 }
 
-float	EngineMesh::getBoneSize(Bone* bone) {
+float	MeshObject::getBoneSize(Bone* bone) {
 	Vec3	bonePos = getBonePosition(bone);
 	Vec3	childBonePos;
 	float	closestDist = 0;
@@ -329,7 +329,7 @@ float	EngineMesh::getBoneSize(Bone* bone) {
 	return closestDist / 2.0f;
 }
 
-Bone*			EngineMesh::getBoneFromName(std::string boneName){
+Bone*			MeshObject::getBoneFromName(std::string boneName){
 	std::vector<BoneBody>::iterator	iter;
 	for(iter=mBoneBodies.begin();iter!=mBoneBodies.end();++iter){
 	    if( (*iter).bone->getName().compare(boneName) == 0 ) {
@@ -340,7 +340,7 @@ Bone*			EngineMesh::getBoneFromName(std::string boneName){
 	return 0;
 }
 
-void			EngineMesh::setBodyForBoneName(std::string boneName,Actor* body){
+void			MeshObject::setBodyForBoneName(std::string boneName,Actor* body){
 	std::vector<BoneBody>::iterator	iter;
 	for(iter=mBoneBodies.begin();iter!=mBoneBodies.end();++iter){
 	    if( (*iter).bone->getName().compare(boneName) == 0 ) {
@@ -350,7 +350,7 @@ void			EngineMesh::setBodyForBoneName(std::string boneName,Actor* body){
 	}
 }
 
-void			EngineMesh::setJointForBoneName(std::string boneName,Joint* joint){
+void			MeshObject::setJointForBoneName(std::string boneName,Joint* joint){
 	std::vector<BoneBody>::iterator	iter;
 	for(iter=mBoneBodies.begin();iter!=mBoneBodies.end();++iter){
 	    if( (*iter).bone->getName().compare(boneName) == 0 ) {
@@ -360,7 +360,7 @@ void			EngineMesh::setJointForBoneName(std::string boneName,Joint* joint){
 	}
 }
 
-Actor*		EngineMesh::getBodyOfBoneName(std::string boneName){
+Actor*		MeshObject::getBodyOfBoneName(std::string boneName){
 	Bone* bone = getBoneFromName(boneName);	
 	if (bone) {
 		return getBodyOfBone(bone);
@@ -368,7 +368,7 @@ Actor*		EngineMesh::getBodyOfBoneName(std::string boneName){
 	return 0;
 }
 
-Joint*	EngineMesh::getJointOfBoneName(std::string boneName){
+Joint*	MeshObject::getJointOfBoneName(std::string boneName){
 	Bone* bone = getBoneFromName(boneName);	
 	if (bone) {
 		return getJointOfBone(bone);
@@ -376,7 +376,7 @@ Joint*	EngineMesh::getJointOfBoneName(std::string boneName){
 	return 0;
 }
 
-Vec3			EngineMesh::getBoneNamePosition(std::string boneName){
+Vec3			MeshObject::getBoneNamePosition(std::string boneName){
 	Bone* bone = getBoneFromName(boneName);	
 	if (bone) {
 		return getBonePosition(bone);
@@ -384,7 +384,7 @@ Vec3			EngineMesh::getBoneNamePosition(std::string boneName){
 	return Vec3();
 }
 
-Quat			EngineMesh::getBoneNameOrientation(std::string boneName,bool rotated){
+Quat			MeshObject::getBoneNameOrientation(std::string boneName,bool rotated){
 	Bone* bone = getBoneFromName(boneName);	
 	if (bone) {
 		return getBoneOrientation(bone,rotated);
@@ -392,7 +392,7 @@ Quat			EngineMesh::getBoneNameOrientation(std::string boneName,bool rotated){
 	return Quat();
 }
 
-float			EngineMesh::getBoneNameSize(std::string boneName){
+float			MeshObject::getBoneNameSize(std::string boneName){
 	Bone* bone = getBoneFromName(boneName);	
 	if (bone) {
 		return getBoneSize(bone);
@@ -400,7 +400,7 @@ float			EngineMesh::getBoneNameSize(std::string boneName){
 	return 0;
 }
 
-std::string 	EngineMesh::getBoneNameParentName(std::string boneName){
+std::string 	MeshObject::getBoneNameParentName(std::string boneName){
 	Bone* bone = getBoneFromName(boneName);	
 	if (bone) {
 		Bone* parentBone = getBoneParent(bone);
@@ -413,7 +413,7 @@ std::string 	EngineMesh::getBoneNameParentName(std::string boneName){
 	return std::string("");
 }
 
-int				EngineMesh::getBoneNameChildren(std::string boneName){
+int				MeshObject::getBoneNameChildren(std::string boneName){
 	Bone* bone = getBoneFromName(boneName);	
 	if (bone) {
 		return bone->numChildren();
@@ -421,7 +421,7 @@ int				EngineMesh::getBoneNameChildren(std::string boneName){
 	return 0;
 }
 
-std::string				EngineMesh::getBoneNameChildName(std::string boneName,int index){
+std::string				MeshObject::getBoneNameChildName(std::string boneName,int index){
 	Bone* bone = getBoneFromName(boneName);	
 	if (bone) {
 		return ((Ogre::Bone*)bone->getChild(index))->getName();

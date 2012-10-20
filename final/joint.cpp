@@ -4,7 +4,7 @@
 #include "actor.h"
 
 Joint::Joint(Engine* engine,Actor* actor1,Actor* actor2):
-		EngineGuiContainer(engine),
+		GuiContainer(engine),
         mActor1(actor1),
         mActor2(actor2),
         mMotorOn(false),

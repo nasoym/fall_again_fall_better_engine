@@ -6,7 +6,7 @@ class Actor;
 
 #include "math3d.h"
 
-#include "engine_gui_container.h"
+#include "gui_container.h"
 
 #include "PxPhysicsAPI.h"
 using namespace physx;
@@ -24,7 +24,7 @@ using namespace physx;
 	#endif 
 
 
-class Joint : public EngineGuiContainer {
+class Joint : public GuiContainer {
 	private:
         PxD6Joint *     mJoint;
         bool            mMotorOn;

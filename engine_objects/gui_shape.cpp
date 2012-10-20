@@ -1,9 +1,9 @@
 #include "logger.h"
-#include "engine_gui_shape.h"
-#include "engine_gui_container.h"
+#include "gui_shape.h"
+#include "gui_container.h"
 #include "engine.h"
 
-EngineGuiShape::EngineGuiShape(Engine* engine) :
+GuiShape::GuiShape(Engine* engine) :
 	EngineObject(engine),
 	mMaterial(0),
 	mEntity(0),
@@ -17,7 +17,7 @@ EngineGuiShape::EngineGuiShape(Engine* engine) :
     mNode = getEngine()->getDebugNode()->createChildSceneNode();
 }
 
-EngineGuiShape::~EngineGuiShape(){
+GuiShape::~GuiShape(){
 	Logger::debug("guiShape delete");
 
 	if(mEntity && getNode()){
@@ -36,27 +36,27 @@ EngineGuiShape::~EngineGuiShape(){
 	}
 }
 
-void	EngineGuiShape::selectShow(){
+void	GuiShape::selectShow(){
 	if (getNode()){
 		getNode()->showBoundingBox(true);
 	}
 }
 
-void	EngineGuiShape::selectHide(){
+void	GuiShape::selectHide(){
 	if (getNode()){
 		getNode()->showBoundingBox(false);
 	}
 }
 
-void	EngineGuiShape::setContainer(EngineGuiContainer* container){
+void	GuiShape::setContainer(GuiContainer* container){
 	mContainer = container;
 }
 
-EngineGuiContainer* EngineGuiShape::getContainer(){
+GuiContainer* GuiShape::getContainer(){
 	return mContainer;
 }
 
-void    EngineGuiShape::setPosition(Vec3& vec3){
+void    GuiShape::setPosition(Vec3& vec3){
 	Vec3	globalPos;
 	if (getContainer()) {
 		globalPos = getContainer()->getOrientation() * getLocalPosition();
@@ -67,24 +67,24 @@ void    EngineGuiShape::setPosition(Vec3& vec3){
 	getNode()->setPosition(globalPos.toOgre());
 }
 
-Vec3    	EngineGuiShape::getPosition(){
+Vec3    	GuiShape::getPosition(){
 	return Vec3(getNode()->getPosition());
 }
 
-void        EngineGuiShape::setOrientation(Quat& quat){
+void        GuiShape::setOrientation(Quat& quat){
 	getNode()->setOrientation((quat * getLocalOrientation()).toOgre());
 }
 
-Quat EngineGuiShape::getOrientation(){
+Quat GuiShape::getOrientation(){
 	return Quat(getNode()->getOrientation());
 }
 
-void        EngineGuiShape::setLocalSize(Vec3& vec3){
+void        GuiShape::setLocalSize(Vec3& vec3){
 	mLocalSize = vec3;
 	getNode()->setScale(vec3.toOgre() * (2.0f / 100.0f));
 }
 
-void        EngineGuiShape::setSize(Vec3& vec3){
+void        GuiShape::setSize(Vec3& vec3){
 	if (getContainer()) {
 		Vec3 scaling = vec3 / getContainer()->getSize();
 		//Logger::debug(format("scaling: %1% %2% %3%") % 
@@ -104,17 +104,17 @@ void        EngineGuiShape::setSize(Vec3& vec3){
 	}
 }
 
-Vec3    EngineGuiShape::getSize(){
+Vec3    GuiShape::getSize(){
 	return Vec3(getNode()->getScale() * (100.0f / 2.0f));
 }
 
-void	EngineGuiShape::setMaterialName(const char* name){
+void	GuiShape::setMaterialName(const char* name){
     getEntity()->setMaterialName(name);
 	mMaterialName = std::string(name);
 	//mMaterial = 0; //TODO do correct cleanup
 }
 
-bool	EngineGuiShape::hasColour(){
+bool	GuiShape::hasColour(){
 	if(mMaterial.isNull()){
 		return false;
 	} else {
@@ -122,7 +122,7 @@ bool	EngineGuiShape::hasColour(){
 	}
 }
 
-float 	EngineGuiShape::getAlpha(){
+float 	GuiShape::getAlpha(){
 	if(!mMaterial.isNull()){
 		ColourValue color = mMaterial->getTechnique(0)->getPass(0)->getDiffuse();
 		return color.a;
@@ -130,7 +130,7 @@ float 	EngineGuiShape::getAlpha(){
 	return 1.0f;
 }
 
-Vec3 	EngineGuiShape::getColour(){
+Vec3 	GuiShape::getColour(){
 	if(!mMaterial.isNull()){
 		ColourValue color = mMaterial->getTechnique(0)->getPass(0)->getDiffuse();
 		return Vec3(color.r,color.g,color.b);
@@ -138,7 +138,7 @@ Vec3 	EngineGuiShape::getColour(){
 	return Vec3();
 }
 
-void	EngineGuiShape::setColour(float red,float green,float blue,float alpha) {
+void	GuiShape::setColour(float red,float green,float blue,float alpha) {
 	if(mMaterial.isNull()){
 		setupCustomMaterial();
 	}
@@ -148,7 +148,7 @@ void	EngineGuiShape::setColour(float red,float green,float blue,float alpha) {
 		)); 
 }
 
-void 	EngineGuiShape::setCustomMaterial(){
+void 	GuiShape::setCustomMaterial(){
 	if(mMaterial.isNull()){
 		setupCustomMaterial();
 	} else {
@@ -156,7 +156,7 @@ void 	EngineGuiShape::setCustomMaterial(){
 	}
 }
 
-void	EngineGuiShape::setupCustomMaterial(){
+void	GuiShape::setupCustomMaterial(){
 	mMaterial = Ogre::MaterialManager::getSingleton().create(
 		readUuid(),
 		ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME);

@@ -1,5 +1,5 @@
-#ifndef _ENGINE_MESH_H
-#define _ENGINE_MESH_H
+#ifndef _MESH_H
+#define _MESH_H
 
 #include <Ogre.h>
 using namespace Ogre;
@@ -7,26 +7,26 @@ using namespace Ogre;
 #include <vector>
 #include <string>
 
-#include "engine_gui_shape.h"
+#include "gui_shape.h"
 
 class Engine;
-class EngineGuiContainer;
+class GuiContainer;
 class Actor;
 
 struct BoneBody {
 	Bone*		bone;
 	Actor*	body;
 	Joint*joint;
-	EngineGuiContainer* container;
+	GuiContainer* container;
 	BoneBody(Bone* b) : bone(b),body(0),joint(0), container(0) {}
 };
 
-class EngineMesh : public EngineGuiShape {
+class MeshObject : public GuiShape {
 
     public:
-        EngineMesh(Engine*,const char*);
-		//virtual ~EngineMesh();
-		virtual EngineMesh*				isMesh(){return this;}
+        MeshObject(Engine*,const char*);
+		//virtual ~MeshObject();
+		virtual MeshObject*				isMesh(){return this;}
 		virtual ObjectType		getType(){ return MESH;}
 
 		void			setupAllBones();
@@ -48,8 +48,8 @@ class EngineMesh : public EngineGuiShape {
 		Bone*			getRootBone(){return mRootBone;}
 
 		//Debug
-		void			setContainerForBone(Bone* bone,EngineGuiContainer* container);
-		EngineGuiContainer*	getContainerOfBone(Bone* bone);
+		void			setContainerForBone(Bone* bone,GuiContainer* container);
+		GuiContainer*	getContainerOfBone(Bone* bone);
 		void			createAllDebugObjects();
 		void			createDebugForBone(Bone* bone);
 
@@ -101,7 +101,7 @@ class EngineMesh : public EngineGuiShape {
 		Vec3 					mLocalPos;
 		Quat 					mLocalQuat;
 		std::string				mMeshFileName;
-		EngineGuiContainer*			mRootShape;
+		GuiContainer*			mRootShape;
 
 		float					mRotationX;
 		float					mRotationY;
