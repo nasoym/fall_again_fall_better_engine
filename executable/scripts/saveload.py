@@ -256,12 +256,6 @@ def load(Engine,EngineModule,fileName,objects,loadingPosition=None,loadingOrient
 						elif shapeType == "plane":
 							o = actorEntity.addPlane()
 
-						#o = Engine.createPhysic()
-
-						#if node.hasProp("local_size"):
-						#a = (node.prop("local_size").split(","))
-						#size = EngineModule.Vec3( float(a[0]),float(a[1]),float(a[2]))
-
 						if node.hasProp("uuid"):
 							uuid = node.prop("uuid")
 							uuid = getFromUuidTable(Engine,uuidTable,uuid)
@@ -336,88 +330,6 @@ def load(Engine,EngineModule,fileName,objects,loadingPosition=None,loadingOrient
 				else:
 					res.remove(node)
 
-
-
-
-			elif node.name==str(EngineModule.ObjectType.STATICBODY):
-				o = Engine.createStaticActor()
-				a = (node.prop("size").split(","))
-				size = EngineModule.Vec3( float(a[0]),float(a[1]),float(a[2]))
-				o.addBox(size)
-
-				#loadGuiContainer(node,Engine,EngineModule,o,uuidTable)
-				if node.hasProp("uuid"):
-					uuid = node.prop("uuid")
-					uuid = getFromUuidTable(Engine,uuidTable,uuid)
-					o.setUuid(uuid)
-				loadEngineObject(node,Engine,EngineModule,o)
-				#loadSize(node,Engine,EngineModule,o)
-				loadPosition(node,Engine,EngineModule,o)
-				loadOrientation(node,Engine,EngineModule,o)
-				res.remove(node)
-
-
-
-				"""
-				if isGuiContainerFullfilled(node,Engine,EngineModule,uuidTable):
-					o = Engine.createPhysicStatic()
-					loadGuiContainer(node,Engine,EngineModule,o,uuidTable)
-					if node.hasProp("uuid"):
-						uuid = node.prop("uuid")
-						uuid = getFromUuidTable(Engine,uuidTable,uuid)
-						o.setUuid(uuid)
-					loadEngineObject(node,Engine,EngineModule,o)
-					loadSize(node,Engine,EngineModule,o)
-					loadPosition(node,Engine,EngineModule,o)
-					loadOrientation(node,Engine,EngineModule,o)
-					res.remove(node)
-				else:
-					lastUnresolved = "staticbody: gui container failed"
-					"""
-
-			elif node.name==str(EngineModule.ObjectType.BODY):
-				o = Engine.createDynamicActor()
-				a = (node.prop("size").split(","))
-				size = EngineModule.Vec3( float(a[0]),float(a[1]),float(a[2]))
-				o.addBox(size)
-
-				#loadGuiContainer(node,Engine,EngineModule,o,uuidTable)
-				if node.hasProp("uuid"):
-					uuid = node.prop("uuid")
-					uuid = getFromUuidTable(Engine,uuidTable,uuid)
-					o.setUuid(uuid)
-				loadEngineObject(node,Engine,EngineModule,o)
-				#loadSize(node,Engine,EngineModule,o)
-				loadPosition(node,Engine,EngineModule,o)
-				loadOrientation(node,Engine,EngineModule,o)
-				if node.hasProp("mass"):
-					mass = float(node.prop("mass"))
-					o.setMass(mass)
-				res.remove(node)
-
-
-
-
-				"""
-				if isGuiContainerFullfilled(node,Engine,EngineModule,uuidTable):
-					o = Engine.createPhysicBox()
-					loadGuiContainer(node,Engine,EngineModule,o,uuidTable)
-					if node.hasProp("uuid"):
-						uuid = node.prop("uuid")
-						uuid = getFromUuidTable(Engine,uuidTable,uuid)
-						o.setUuid(uuid)
-					loadEngineObject(node,Engine,EngineModule,o)
-					loadSize(node,Engine,EngineModule,o)
-					loadPosition(node,Engine,EngineModule,o)
-					loadOrientation(node,Engine,EngineModule,o)
-					if node.hasProp("mass"):
-						mass = float(node.prop("mass"))
-						o.setMass(mass)
-					res.remove(node)
-				else:
-					lastUnresolved = "body: gui container failed"
-					"""
-
 			elif node.name==str(EngineModule.ObjectType.STATIC_ACTOR):
 				o = Engine.createStaticActor()
 				loadGuiContainer(node,Engine,EngineModule,o,uuidTable)
@@ -454,22 +366,6 @@ def load(Engine,EngineModule,fileName,objects,loadingPosition=None,loadingOrient
 				o.setOrientation(o.getOrientation() * loadingOrientation)
 				res.remove(node)
 
-			elif node.name==str(EngineModule.ObjectType.SPACECAGE):
-				if isGuiContainerFullfilled(node,Engine,EngineModule,uuidTable):
-					if node.hasProp("size"):
-						a = (node.prop("size").split(","))
-						size = EngineModule.Vec3( float(a[0]),float(a[1]),float(a[2]))
-						o = Engine.createSpaceCage(size)
-						loadGuiContainer(node,Engine,EngineModule,o,uuidTable)
-						if node.hasProp("uuid"):
-							uuid = node.prop("uuid")
-							uuid = getFromUuidTable(Engine,uuidTable,uuid)
-							o.setUuid(uuid)
-						loadEngineObject(node,Engine,EngineModule,o)
-					res.remove(node)
-				else:
-					lastUnresolved = "spacecage: gui container failed"
-
 			elif node.name=="CAMERA":
 				if node.hasProp("position"):
 					a = (node.prop("position").split(","))
@@ -501,27 +397,6 @@ def load(Engine,EngineModule,fileName,objects,loadingPosition=None,loadingOrient
 			elif node.name=="OBJECTS":
 				objectsList.append(node)
 				res.remove(node)
-
-				"""
-				if node.hasProp("name"):
-					name = node.prop("name")
-					if node.hasProp("content"):
-						contentString = node.prop("content")
-						contentList = contentString.split(":",1)
-						contentType = contentList[0]
-						contentValue = contentList[1]
-						content = translateType(Engine,EngineModule,contentType,contentValue,uuidTable)
-						#Engine.log("name: " + name)
-						#Engine.log("content: " + str(content))
-						if content:
-							objects.append(name,content)
-						else:
-							pass
-							#Engine.log("not found")
-						res.remove(node)
-				else:
-					res.remove(node)
-					"""
 
 	lastUnresolved=""
 	lastResultLength = 0
@@ -644,19 +519,6 @@ def save(Engine,EngineModule,fileName,objects):
 
 			node.setProp("final_shape",str(o.isFinalShape()))
 
-		elif o.getType()==EngineModule.ObjectType.STATICBODY:
-			saveGuiContainer(node,Engine,EngineModule,o)
-			node.setProp("position",str(o.getPosition()))
-			node.setProp("size",str(o.getSize()))
-			node.setProp("orientation",str(o.getOrientation()))
-
-		elif o.getType()==EngineModule.ObjectType.BODY:
-			saveGuiContainer(node,Engine,EngineModule,o)
-			node.setProp("position",str(o.getPosition()))
-			node.setProp("size",str(o.getSize()))
-			node.setProp("orientation",str(o.getOrientation()))
-			node.setProp("mass",str(o.getMass()))
-
 		elif o.getType()==EngineModule.ObjectType.BOX:
 			node.setProp("position",str(o.getPosition()))
 			node.setProp("size",str(o.getSize()))
@@ -698,10 +560,6 @@ def save(Engine,EngineModule,fileName,objects):
 			node.setProp("zlimit",str(o.getZLimit()))
 			node.setProp("motor_target",str(o.getMotorTarget()))
 			node.setProp("motor_on",str(o.isMotorOn()))
-
-		elif o.getType()==EngineModule.ObjectType.SPACECAGE:
-			saveGuiContainer(node,Engine,EngineModule,o)
-			node.setProp("size",str(o.getSize()))
 
 		elif o.getType()==EngineModule.ObjectType.DYNAMIC_ACTOR:
 			saveGuiContainer(node,Engine,EngineModule,o)
