@@ -29,8 +29,6 @@ class Joint : public GuiContainer {
         PxD6Joint *     mJoint;
         bool            mMotorOn;
 
-		//Actor*			mBody1;
-		//Actor*			mBody2;
         Actor*          mActor1;
         Actor*          mActor2;
 

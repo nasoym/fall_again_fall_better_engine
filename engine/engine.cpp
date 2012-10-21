@@ -222,7 +222,6 @@ void	Engine::step() {
 		quit();
 	}
 	updateKeysDown();
-	//TODO camera pos/rot from node
 	guiUpdates();
 	render();
 
