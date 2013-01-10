@@ -120,7 +120,7 @@ if runDebugMode:
 	modules.append(edit)
 	modules.append(operations)
 
-runDebugMode = False
+#runDebugMode = False
 
 #modules.append(main)
 #modules.append(test_input)

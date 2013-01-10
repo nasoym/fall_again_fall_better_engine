@@ -52,6 +52,7 @@ Vec3        Joint::getAnchor2Size(){
 }
 
 void	Joint::guiUpdate(){
+	GuiContainer::guiUpdate();
 	//TODO check if any body is awake
 	setPosition(getPosition());
 	setOrientation(getOrientation());

@@ -41,6 +41,7 @@ void	Actor::moveBackToScene(){
 }
 
 void	Actor::physicUpdate(){
+	GuiContainer::physicUpdate();
 }
 
 int					Actor::howManyPhysicShapes(){
@@ -56,6 +57,7 @@ PhysicShape*		Actor::getPhysicShapeByIndex(int index){
 }
 
 void	Actor::guiUpdate(){
+	GuiContainer::guiUpdate();
 	if (mDoGuiUpdates) {
 		GuiContainer::setPosition(getPosition());
 		GuiContainer::setOrientation(getOrientation());

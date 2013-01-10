@@ -116,6 +116,16 @@ BOOST_PYTHON_MODULE(EngineModule) {
 		.def("setSelectable",&EngineObject::setSelectable)
 		.def("setUnselectable",&EngineObject::setUnselectable)
 		.def("isSelectable",&EngineObject::isSelectable)
+
+		.def("setPythonDictionary",&EngineObject::setPythonDictionary)
+		.def("setPythonScriptObjects",&EngineObject::setPythonScriptObjects)
+
+		.def("getPythonDictionary",&EngineObject::getPythonDictionary)
+		.def("getPythonScriptObjects",&EngineObject::getPythonScriptObjects)
+		.def("pythonScriptObjectsCallMethod",&EngineObject::pythonScriptObjectsCallMethod)
+
+
+
 		;
 
     class_<GuiShape, bases<EngineObject> >("GuiShape", init<Engine*>())

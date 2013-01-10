@@ -62,6 +62,30 @@ def printFps(Engine):
 	else:
 		print("fps: 0")
 
+
+class CallableScript(object):
+	def __init__(self,Engine,EngineModule):
+		pass
+		self.engine = Engine
+		self.engineModule = EngineModule
+
+	def hello(self):
+		print("hello from within callable script")
+
+	def guiUpdate(self,me):
+		pass
+
+	def physicUpdate(self,me):
+		#print("p"+ str(me))
+		pass
+		if me.isActor():
+			relVec = self.engineModule.Vec3(0,1,0)
+			relVec = me.isActor().getOrientation() * relVec
+			relVec.normalise()
+			relVec = relVec * 10000
+			me.isActor().addForce(relVec)
+
+
 def keyPressed(Engine,EngineModule,key,selection,objects):
 
 	if key == EngineModule.Keys.K_COMMA:
@@ -85,8 +109,27 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 				newMass = b.getMass() * 0.01
 				b.setMass(newMass)
 				"""
+		Engine.log("comma")
+		o = Engine.createDynamicActor()
+		b = o.addBox(EngineModule.Vec3(1,1,1))
+		#b = o.addCapsule(EngineModule.Vec3(1,1,1))
+		b.setMaterialName(Engine.getDefaultShadedMaterialName())
+		b.setScaling1To1()
+		o.setPosition(EngineModule.Vec3(0,150,0))
+		o.setSize(EngineModule.Vec3(10,10,10))
 
 
+		o.setPythonScriptObjects([])
+		b = o.getPythonScriptObjects()
+		Engine.log("orig: " + str(o.getPythonScriptObjects()))
+		Engine.log("b: " + str(o.getPythonScriptObjects()))
+		b.append(CallableScript(Engine,EngineModule))
+		Engine.log("orig: " + str(o.getPythonScriptObjects()))
+		Engine.log("b: " + str(o.getPythonScriptObjects()))
+		#o.pythonScriptObjectsCallMethod("hello")	
+
+
+		"""
 		objectsNumber = Engine.howManyObjects()
 		for i in range(0,objectsNumber):
 			o = Engine.getObject(i)
@@ -95,6 +138,7 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 					"EngineModule.Vec3(" + str(o.getPosition()) + ") EngineModule.Quat(" +
 					str(o.getOrientation()) + ")"
 					)
+					"""
 
 
 

@@ -5,6 +5,22 @@
 #include <string>
 #include "uuid.h"
 
+#include <boost/python/module.hpp>
+#include <boost/python/def.hpp>
+#include <boost/python/class.hpp>
+#include <boost/python/operators.hpp>
+#include <boost/python/return_value_policy.hpp>
+#include <boost/python/call_method.hpp>
+#include <boost/python/return_internal_reference.hpp>
+#include <boost/python/copy_const_reference.hpp>
+
+#include <boost/python/list.hpp>
+#include <boost/python/tuple.hpp>
+
+#include "logger.h"
+
+using namespace boost::python;
+
 class Engine;
 
 class GuiShape;
@@ -49,8 +65,6 @@ class EngineObject {
 
 		virtual ObjectType		getType(){ return OBJECT;}
 
-		virtual void	guiUpdate(){}
-		virtual void	physicUpdate(){}
 
 		virtual GuiShape*			isGuiShape(){return 0;}
 		virtual GuiContainer*		isGuiContainer(){return 0;}
@@ -67,10 +81,57 @@ class EngineObject {
 		void			setUnselectable(){mSelectable=false;}
 		bool			isSelectable(){return mSelectable;}
 
+		void		setPythonDictionary(object dictionary){
+			mPythonDictionary = dictionary;
+		}
+
+		void		setPythonScriptObjects(object scriptObjects){
+			mPythonScriptObjects = scriptObjects;
+		}
+
+		PyObject*		getPythonDictionary(){
+			return incref(mPythonDictionary.ptr());
+		}
+
+		PyObject*		getPythonScriptObjects(){
+			return incref(mPythonScriptObjects.ptr());
+		}
+
+		void	pythonScriptObjectsCallMethod(std::string methodName) {
+			if (!mPythonScriptObjects.is_none()){
+				//Logger::debug("pyscript: is not none");
+				boost::python::list scriptList = extract<boost::python::list>(mPythonScriptObjects);
+				if (!scriptList.is_none()){
+					//Logger::debug("pyscript: is a list");
+					object scriptObject;
+					for (int i = 0; i < len(scriptList); ++i) {
+						scriptObject = extract<object>(scriptList[i]);
+
+						// method = "physicUpdate"
+						if (PyObject_HasAttrString(scriptObject.ptr(),methodName.c_str()) ) {
+							//Logger::debug("pyscript: object has method");
+							scriptObject.attr(methodName.c_str())(boost::ref(this));
+						}
+					}
+				}
+			}
+		}
+
+		virtual void	guiUpdate(){
+			pythonScriptObjectsCallMethod("guiUpdate");
+		}
+		virtual void	physicUpdate(){
+			pythonScriptObjectsCallMethod("physicUpdate");
+		}
+
+
 	private:
 		Engine*		mEngine;
 		std::string	mName;
 		Uuid		mUuid;
 		bool		mSelectable;
+
+		object		mPythonDictionary;
+		object		mPythonScriptObjects;
 };
 #endif

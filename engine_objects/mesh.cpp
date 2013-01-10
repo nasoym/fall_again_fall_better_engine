@@ -61,6 +61,7 @@ void		MeshObject::setupAllBones(){
 }
 
 void	MeshObject::guiUpdate(){
+	GuiShape::guiUpdate();
 	Actor* rootBody = getBodyOfBone(mRootBone);
 	if (rootBody) {
 	//if (false) {
