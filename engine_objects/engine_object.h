@@ -101,29 +101,29 @@ class EngineObject {
 			if (!mPythonScriptObjects.is_none()){
 				//Logger::debug("pyscript: is not none");
 				boost::python::list scriptList = extract<boost::python::list>(mPythonScriptObjects);
-				if (!scriptList.is_none()){
+				//if (!scriptList.is_none()){
 					//Logger::debug("pyscript: is a list");
 					object scriptObject;
 					for (int i = 0; i < len(scriptList); ++i) {
 						scriptObject = extract<object>(scriptList[i]);
 
 						// method = "physicUpdate"
-						if (PyObject_HasAttrString(scriptObject.ptr(),methodName.c_str()) ) {
+						//if (PyObject_HasAttrString(scriptObject.ptr(),methodName.c_str()) ) {
 							//Logger::debug("pyscript: object has method");
 							scriptObject.attr(methodName.c_str())(boost::ref(this));
-						}
+						//}
 					}
-				}
+				//}
 			}
 		}
 
 		virtual void	guiUpdate(){
 			pythonScriptObjectsCallMethod("guiUpdate");
 		}
+
 		virtual void	physicUpdate(){
 			pythonScriptObjectsCallMethod("physicUpdate");
 		}
-
 
 	private:
 		Engine*		mEngine;
