@@ -1,18 +1,25 @@
 import random
 random.seed()
 
-import scripts.temp as temp
-import scripts.navigate as navigate
-import scripts.select as select
-import scripts.misc as misc
-import scripts.creators as creators
-import scripts.main as main
-import scripts.anim as anim
-import scripts.serialReader as serialReader
-import scripts.test as test
-import scripts.edit as edit
-import scripts.operations as operations
-import scripts.test_input as test_input
+import engine_scripts.temp as temp
+import engine_scripts.navigate as navigate
+import engine_scripts.select as select
+import engine_scripts.misc as misc
+import engine_scripts.creators as creators
+import engine_scripts.main as main
+import engine_scripts.anim as anim
+import engine_scripts.serialReader as serialReader
+import engine_scripts.test as test
+import engine_scripts.edit as edit
+import engine_scripts.operations as operations
+import engine_scripts.test_input as test_input
+
+import sys
+import os
+sys.path.append(os.path.abspath(os.path.join(os.getcwd(),"..")))
+
+import testmod.hello as hello
+hello.huhu()
 
 class Selection(object):
 	def __init__(self):

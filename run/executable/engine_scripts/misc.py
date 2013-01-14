@@ -84,7 +84,7 @@ def keyPressed(Engine,EngineModule,key,selection,objects):
 	if key == EngineModule.Keys.K_L:
 		if Engine.isKeyDown(EngineModule.Keys.K_1):
 			print("load scene.xml")
-			saveload.load(Engine,EngineModule,"xmlscene/scene.xml",objects)
+			saveload.load(Engine,EngineModule,"../xmlscene/scene.xml",objects)
 			print("done")
 		if Engine.isKeyDown(EngineModule.Keys.K_2):
 			print("load ragdoll.xml")

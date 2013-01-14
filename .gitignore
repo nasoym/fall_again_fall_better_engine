@@ -14,5 +14,6 @@ Ogre.log
 ogre.cfg
 operations.txt
 logs/
+*.log
 git_version.txt
 todo.txt

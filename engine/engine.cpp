@@ -335,8 +335,8 @@ void Engine::setup(){
 	time(&rawtime);
 	timeinfo = localtime(&rawtime);
 
-	char buffer [35];
-	strftime(buffer,35,"logs/%Y_%m_%d_%H_%M_%S_ogre.log",timeinfo);
+	char buffer [40];
+	strftime(buffer,40,"../logs/%Y_%m_%d_%H_%M_%S_ogre.log",timeinfo);
 
 	//LogManager::getSingleton().logMessage("before",LML_CRITICAL);
     mLogger = new Ogre::LogManager();

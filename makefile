@@ -63,12 +63,12 @@ show:
 	echo $(CFLAGS)
 
 dll:
-	$(LINK) $(LIBFLAGS) -DLL -OUT:executable/EngineModule.pyd $(OBJ) $(LIBLIST)
+	$(LINK) $(LIBFLAGS) -DLL -OUT:run/executable/EngineModule.pyd $(OBJ) $(LIBLIST)
 
-all: executable/main.exe
+all: run/executable/main.exe
 	echo "main"
-	echo `git log -n 1 --pretty=format:%h` > executable/git_version.txt
-	#> executable/git_version.txt
+	echo `git log -n 1 --pretty=format:%h` > run/executable/git_version.txt
+	#> run/executable/git_version.txt
 
 test: 
 	$(CC) $(CFLAGS) -Fobuild/test.obj test.cpp 
@@ -76,9 +76,9 @@ test:
 
 watchdog: 
 	$(CC) $(CFLAGS) -Fobuild/watchdog.obj watchdog.cpp 
-	$(LINK) $(LIBFLAGS) -OUT:executable/watchdog.exe build/watchdog.obj $(LIBLIST)
+	$(LINK) $(LIBFLAGS) -OUT:run/executable/watchdog.exe build/watchdog.obj $(LIBLIST)
 
-executable/main.exe: $(OBJ)
+run/executable/main.exe: $(OBJ)
 	echo "linking to:$@"
 	$(LINK) $(LIBFLAGS) -OUT:$@ $(OBJ) $(LIBLIST)
 
@@ -93,12 +93,13 @@ build/main.obj: main.cpp
 
 
 run: all
-	(cd executable ; ./main.exe)
+	(cd run; ./run.sh)
+	#(cd run/executable ; ./main.exe)
 
 run-watch: watchdog
-	(cd executable ; ./watchdog.exe)
+	(cd run/executable ; ./watchdog.exe)
 
 clean:
 	rm build/*.obj
-	rm executable/main.exe
+	rm run/executable/main.exe
 

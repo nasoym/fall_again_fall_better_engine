@@ -14,7 +14,10 @@ void	Engine::closePython() {
 void	Engine::setupPython() {
 	Logger::debug("setup python");
 	Py_Initialize();
-	//printf("Py_GetPath: %s\n",Py_GetPath());
+	//Logger::debug(format("Py_GetPath (before set): %p\n") % Py_GetPath());
+	//PySys_SetPath("../");
+	//Logger::debug(format("Py_GetPath (after set): %p\n") % Py_GetPath());
+
 	object main_module(( handle<>(borrowed(PyImport_AddModule("__main__"))) ));
 	main_namespace = main_module.attr("__dict__");
 	PyImport_AppendInittab("EngineModule", &initEngineModule ); 
@@ -32,7 +35,7 @@ void    Engine::runPython(){
 	Logger::debug("run python file");
 	try {
 		Logger::debug("run script.py");
-        PyObject* file = PyFile_FromString("script.py", "r+");
+        PyObject* file = PyFile_FromString("../script.py", "r+");
         PyRun_File(PyFile_AsFile(file), "script.py", Py_file_input, 
 			main_namespace.ptr(), main_namespace.ptr()
 			);
