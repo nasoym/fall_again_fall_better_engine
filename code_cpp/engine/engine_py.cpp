@@ -34,9 +34,9 @@ void    Engine::runPython(){
 	}
 	Logger::debug("run python file");
 	try {
-		Logger::debug("run script.py");
-        PyObject* file = PyFile_FromString("../script.py", "r+");
-        PyRun_File(PyFile_AsFile(file), "script.py", Py_file_input, 
+		Logger::debug("run main.py");
+        PyObject* file = PyFile_FromString("../main.py", "r+");
+        PyRun_File(PyFile_AsFile(file), "main.py", Py_file_input, 
 			main_namespace.ptr(), main_namespace.ptr()
 			);
 		//PyRun_SimpleString("print(globals())");
