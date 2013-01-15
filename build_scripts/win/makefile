@@ -88,6 +88,8 @@ watchdog:
 $(EXECUTABLEDIR)/main.exe: $(OBJ)
 	echo "linking to:$@"
 	$(LINK) $(LIBFLAGS) -OUT:$@ $(OBJ) $(LIBLIST)
+	rm $(EXECUTABLEDIR)/main.exp
+	rm $(EXECUTABLEDIR)/main.lib
 
 $(BUILDTEMPPATH)/%.obj: %.cpp %.h
 	$(CC) $(CFLAGS) -Fo$@ $<
@@ -97,8 +99,6 @@ $(BUILDTEMPPATH)/%.obj: %.cpp
 
 $(BUILDTEMPPATH)/main.obj: $(MAINCODEDIR)/main.cpp
 	$(CC) $(CFLAGS) -Fo$@ $<
-	rm $(EXECUTABLEDIR)/main.exp
-	rm $(EXECUTABLEDIR)/main.lib
 
 run: all
 	(cd $(EXECUTABLEDIR); ./run.sh)
