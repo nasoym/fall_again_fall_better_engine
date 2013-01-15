@@ -1,13 +1,17 @@
 
 #VPATH=common:engine:engine_objects:final:engine_physics:stereoManager
-VPATH=common:engine:engine_objects:final
+
+BUILDTEMPPATH=../../build/win_temp
+MAINCODEDIR=../../code_cpp
+EXECUTABLEDIR=../../executable/win
+
+VPATH=$(MAINCODEDIR)/common:$(MAINCODEDIR)/engine:$(MAINCODEDIR)/engine_objects:$(MAINCODEDIR)/final
 ALLPATHES=$(subst :, ,$(VPATH))
 
-OBJ=build/main.obj
-OBJ+=$(foreach dir,$(ALLPATHES), $(patsubst $(dir)/%.cpp,build/%.obj,$(wildcard $(dir)/*.cpp)) )
+OBJ=$(BUILDTEMPPATH)/main.obj
+OBJ+=$(foreach dir,$(ALLPATHES), $(patsubst $(dir)/%.cpp,$(BUILDTEMPPATH)/%.obj,$(wildcard $(dir)/*.cpp)) )
 
 LINK=/c/Procs/MicrosoftVisualStudio10.0/VC/bin/link.exe
-
 
 CFLAGS=
 CFLAGS+=-I /c/Procs/MicrosoftVisualStudio10.0/VC/include
@@ -60,46 +64,51 @@ LIBFLAGS+=-NODEFAULTLIB:LIBCMT
 .PHONY: clean test 
 
 show:
-	echo $(CFLAGS)
+	echo "cflags: $(CFLAGS)"
+	echo "vpath: $(VPATH)"
+	echo "allpathes: $(ALLPATHES)"
+	echo "obj: $(OBJ)"
 
 dll:
-	$(LINK) $(LIBFLAGS) -DLL -OUT:run/executable/EngineModule.pyd $(OBJ) $(LIBLIST)
+	$(LINK) $(LIBFLAGS) -DLL -OUT:$(EXECUTABLEDIR)/EngineModule.pyd $(OBJ) $(LIBLIST)
 
-all: run/executable/main.exe
+all: $(EXECUTABLEDIR)/main.exe
 	echo "main"
-	echo `git log -n 1 --pretty=format:%h` > run/executable/git_version.txt
-	#> run/executable/git_version.txt
+	echo `git log -n 1 --pretty=format:%h` > $(EXECUTABLEDIR)/git_version.txt
+	#> $(EXECUTABLEDIR)/git_version.txt
 
 test: 
-	$(CC) $(CFLAGS) -Fobuild/test.obj test.cpp 
-	$(LINK) $(LIBFLAGS) -OUT:test.exe build/test.obj $(LIBLIST)
+	$(CC) $(CFLAGS) -Fo$(BUILDTEMPPATH)/test.obj $(MAINCODEDIR)/test.cpp 
+	$(LINK) $(LIBFLAGS) -OUT:test.exe $(BUILDTEMPPATH)/test.obj $(LIBLIST)
 
 watchdog: 
-	$(CC) $(CFLAGS) -Fobuild/watchdog.obj watchdog.cpp 
-	$(LINK) $(LIBFLAGS) -OUT:run/executable/watchdog.exe build/watchdog.obj $(LIBLIST)
+	$(CC) $(CFLAGS) -Fo$(BUILDTEMPPATH)/watchdog.obj $(MAINCODEDIR)/watchdog.cpp 
+	$(LINK) $(LIBFLAGS) -OUT:$(EXECUTABLEDIR)/watchdog.exe $(BUILDTEMPPATH)/watchdog.obj $(LIBLIST)
 
-run/executable/main.exe: $(OBJ)
+$(EXECUTABLEDIR)/main.exe: $(OBJ)
 	echo "linking to:$@"
 	$(LINK) $(LIBFLAGS) -OUT:$@ $(OBJ) $(LIBLIST)
 
-build/%.obj: %.cpp %.h
+$(BUILDTEMPPATH)/%.obj: %.cpp %.h
 	$(CC) $(CFLAGS) -Fo$@ $<
 
-build/%.obj: %.cpp
+$(BUILDTEMPPATH)/%.obj: %.cpp
 	$(CC) $(CFLAGS) -Fo$@ $<
 
-build/main.obj: main.cpp
+$(BUILDTEMPPATH)/main.obj: $(MAINCODEDIR)/main.cpp
 	$(CC) $(CFLAGS) -Fo$@ $<
-
+	rm $(EXECUTABLEDIR)/main.exp
+	rm $(EXECUTABLEDIR)/main.lib
 
 run: all
-	(cd run; ./run.sh)
-	#(cd run/executable ; ./main.exe)
+	(cd $(EXECUTABLEDIR); ./run.sh)
 
 run-watch: watchdog
-	(cd run/executable ; ./watchdog.exe)
+	(cd $(EXECUTABLEDIR); ./watchdog.exe)
 
 clean:
-	rm build/*.obj
-	rm run/executable/main.exe
+	rm $(BUILDTEMPPATH)/*.obj
+	rm $(EXECUTABLEDIR)/main.exe
+
+#TODO create build .. pathes if not existing
 
