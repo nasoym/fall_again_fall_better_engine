@@ -1,5 +1,10 @@
 
-#include <windows.h>
+#ifdef MACOSX
+#elif WIN
+    #include <windows.h>
+#else
+#endif
+
 #include <stdio.h>
 #include "engine.h"
 Engine* mEngine = 0;

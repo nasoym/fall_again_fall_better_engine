@@ -11,7 +11,8 @@ using namespace Ogre;
 #define OIS_DYNAMIC_LIB
 #include <OIS/OIS.h>
 
-enum Keys;
+#include "engine_keys.h"
+//enum Keys;
 
 #include <set>
 #include <vector>

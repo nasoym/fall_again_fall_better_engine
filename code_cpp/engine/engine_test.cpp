@@ -8,10 +8,17 @@
 #include "dynamic_actor.h"
 #include "physic_shape.h"
 
-#include "memobserver.h"
+
+#ifdef WIN
+    #include "memobserver.h"
+#endif
 
 int			Engine::getMemoryUsage(){
+#ifdef WIN
 	return getMemoryUsageWorkingSize();
+#else
+    return 0;
+#endif
 }
 
 void		Engine::log(std::string message){
