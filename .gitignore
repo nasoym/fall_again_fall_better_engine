@@ -3,6 +3,7 @@
 *.so
 *.o
 *.dll
+*.dylib
 *.lib
 *.exp
 *.obj
@@ -13,3 +14,4 @@
 *.log
 git_version.txt
 todo.txt
+executable/
