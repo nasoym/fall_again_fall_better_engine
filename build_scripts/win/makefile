@@ -30,7 +30,10 @@ CFLAGS+=-I /c/Users/Sinan/Downloads/physx/PhysX-3.2.1_PC_SDK_Core/include/founda
 CFLAGS+=-I /c/Python27/include
 CFLAGS+=-I /c/boost_1_47/
 CFLAGS+=$(foreach dir,$(ALLPATHES),"-I" $(dir))
-CFLAGS+=-c -MD -EHsc -D "NDEBUG" -nologo
+CFLAGS+=-c -MD -EHsc -nologo
+CFLAGS+=-D "NDEBUG"
+CFLAGS+=-D "WIN"
+CFLAGS+=-D "OGRE_PROCEDURAL"
 
 CC=cl.exe
 
@@ -64,51 +67,51 @@ LIBFLAGS+=-NODEFAULTLIB:LIBCMT
 .PHONY: clean test 
 
 show:
-	echo "cflags: $(CFLAGS)"
-	echo "vpath: $(VPATH)"
-	echo "allpathes: $(ALLPATHES)"
-	echo "obj: $(OBJ)"
+	@ echo "cflags: $(CFLAGS)"
+	@ echo "vpath: $(VPATH)"
+	@ echo "allpathes: $(ALLPATHES)"
+	@ echo "obj: $(OBJ)"
 
 dll:
 	$(LINK) $(LIBFLAGS) -DLL -OUT:$(EXECUTABLEDIR)/EngineModule.pyd $(OBJ) $(LIBLIST)
 
 all: $(EXECUTABLEDIR)/main.exe
-	echo "main"
-	echo `git log -n 1 --pretty=format:%h` > $(EXECUTABLEDIR)/git_version.txt
-	#> $(EXECUTABLEDIR)/git_version.txt
+	@ echo "main"
+	@ echo `git log -n 1 --pretty=format:%h` > $(EXECUTABLEDIR)/git_version.txt
+	@ #> $(EXECUTABLEDIR)/git_version.txt
 
 test: 
-	$(CC) $(CFLAGS) -Fo$(BUILDTEMPPATH)/test.obj $(MAINCODEDIR)/test.cpp 
-	$(LINK) $(LIBFLAGS) -OUT:test.exe $(BUILDTEMPPATH)/test.obj $(LIBLIST)
+	@ $(CC) $(CFLAGS) -Fo$(BUILDTEMPPATH)/test.obj $(MAINCODEDIR)/test.cpp 
+	@ $(LINK) $(LIBFLAGS) -OUT:test.exe $(BUILDTEMPPATH)/test.obj $(LIBLIST)
 
 watchdog: 
-	$(CC) $(CFLAGS) -Fo$(BUILDTEMPPATH)/watchdog.obj $(MAINCODEDIR)/watchdog.cpp 
-	$(LINK) $(LIBFLAGS) -OUT:$(EXECUTABLEDIR)/watchdog.exe $(BUILDTEMPPATH)/watchdog.obj $(LIBLIST)
+	@ $(CC) $(CFLAGS) -Fo$(BUILDTEMPPATH)/watchdog.obj $(MAINCODEDIR)/watchdog.cpp 
+	@ $(LINK) $(LIBFLAGS) -OUT:$(EXECUTABLEDIR)/watchdog.exe $(BUILDTEMPPATH)/watchdog.obj $(LIBLIST)
 
 $(EXECUTABLEDIR)/main.exe: $(OBJ)
-	echo "linking to:$@"
-	$(LINK) $(LIBFLAGS) -OUT:$@ $(OBJ) $(LIBLIST)
-	rm $(EXECUTABLEDIR)/main.exp
-	rm $(EXECUTABLEDIR)/main.lib
+	@ echo "linking to:$@"
+	@ $(LINK) $(LIBFLAGS) -OUT:$@ $(OBJ) $(LIBLIST)
+	@ rm $(EXECUTABLEDIR)/main.exp
+	@ rm $(EXECUTABLEDIR)/main.lib
 
 $(BUILDTEMPPATH)/%.obj: %.cpp %.h
-	$(CC) $(CFLAGS) -Fo$@ $<
+	@ $(CC) $(CFLAGS) -Fo$@ $<
 
 $(BUILDTEMPPATH)/%.obj: %.cpp
-	$(CC) $(CFLAGS) -Fo$@ $<
+	@ $(CC) $(CFLAGS) -Fo$@ $<
 
 $(BUILDTEMPPATH)/main.obj: $(MAINCODEDIR)/main.cpp
-	$(CC) $(CFLAGS) -Fo$@ $<
+	@ $(CC) $(CFLAGS) -Fo$@ $<
 
 run: all
-	(cd $(EXECUTABLEDIR); ./run.sh)
+	@ (cd $(EXECUTABLEDIR); ./run.sh)
 
 run-watch: watchdog
-	(cd $(EXECUTABLEDIR); ./watchdog.exe)
+	@ (cd $(EXECUTABLEDIR); ./watchdog.exe)
 
 clean:
-	rm $(BUILDTEMPPATH)/*.obj
-	rm $(EXECUTABLEDIR)/main.exe
+	@ rm $(BUILDTEMPPATH)/*.obj
+	@ rm $(EXECUTABLEDIR)/main.exe
 
 #TODO create build .. pathes if not existing
 
