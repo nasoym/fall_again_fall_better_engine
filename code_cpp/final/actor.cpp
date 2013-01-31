@@ -74,7 +74,7 @@ Quat	Actor::getOrientation() {
 	return Quat(t.q.w,t.q.x,t.q.y,t.q.z);
 }
 
-void    Actor::setPosition(Vec3& vec3) {
+void    Actor::setPosition(const Vec3& vec3) {
     PxTransform t = getActor()->getGlobalPose();
     t.p.x = vec3.X();
     t.p.y = vec3.Y();
@@ -84,7 +84,7 @@ void    Actor::setPosition(Vec3& vec3) {
 	GuiContainer::setPosition(vec3);
 }
 
-void    Actor::setOrientation(Quat& quat) {
+void    Actor::setOrientation(const Quat& quat) {
     PxTransform t = getActor()->getGlobalPose();
     t.q.x = quat.X();
     t.q.y = quat.Y();

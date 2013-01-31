@@ -20,11 +20,15 @@ Articulation*	Engine::createArticulation(){
 }
 
 DynamicActor*	Engine::createDynamicActor(){
-	return new DynamicActor(this,Vec3(1,1,1));
+    Vec3 vec = Vec3(1,1,1);
+	//return new DynamicActor(this,Vec3(1,1,1));
+	return new DynamicActor(this,vec);
 }
 
 StaticActor*	Engine::createStaticActor(){
-	return new StaticActor(this,Vec3(1,1,1));
+    Vec3 vec = Vec3(1,1,1);
+	//return new StaticActor(this,Vec3(1,1,1));
+	return new StaticActor(this,vec);
 }
 
 EngineObject*	Engine::createMesh(const char* meshName){

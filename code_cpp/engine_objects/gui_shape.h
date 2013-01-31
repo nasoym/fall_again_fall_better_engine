@@ -26,13 +26,13 @@ class GuiShape : public EngineObject {
         GuiShape(Engine* engine);
         virtual ~GuiShape();
 
-		virtual void        setPosition(Vec3& vec3);
+		virtual void        setPosition(const Vec3& vec3);
 		virtual Vec3    	getPosition();
 
-		virtual void        setOrientation(Quat& quat);
+		virtual void        setOrientation(const Quat& quat);
 		virtual Quat 		getOrientation();
 
-		virtual void        setSize(Vec3& vec3);
+		virtual void        setSize(const Vec3& vec3);
 		virtual Vec3    	getSize();
 
 		virtual GuiShape*			isGuiShape(){return this;}
@@ -47,13 +47,13 @@ class GuiShape : public EngineObject {
 		SceneNode*			getNode(){return mNode;}
 
 
-		virtual void        setLocalPosition(Vec3& vec3){mLocalPosition = vec3;}
+		virtual void        setLocalPosition(const Vec3& vec3){mLocalPosition = vec3;}
 		virtual Vec3    	getLocalPosition(){return mLocalPosition;}
 
-		virtual void        setLocalOrientation(Quat& quat){mLocalOrientation = quat;}
+		virtual void        setLocalOrientation(const Quat& quat){mLocalOrientation = quat;}
 		virtual Quat 		getLocalOrientation(){return mLocalOrientation;}
 
-		virtual void        setLocalSize(Vec3& vec3); //{mLocalSize = vec3;}
+		virtual void        setLocalSize(const Vec3& vec3); //{mLocalSize = vec3;}
 		virtual Vec3    	getLocalSize(){return mLocalSize;}
 
 		void				setContainer(GuiContainer* container);

@@ -12,8 +12,10 @@ class Actor;
 #include <Ogre.h>
 using namespace Ogre;
 
-#include "ProceduralStableHeaders.h"
-#include "Procedural.h"
+#ifdef OGRE_PROCEDURAL
+    #include "ProceduralStableHeaders.h"
+    #include "Procedural.h"
+#endif
 
 
 class PhysicShape : public GuiShape {
@@ -34,18 +36,18 @@ class PhysicShape : public GuiShape {
 		virtual ObjectType		getType(){ return PHYSIC_SHAPE;}
 
 	public:
-		void 					createGuiBox(Vec3&);
-		void 					createGuiSphere(Vec3&);
-		void 					createGuiCapsule(Vec3&);
-		void 					updateGuiCapsule(Vec3&);
+		void 					createGuiBox(const Vec3&);
+		void 					createGuiSphere(const Vec3&);
+		void 					createGuiCapsule(const Vec3&);
+		void 					updateGuiCapsule(const Vec3&);
 
-		virtual void        	setLocalPosition(Vec3& vec3);
+		virtual void        	setLocalPosition(const Vec3& vec3);
 		virtual Vec3    		getLocalPosition();
 
-		virtual void        	setLocalOrientation(Quat& quat);
+		virtual void        	setLocalOrientation(const Quat& quat);
 		virtual Quat 			getLocalOrientation();
 
-		virtual void        	setLocalSize(Vec3& vec3);
+		virtual void        	setLocalSize(const Vec3& vec3);
 		virtual Vec3    		getLocalSize();
 
 		bool					isBoxShape();

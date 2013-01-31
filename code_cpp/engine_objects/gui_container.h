@@ -14,13 +14,13 @@ class GuiContainer : public EngineObject {
         GuiContainer(Engine*);
         ~GuiContainer();
 
-		virtual void        setPosition(Vec3& vec3);
+		virtual void        setPosition(const Vec3& vec3);
 		virtual Vec3    	getPosition(){return mPosition;}
 
-		virtual void        setOrientation(Quat& quat);
+		virtual void        setOrientation(const Quat& quat);
 		virtual Quat 		getOrientation(){return mOrientation;}
 
-		virtual void        setSize(Vec3& vec3);
+		virtual void        setSize(const Vec3& vec3);
 		virtual Vec3    	getSize(){return mSize;}
 
 		GuiShape*		getShapeByIndex(int);

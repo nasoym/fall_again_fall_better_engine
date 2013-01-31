@@ -25,8 +25,8 @@ class StaticActor : public Actor {
 
         virtual PxRigidActor*   getActor(){return mBody;}
 
-		virtual void        	setPosition(Vec3& vec3);
-		virtual void        	setOrientation(Quat& quat);
+		virtual void        	setPosition(const Vec3& vec3);
+		virtual void        	setOrientation(const Quat& quat);
 
 	private:
         PxRigidStatic*      	mBody;

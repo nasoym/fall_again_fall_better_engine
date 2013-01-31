@@ -50,8 +50,8 @@ class Joint : public GuiContainer {
 		Actor*		getBody1();
 		Actor*		getBody2();
 
-        void        setAnchor1Size(Vec3& vec3);
-        void        setAnchor2Size(Vec3& vec3);
+        void        setAnchor1Size(const Vec3& vec3);
+        void        setAnchor2Size(const Vec3& vec3);
 
         Vec3        getAnchor1Size();
         Vec3        getAnchor2Size();
@@ -68,11 +68,11 @@ class Joint : public GuiContainer {
         Actor*      getActor1();
         Actor*      getActor2();
 
-        void        setAnchor1(Vec3&);
-        void        setAnchor2(Vec3&);
+        void        setAnchor1(const Vec3&);
+        void        setAnchor2(const Vec3&);
 
-        void        setAnchor1Orientation(Quat&);
-        void        setAnchor2Orientation(Quat&);
+        void        setAnchor1Orientation(const Quat&);
+        void        setAnchor2Orientation(const Quat&);
 
         Vec3        getAnchor1();
         Vec3        getAnchor2();

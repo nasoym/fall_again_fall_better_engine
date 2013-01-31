@@ -52,7 +52,7 @@ PhysicShape*		StaticActor::addPlane(){
 }
 
 
-void    StaticActor::setPosition(Vec3& vec3) {
+void    StaticActor::setPosition(const Vec3& vec3) {
 	if (mAddedToScene){
 		(getEngine()->getPhysicsEngine()->getScene())->removeActor(*mBody);
 	}
@@ -66,7 +66,7 @@ void    StaticActor::setPosition(Vec3& vec3) {
 	}
 }
 
-void    StaticActor::setOrientation(Quat& quat) {
+void    StaticActor::setOrientation(const Quat& quat) {
 	if (mAddedToScene){
 		(getEngine()->getPhysicsEngine()->getScene())->removeActor(*mBody);
 	}
