@@ -62,20 +62,19 @@ bool	PhysicShape::isPlaneShape(){
 	return false;
 }
 
-void PhysicShape::createGuiBox(const Vec3& vec3) {
+void PhysicShape::createGuiBox(Vec3& vec3) {
     setEntity(getEngine()->getSceneManager()->createEntity("Prefab_Cube"));
     getNode()->attachObject(getEntity());
 	setLocalSize(vec3);
 }
 
-void PhysicShape::createGuiSphere(const Vec3& vec3) {
+void PhysicShape::createGuiSphere(Vec3& vec3) {
     setEntity(getEngine()->getSceneManager()->createEntity("Prefab_Sphere"));
     getNode()->attachObject(getEntity());
 	setLocalSize(vec3);
 }
 
-void PhysicShape::createGuiCapsule(const Vec3& vec3) {
-#ifdef OGRE_PROCEDURAL
+void PhysicShape::createGuiCapsule(Vec3& vec3) {
 	if (mMesh != 0 ) {
 		getNode()->detachObject(getEntity());
 		getEngine()->getSceneManager()->destroyEntity(getEntity());
@@ -104,16 +103,13 @@ void PhysicShape::createGuiCapsule(const Vec3& vec3) {
 	if (hasColour()) {
 		setCustomMaterial();
 	}
-#else
-    createGuiBox(vec3);
-#endif
 }
 
-void PhysicShape::updateGuiCapsule(const Vec3& vec3) {
+void PhysicShape::updateGuiCapsule(Vec3& vec3) {
 	createGuiCapsule(vec3);
 }
 
-void        PhysicShape::setLocalPosition(const Vec3& vec3){
+void        PhysicShape::setLocalPosition(Vec3& vec3){
     PxTransform t = mShape->getLocalPose();
     t.p.x = vec3.X();
     t.p.y = vec3.Y();
@@ -129,7 +125,7 @@ Vec3    	PhysicShape::getLocalPosition(){
 	return Vec3(t.p.x,t.p.y,t.p.z);
 }
 
-void        PhysicShape::setLocalOrientation(const Quat& quat){
+void        PhysicShape::setLocalOrientation(Quat& quat){
     PxTransform t = mShape->getLocalPose();
     t.q.x = quat.X();
     t.q.y = quat.Y();
@@ -146,7 +142,7 @@ Quat 		PhysicShape::getLocalOrientation(){
 	return Quat(t.q.w,t.q.x,t.q.y,t.q.z);
 }
 
-void        PhysicShape::setLocalSize(const Vec3& vec3){
+void        PhysicShape::setLocalSize(Vec3& vec3){
 	switch(mShape->getGeometryType()){
 		case PxGeometryType::eBOX:
 			mShape->setGeometry(PxBoxGeometry(vec3.toPhysx()));

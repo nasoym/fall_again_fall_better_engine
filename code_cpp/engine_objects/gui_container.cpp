@@ -79,7 +79,7 @@ int     GuiContainer::howManyShapes() {
 	return mShapes.size();
 }
 
-void        GuiContainer::setPosition(const Vec3& vec3){
+void        GuiContainer::setPosition(Vec3& vec3){
 	std::vector<GuiShape*>::iterator	iter;
 	for(iter=mShapes.begin();iter!=mShapes.end();++iter){
 		(*iter)->setPosition(vec3);
@@ -87,7 +87,7 @@ void        GuiContainer::setPosition(const Vec3& vec3){
 	mPosition = vec3;
 }
 
-void        GuiContainer::setOrientation(const Quat& quat){
+void        GuiContainer::setOrientation(Quat& quat){
 	std::vector<GuiShape*>::iterator	iter;
 	for(iter=mShapes.begin();iter!=mShapes.end();++iter){
 		(*iter)->setOrientation(quat);
@@ -95,7 +95,7 @@ void        GuiContainer::setOrientation(const Quat& quat){
 	mOrientation = quat;
 }
 
-void        GuiContainer::setSize(const Vec3& vec3){
+void        GuiContainer::setSize(Vec3& vec3){
 	std::vector<GuiShape*>::iterator	iter;
 	for(iter=mShapes.begin();iter!=mShapes.end();++iter){
 		(*iter)->setSize(vec3);

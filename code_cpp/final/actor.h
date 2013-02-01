@@ -23,8 +23,8 @@ class Actor : public GuiContainer {
 		virtual void		physicUpdate();
 		virtual void		guiUpdate();
 
-		virtual void        setPosition(const Vec3& vec3);
-		virtual void        setOrientation(const Quat& quat);
+		virtual void        setPosition(Vec3& vec3);
+		virtual void        setOrientation(Quat& quat);
 
 		virtual Vec3    	getPosition();
 		virtual Quat 		getOrientation();

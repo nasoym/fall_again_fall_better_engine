@@ -56,7 +56,7 @@ GuiContainer* GuiShape::getContainer(){
 	return mContainer;
 }
 
-void    GuiShape::setPosition(const Vec3& vec3){
+void    GuiShape::setPosition(Vec3& vec3){
 	Vec3	globalPos;
 	if (getContainer()) {
 		globalPos = getContainer()->getOrientation() * getLocalPosition();
@@ -71,22 +71,22 @@ Vec3    	GuiShape::getPosition(){
 	return Vec3(getNode()->getPosition());
 }
 
-void        GuiShape::setOrientation(const Quat& quat){
-	getNode()->setOrientation((Quat(quat) * getLocalOrientation()).toOgre());
+void        GuiShape::setOrientation(Quat& quat){
+	getNode()->setOrientation((quat * getLocalOrientation()).toOgre());
 }
 
 Quat GuiShape::getOrientation(){
 	return Quat(getNode()->getOrientation());
 }
 
-void        GuiShape::setLocalSize(const Vec3& vec3){
+void        GuiShape::setLocalSize(Vec3& vec3){
 	mLocalSize = vec3;
 	getNode()->setScale(vec3.toOgre() * (2.0f / 100.0f));
 }
 
-void        GuiShape::setSize(const Vec3& vec3){
+void        GuiShape::setSize(Vec3& vec3){
 	if (getContainer()) {
-		Vec3 scaling = Vec3(vec3) / getContainer()->getSize();
+		Vec3 scaling = vec3 / getContainer()->getSize();
 		//Logger::debug(format("scaling: %1% %2% %3%") % 
 	//			scaling.X() % vec3.Y() % vec3.Z() );
 		if (mScalingType != FIX) {

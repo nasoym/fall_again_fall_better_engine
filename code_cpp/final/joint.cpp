@@ -35,12 +35,12 @@ Actor*		Joint::getBody2(){
 	return mActor2;
 }
 
-void        Joint::setAnchor1Size(const Vec3& vec3){
-	setAnchor1(Vec3(vec3) * mActor1->getSize() );
+void        Joint::setAnchor1Size(Vec3& vec3){
+	setAnchor1(vec3 * mActor1->getSize() );
 }
 
-void        Joint::setAnchor2Size(const Vec3& vec3){
-	setAnchor2(Vec3(vec3) * mActor2->getSize() );
+void        Joint::setAnchor2Size(Vec3& vec3){
+	setAnchor2(vec3 * mActor2->getSize() );
 }
 
 Vec3        Joint::getAnchor1Size(){
@@ -188,7 +188,7 @@ Quat   Joint::getAnchor2Orientation( ) {
     return Quat(t.q.w,t.q.x,t.q.y,t.q.z);
 }
 
-void Joint::setAnchor1(const Vec3 & vec3){
+void Joint::setAnchor1(Vec3 & vec3){
     PxTransform t = mJoint->getLocalPose(PxJointActorIndex::eACTOR0);
     t.p.x = vec3.X();
     t.p.y = vec3.Y();
@@ -197,7 +197,7 @@ void Joint::setAnchor1(const Vec3 & vec3){
     updateBodies();
 }
 
-void Joint::setAnchor2(const Vec3& vec3){
+void Joint::setAnchor2(Vec3& vec3){
     PxTransform t = mJoint->getLocalPose(PxJointActorIndex::eACTOR1);
     t.p.x = vec3.X();
     t.p.y = vec3.Y();
@@ -206,7 +206,7 @@ void Joint::setAnchor2(const Vec3& vec3){
     updateBodies();
 }
 
-void Joint::setAnchor1Orientation(const Quat & quat){
+void Joint::setAnchor1Orientation(Quat & quat){
     PxTransform t = mJoint->getLocalPose(PxJointActorIndex::eACTOR0);
     t.q.x = quat.X();
     t.q.y = quat.Y();
@@ -216,7 +216,7 @@ void Joint::setAnchor1Orientation(const Quat & quat){
     updateBodies();
 }
 
-void Joint::setAnchor2Orientation(const Quat & quat){
+void Joint::setAnchor2Orientation(Quat & quat){
     PxTransform t = mJoint->getLocalPose(PxJointActorIndex::eACTOR1);
     t.q.x = quat.X();
     t.q.y = quat.Y();
