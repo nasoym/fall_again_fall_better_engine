@@ -515,7 +515,8 @@ void		Engine::lightsOff(){
 
 void		Engine::lightsOn(){
 	ColourValue	col0 = ColourValue(0.00,0.00,0.00,1.0);
-	/*
+
+	// sepia
 	ColourValue	col1 = ColourValue(0.14,0.09,0.06,1.0);
 	ColourValue	col2 = ColourValue(0.30,0.15,0.02,1.0);
 	ColourValue	col3 = ColourValue(0.69,0.62,0.53,1.0);
@@ -523,14 +524,15 @@ void		Engine::lightsOn(){
 	ColourValue	col5 = ColourValue(0.30,0.15,0.02,1.0);
 	ColourValue	col6 = ColourValue(0.30,0.15,0.02,1.0);
 	ColourValue	col7 = ColourValue(0.30,0.15,0.02,1.0);
-	*/
 
+	/*
 	ColourValue	col1 = ColourValue(0.1,0.1,0.1,1.0);
 	ColourValue	col2 = ColourValue(0.2,0.2,0.2,1.0);
 	ColourValue	col3 = ColourValue(0.5,0.5,0.5,1.0);
 	ColourValue	col4 = ColourValue(0.7,0.7,0.7,1.0);
 	ColourValue	col5 = ColourValue(0.3,0.3,0.3,1.0);
 	ColourValue	col6 = ColourValue(0.5,0.5,0.5,1.0);
+	*/
 
     mSceneMgr->setAmbientLight(col1);
 
@@ -580,7 +582,11 @@ void Engine::close(){
 
 void Engine::render(){
     WindowEventUtilities::messagePump();
-    mRoot->renderOneFrame();
+	if (mWindow->isActive()){
+		mRoot->renderOneFrame();
+	} else if (mWindow->isVisible()) {
+		mWindow->update();
+	}
     //mRoot->startRendering();
 }
 
