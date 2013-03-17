@@ -58,7 +58,7 @@ class EngineObject {
 		//void 			setName(char * chr_ptr){mName = std::string(chr_ptr);}
 
 		std::string		readUuid(){ return mUuid.toString(); }
-		void			setUuid(std::string name){mUuid.fromString(name);}
+		void			setUuid(std::string name); //{mUuid.fromString(name);}
 		Uuid			getUuid(){ return mUuid; }
 
 		Engine*			getEngine(){ return mEngine; }

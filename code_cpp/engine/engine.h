@@ -17,6 +17,7 @@ using namespace Ogre;
 #include <set>
 #include <vector>
 #include <string>
+#include <map>
 
 #include "math3d.h"
 
@@ -88,6 +89,10 @@ class Engine : public WindowEventListener,
 		EngineObject* getObject(int index);
 		EngineObject* getFromUuid(std::string);
 
+		
+		void 	deleteMappedObject(EngineObject*);
+		void 	addMappedObject(EngineObject*);
+		
 		PhysicsEngine*	getPhysicsEngine(){return mPhysicsEngine;}
 
 		void    physicUpdates();
@@ -158,6 +163,7 @@ class Engine : public WindowEventListener,
 		bool					mLoopRendering;
 
 		std::vector<EngineObject*> mObjects;
+		std::map<std::string,EngineObject*> mMappedObjects;
 
 		float	mSimulationTime;
 

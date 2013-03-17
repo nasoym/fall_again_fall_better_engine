@@ -14,3 +14,10 @@ EngineObject::~EngineObject(){
 	//mEngine->deleteObject(this);
 }
 
+void	EngineObject::setUuid(std::string name){
+	mUuid.fromString(name);
+	mEngine->deleteMappedObject(this);
+	mEngine->addMappedObject(this);
+}
+
+

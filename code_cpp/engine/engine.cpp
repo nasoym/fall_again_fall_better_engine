@@ -274,6 +274,7 @@ void    Engine::physicUpdates() {
 void    Engine::deleteAllObjects() {
 	std::vector<EngineObject*>	objectsCopy=std::vector<EngineObject*>(mObjects);
 	mObjects.clear();
+	mMappedObjects.clear();
 	std::vector<EngineObject*>::iterator  mIterator;
 	for (mIterator = objectsCopy.begin(); 
 		mIterator != objectsCopy.end(); ++mIterator) {
@@ -291,11 +292,28 @@ void    Engine::deleteObject(EngineObject* object) {
 			break;
 		}
 	}
+	deleteMappedObject(object);
 	Logger::debug("done with engine del");
+}
+
+void 	Engine::deleteMappedObject(EngineObject* object){
+	std::map<std::string,EngineObject*>::iterator  mIterator;
+	for (mIterator = mMappedObjects.begin(); 
+		mIterator != mMappedObjects.end(); ++mIterator) {
+		if ( (*mIterator).second == object ){
+			mMappedObjects.erase( mIterator);
+			break;
+		}
+	}
+}
+
+void 	Engine::addMappedObject(EngineObject* object) {
+	mMappedObjects[object->readUuid()] = object;
 }
 
 void    Engine::addObject(EngineObject* object){
 	mObjects.push_back(object);
+	addMappedObject(object);
 }
 
 int     Engine::howManyObjects() {
@@ -307,15 +325,14 @@ EngineObject* Engine::getObject(int index){
 }
 
 EngineObject* Engine::getFromUuid(std::string uuidToFind){
-	std::vector<EngineObject*>::iterator  mIterator;
-	for (mIterator = mObjects.begin(); 
-		mIterator != mObjects.end(); ++mIterator) {
-		if( (*mIterator)->getUuid().isEqual(uuidToFind) ) {
-			return (*mIterator);
-		}
+	std::map<std::string,EngineObject*>::iterator  mIterator;
+	mIterator = mMappedObjects.find(uuidToFind);
+	if (mIterator!=mMappedObjects.end()) {
+		return (*mIterator).second;
 	}
 	return 0;
 }
+
 bool	Engine::isFullscreen(){
 	if (mWindow) {
 		return mWindow->isFullScreen();
@@ -323,8 +340,6 @@ bool	Engine::isFullscreen(){
 		return false;
 	}
 }
-
-
 
 
 
