@@ -1,0 +1,109 @@
+Ich möchte eine Arbeit vorstellen die ich letztes Jahr zusammen
+mit dem Medien Künstler Jeffrey Shaw fertig gestellt habe.
+
+Ich habe dies schon einmal beim Entwicklerforum vorgestellt
+daher haben es einige von euch auch schon gesehen.
+
+In Zusammenarbeit mit Jeffrey Shaw ist eine Interaktive Installation
+entstanden die von Oktober letztes Jahr bis Maerz dieses Jahr 
+in Shanghai im Zusammenhang mit der 9. Biennale dort 
+ausgestellt wurde.
+
+Hier habe ich ein paar Fotos der Installation.
+Ich selber habe die Installation nicht vor Ort sehen können und
+kenne daher auch nur diese Fotos.
+Der Titel der Installation ist "Fall again, Fall Better"
+
+	[ zum Titel:
+	[	Ever tried. Ever failed. No matter. 
+	[   Try again. Fail again. Fail better.
+	[	Samuel Beckett, Worstward Ho 1983
+
+[Fotos] [SPACE]!! [Arrows]
+	Projektion Eingangshalle
+		im neu eingeweihten Museum für moderne Kunst
+	griff ziehen: fallen aufstehen
+		Haufen bilden
+	Rot Cyan
+
+Und hier ist nun die Installation die ich über die letzten zwei
+Jahre verteilt programmiert habe.
+So wie sie hier zu sehen ist war sie auch auf der Projektion 
+der Installation zu sehen.
+
+[Fall again fall better][06] [Brille]?
+	umfallen aufstehen  [SPACE]
+
+	-> Arbeitsumgebung 
+		basierend auf python
+		ogre PhysX c++ boost python
+		PhysX -> Bullet , geschlossenser gelenk kreislauf
+
+Der Kontakt zu Jeffrey Shaw ist letztlich über mein Uni Arbeit 
+entstanden, denn das Thema während meinem Medien Kunst Studium 
+waren Physikalisch simulierte Figuren.
+Hier ist zum Beispiel eine Arbeit aus meiner Uni Zeit.
+
+[walking towards] 
+	Arbeitsumgebung (vvvv PureData)
+	Figuren szenen bauen
+	Visuelle Programmierung: verhaltens,bewegungs programme
+	figuren sind simuliert --> roboter
+	verhalten laufe immer zum anderen -> kollisionen
+		-> aufbauend auf dieses verhalten 
+		verschiedene arbeiten konstruieren
+	tech: c++ Nvidia PhysX, shader
+
+l start logics
+4 show subs 2x
+2 hide all subs
+F9 toggle hide menus
+F12 toggle fullscreen 
+
+[visual logis]
+	gruene pfeile, funktionen(c++)
+	unflexibel schwiergig zu handhaben
+
+Ich habe daher für das Projekt mit Jeffrey Shaw nicht auf dem
+Programm von meiner Uni Zeit aufgebaut.
+Sondern habe noch einmal von neuem angefangen das zu programmieren 
+und zwar diesmal mit c++ 
+kombiniert mit Python anstatt visueller Programmierung.
+
+[Mobile]
+[osc demo][05]
+	demo mobile colour touch
+	Figuren bauen 
+	kollisions koerper -> mesh model
+		-> xml dateien 
+	python scripte -> projekt /installations spezifisch
+
+	boxes an kopf anhaengen
+		gewicht physikalischen gesetzte
+		zeigen an scripten
+
+	interactive python editing gravity
+
+An diesem Beispiel möchte ich nun zum Schluss noch demonstrieren
+was ich persönlich so faszinierend am Thema der physikalisch 
+simulierten Figuren finde.
+Und zum anderen welches Potenzial ich denke was in dieser Technik
+steckt.
+
+/ set gravity 0
+\ add upwards force
+' add force to breast
+; create ragdoll without base
+. add jointed box
+, add jointed box
+m create box
+3 set force to 1
+1 decrease force
+2 increase force
+space set force to 0
+
+ausblick
+	verhaltens programme -> python -> visuelle elemente ?
+
+================================================================
+

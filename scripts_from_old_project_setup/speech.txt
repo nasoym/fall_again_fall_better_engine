@@ -1,0 +1,166 @@
+equipment:
+	holzfigur
+	android mobile
+	laptop
+	projektion
+
+	[ zum Titel:
+	[	Ever tried. Ever failed. No matter. 
+	[   Try again. Fail again. Fail better.
+	[	Samuel Beckett, Worstward Ho 1983
+
+=================
+
+	Ich möchte mit einer Frage beginnen 
+	die mich seit meinem Studium immer wieder beschäftigt, naemlich :
+
+		Wie lassen sich physikalische simulationen sinnvoll in
+		interaktiven gestalterischen arbeiten einsetzten.
+	
+	Um zum einen die die Tatsache das die physik simulation 
+	in echtzeit berechnet werden und sich daher viele moeglichkeiten 
+	der interaktion bieten auszunutzen.
+
+	Und zum anderen den Eindruck des Unvorhersehbaren fuer 
+	bewegungen von Objekten oder Figuren zu nutzten.
+
+	Hier ist eine der Arbeiten die daraus entstanden sind.
+
+[zeige walking towards] 
+[starte logics so dass figuren laufen]
+
+	was ich hier gebaut hatte war eine arbeitsumgebung
+	um mithilfe von visueller programmierung, aehnlich wie bei 
+	vvvv oder puredata, verhaltens und bewegungs programme 
+	zu erschaffen.
+
+	Die Figuren unterliegen mit all ihren Koerperteilen den simulierten 
+    Physikalischen Gesetzten, zum Beispliel der Gravitation.
+	Daher muessen sie genauso wie zum Beispiel zweibeinige Roboter 
+	mit Verhaltens Systemen erst zum laufen und stehen gebracht werden.
+
+	Darueber hinaus haben diese beiden Figuren noch das Verhalten immer 
+	zu jeweils anderen hinzulaufen, dadurch kollidieren beide 
+	immer wieder miteinander.
+
+	Programmiertechnisch habe ich das alles in c++ programmiert.
+	die Physik simulation berechen ich mit hilfe von Nvidias PhysX.
+	Die grafische darstellung ist von mir aus einem DirectX shader 
+	beispiel von Nvidia abgewandelt.
+	(ssao)
+
+	Hier kann man jetzt zum Beispiel die visuellen programm 
+	Elemente sehen die das laufen der Figuren steuern.
+
+[zeige komplexe logic strukturen]
+[show logics]
+
+	Hier bei bin ich an das fuer visuelle programmierung 
+	bekannte problem gestossen das sich derart komplexe strukturen 
+	nur noch schwer mit visueller programmierung beherschen lassen.
+
+[uebergang zu hong kong]
+
+    Vor ziemlich genau 2 Jahren dann ist durch meinen ehemaligen 
+    Professor ein Kontakt zu Jeffrey Shaw zustande gekommen.
+	Jeffrey Shaw war von 1991 bis 2003 Leiter des Institus fuer 
+	Bildmedien am ZKM in Karlsruhe 
+	und ist jetzt seit 2009 Leiter der School of creative 
+	media in Hong Kong.
+	und ist ein bekannter internationaler medien kuenstler.
+
+    Jeffrey Shaw wollte wissen ob es moeglich waere eine 
+	sogenannte Drueckfigur physikalisch zu simulieren.
+
+[zeige holzfigur]
+
+    Da ich nicht wieder in Windows arbeiten wollte habe ich dafuer 
+	nicht das aus meiner Uni zeit entwickelte Programm genommen, 
+	sondern habe in Linux mit Python und Ogre ganz von neuem
+    damit angefangen das auszuprobieren.
+    Am ende ist dann die "Fall again Fall better" Installation 
+	dabei rausgekommen.
+    Allerdings musste die arbeit letztlich doch wieder auf windows 
+	laufen da der installtionsrechner windows war.
+
+    Ich zeige jetzt mal zuerst ein paar fotos von der Installtion.
+
+[fotos von fall again fall better]
+[turn of slideshow]
+
+	Austgestellt war die Arbeit im Rahmen mit der 9. Biennale 
+	in Shanghai.
+    von Oktober letztes jahr bis ende Maerz dieses Jahr.
+	ich selber habe die austellung leider nicht sehen koennen, 
+	kenne daher auch nur diese fotos davon.
+
+	die installation besteht aus einem griff an dem die besucher 
+	ziehen koennen, und der projektion die in rot-cyan angylph 
+	dargestellt ist, 
+	so dass die betrachter mit rot-cyan brillen das ganze in 3d sehen 
+	koennen.
+
+	wenn ein besucher an dem griff zieht fallen die figruen um 
+    und stehen wieder auf wenn der besucher den griff wieder loslaesst.
+
+    Und das hier ist jetzt das eigentliche Programm so wie es auf 
+	der Projektion zu sehen war.
+
+[fall again fall better projekt]
+
+    Die Figuren fallen um und bilden immer wieder verschiedene Haufen.
+    
+    Um die Figuren und die Bewegungen zu bearbeiten habe ich auch
+    hier wieder so eine Art Arbeitsumgebung gebaut. Diesmal allerdings 
+    basierend auf Python Scripten.
+    
+    Um ein bisschen zu demonstrieren was ich in dieser Arbeitsumgebung 
+	machen kann habe ich hier noch ein weiters Beispiel vorbereitet.
+
+    Hier ist jetzt nur eine figur die ihr mit diesem Mobile 
+	geraet kontrollieren koennt. 
+    Die farbigen Flaechen reagieren auf multitouch und damit lassen 
+	sich die einzelen koerperteile der figur zum aufrecht stehen 
+	oder umfallen bringen.
+
+[interactive example]
+[mobile]
+[interactive modification]
+
+	so kann ich jetzt zum beispiel hier einen koerperteil der figur 
+	auswaehlen und dann einfach noch ein paar verbundene 
+	objekte hinzufuegen.
+
+	oder ich kann jetzt ein paar objekte auaswaehlen und ihnen dann 
+    ein verhalten geben.
+    So dass sie jetzt zum beispiel eine kraft nach vorne bekommen.
+
+    mit dieser Arbeitsumgebung habe ich zum einen die Figuren 
+	konstruiert.
+    Die Figuren oder der ganze aufbau der scenerie lassen sich 
+	dann als xml file abspeichern.
+
+    Das Verhalten der Figuren ist zwar wesentlich weniger komplex 
+	als zweibeiner zum laufen zu bringen. 
+    aber ich hatte doch schon den eindruck das sich mit der script 
+	sprache umfangreiche komplexe strukturen wesentlich besser 
+	handhaben lassen als im vergleich dazu mit visueller programmierung.
+
+[ausblick]
+
+    Das ist zum beispiel auch ein thema welches ich gerne als 
+	naechstes bearbeiten moechte naemlich das verhaltens programm 
+	welches ich waehrend meiner unizeit entwickelt 
+    habe, welches die figuren zum laufen und stehen bringen kann.
+    Nun in python scripts zu uebersetzten.
+
+    Vor allem bin ich auch neugierig rauszufinden ob wenn dan die 
+	komplexen ablauefe mit scripten geloest sind sich wieder 
+	eine sinnvolle anwendung fuer visuelle kontrolle bietet vieleicht 
+	zumbeispiel um groesser logische einheiten miteinander zu verbidne?
+
+    [fragen?]
+
+[verweis of website]	
+!! add fall again fall better to website
+
